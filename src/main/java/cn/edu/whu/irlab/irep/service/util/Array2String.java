@@ -1,4 +1,4 @@
-package cn.edu.whu.irlab.irep.service.preProcess;
+package cn.edu.whu.irlab.irep.service.util;
 
 import java.util.ArrayList;
 

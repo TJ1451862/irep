@@ -3,8 +3,13 @@ package cn.edu.whu.irlab.irep.service.preProcess;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;
+import org.apache.lucene.analysis.cjk.CJKAnalyzer;
+import org.apache.lucene.analysis.cn.smart.SmartChineseAnalyzer;
+import org.apache.lucene.analysis.core.SimpleAnalyzer;
+import org.apache.lucene.analysis.core.WhitespaceAnalyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
+import org.springframework.stereotype.Service;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -37,8 +42,8 @@ public class PreProcessor {
 
         StringBuilder stringBuilder =new StringBuilder();
         StringReader reader=new StringReader(token);
-        TokenStream tokenStream=analyzer.tokenStream(token,reader);
         try{
+            TokenStream tokenStream=analyzer.tokenStream(token,reader);
             tokenStream.reset();
             while (tokenStream.incrementToken()){
                 CharTermAttribute charTermAttribute =tokenStream.getAttribute(CharTermAttribute.class);
@@ -102,5 +107,29 @@ public class PreProcessor {
         }
         System.out.println("去停用词完成");
         return terms;
+    }
+
+    //筛选分词器
+    public static Analyzer analyzerSelector(String analyzerName){
+        Analyzer analyzer=null;
+        switch (analyzerName){
+            case "standard":
+                analyzer=new StandardAnalyzer();
+                break;
+            case "whitespace":
+                analyzer=new WhitespaceAnalyzer();
+                break;
+            case "simple":
+                analyzer=new SimpleAnalyzer();
+                break;
+            case "CJK":
+                analyzer=new CJKAnalyzer();
+                break;
+            case "smartChinese":
+                analyzer=new SmartChineseAnalyzer();
+                break;
+            default:break;
+        }
+        return analyzer;
     }
 }
