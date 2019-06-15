@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.whu.irlab.irep.mapper.RecordMapper">
+  <resultMap id="BaseResultMap" type="cn.edu.whu.irlab.irep.entity.Record">
+    <result column="term" jdbcType="VARCHAR" property="term" />
+    <result column="doc_id" jdbcType="INTEGER" property="docId" />
+    <result column="location" jdbcType="INTEGER" property="location" />
+    <result column="index_type" jdbcType="VARCHAR" property="indexType" />
+  </resultMap>
+  <insert id="insert" parameterType="cn.edu.whu.irlab.irep.entity.Record">
+    insert into records (term, doc_id, location,index_type) values (#{term,jdbcType=VARCHAR}, #{docId,jdbcType=INTEGER}, #{location,jdbcType=INTEGER},#{indexType,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.edu.whu.irlab.irep.entity.Record">
+    insert into records
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="term != null">
+        term,
+      </if>
+      <if test="docId != null">
+        doc_id,
+      </if>
+      <if test="location != null">
+        location,
+      </if>
+      <if test="indexType != null">
+        index_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="term != null">
+        #{term,jdbcType=VARCHAR},
+      </if>
+      <if test="docId != null">
+        #{docId,jdbcType=INTEGER},
+      </if>
+      <if test="location != null">
+        #{location,jdbcType=INTEGER},
+      </if>
+      <if test="indexType != null">
+        #{indexType,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

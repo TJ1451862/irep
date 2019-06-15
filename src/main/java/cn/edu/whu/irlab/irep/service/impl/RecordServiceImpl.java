@@ -15,9 +15,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class RecordServiceImpl {
 
-    @Autowired
-    public RecordMapper recordMapper;
-
     /**
      * 插入一条记录
      *
@@ -28,6 +25,9 @@ public class RecordServiceImpl {
     public int insertRecord(Record record){
         return recordMapper.insert(record);
     }
+
+    @Autowired
+    public RecordMapper recordMapper;
 
 
 }
