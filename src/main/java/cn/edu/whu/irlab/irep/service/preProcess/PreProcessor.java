@@ -21,6 +21,7 @@ import java.util.ArrayList;
  * @desc 中文预处理器
  **/
 
+@Service
 public class PreProcessor {
 
     public static ArrayList<String> preProcess(String token,Analyzer analyzer,boolean isRemoveStopWord){
@@ -54,8 +55,8 @@ public class PreProcessor {
             e.printStackTrace();
         }
         analyzer.close();
-
         String outPut=String.valueOf(stringBuilder);
+        System.out.println("分词完成");
         return outPut;
     }
 
@@ -94,14 +95,14 @@ public class PreProcessor {
         String dataDir = null;
         try{
             dataDir = "resources/StopWordTable.txt";
-            BufferedReader br1 = new BufferedReader(new InputStreamReader(new FileInputStream(dataDir), "GBK"));//构造一个BufferedReader类来读停用词表
+            BufferedReader br1 = new BufferedReader(new InputStreamReader(new FileInputStream(dataDir), "UTF-8"));//构造一个BufferedReader类来读停用词表
             String string1 = null;
-            ArrayList<String> stopword = new ArrayList();
+            ArrayList<String> stopWord = new ArrayList();
             while ((string1 = br1.readLine()) != null) {//使用readLine方法，一次读一行 读取停用词
-                stopword.add(string1);
+                stopWord.add(string1);
             }
             br1.close();
-            terms.removeAll(stopword);//去停用词
+            terms.removeAll(stopWord);//去停用词
         }catch (IOException e){
             e.printStackTrace();
         }

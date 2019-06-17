@@ -18,4 +18,15 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         <!-- <setting name="mapUnderscoreToCamelCase" value="true"/>  驼峰式命名 -->
     </settings>
 
+    <typeAliases>
+        <typeAlias alias="Integer" type="java.lang.Integer" />
+        <typeAlias alias="Long" type="java.lang.Long" />
+        <typeAlias alias="HashMap" type="java.util.HashMap" />
+        <typeAlias alias="LinkedHashMap" type="java.util.LinkedHashMap" />
+        <typeAlias alias="ArrayList" type="java.util.ArrayList" />
+        <typeAlias alias="LinkedList" type="java.util.LinkedList" />
+        <typeAlias type="cn.edu.whu.irlab.irep.entity.Record" alias="Record"/>
+        <package name="cn.edu.whu.irlab.irep.entity" />
+    </typeAliases>
+
 </configuration>

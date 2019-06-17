@@ -5,6 +5,8 @@ import cn.edu.whu.irlab.irep.entity.Record;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @author gcr
  * @version 1.0
@@ -22,12 +24,18 @@ public class RecordServiceImpl {
      * @return 结果
      */
 
-    public int insertRecord(Record record){
-        return recordMapper.insert(record);
-    }
 
     @Autowired
     public RecordMapper recordMapper;
+
+    public int insert(Record record) {
+        return recordMapper.insert(record);
+    }
+
+    public List<Record> selectByIndexType(String indexType){
+        return recordMapper.selectByIndexType(indexType);
+    }
+
 
 
 }
