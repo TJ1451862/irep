@@ -73,16 +73,16 @@ public class Find {
         String ID=Integer.toString(webID);
 
         if (webId_FileName==null){
-            dataDir = "resources/map/Id_Name.txt";
+            dataDir = "resources/map/Id_Name.json";
             webId_FileName =ReadDoc.readDoc(dataDir);
         }
 
         JSONObject jsonObject= JSON.parseObject(webId_FileName);
         docName=jsonObject.getString(ID);
         if (isChinese){
-            dataDir1="resources/doc_chinese/"+ docName+".txt";
+            dataDir1="resources/doc_ch/"+ docName+".txt";
         }else{
-            dataDir1="resources/doc_english/"+ docName+"_eng.txt";
+            dataDir1="resources/doc_en/"+ docName+"_eng.txt";
         }
 
         doc=ReadDoc.readDoc(dataDir1);

@@ -58,4 +58,16 @@
     select <include refid="Base_Column_List"/>
     from inverted_index where index_type=#{indexType,jdbcType=VARCHAR}
   </select>
+  <select id="selectByIndexTypeAndTerm" parameterType="cn.edu.whu.irlab.irep.entity.InvertedIndex" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/>
+    from inverted_index
+    <where>
+      <if test="term != null and term != ''">
+        and term=#{term,jdbcType=VARCHAR}
+      </if>
+      <if test="indexType != null and indexType != ''">
+        and index_type=#{indexType,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </select>
 </mapper>

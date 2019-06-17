@@ -7,9 +7,11 @@
     <result column="ids" property="ids" jdbcType="VARCHAR" />
     <result column="index_type" property="indexType" jdbcType="VARCHAR" />
   </resultMap>
+  <sql id="Base_Column_List">
+    term, df, ids, index_type
+  </sql>
   <insert id="insert" parameterType="cn.edu.whu.irlab.irep.entity.FullIndex" >
-    insert into full_index (term, df, ids, 
-      index_type)
+    insert into full_index (term, df, ids, index_type)
     values (#{term,jdbcType=VARCHAR}, #{df,jdbcType=INTEGER}, #{ids,jdbcType=VARCHAR}, 
       #{indexType,jdbcType=VARCHAR})
   </insert>
@@ -44,4 +46,8 @@
       </if>
     </trim>
   </insert>
+  <select id="selectFullIndexByIndexType" parameterType="String" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/>
+    from full_index where index_type=#{indexType,jdbcType=VARCHAR}
+  </select>
 </mapper>

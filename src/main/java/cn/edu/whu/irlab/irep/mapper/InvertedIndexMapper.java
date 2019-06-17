@@ -14,4 +14,6 @@ public interface InvertedIndexMapper {
     int insertSelective(InvertedIndex record);
 
     List<InvertedIndex> selectByIndexType(String indexType);
+
+    List<InvertedIndex> selectByIndexTypeAndTerm(InvertedIndex invertedIndex);
 }

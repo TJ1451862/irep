@@ -24,7 +24,7 @@ import java.util.ArrayList;
 @Service
 public class PreProcessor {
 
-    public static ArrayList<String> preProcess(String token,Analyzer analyzer,boolean isRemoveStopWord){
+    public ArrayList<String> preProcess(String token,Analyzer analyzer,boolean isRemoveStopWord){
         ArrayList<String> result=new ArrayList<>();
         String terms;
         if (isRemoveStopWord){
@@ -39,7 +39,7 @@ public class PreProcessor {
     }
 
     //分词
-    public static String outputAnalyzer(String token, Analyzer analyzer){
+    public String outputAnalyzer(String token, Analyzer analyzer){
 
         StringBuilder stringBuilder =new StringBuilder();
         StringReader reader=new StringReader(token);
@@ -61,7 +61,7 @@ public class PreProcessor {
     }
 
     //去标点
-    public static ArrayList<String> removePunctuation(String seg){
+    public ArrayList<String> removePunctuation(String seg){
         String splits = seg.replaceAll("\\pP|\\pS|\\pM|\\pN|\\pC", "");// 去除标点符号
 
         splits = splits.replaceAll(" "," " );
@@ -90,7 +90,7 @@ public class PreProcessor {
     }
 
     //去停用词
-    public static ArrayList<String> removeStopWords(ArrayList<String> termList){
+    public ArrayList<String> removeStopWords(ArrayList<String> termList){
         ArrayList<String> terms = termList;
         String dataDir = null;
         try{
@@ -111,7 +111,7 @@ public class PreProcessor {
     }
 
     //筛选分词器
-    public static Analyzer analyzerSelector(String analyzerName){
+    public Analyzer analyzerSelector(String analyzerName){
         Analyzer analyzer=null;
         switch (analyzerName){
             case "standard":

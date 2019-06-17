@@ -5,6 +5,8 @@ import cn.edu.whu.irlab.irep.mapper.FullIndexMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class FullIndexServiceImpl {
 
@@ -13,6 +15,10 @@ public class FullIndexServiceImpl {
 
     public int insert(FullIndex fullIndex){
         return fullIndexMapper.insert(fullIndex);
+    }
+
+    public List<FullIndex> selectFullIndexByIndexType(String indexType){
+        return fullIndexMapper.selectFullIndexByIndexType(indexType);
     }
 
 }

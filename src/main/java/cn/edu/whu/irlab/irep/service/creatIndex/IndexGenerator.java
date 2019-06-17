@@ -52,13 +52,17 @@ public class IndexGenerator {
      * @param folderPath 包含待处理的文档的文件夹路径
      * @param analyzerName 分词器名
      * @param isRemoveStopWord 是否去停用词
-     * @param indexType 索引类型
+     *
      * */
-    public IndexGenerator(String folderPath, String analyzerName, boolean isRemoveStopWord, String indexType) {
+    public IndexGenerator(String folderPath, String analyzerName, boolean isRemoveStopWord) {
         this.folderPath = folderPath;
         this.analyzerName = analyzerName;
         this.isRemoveStopWord = isRemoveStopWord;
         this.indexType = IndexTypeConstructor.indexTypeConstructor(analyzerName, isRemoveStopWord);
+    }
+
+    public void selectFullIndex(){
+
     }
 
     /**
