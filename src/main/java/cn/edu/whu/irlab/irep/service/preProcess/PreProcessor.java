@@ -24,23 +24,24 @@ import java.util.ArrayList;
 @Service
 public class PreProcessor {
 
-    public ArrayList<String> preProcess(String token,Analyzer analyzer,boolean isRemoveStopWord){
+
+    public ArrayList<String> preProcess(String token,String analyzerName,boolean isRemoveStopWord){
         ArrayList<String> result=new ArrayList<>();
         String terms;
         if (isRemoveStopWord){
-            terms=outputAnalyzer(token,analyzer);
+            terms=outputAnalyzer(token,analyzerName);
             result=removePunctuation(terms);
             result=removeStopWords(result);
         }else {
-            terms=outputAnalyzer(token,analyzer);
+            terms=outputAnalyzer(token,analyzerName);
             result=removePunctuation(terms);
         }
         return result;
     }
 
     //分词
-    public String outputAnalyzer(String token, Analyzer analyzer){
-
+    public String outputAnalyzer(String token, String analyzerName){
+        Analyzer analyzer=analyzerSelector(analyzerName);
         StringBuilder stringBuilder =new StringBuilder();
         StringReader reader=new StringReader(token);
         try{
@@ -110,7 +111,14 @@ public class PreProcessor {
         return terms;
     }
 
-    //筛选分词器
+    /**
+     * @param analyzerName 分词器名称
+     *                     standard 标准分词器
+     *                     whitespace 空格分词器
+     *                     simple 简单分词器
+     *                     CJK 二分法分词器
+     *                     smartChinese 中文智能分词器
+     * */
     public Analyzer analyzerSelector(String analyzerName){
         Analyzer analyzer=null;
         switch (analyzerName){

@@ -41,7 +41,7 @@ public class Find {
         return web_Id;
     }
 
-    public static String findTitle(int webID,boolean isChinese){
+    public String findTitle(int webID,boolean isChinese){
 
         String title=null;
         String dataDir = null;
@@ -65,7 +65,7 @@ public class Find {
         return title;
     }
 
-    public static String findDoc(int webID,boolean isChinese){
+    public String findDoc(int webID,boolean isChinese){
         String doc=null;
         String docName;
         String dataDir = null;

@@ -1,5 +1,7 @@
 package cn.edu.whu.irlab.irep.service.util;
 
+import org.springframework.stereotype.Service;
+
 /**
  * @author gcr
  * @version 1.0
@@ -7,9 +9,10 @@ package cn.edu.whu.irlab.irep.service.util;
  * @desc IndexType构造器
  **/
 
+@Service
 public class IndexTypeConstructor {
 
-    public static String indexTypeConstructor(String analyzer,boolean isRemoveStopWord){
+    public String indexTypeConstructor(String analyzer,boolean isRemoveStopWord){
         String indexType;
         String suffixPositive="_remove";
         String suffixNegative="_not_remove";

@@ -61,10 +61,6 @@ public class IndexGenerator {
         this.indexType = IndexTypeConstructor.indexTypeConstructor(analyzerName, isRemoveStopWord);
     }
 
-    public void selectFullIndex(){
-
-    }
-
     /**
      * 生成索引数据
      * */
@@ -85,8 +81,7 @@ public class IndexGenerator {
             for (File file :
                     files) {
                 Doc doc = new Doc(file.getPath(), file.getName());
-                Analyzer analyzer = preProcessor.analyzerSelector(analyzerName);
-                ArrayList<String> termList = doc.preProcess(analyzer, isRemoveStopWord);
+                ArrayList<String> termList = doc.preProcess(analyzerName, isRemoveStopWord);
                 int num = 0;
                 for (String s :
                         termList) {

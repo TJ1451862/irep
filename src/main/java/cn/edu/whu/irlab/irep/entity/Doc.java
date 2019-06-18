@@ -14,7 +14,6 @@ public class Doc {
     public PreProcessor preProcessor;
 
     private int id;
-    private String webId;
     private String filePath;
     private String fileName;
     private String title;
@@ -22,13 +21,18 @@ public class Doc {
 
     public Doc(String filePath,String fileName){
         this.filePath=filePath;
+        this.fileName=fileName;
         this.content= ReadDoc.readDoc(filePath);
         this.id= Find.findId(fileName,true);
     }
 
+    public Doc(int id) {
+        this.id = id;
+    }
+
     //预处理文档
-    public ArrayList<String> preProcess(Analyzer analyzer,boolean isRemoveStopWord){
-        return preProcessor.preProcess(content,analyzer,isRemoveStopWord);
+    public ArrayList<String> preProcess(String analyzerName,boolean isRemoveStopWord){
+        return preProcessor.preProcess(content,analyzerName,isRemoveStopWord);
     }
 
     public void setId(int id) {
@@ -47,10 +51,6 @@ public class Doc {
         this.filePath = filePath;
     }
 
-    public void setWebId(String webId) {
-        this.webId = webId;
-    }
-
     public int getId() {
         return id;
     }
@@ -67,7 +67,11 @@ public class Doc {
         return filePath;
     }
 
-    public String getWebId() {
-        return webId;
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
     }
 }
