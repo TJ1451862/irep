@@ -15,7 +15,6 @@ import java.util.ArrayList;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = IrepApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-
 public class PreprocessorTest {
 
     @Autowired
@@ -24,9 +23,9 @@ public class PreprocessorTest {
     @Test
     public void preProcessorTest(){
         String string="中华人民共和国简称中国，是一个有13亿人口的国家。";
-        Analyzer analyzer=new StandardAnalyzer();
+        String analyzerName="standard";
         ArrayList<String> arrayList=new ArrayList<>();
-        arrayList= PreProcessor.preProcess(string,analyzer,true);
+        arrayList= preProcessor.preProcess(string,analyzerName,true);
         System.out.println(arrayList);
     }
 

@@ -27,6 +27,7 @@ import java.util.Map;
 
 public class IndexGenerator {
 
+
     @Autowired
     public PreProcessor preProcessor;
 
@@ -38,6 +39,9 @@ public class IndexGenerator {
 
     @Autowired
     public FullIndexServiceImpl fullIndexService;
+
+    @Autowired
+    public IndexTypeConstructor indexTypeConstructor;
 
     private String folderPath;//包含待处理的文档的文件夹路径
 
@@ -58,7 +62,7 @@ public class IndexGenerator {
         this.folderPath = folderPath;
         this.analyzerName = analyzerName;
         this.isRemoveStopWord = isRemoveStopWord;
-        this.indexType = IndexTypeConstructor.indexTypeConstructor(analyzerName, isRemoveStopWord);
+        this.indexType = indexTypeConstructor.indexTypeConstructor(analyzerName, isRemoveStopWord);
     }
 
     /**

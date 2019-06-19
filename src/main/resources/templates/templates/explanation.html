@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文档与支持</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{css/styles.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{css/styles.css}">
+    a.one:link {color: #ff0000}
+    a.one:hover {color: #F00  ;font-size: 150%}
+</head>
+
+<body style="background-color:#f5f5f5;">
+    <nav class="navbar navbar-light navbar-expand-md" style="background-color:rgb(47,85,151);position:fixed;width:100%;top:0px;z-index:996;">
+        <div class="container-fluid"><a class="navbar-brand" href="index.html" style="width:340px;background-image:url(img/logo.png);background-size:cover;height:40px;padding:10px 0px;"></a><button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"></button>
+            <div
+                class="collapse navbar-collapse" id="navcol-1" style="/*text-align:right;*/position:absolute;right:20px;">
+                <ul class="nav navbar-nav" style="margin:0 0 0 0px;">
+                    <li class="nav-item" role="presentation" style="margin:0 5px;"><a class="nav-link" href="index.html">首页</a></li>
+                    <li class="nav-item" role="presentation" style="margin:0 5px;"><a class="nav-link" href="IRforCN.html">信息检索实验</a></li>
+                    <li class="nav-item" role="presentation" style="margin:0 5px;"><a class="nav-link" href="NLP.html">NLP实验</a></li>
+                    <li class="nav-item" role="presentation" style="margin:0 5px;"><a class="nav-link active" href="explanation.html">文档与支持</a></li>
+                </ul>
+        </div>
+        </div>
+    </nav>
+    <div style="margin-top:56px;">
+        <div class="container">
+            <div class="row" style="border-bottom:solid;border-color:#4472c4;border-width:1.5px;">
+                <div class="col-md-12">
+                    <div style="float:initial;height:50px;width:250px;margin:20px auto 10px auto;"><img class="align-items-center" src="img/01 (27).png" width="50px" style="float:left;color:rgb(68,114,196);">
+                        <h1 style="float:left;width:200px;margin:0;font-family:Microsoft Yahei;font-size: 40px;">文档与支持</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div style="height:50px;"></div>
+                    <h4 style="font-family:Microsoft Yahei;">文档目录</h4>
+
+                    <dl class="side_help">
+                        <dt>信息检索实验</dt>
+                        <div style="height:10px;border-bottom:solid;border-color:#c7c7c7;"></div>
+                        <dd>
+                            <!--<p><a class="one" href="#bool" >文档预处理</a></p>-->
+                            <!--<p><a href="#bool" >布尔检索模型</a></p>-->
+                            <!--<p><a href="#vector" >向量空间模型</a></p>-->
+                            <!--<p><a href="#probability" >概率检索模型</a></p>-->
+                            <!--<p><a href="#language" >语言模型</a></p>-->
+                            <!--<p><a href="#rank" >Learning to Rank</a></p> -->
+                            <br><a href="#bool" >布尔检索模型</a>
+                            <br><a href="#vector" >向量空间模型</a>
+                            <br><a href="#probability" >概率检索模型</a>
+                            <br><a href="#language" >语言模型</a>
+                            <br><a href="#rank" >Learning to Rank</a>
+                        </dd>
+                        <br>
+                        <dt>NLP实验</dt>
+                        <div style="height:10px;border-bottom:solid;border-color:#c7c7c7;"></div>
+
+
+                        <br><a href="#Lexical" >分词</a>
+                        <br><a href="#POSTagging"> 词性标注</a>
+                        <br><a href="#Named"> 命名实体识别</a>
+                    </dl>
+                        <div style="height:10px;border-bottom:solid;border-color: #c7c7c7;"></div>
+            </div>
+
+                <div class="col-md-4" style="-ms-flex:0 0 66.666666%;flex:0 0 66.666666%;max-width:66.666666%;border-left:solid;border-color:#4472c4;border-width:1.5px;">
+                    <div style="height:50px;"></div>
+                    <h2 style="font-family:Microsoft Yahei;">API说明文档</h2>
+
+                    <div>
+                        <p ><h1><font size="5"><strong><a name = "bool">布尔检索模型</a></strong></font></h1>
+                        <div style="height:10px;border-bottom:solid;border-color:#c7c7c7;"></div>
+                        <br>为用户提供布尔检索服务，用户不必关注整个模型的具体实现，只需给定检索的语料库，通过构造并提交相应的布尔检索表达
+                        式，指定结果的输出参数，即可获取在该范围内的检索结果，即用户需求的文档信息。<br>
+                        <strong>接口名：BooleanRetrieval</strong><br>
+                            <br><strong>输入参数</strong><br>
+                        <table style=" font-size:14px; font-family: Microsoft YaHei;" width="100%" border="1" cellspacing="0" cellpadding="0">
+                            <tbody><tr>
+                                <td width="20%" align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;"><strong>参数名</strong></td>
+                                <td width="20%" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;"><strong>类型</strong></td>
+                                <td width="60%" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;"><strong>说明</strong></td>
+                            </tr>
+                            <tr>
+                                <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">docsPath</td>
+                                <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">String</td>
+                                <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">语料库路径</td>
+                            </tr>
+                            <tr>
+                                <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">expression</td>
+                                <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">String</td>
+                                <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">检索表达式文本内容</td>
+                            </tr>
+                            <tr>
+                                <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">stopWords</td>
+                                <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">HashSet&lt;String&gt;</td>
+                                <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">停用词集合</td>
+                            </tr>
+                            <tr>
+                                <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">docsNum</td>
+                                <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">int</td>
+                                <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">输出文档数量的最大值，默认为
+                                    Integer.MAX_VALUE
+                                </td>
+                            </tr>
+                            </tbody></table>
+                        <br><strong>输出参数</strong><br>
+                        <table style=" font-size:14px; font-family: Microsoft YaHei;" width="100%" border="1" cellspacing="0" cellpadding="0">
+                            <tbody><tr>
+                                <td width="20%" align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;"><strong>参数名</strong></td>
+                                <td width="20%" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;"><strong>类型</strong></td>
+                                <td width="60%" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;"><strong>说明</strong></td>
+                            </tr>
+                            <tr>
+                                <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">relatedDocs</td>
+                                <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">HashMap&lt;Integer,String&gt;</td>
+                                <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">满足检索表达式的所有文档</td>
+                            </tr>
+
+                            </tbody></table>
+                        </p>
+
+                        <p>
+                        <h1><strong><font size="5"><a name = "vector">向量空间模型</a></font></strong></h1>
+                        <div style="height:10px;border-bottom:solid;border-color:#c7c7c7;"></div>
+                        <br>提供基于向量空间模型的检索功能。用户只需简单的调用相关API接口即可获取到所需结果。<br><strong>接口名：VectorSpaceModel</strong><br>
+                        <br><strong>输入参数</strong><br>
+                        <table style=" font-size:14px; font-family: Microsoft YaHei;" width="100%" border="1" cellspacing="0" cellpadding="0">
+                            <tbody><tr>
+                                <td width="20%" align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;"><strong>参数名</strong></td>
+                                <td width="20%" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;"><strong>类型</strong></td>
+                                <td width="60%" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;"><strong>说明</strong></td>
+                            </tr>
+                            <tr>
+                                <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">query</td>
+                                <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">String</td>
+                                <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">查询语句</td>
+                            </tr>
+                            </tbody></table>
+                        <br><strong>输出参数</strong><br>
+                        <table style=" font-size:14px; font-family: Microsoft YaHei;" width="100%" border="1" cellspacing="0" cellpadding="0">
+                            <tbody><tr>
+                                <td width="20%" align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;"><strong>参数名</strong></td>
+                                <td width="20%" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;"><strong>类型</strong></td>
+                                <td width="60%" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;"><strong>说明</strong></td>
+                            </tr>
+                            <tr>
+                                <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">createIndex</td>
+                                <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">String</td>
+                                <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">文档库的倒排索引</td>
+                            </tr>
+                            <tr>
+                                <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">countIdf</td>
+                                <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">String</td>
+                                <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">文档库各个词的IDF</td>
+                            </tr>
+                            <tr>
+                                <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">segmentQuery</td>
+                                <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">String</td>
+                                <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">对查询语句进行中文分词的结果</td>
+                            </tr>
+                            <tr>
+                                <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">removePunctuation</td>
+                                <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">String</td>
+                                <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">对查询语句去标点的结果</td>
+                            </tr>
+                            <tr>
+                                <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">removeStopWords</td>
+                                <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">String</td>
+                                <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">对查询语句去停用词的结果</td>
+                            </tr>
+                            <tr>
+                                <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">countTf</td>
+                                <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">String</td>
+                                <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">查询语句各词的TF</td>
+                            </tr>
+                            <tr>
+                                <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">outPutVector</td>
+                                <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">String</td>
+                                <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">查询向量</td>
+                            </tr>
+                            <tr>
+                                <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">outPutEveryDoc_Tf</td>
+                                <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">String</td>
+                                <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">各个文档中各词的TF</td>
+                            </tr>
+                            <tr>
+                                <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">outPutEveryDoc_Vector</td>
+                                <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">String</td>
+                                <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">文档向量</td>
+                            </tr>
+                            <tr>
+                                <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">countSimilarities</td>
+                                <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">String</td>
+                                <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">查询与各个文档的相似度</td>
+                            </tr>
+                            <tr>
+                                <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">sortSimilarities</td>
+                                <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">String</td>
+                                <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">查询结果</td>
+                            </tr>
+
+                            </tbody></table>
+                        </p>
+
+                        <p><h1><strong><font size="5"><a name = "probablity">概率检索模型</a></font></strong></h1>
+                        <div style="height:10px;border-bottom:solid;border-color:#c7c7c7;"></div>
+                        <br>提供基于概率检索模型的检索功能。用户只需简单的调用相关API接口即可获取到所需结果。<br>
+                        <strong>接口名：ProbabilityModel</strong><br>
+                        <br><strong>输入参数</strong><br>
+                        <table style=" font-size:14px; font-family: Microsoft YaHei;" width="100%" border="1" cellspacing="0" cellpadding="0">
+                            <tbody><tr>
+                                <td width="20%" align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;"><strong>参数名</strong></td>
+                                <td width="20%" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;"><strong>类型</strong></td>
+                                <td width="60%" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;"><strong>说明</strong></td>
+                            </tr>
+                            <tr>
+                                <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">query</td>
+                                <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">String</td>
+                                <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">查询语句</td>
+                            </tr>
+                            </tbody></table>
+                        <br><strong>输出参数</strong><br>
+                        <table style=" font-size:14px; font-family: Microsoft YaHei;" width="100%" border="1" cellspacing="0" cellpadding="0">
+                            <tbody><tr>
+                                <td width="20%" align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;"><strong>参数名</strong></td>
+                                <td width="20%" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;"><strong>类型</strong></td>
+                                <td width="60%" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;"><strong>说明</strong></td>
+                            </tr>
+                            <tr>
+                                <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">PPQ</td>
+                                <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">List</td>
+                                <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">索引项</td>
+                            </tr>
+                            <tr>
+                                <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">bij</td>
+                                <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">JsonArray</td>
+                                <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">系数Bij</td>
+                            </tr>
+                            <tr>
+                                <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">similarity</td>
+                                <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">JsonArray</td>
+                                <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">相似度</td>
+                            </tr>
+                            <tr>
+                                <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">sortSimilarity</td>
+                                <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">JsonArray</td>
+                                <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">排序后的相似度</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        </p>
+
+                        <p>
+                        <h1><strong><font size="5"><a name = "language">语言模型</a></font></strong></h1>
+                        <div style="height:10px;border-bottom:solid;border-color:#c7c7c7;"></div>
+                        <br>提供信息检索模型之语言模型各步骤的可视化功能。用户只需简单的调用相关API接口即可获取到所需结果（即语言模型各个步骤处理后的结果）。<br><strong>接口名：LanguageModel</strong><br>
+                            <br><strong>输入参数</strong><br>
+                        <table style=" font-size:14px; font-family: Microsoft YaHei;" width="100%" border="1" cellspacing="0" cellpadding="0">
+                            <tbody><tr>
+                                <td width="20%" align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;"><strong>参数名</strong></td>
+                                <td width="20%" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;"><strong>类型</strong></td>
+                                <td width="60%" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;"><strong>说明</strong></td>
+                            </tr>
+                            <tr>
+                                <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">query</td>
+                                <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">String</td>
+                                <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">查询语句</td>
+                            </tr>
+                            <tr>
+                                <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">λ</td>
+                                <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">double</td>
+                                <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">平滑参数</td>
+                            </tr>
+                            <tr>
+                                <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">modelType</td>
+                                <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">String</td>
+                                <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">语言模型类型</td>
+                            </tr>
+                            </tbody></table>
+                        <br><strong>输出参数</strong><br>
+                        <table style=" font-size:14px; font-family: Microsoft YaHei;" width="100%" border="1" cellspacing="0" cellpadding="0">
+                            <tbody><tr>
+                                <td width="20%" align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;"><strong>参数名</strong></td>
+                                <td width="20%" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;"><strong>类型</strong></td>
+                                <td width="60%" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;"><strong>说明</strong></td>
+                            </tr>
+                            <tr>
+                                <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">relatedDocs</td>
+                                <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">HashMap&lt;Integer,String&gt;</td>
+                                <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">满足检索表达式的所有文档</td>
+                            </tr>
+                            </tbody></table>
+                        </p>
+                        <p><h1><strong><font size="5"><a name = "rank">Learning to Rank API</a></font></strong></h1>
+                        <div style="height:10px;border-bottom:solid;border-color:#c7c7c7;"></div>
+                        <br>提供信息检索模型之Learning to Rank模型各步骤的可视化功能。用户只需简单的调用相关API接口即可获取到所需结果（即Learning to Rank模型各个步骤处理后的结果）。<br><strong>接口名：LearningtoRank</strong><br><strong>待开发</strong><br></p>
+                        <p><h1><strong><font size="5"><a name = "Lexical">分词API</a></font></strong></h1>
+                        <div style="height:10px;border-bottom:solid;border-color:#c7c7c7;"></div>
+                        <br><strong>接口名：LexicalAnalysis</strong><br>
+                        <div> <br><strong>1. 接口定义</strong><br>
+                            <table style=" font-size:14px; font-family: Microsoft YaHei;" width="100%" border="1" cellspacing="0" cellpadding="0">
+                                <tbody><tr>
+                                    <td width="20%" align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;"><strong>功能名</strong></td>
+                                    <td width="20%" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;"><strong>接口原型</strong></td>
+                                    <td width="60%" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;"><strong>功能描述</strong></td>
+                                </tr>
+                                <tr>
+                                    <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">中文分词</td>
+                                    <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">DivideWord divide (String sentence, int max)</td>
+                                    <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">分词接口，将等待分词的语句作为string形式输入，同时获取词典中词组的最大长度。该接口主要针对分词，将一个汉字序列切分成一个一个单独的词。</td>
+                                </tr>
+                                </tbody></table>
+                        </div>
+                        <div> <br><strong>2. 接口描述</strong><br>
+                            将一段中文语句（不大于200字）切分成一个一个单独的词，中间用“/”隔开字词输出字符串格式的结果。
+                        </div>
+                        <div> <br><strong>3. 参数说明</strong><br>
+                            <strong>3.1．输入参数（divide对象中属性）</strong><br>
+                            <table style=" font-size:14px; font-family: Microsoft YaHei;" width="100%" border="1" cellspacing="0" cellpadding="0">
+                                <tbody><tr>
+                                    <td width="15%" align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;"><strong>参数名</strong></td>
+                                    <td width="15%" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;"><strong>是否必选</strong></td>
+                                    <td width="15%" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;"><strong>类型</strong></td>
+                                    <td width="55%" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;"><strong>说明</strong></td>
+                                </tr>
+                                <tr>
+                                    <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">sentence</td>
+                                    <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">是</td>
+                                    <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">string</td>
+                                    <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">分词段落作为字符串输入</td>
+                                </tr>
+                                <tr>
+                                    <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">max</td>
+                                    <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">是</td>
+                                    <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">int</td>
+                                    <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">字典词组的最大长度</td>
+                                </tr>
+                                </tbody></table>
+                            <br><strong>3.2. 返回值类型</strong><br>
+                            <table style=" font-size:14px; font-family: Microsoft YaHei;" width="100%" border="1" cellspacing="0" cellpadding="0">
+                                <tbody><tr>
+                                    <td width="20%" align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;"><strong>类型</strong></td>
+                                    <td width="60%" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;"><strong>说明</strong></td>
+                                </tr>
+                                <tr>
+                                    <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">string</td>
+                                    <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">分词后用斜杠“/”分割一个个词，再使用字符串类型输入。</td>
+                                </tr>
+                                </tbody></table>
+                        </div>
+                        <div> <br><strong>参考示例</strong><br>
+                            在“需要分词的段落”中输入要分词的中文段落（200字以内），点击“分词”按钮就可以在“分词结果的呈现”文本框内查看到分词结果。
+                            <br><table><tr>
+                                <td><img src="img/分词参考示例1.png " border=0 width="500px" style="margin:0;"></td>
+                                <td><img src="img/分词参考示例2.png" border=0 width="500px" style="margin:0;"></td>
+                            </tr></table>
+                        </div>
+                        <div> <br><strong>4. 限制与约束</strong><br>
+                            <strong>4.1 输入文本长度</strong><br>
+                            分词文本限制在200字以内，超过字数无法输入，文本要UTF-8格式，格式错误的不报错，分析结果会不正确。
+                        </div>
+                        </p>
+
+                        <p><h1><strong><font size="5"><a name = "POSTagging">词性标注API</a></font></strong></h1>
+                        <div style="height:10px;border-bottom:solid;border-color:#c7c7c7;"></div>
+                        <br>基于thulac工具包，提供中文词性标注的功能。<br><strong>接口名：POSTagging</strong>
+                            <br><strong>输入参数</strong><br>
+                        <table style=" font-size:14px; font-family: Microsoft YaHei;" width="100%" border="1" cellspacing="0" cellpadding="0">
+                            <tbody><tr>
+                                <td width="20%" align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;"><strong>参数名</strong></td>
+                                <td width="20%" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;"><strong>类型</strong></td>
+                                <td width="60%" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;"><strong>说明</strong></td>
+                            </tr>
+                            <tr>
+                                <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">text</td>
+                                <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">String</td>
+                                <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">待标注词性的文本</td>
+                            </tr>
+                            </tbody></table>
+                        <br><strong>输出参数</strong><br>
+                        <table style=" font-size:14px; font-family: Microsoft YaHei;" width="100%" border="1" cellspacing="0" cellpadding="0">
+                            <tbody><tr>
+                                <td width="20%" align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;"><strong>参数名</strong></td>
+                                <td width="20%" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;"><strong>类型</strong></td>
+                                <td width="60%" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;"><strong>说明</strong></td>
+                            </tr>
+                            <tr>
+                                <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">result</td>
+                                <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">String</td>
+                                <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">经过词性标注的文本</td>
+                            </tr>
+                            </tbody></table>
+                        <br><strong>词性标记集：</strong><br>
+                        <br>n/名词 np/人名 ns/地名 ni/机构名 nz/其它专名
+                        m/数词 q/量词 mq/数量词 t/时间词 f/方位词 s/处所词
+                        v/动词 a/形容词 d/副词 h/前接成分 k/后接成分 i/习语
+                        j/简称 r/代词 c/连词 p/介词 u/助词 y/语气助词
+                        e/叹词 o/拟声词 g/语素 w/标点 x/其它
+                        </br>
+                        <div><strong>调用示例：（python代码）</strong>></div>
+                        <div class="detail_code" style="background-color: #92a5c6">
+                            <p><pre>
+                            <code>
+    import requests
+    import json
+
+    def postTest():
+        url = "http://127.0.0.1:5000/POSTagging/"
+        data = {"content": "“我最想感谢的人是我的导师付磊教授。在他的指导下，我发表8篇SCI论文，
+                             总影响因子超过110，这是我给自己最好的毕业礼物。”“希望以后有很多钱，
+                             给母校盖几栋楼。”“室友在外地实习，我们带着他的照片来参加典礼，没想
+                             到这家伙一早赶回来了。”现场采访环节，毕业生们说着笑着哭着，话语里满
+                             含眷恋与感恩。"}
+        headers = {"Content-Type" : "application/json"}
+        r = requests.post(url=url, data=json.dumps(data), headers=headers)
+        print(r.text)
+    if __name__ == "__main__":
+        postTest()
+                             </code>
+                             </pre>
+                            </p>
+                        </div>
+                        </p>
+                        <p><strong><h1><font size="5"><a name = "Named">命名实体识别API</a></font></h1></strong>
+                        <div style="height:10px;border-bottom:solid;border-color:#c7c7c7;"></div>
+                        <br>提供命名实体识别功能。用户只需简单的调用相关API接口即可获取到所需结果。<br><strong>接口名：NamedEntityRecognition</strong>
+                            <br><strong>输入参数</strong><br>
+                        <table style=" font-size:14px; font-family: Microsoft YaHei;" width="100%" border="1" cellspacing="0" cellpadding="0">
+                            <tbody><tr>
+                                <td width="20%" align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;"><strong>参数名</strong></td>
+                                <td width="20%" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;"><strong>类型</strong></td>
+                                <td width="60%" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;"><strong>说明</strong></td>
+                            </tr>
+                            <tr>
+                                <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">text</td>
+                                <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">String</td>
+                                <td align="left" style=" padding: 6px 5px;border:1px solid #CCC; border-bottom:1px solid #CCC;">待分析的文本</td>
+                            </tr>
+                            </tbody></table>
+
+                        <br><strong>
+                        输出参数</strong><br>
+                        <table width="100%" class="self-table" border="1" cellspacing="0" cellpadding="0">
+                            <tbody><tr>
+                                <td width="20%"><strong>参数名</strong></td>
+                                <td width="20%"><strong>类型</strong></td>
+                                <td width="60%" colspan="4"><strong>说明</strong></td>
+                            </tr>
+                            <tr>
+                                <td rowspan="6">classes</td>
+                                <td rowspan="6">list</td>
+                                <td>
+                                    <table width="100%" border="1" cellspacing="0" cellpadding="0">
+                                        <tbody><tr>
+                                            <td colspan="4">命名实体识别结果，其中list元素包含以下字段</td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                        <tr>
+                                            <td >word</td>
+                                            <td >string</td>
+                                            <td colspan="2">实体词</td>
+                                        </tr>
+                                        <tr>
+                                            <td >wlist</td>
+                                            <td >list</td>
+                                            <td colspan="2">每一类实体词的列表</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td rowspan="4">cls</td>
+                                            <td rowspan="4">string</td>
+
+                                        <tr>
+                                            <td>人名</td>
+                                            <td>PER</td>
+                                        </tr>
+                                        <tr>
+                                            <td>地名</td>
+                                            <td>LOC</td>
+                                        </tr>
+                                        <tr>
+                                            <td>机构名</td>
+                                            <td>ORG</td>
+                                        </tr>
+
+                                        </tr></tbody>
+                                    </table>
+
+                                </td>
+                            </tr>
+                            </tr>
+                            </tbody></table>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer style="color:rgb(47,85,151);width:100%;height:35px;line-height:35px;background-color:#2f5597;background-position:bottom;bottom:0;">
+        <p class="text-center" style="font-family:微软雅黑;color:rgb(255,255,255);margin:0;">©copyright 2018 武汉大学信息检索与知识挖掘研究所 </p>
+    </footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
+    <script th:src="@{js/script.min.js}"></script>
+</body>
+
+</html>

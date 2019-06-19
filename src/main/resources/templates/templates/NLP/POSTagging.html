@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>词性标注</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{../css/styles.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{../css/styles.css}">
+</head>
+
+<body>
+<nav class="navbar navbar-light navbar-expand-md" style="background-color:rgb(47,85,151);position:relative;">
+    <div class="container-fluid"><a class="navbar-brand" href="../index.html" style="width:340px;background-image:url(../img/logo.png);background-size:cover;height:40px;padding:10px 0px;"></a><button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"></button>
+        <div class="collapse navbar-collapse" id="navcol-1" style="/*text-align:right;*/position:absolute;right:20px;">
+            <ul class="nav navbar-nav" style="margin:0 0 0 0px;">
+                <li class="nav-item" role="presentation" style="margin:0 5px;"><a class="nav-link" href="../index.html">首页</a></li>
+                <li class="nav-item" role="presentation" style="margin:0 5px;"><a class="nav-link" href="../IRforCN.html">信息检索实验</a></li>
+                <li class="nav-item" role="presentation" style="margin:0 5px;"><a class="nav-link active" href="../NLP.html">NLP实验</a></li>
+                <li class="nav-item" role="presentation" style="margin:0 5px;"><a class="nav-link" href="../explanation.html">文档与支持</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<nav class="navbar navbar-light navbar-expand-md">
+    <div class="container-fluid" style="height: 40px">
+        <div
+                class="collapse navbar-collapse" id="navcol-2" style="position:absolute;right:20px;">
+            <ul class="nav navbar-nav" style="margin:0 0 0 0px;">
+                <li class="nav-item align-self-center" role="presentation" style="margin:0 5px;"><a href="LexicalAnalysis.html" class="nav-link" style="color:rgb(0,0,0);">分词</a></li>
+                <li role="presentation" class="nav-item align-self-center" style="margin:0 5px;"><a href="POSTagging.html" class="nav-link active" style="color:rgb(0,0,0);font-style:normal;font-family:Microsoft Yahei;font-weight:normal;margin:0;height:30px;line-height:5px;border:solid;border-radius:10px;border-color:rgb(0,0,0);border-width:3px;">词性标注</a></li>
+                <li class="nav-item" role="presentation" style="margin:0 5px;"><a href="NamedEntityRecognition.html" class="nav-link" style="color:rgb(0,0,0);">命名实体识别</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div style="font-family:微软雅黑;">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div>
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item"><a role="tab" data-toggle="tab" href="#tab-1" class="nav-link active">简介</a></li>
+                        <li class="nav-item"><a role="tab" data-toggle="tab" href="#tab-2" class="nav-link">词性标注集</a></li>
+                        <li class="nav-item"><a role="tab" data-toggle="tab" href="#tab-3" class="nav-link">常用技术</a></li>
+                    </ul>
+                    <div class="tab-content" style="height:500px;">
+                        <div role="tabpanel" class="tab-pane active" id="tab-1">
+                            <p>词性标注模块采用清华大学自然语言处理与社会人文计算实验室的中文词法分析工具包（thulac）的分词和词性标注联合模型。该模型有如下特点：</br>
+                                1、能力强。利用目前世界上规模最大的人工分词和词性标注中文语料库（约含5800万字）训练而成，模型标注能力强大。</br>
+                                2、准确率高。该工具包在标准数据集Chinese Treebank（CTB5）上词性标注的F1值可达到92.9％，与该数据集上最好方法效果相当。</br>
+                                3、速度较快。同时进行分词和词性标注速度为300KB/s，每秒可处理约15万字。</br>
+                            </p>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="tab-2">
+                            <p>n/名词 np/人名 ns/地名 ni/机构名 nz/其它专名
+                                m/数词 q/量词 mq/数量词 t/时间词 f/方位词 s/处所词
+                                v/动词 a/形容词 d/副词 h/前接成分 k/后接成分 i/习语
+                                j/简称 r/代词 c/连词 p/介词 u/助词 y/语气助词
+                                e/叹词 o/拟声词 g/语素 w/标点 x/其它
+                            </p>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="tab-3">
+                            <p>1、词性标注实现方法主要有基于规则与基于统计的方法。目前，主流的方法是采用基于统计的方法，将句子的词性标注作
+                                为一个序列标注问题来解决，有最大熵模型、隐含马尔可夫模型、条件随机场模型等模型。</br>
+                                2、thulac该工具包使用了基于词图（word lattice）的重排序算法（re-ranking method）。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div>
+                    <div style="margin:10px 0;height:40px;">
+                        <h4 style="float:left;margin:8px 0;font-size:20px;font-weight:bold;">请输入待标注内容：</h4>
+                        <button id="postag" class="btn btn-primary cixing" type="button" style="float:right;margin:0;">标注</button>
+                    </div>
+                    <textarea id="inputSentence" class="text" style="width:100%;height:100px;margin:0;"></textarea>
+                </div>
+                <h3 class="text-center" style="margin:20px 0 0px 0;font-weight:bold;font-size:20px;">词性标注结果</h3>
+                <div class="text" style="height:320px;">
+                    <div id="postTagResult" style="height:50%;border-bottom:solid;border-color:#000000;overflow-y: scroll;"></div>
+                    <div id="postTag" style="height:50%;overflow-y:scroll;">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <footer style="color:rgb(47,85,151);width:100%;height:35px;line-height:35px;background-color:#2f5597;background-position:bottom;margin:0px;padding:0;position:fixed;bottom:0;">
+        <p class="text-center" style="font-family:微软雅黑;color:rgb(255,255,255);">©copyright 2018 武汉大学信息检索与知识挖掘研究所 </p>
+    </footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
+</body>
+<script type="text/javascript">
+
+    function select_wtype(el){
+        var wtype = $(el).attr("option-data");
+        $('#postTag .current').removeClass("current").addClass("cixing");
+
+        $('.stress').removeClass("stress").addClass("result");
+        $(el).removeClass("result").addClass("stress");
+
+        $('[cixing="'+ wtype +'"]').addClass("current");
+    }
+
+    function select_type(el){
+        var type = $(el).attr("cixing");
+        $('#postTag .current').removeClass('current').addClass("cixing");
+        $(el).removeClass('cixing').addClass('current');
+        // $(el).addClass('current');
+        $('.stress').removeClass('stress').addClass('result');
+        $('[option-data="' + type + '"]').removeClass('result').addClass('stress');
+    }
+
+
+    $(document).ready(function(){
+        $("#postag").click(function(){
+            $.ajax({
+                type: "POST",
+                url: "http://127.0.0.1:5000/POSTagging/",
+                data: JSON.stringify({
+                    content: $("#inputSentence").val(),
+                }),
+                contentType: 'application/json',
+                dataType: "json",
+                success: function(data){
+                    //console.log(data);
+                    $("#postTag").text("");
+                    $("#postTagResult").text("");
+                    var result=data.msg;
+                    var map=new Map();
+                    $.each(result,function (index,obj) {
+                        //console.log(obj);
+                        $.each(obj,function (key,value) {
+                            console.log(key+":"+value);
+                            $("#postTagResult").append(
+                                "<span class=\"result\" onclick=\"select_wtype(this)\" option-data="+value+">"+key+"</span>"
+                            );
+                            map.set(value," ");
+                        })
+                    });
+
+                    map.forEach(function (value, key, map) {
+                        var tag="";
+                        switch (key) {
+                            case "n":tag="名词";
+                                break;
+                            case "np":tag="人名";
+                                break;
+                            case "ns":tag="地名";
+                                break;
+                            case "ni":tag="机构名";
+                                break;
+                            case "nz":tag="其他专名";
+                                break;
+                            case "m":tag="数词";
+                                break;
+                            case "q":tag="量词";
+                                break;
+                            case "mq":tag="数量词";
+                                break;
+                            case "t":tag="时间词";
+                                break;
+                            case "f":tag="方位词";
+                                break;
+                            case "s":tag="处所词";
+                                break;
+                            case "v":tag="动词";
+                                break;
+                            case "a":tag="形容词";
+                                break;
+                            case "d":tag="副词";
+                                break;
+                            case "h":tag="前接成分";
+                                break;
+                            case "k":tag="后接成分";
+                                break;
+                            case "i":tag="习语";
+                                break;
+                            case "id":tag="成语";
+                            break;
+                            case "j":tag="简称";
+                                break;
+                            case "r":tag="代词";
+                                break;
+                            case "c":tag="连词";
+                                break;
+                            case "p":tag="介词";
+                                break;
+                            case "u":tag="助词";
+                                break;
+                            case "y":tag="语气助词";
+                                break;
+                            case "e":tag="叹词";
+                                break;
+                            case "o":tag="拟声词";
+                                break;
+                            case "g":tag="语速";
+                                break;
+                            case "w":tag="标点";
+                                break;
+                            case "x":tag="其它";
+                                break;
+                        }
+                        $("#postTag").append(
+                            "<button class=\"btn btn-primary cixing\" type=\"button\" onclick=\"select_type(this)\" cixing=\""+key+"\">"+tag+key+"</button>\n"
+                        )
+                    });
+
+                    console.log(map);
+                    if (data.success) {
+                        $("#analysisResult").val(data.msg);
+                    } else {
+                        $("#analysisResult").val("出现错误：" + data.msg);
+                    }
+                },
+                error: function(jqXHR){
+                    alert("发生错误：" + jqXHR.status);
+                },
+            });
+        });
+    });
+</script>
+</html>

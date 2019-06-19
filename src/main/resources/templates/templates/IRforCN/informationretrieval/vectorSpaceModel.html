@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" th:href="@{../../css/styles.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{../../css/styles.css}">
+    <script src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+
+<body>
+<nav class="navbar navbar-light navbar-expand-md" style="background-color:rgb(47,85,151);position:relative;">
+    <div class="container-fluid"><a class="navbar-brand" href="../../index.html" style="width:340px;
+    background-image:url(../../img/logo.png);background-size:cover;height:40px;padding:10px 0px;">
+    </a><button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"></button>
+        <div class="collapse navbar-collapse" id="navcol-1" style="/*text-align:right;*/position:absolute;right:20px;">
+            <ul class="nav navbar-nav" style="margin:0 0 0 0px;">
+                <li class="nav-item" role="presentation" style="margin:0 5px;"><a class="nav-link" href="../../index.html">首页</a></li>
+                <li class="nav-item" role="presentation" style="margin:0 5px;"><a class="nav-link active" href="../../IRforCN.html">信息检索实验</a></li>
+                <li class="nav-item" role="presentation" style="margin:0 5px;"><a class="nav-link" href="../../NLP.html">NLP实验</a></li>
+                <li class="nav-item" role="presentation" style="margin:0 5px;"><a class="nav-link" href="../../explanation.html">文档与支持</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<nav class="navbar navbar-light navbar-expand-md">
+    <div class="container-fluid"><a href="../../IRforEN/informationretrieval/vectorSpaceModel.html" class="navbar-brand brand">中文</a><button data-toggle="collapse" data-target="#navcol-2" class="navbar-toggler"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+        <div
+                class="collapse navbar-collapse" id="navcol-2" style="position:absolute;right:20px;">
+            <ul class="nav navbar-nav" style="margin:0 0 0 0px;">
+                <li role="presentation" class="nav-item align-self-center" style="margin:0 5px;"><a href="../preprocessing.html" class="nav-link" style="color:rgb(0,0,0);">文档预处理</a></li>
+                <li role="presentation" class="nav-item" style="margin:0 5px;"><a href="../invertedindex.html" class="nav-link active" style="color:rgb(0,0,0);">倒排索引表</a></li>
+                <li class="dropdown align-self-center" style="margin:0 5px;"><a data-toggle="dropdown" aria-expanded="false" href="#" class="dropdown-toggle nav-link dropdown-toggle" style="color:rgb(0,0,0);font-style:normal;font-family:Microsoft Yahei;font-weight:normal;margin:0;height:30px;line-height:5px;border:solid;border-radius:10px;border-color:rgb(0,0,0);border-width:3px;">文档检索</a>
+                    <div role="menu" class="dropdown-menu" style="background-color:rgba(199,199,199,0.5);"><a role="presentation" href="boolean.html" class="dropdown-item">布尔模型</a><a role="presentation" href="vectorSpaceModel.html" class="dropdown-item">向量空间模型</a><a role="presentation" href="probabilityModel.html" class="dropdown-item">概率检索模型</a><a role="presentation" href="languageModel.html" class="dropdown-item">语言模型</a></div>
+                </li>
+                <li role="presentation" class="nav-item" style="margin:0 5px;"><a href="../performance.html" class="nav-link" style="color:rgb(0,0,0);">检索模型性能</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6" style="padding:0 55px 0 30px;">
+                <div class="row">
+                    <div class="col">
+                        <div  class="row">
+                            <div class="col">
+                                <div class="input-group" style="height: 38px;font-family:Microsoft Yahei;">
+                                    <div class="input-group-prepend"><span class="input-group-text" style="font-size:16px;">请输入查询语句</span></div><input id="inputForVSM" type="text" class="form-control" />
+                                    <div class="input-group-append">
+                                        <button id="searchForVSM" class="btn btn-primary" type="button" style="background-color:#4472c4;font-size:16px;">检索</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="first" class="row" style="margin:40px 0 0 0;display:block">
+                    <div class="col">
+                        <div class="row">
+                            <ul class="nav nav-tabs col" style="-ms-flex:0 0 500px;flex:0 0 500px;max-width:40px;padding:0;display:inline-block;">
+                                <li class="nav-item nav-tabs-vertical"><a role="tab" data-toggle="tab" href="#tab-4" class="nav-link active" style="border-top-left-radius:.25rem;border-top-right-radius:0;border-bottom-left-radius:.25rem;padding:16px 8px;">简<br />介</a></li>
+                                <li class="nav-item nav-tabs-vertical"
+                                    style="margin:0 -1px 0 0;"><a role="tab" data-toggle="tab" href="#tab-5" class="nav-link" style="border-top-left-radius:.25rem;border-top-right-radius:0;border-bottom-left-radius:.25rem;padding:16px 8px;">流<br />程</a></li>
+                                <li class="nav-item nav-tabs-vertical"
+                                    style="margin:0 -1px 0 0;"><a role="tab" data-toggle="tab" href="#tab-6" class="nav-link" style="border-top-left-radius:.25rem;border-top-right-radius:0;border-bottom-left-radius:.25rem;padding:16px 8px;">优<br />劣</a></li>
+                            </ul>
+                            <div class="tab-content col" style="height:470px;">
+                                <div role="tabpanel" class="tab-pane active" id="tab-4">
+                                    <p>
+                                        <strong>向量空间模型（vector space model 简称：VSM）：</strong>一系列文档在同一向量空间中的表示被称为向量空间模型。其把对文本内容的处理简化为向量空间中的向量运算，并且它以空间上的相似度表达语义的相似度。<br>
+                                        <br>
+                                        <strong>文档频率（document frequency）<math><msub><mi>df</mi><mn>t</mn></msub></math>：</strong>
+                                        出现词项的t文档数目，也就是每个倒排记录表的长度。<br>
+                                        <br>
+                                        <strong>词项频率（term frequency）<math><msub><mi>tf</mi><mn>t,d</mn></msub></math>：</strong>
+                                        词项t在文档d中出现的次数。<br>
+                                        <br>
+                                        <strong>逆文档频率（inverse document frequency）<math><msub><mi>idf</mi><mn>t</mn></msub></math>：</strong>
+                                        因为<math><msub><mi>df</mi><mn>t</mn></msub></math>本身较大，需要将其映射到一个较小的范
+                                        围。设文档集中所有文档数为N，词项idf为：<br>
+                                        <math style="display: block">
+                                            <msub>
+                                                <mi>idf</mi>
+                                                <mn>t</mn>
+                                            </msub>
+                                            <mo>=</mo>
+                                            <msub>
+                                                <mi>log</mi>
+                                                <mn>2</mn>
+                                            </msub>
+                                            <mfrac>
+                                                <mrow>
+                                                    <mn>N</mn>
+                                                </mrow>
+                                                <mrow>
+                                                    <msub><mi>df</mi><mn>t</mn></msub>
+                                                </mrow>
+                                            </mfrac>
+                                        </math>
+                                    </p>
+                                </div>
+                                <div role="tabpanel" class="tab-pane" id="tab-5">
+                                    <p>
+                                        1.计算<math><msub><mi>idf</mi><mn>t</mn></msub></math>：利用倒排索引表中的文档频率参数求出各个词项逆文档频率<br>
+                                        逆文档频率因子（<math><msub><mi>idf</mi><mn>t</mn></msub></math>）–全局（文档集合）<br>
+                                        计算公式：
+                                        <math>
+                                            <msub>
+                                                <mi>idf</mi>
+                                                <mn>t</mn>
+                                            </msub>
+                                            <mo>=</mo>
+                                            <msub>
+                                                <mi>log</mi>
+                                                <mn>2</mn>
+                                            </msub>
+                                            <mfrac>
+                                                <mrow>
+                                                    <mn>N</mn>
+                                                </mrow>
+                                                <mrow>
+                                                    <msub><mi>df</mi><mn>t</mn></msub>
+                                                </mrow>
+                                            </mfrac>
+                                        </math><!--idf计算公式-->
+                                        <br>
+                                        N代表文档集合中的文档总数<br>
+                                        2.计算词频因子:
+                                        将查询语句也看作一个文档，分别计算查询语句与文档集中各词的词频因子。<br>
+                                        词频因子（<math><msub><mi>tf</mi><mn>t,d</mn></msub></math>)–局部（一个文档）：最简单的就是直接利用词频数<math><msub><mi>tf</mi><mn>t,d</mn></msub></math>作为词频因子值。<br>
+                                        平滑公式：
+                                        <math>
+                                            <msubsup>
+                                                <mo>tf</mo>
+                                                <mn>t,d</mn>
+                                                <mn>&nbsp;'</mn>
+                                            </msubsup>
+                                            <mo>=</mo>
+                                            <mn>1</mn>
+                                            <mo>+</mo>
+                                            <mo>log(</mo><msub><mi>tf</mi><mn>t,d</mn></msub><mn>)</mn>
+                                        </math>
+                                        <br>
+                                        3.计算向量：按照词典中的顺序建立各个文档的词项向量，向量中每一个词的权值一般采用TF-IDF框架计算。（查询语句也看作一个文档进行计算）<br>
+                                        词频因子（TF)–局部（一个文档）：最简单的就是直接利用词频数作为TF值。<br>
+                                        平滑公式：
+                                        <math>
+                                            <msub><mi>W</mi><mn>tf</mn></msub>
+                                            <mo>=</mo>
+                                            <mn>1</mn>
+                                            <mo>+</mo>
+                                            <mo>log(</mo><msub><mi>tf</mi><mn>t,d</mn></msub><mo>)</mo>
+                                        </math><br>
+                                        4.相似度计算：查询与某文档的相似度为查询向量和文档向量余弦值。（或查询向量的但闻向量与文档向量的单位向量的点积）<br>
+                                        5.按照文档和查询的相似性得分从高到低排序作为搜索结果。<br>
+
+
+                                    </p>
+                                </div>
+                                <div role="tabpanel" class="tab-pane" id="tab-6">
+                                    <p>
+                                        <strong>优点</strong><br>
+                                        基于线性代数的简单模型；词组的权重不是二元的；允许计算文档和索引之间的连续。
+                                        <br>
+                                        <br>
+                                        <strong>缺点</strong><br>
+                                        不适用于较长的文件；检索词组必须与文件中出现的词组精确匹配；语义敏感度不佳；易导致“假阴性匹配”；忽略词组间的相关性。
+                                        <br>
+                                        <br>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="second" class="row" style="display: none">
+                    <div class="col">
+                        <div class="row" style="margin:0;">
+                            <div class="col" style="padding:0;">
+                                <h3 class="text-center" style="height:40px;line-height:40px;font-size:20px;padding:0;
+                                margin:0;color:rgb(0,0,0);font-family:微软雅黑;font-weight:bold;">检索结果</h3>
+                                <div id="searchResults" class="suojin text" style="height:420px;margin:0;"></div>
+                                <button id="introduce" class="btn btn-primary" type="button" style="background-color:#4472c4;
+                                font-size:16px;float:right;margin:10px 0;">介绍</button>
+                                <button id="return" class="btn btn-primary" type="button" style="background-color:#4472c4;
+                                font-size:16px;float:right;margin:10px 0;">返回</button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6" style="padding:0 10px 0 55px;">
+                <div class="row">
+                    <div class="col">
+                        <h3 style="/*float:right;*/font-size:20px;padding:0;margin:0;color:rgb(0,0,0);font-family:微软雅黑;font-weight:bold;height:25px;">查看检索流程</h3>
+                        <div style="margin-top:30px;">
+                            <div style="margin:5px 0;"><button id="queryVector" class="btn btn-primary bigButton" type="button">求查询向量</button>
+                                <img src="../../img/箭头左.png" height="20px" />
+                                <button id="tfForQuery" class="btn btn-primary bigButton" type="button">求查询的TF</button>
+                                <img src="../../img/箭头左.png" height="20px" />
+                                <button id="preprocessQuery" class="btn btn-primary bigButton" type="button">查询预处理</button>
+                                <img src="../../img/箭头左.png" height="20px" />
+                                <button id="idf" class="btn btn-primary bigButton" type="button">求文档IDF</button>
+                            </div>
+                            <div>
+                                <img src="../../img/图片1.png" width="20px" style="margin:0 50px;" />
+                            </div>
+                            <div style="margin:5px 0;">
+                                <button id="tfForDocs" class="btn btn-primary bigButton" type="button">求各文档TF</button>
+                                <img src="../../img/箭头右.png" height="20px" />
+                                <button id="vectorsForDocs" class="btn btn-primary bigButton" type="button">求文档向量</button>
+                                <img src="../../img/箭头右.png" height="20px" />
+                                <button id="similarity" class="btn btn-primary bigButton"
+                                        type="button">求相似度</button><img src="../../img/箭头右.png" height="20px" />
+                                <button id="sortSimilarity" class="btn btn-primary bigButton" type="button">按相似度降序排序</button></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="row" style="margin:0;">
+                            <div class="col" style="-ms-flex:0 0 90%;flex:0 0 90%;max-width:90%;padding:0;">
+                                <div style="float:none;margin:auto;">
+                                    <h3 class="text-center" style="/*float:right;*/height:40px;line-height:40px;
+                                    font-size:20px;padding:0;margin:10px;color:rgb(0,0,0);font-family:微软雅黑;font-weight:bold;">中间结果</h3>
+                                </div>
+                                <div id="results" class="suojin text" style="height:310px;margin:0;"></div>
+                            </div>
+                            <div class="col" style="-ms-flex:0 0 10%;flex:0 0 10%;max-width:10%;padding:0;"><button class="btn btn-primary" type="button" style="display:block;margin:60px 15px 0 ;background-color:#4472c4;"><i class="fa fa-undo"></i></button><button class="btn btn-primary" type="button" style="display:block;margin:10px 15px;background-color:#4472c4;"><i class="fa fa-repeat"></i></button></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer style="color:rgb(47,85,151);width:100%;height:35px;line-height:35px;background-color:#2f5597;background-position:bottom;margin:0px;padding:0;position:fixed;bottom:0;">
+    <p class="text-center" style="font-family:微软雅黑;color:rgb(255,255,255);">©copyright 2018 武汉大学信息检索与知识挖掘研究所 </p>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
+    <script th:src="@{../../js/script.min.js}"></script>
+</body>
+    <script type="text/javascript">
+        var json=null;
+        var $searchResults=null;
+
+        $(function() {
+            // $("#searchResults").bind('DOMNodeInserted',function () {
+            //     if(stateForSearchResults==0){
+            //         $up0ForSearchResults=$("#searchResults").find("*");
+            //         stateForSearchResults=1;
+            //     }else {
+            //         $up1ForSearchResults=$("#searchResults").find("*");
+            //         stateForSearchResults=0;
+            //     }
+            // })//监听检索结果div变化
+
+            $("#return").click(function () {
+                $("#searchResults").text("");
+                $("#searchResults").append($searchResults);
+
+                // if(stateForSearchResults==0){
+                //     $("#searchResults").text("");
+                //     $("#searchResults").append($up0ForSearchResults);
+                // }else {
+                //     $("#searchResults").text("");
+                //     $("#searchResults").append($up1ForSearchResults);
+                // }
+            });//返回上一步
+
+            $("#introduce").click(function () {
+                $("#first").show();
+                $("#second").hide();
+            });//显示介绍界面
+
+            $("#searchForVSM").click(function(){
+                $("#first").hide();
+                $("#second").show();
+                var query = $("#inputForVSM").val();
+                $("#searchResults").text("");
+                $.ajax({
+                    type:"POST",
+                    url:"vectorSpaceModel/search",
+                    dataType:"json",
+                    data:{"query":query},
+                    contentType:"application/x-www-form-urlencoded; charset=utf-8",
+                    traditional: true,
+                    success:function(result){
+                        console.log(result);
+                        json=result;
+                        $.each(result,function(index,obj) {
+                            var str1 = obj.content.substring(0,90)+ "......";
+                            $('#searchResults').append("<a id='"+index+"' href='' class='ra' style='font-size: 20px;font-family=Microsoft Yahei;font-weight: bold; margin-right: 20px' data-toggle='modal' data-target='#myModal' onclick='getContent(this.id)' >"+obj.title+"</a>");
+                            $('#searchResults').append("<br>");
+                            $('#searchResults').append("<p>"+str1+"</p>");
+
+                        });
+                        $searchResults=$("#searchResults").find("*");
+                    },
+                    error:function(){
+                        alert("检索出错！");
+                        $("#searchResults").text("");// 清空数据
+                    }
+                })
+            });//检索功能
+
+            $("#idf").click(function () {
+                $("#results").text("");
+                $.ajax({
+                    type:"POST",
+                    url:"vectorSpaceModel/idf",
+                    dataType:"json",
+                    contentType:"application/x-www-form-urlencoded; charset=utf-8",
+                    traditional: true,
+                    success:function(idf){
+                        console.log(idf);
+                        $("#results").append(
+                            "<div class=\"table-responsive\" style=\"text-align:center;font-family:Microsoft Yahei;\">\n" +
+                            "    <table class=\"table\">\n" +
+                            "        <thead style=\"color:#000000;\">\n" +
+                            "            <tr style='border-bottom:3px solid rgb(0,0,0)'>\n" +
+                            "                <th>词项</th>\n" +
+                            "                <th>idf</th>\n" +
+                            "                <th>词项</th>\n" +
+                            "                <th>idf</th>\n" +
+                            "            </tr>\n" +
+                            "        </thead>\n" +
+                            "        <tbody id='tbody'></tbody>\n" +
+                            "    </table>\n" +
+                            "</div>");
+
+                        var item1,idf1;
+                        var select=0;
+                        $.each(idf,function(index,obj) {
+                            if(select==0){
+                                item1=index;
+                                idf1=obj;
+                                select=1;
+                                $('#tbody').append("<tr>\n"+
+                                    "<td class=\"smallTableForTd\" >"+item1+"</td>\n"+
+                                    "<td class=\"smallTableForTd\" >"+idf1+"</td>\n"+
+                                    "</tr>\n"
+                                );
+                            }else {
+                                item1=index;
+                                idf1=obj;
+                                select=0;
+                                $('#tbody').children().last().append(
+                                    "<td class=\"smallTableForTd\" >"+item1+"</td>\n"+
+                                    "<td class=\"smallTableForTd\" >"+idf1+"</td>\n"
+                                );
+                            }
+                        });//end of each
+                    },
+                    error:function(){
+                        alert("检索出错！");
+                        $("#results").text("");// 清空数据
+                    }
+                })//end of ajax
+            })//求idf功能
+
+            $("#preprocessQuery").click(function () {
+                var query = $("#inputForVSM").val();
+                $("#results").text("");//清空数据
+                $.ajax({
+                    type:"POST",
+                    url:"vectorSpaceModel/PPQ",
+                    data:{"query":query},
+                    dataType:"json",
+                    contentType:"application/x-www-form-urlencoded; charset=utf-8",
+                    traditional: true,
+                    success:function(result){
+                        console.log(result);
+                        $("#results").append(
+                            "查询语句内容："+query+"<br>"+
+                            "去标点结果："+result.punRemove+"<br>"+
+                            "分词结果："+result.fenci+"<br>"+
+                            "去停用词结果："+result.stopwordsRemove
+                        )
+                    },
+                    error:function(){
+                        alert("检索出错！");
+                        $("#results").text("");// 清空数据
+                    }
+                })//end of ajax
+            })//查询预处理
+
+            $("#tfForQuery").click(function () {
+                var query = $("#inputForVSM").val();
+                $("#results").text("");//清空数据
+                $.ajax({
+                    type:"POST",
+                    url:"vectorSpaceModel/TFforQuery",
+                    data:{"query":query},
+                    dataType:"json",
+                    contentType:"application/x-www-form-urlencoded; charset=utf-8",
+                    traditional: true,
+                    success:function(tf){
+                        console.log(tf);
+                        $("#results").append(
+                            "<div class=\"table-responsive\" style=\"text-align:center;font-family:Microsoft Yahei;\">\n" +
+                            "    <table class=\"table\">\n" +
+                            "        <thead style=\"color:#000000;\">\n" +
+                            "            <tr style='border-bottom:3px solid rgb(0,0,0)'>\n" +
+                            "                <th>词项</th>\n" +
+                            "                <th>TF</th>\n" +
+                            "                <th>词项</th>\n" +
+                            "                <th>TF</th>\n" +
+                            "            </tr>\n" +
+                            "        </thead>\n" +
+                            "        <tbody id='tbody'></tbody>\n" +
+                            "    </table>\n" +
+                            "</div>");
+
+                        var item1,tf1;
+                        var select=0;
+
+                        $.each(tf,function(index,obj) {
+                            if(select==0){
+                                item1=index;
+                                tf1=obj;
+                                select=1;
+                                $('#tbody').append("<tr>\n"+
+                                    "<td class=\"smallTableForTd\" >"+item1+"</td>\n"+
+                                    "<td class=\"smallTableForTd\" >"+tf1+"</td>\n"+
+                                    "</tr>\n"
+                                );
+                            }else {
+                                item1=index;
+                                tf1=obj;
+                                select=0;
+                                $('#tbody').children().last().append(
+                                    "<td class=\"smallTableForTd\" >"+item1+"</td>\n"+
+                                    "<td class=\"smallTableForTd\" >"+tf1+"</td>\n"
+                                );
+                            }
+                        });//end of each
+                    },
+                    error:function(){
+                        alert("检索出错！");
+                        $("#results").text("");// 清空数据
+                    }
+                })//end of ajax
+            })//求查询的TF
+
+            $("#queryVector").click(function () {
+                var query = $("#inputForVSM").val();
+                $("#results").text("");//清空数据
+                $.ajax({
+                    type:"POST",
+                    url:"vectorSpaceModel/vectorForQuery",
+                    data:{"query":query},
+                    dataType:"json",
+                    contentType:"application/x-www-form-urlencoded; charset=utf-8",
+                    traditional: true,
+                    success:function(vectors){
+                        console.log(vectors);
+                        $("#results").append(
+                            "<div class=\"table-responsive\" style=\"text-align:center;font-family:Microsoft Yahei;\">\n" +
+                            "    <table class=\"table\">\n" +
+                            "        <thead style=\"color:#000000;\">\n" +
+                            "            <tr style='border-bottom:3px solid rgb(0,0,0)'>\n" +
+                            "                <th>词项</th>\n" +
+                            "                <th>第几位</th>\n" +
+                            "                <th>值</th>\n" +
+                            "            </tr>\n" +
+                            "        </thead>\n" +
+                            "        <tbody id='tbody'></tbody>\n" +
+                            "    </table>\n" +
+                            "</div>");
+
+                        $.each(vectors,function(index,obj) {
+                            console.log(obj);
+                            $('#tbody').append("<tr>\n"+
+                                "<td class=\"smallTableForTd\" >"+obj.term+"</td>\n"+
+                                "<td class=\"smallTableForTd\" >"+obj.num+"</td>\n"+
+                                "<td class=\"smallTableForTd\" >"+obj.tfidf+"</td>\n"+
+                                "</tr>\n"
+                            );
+                        });//end of each
+                    },
+                    error:function(){
+                        alert("检索出错！");
+                        $("#results").text("");// 清空数据
+                    }
+                })//end of ajax
+            })//求查询向量
+
+            $("#tfForDocs").click(function () {
+                $("#results").text("");//清空数据
+                $.ajax({
+                    type:"POST",
+                    url:"vectorSpaceModel/tfForDoc",
+                    dataType:"json",
+                    contentType:"application/x-www-form-urlencoded; charset=utf-8",
+                    traditional: true,
+                    success:function(tfs){
+                        // console.log(tfs);
+                        var num=0;
+                        $.each(tfs,function (index,json) {
+                            $("#results").append(
+                                "<div class=\"table-responsive\" style=\"text-align:center;font-family:Microsoft Yahei;font-size: 16px;\">\n" +
+                                "    <table class=\"table\">\n" +
+                                "        <thead style=\"color:#000000;\">\n" +
+                                "            <tr class=\"table-primary\">\n" +
+                                "                <td colspan=\"4\" style=\"text-align:center;\"><strong>"+index+"</strong></td>\n" +
+                                "            </tr>\n"+
+                                "            <tr style='border-bottom:3px solid rgb(0,0,0)'>\n" +
+                                "                <th class=\"smallTableForTd\" >词项</th>\n" +
+                                "                <th class=\"smallTableForTd\" >TF</th>\n" +
+                                "                <th class=\"smallTableForTd\" >词项</th>\n" +
+                                "                <th class=\"smallTableForTd\" >TF</th>\n" +
+                                "            </tr>\n" +
+                                "        </thead>\n" +
+                                "        <tbody id='tbody"+num+"'></tbody>\n" +
+                                "    </table>\n" +
+                                "</div>"
+                            );
+                            // console.log(json)
+                            var item1,tf1;
+                            var select=0;
+                            $.each(json,function(index1,obj1) {
+                                if(select==0){
+                                    item1=index1;
+                                    tf1=obj1;
+                                    select=1;
+                                    $('#tbody'+num+'').append("<tr>\n"+
+                                        "<td class=\"smallTableForTd\" >"+item1+"</td>\n"+
+                                        "<td class=\"smallTableForTd\" >"+tf1+"</td>\n"+
+                                        "</tr>\n"
+                                    );
+                                }else {
+                                    item1=index1;
+                                    tf1=obj1;
+                                    select=0;
+                                    $('#tbody'+num+'').children().last().append(
+                                        "<td class=\"smallTableForTd\" >"+item1+"</td>\n"+
+                                        "<td class=\"smallTableForTd\" >"+tf1+"</td>\n"
+                                    );
+                                }
+                            });//end of each
+                            num++;
+                        })//end of each
+
+                    },
+                    error:function(){
+                        alert("检索出错！");
+                        $("#results").text("");// 清空数据
+                    }
+                })//end of ajax
+            })//求各文档的TF
+
+            $("#vectorsForDocs").click(function () {
+                $("#results").text("");//清空数据
+                $.ajax({
+                    type:"POST",
+                    url:"vectorSpaceModel/vectorsForDocs",
+                    dataType:"json",
+                    contentType:"application/x-www-form-urlencoded; charset=utf-8",
+                    traditional: true,
+                    success:function(vectors){
+                        // console.log(tfs);
+                        var num=0;
+                        $.each(vectors,function (index,json) {
+                            $("#results").append(
+                                "<div class=\"table-responsive\" style=\"text-align:center;font-family:Microsoft Yahei;font-size: 16px;\">\n" +
+                                "    <table class=\"table\">\n" +
+                                "        <thead style=\"color:#000000;\">\n" +
+                                "            <tr class=\"table-primary\">\n" +
+                                "                <td colspan=\"4\" style=\"text-align:center;\"><strong>"+index+"</strong></td>\n" +
+                                "            </tr>\n"+
+                                "            <tr style='border-bottom:3px solid rgb(0,0,0)'>\n" +
+                                "                <th class=\"smallTableForTd\" >词项</th>\n" +
+                                "                <th class=\"smallTableForTd\" >第几位</th>\n" +
+                                "                <th class=\"smallTableForTd\" >值</th>\n" +
+                                "            </tr>\n" +
+                                "        </thead>\n" +
+                                "        <tbody id='tbody"+num+"'></tbody>\n" +
+                                "    </table>\n" +
+                                "</div>"
+                            );
+                            // console.log(json)
+                            $.each(json,function(index,obj) {
+                                console.log(obj);
+                                $('#tbody'+num+'').append("<tr>\n"+
+                                    "<td class=\"smallTableForTd\" >"+obj.term+"</td>\n"+
+                                    "<td class=\"smallTableForTd\" >"+obj.num+"</td>\n"+
+                                    "<td class=\"smallTableForTd\" >"+obj.tfidf+"</td>\n"+
+                                    "</tr>\n"
+                                );
+                            });//end of each
+                            num++;
+                        })//end of each
+
+                    },
+                    error:function(){
+                        alert("检索出错！");
+                        $("#results").text("");// 清空数据
+                    }
+                })//end of ajax
+            })//求各文档的向量
+
+            $("#sortSimilarity").click(function () {
+                var query = $("#inputForVSM").val();
+                $("#results").text("");//清空数据
+                $.ajax({
+                    type:"POST",
+                    url:"vectorSpaceModel/sortSimilarity",
+                    data:{"query":query},
+                    dataType:"json",
+                    contentType:"application/x-www-form-urlencoded; charset=utf-8",
+                    traditional: true,
+                    success:function(similarity){
+                        console.log(similarity);
+                        $("#results").append(
+                            "<div class=\"table-responsive\" style=\"text-align:center;font-family:Microsoft Yahei;\">\n" +
+                            "    <table class=\"table\">\n" +
+                            "        <thead style=\"color:#000000;\">\n" +
+                            "            <tr style='border-bottom:3px solid rgb(0,0,0)'>\n" +
+                            "                <th style='width:60px'>文档ID</th>\n" +
+                            "                <th>文档名</th>\n" +
+                            "                <th>相似度</th>\n" +
+                            "            </tr>\n" +
+                            "        </thead>\n" +
+                            "        <tbody id='tbody'></tbody>\n" +
+                            "    </table>\n" +
+                            "</div>");
+
+                        $.each(similarity,function(index,obj) {
+                            console.log(obj);
+                            $('#tbody').append("<tr>\n"+
+                                "<td class=\"smallTableForTd\" >"+obj.web_id+"</td>\n"+
+                                "<td class=\"smallTableForTd\" >"+obj.title+"</td>\n"+
+                                "<td class=\"smallTableForTd\" >"+obj.similarity+"</td>\n"+
+                                "</tr>\n"
+                            );
+                        });//end of each
+                    },
+                    error:function(){
+                        alert("检索出错！");
+                        $("#results").text("");// 清空数据
+                    }
+                })//end of ajax
+            })//求相似度
+
+            $("#similarity").click(function () {
+                var query = $("#inputForVSM").val();
+                $("#results").text("");//清空数据
+                $.ajax({
+                    type:"POST",
+                    url:"vectorSpaceModel/similarity",
+                    data:{"query":query},
+                    dataType:"json",
+                    contentType:"application/x-www-form-urlencoded; charset=utf-8",
+                    traditional: true,
+                    success:function(similarity){
+                        console.log(similarity);
+                        $("#results").append(
+                            "<div class=\"table-responsive\" style=\"text-align:center;font-family:Microsoft Yahei;\">\n" +
+                            "    <table class=\"table\">\n" +
+                            "        <thead style=\"color:#000000;\">\n" +
+                            "            <tr style='border-bottom:3px solid rgb(0,0,0)'>\n" +
+                            "                <th style='width:60px'>文档ID</th>\n" +
+                            "                <th>文档名</th>\n" +
+                            "                <th>相似度</th>\n" +
+                            "            </tr>\n" +
+                            "        </thead>\n" +
+                            "        <tbody id='tbody'></tbody>\n" +
+                            "    </table>\n" +
+                            "</div>");
+
+                        $.each(similarity,function(index,obj) {
+                            console.log(obj);
+                            $('#tbody').append("<tr>\n"+
+                                "<td class=\"smallTableForTd\" >"+obj.web_id+"</td>\n"+
+                                "<td class=\"smallTableForTd\" >"+obj.title+"</td>\n"+
+                                "<td class=\"smallTableForTd\" >"+obj.similarity+"</td>\n"+
+                                "</tr>\n"
+                            );
+                        });//end of each
+                    },
+                    error:function(){
+                        alert("检索出错！");
+                        $("#results").text("");// 清空数据
+                    }
+                })//end of ajax
+            })//按相似度降序排序
+
+
+
+        });
+
+        function getContent(id){
+            $.each(json,function(index,obj) {
+                if (index==id) {
+                    $("#searchResults").text("");
+                    $("#searchResults").append(obj.content);
+                }
+            });
+        };
+    </script>
+</html>

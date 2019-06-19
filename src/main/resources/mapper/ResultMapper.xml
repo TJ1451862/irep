@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.edu.whu.irlab.irep.mapper.ResultMapper" >
+  <resultMap id="BaseResultMap" type="cn.edu.whu.irlab.irep.entity.Result" >
+    <result column="query_id" property="queryId" jdbcType="INTEGER" />
+    <result column="query" property="query" jdbcType="VARCHAR" />
+    <result column="doc_id" property="docId" jdbcType="INTEGER" />
+    <result column="doc_rank" property="docRank" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="is_chinese" property="isChinese" jdbcType="INTEGER" />
+    <result column="index_type" property="indexType" jdbcType="VARCHAR" />
+    <result column="model_type" property="modelType" jdbcType="VARCHAR" />
+  </resultMap>
+  <insert id="insert" parameterType="cn.edu.whu.irlab.irep.entity.Result" >
+    insert into result (query_id, query, doc_id, 
+      doc_rank, title, is_chinese, 
+      index_type, model_type)
+    values (#{queryId,jdbcType=INTEGER}, #{query,jdbcType=VARCHAR}, #{docId,jdbcType=INTEGER}, 
+      #{docRank,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{isChinese,jdbcType=INTEGER}, 
+      #{indexType,jdbcType=VARCHAR}, #{modelType,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.edu.whu.irlab.irep.entity.Result" >
+    insert into result
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="queryId != null" >
+        query_id,
+      </if>
+      <if test="query != null" >
+        query,
+      </if>
+      <if test="docId != null" >
+        doc_id,
+      </if>
+      <if test="docRank != null" >
+        doc_rank,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="isChinese != null" >
+        is_chinese,
+      </if>
+      <if test="indexType != null" >
+        index_type,
+      </if>
+      <if test="modelType != null" >
+        model_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="queryId != null" >
+        #{queryId,jdbcType=INTEGER},
+      </if>
+      <if test="query != null" >
+        #{query,jdbcType=VARCHAR},
+      </if>
+      <if test="docId != null" >
+        #{docId,jdbcType=INTEGER},
+      </if>
+      <if test="docRank != null" >
+        #{docRank,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="isChinese != null" >
+        #{isChinese,jdbcType=INTEGER},
+      </if>
+      <if test="indexType != null" >
+        #{indexType,jdbcType=VARCHAR},
+      </if>
+      <if test="modelType != null" >
+        #{modelType,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:url="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>命名实体识别</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{../css/styles.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{../css/styles.css}">
+
+</head>
+
+<body>
+<nav class="navbar navbar-light navbar-expand-md" style="background-color:rgb(47,85,151);position:relative;">
+    <div class="container-fluid"><a class="navbar-brand" href="../index.html" style="width:340px;background-image:url(../img/logo.png);background-size:cover;height:40px;padding:10px 0px;"></a><button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"></button>
+        <div
+                class="collapse navbar-collapse" id="navcol-1" style="/*text-align:right;*/position:absolute;right:20px;">
+            <ul class="nav navbar-nav" style="margin:0 0 0 0px;">
+                <li class="nav-item" role="presentation" style="margin:0 5px;"><a class="nav-link" href="../index.html">首页</a></li>
+                <li class="nav-item" role="presentation" style="margin:0 5px;"><a class="nav-link" href="../IRforCN.html">信息检索实验</a></li>
+                <li class="nav-item" role="presentation" style="margin:0 5px;"><a class="nav-link active" href="../NLP.html">NLP实验</a></li>
+                <li class="nav-item" role="presentation" style="margin:0 5px;"><a class="nav-link" href="../explanation.html">文档与支持</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<nav class="navbar navbar-light navbar-expand-md">
+    <div class="container-fluid" style="height: 40px">
+        <div
+                class="collapse navbar-collapse" id="navcol-2" style="position:absolute;right:20px;">
+            <ul class="nav navbar-nav" style="margin:0 0 0 0px;">
+                <li class="nav-item align-self-center" role="presentation" style="margin:0 5px;"><a href="LexicalAnalysis.html" class="nav-link" style="color:rgb(0,0,0);">分词</a></li>
+                <li class="nav-item" role="presentation" style="margin:0 5px;"><a href="POSTagging.html" class="nav-link" style="color:rgb(0,0,0);">词性标注</a></li>
+                <li role="presentation" class="nav-item align-self-center" style="margin:0 5px;"><a href="NamedEntityRecognition.html" class="nav-link active" style="color:rgb(0,0,0);font-style:normal;font-family:Microsoft Yahei;font-weight:normal;margin:0;height:30px;line-height:5px;border:solid;border-radius:10px;border-color:rgb(0,0,0);border-width:3px;">命名实体识别</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div style="font-family:微软雅黑;">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div>
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item"><a role="tab" data-toggle="tab" href="#tab-1" class="nav-link active">简介</a></li>
+                        <li class="nav-item"><a role="tab" data-toggle="tab" href="#tab-2" class="nav-link">采用技术</a></li>
+                        <li class="nav-item"><a role="tab" data-toggle="tab" href="#tab-3" class="nav-link">流程</a></li>
+                    </ul>
+                    <div class="tab-content" style="height:500px;">
+                        <div role="tabpanel" class="tab-pane active" id="tab-1">
+                            <p>命名实体识别（Named Entity Recognition），是指识别文本中具有特定意义的实体，主要包括人名、地名、机构名
+                                等。本NLP系统的命名实体识别方法，可以从输入的中文文本中识别出人名（PER）、地名(LOC)、组织名称(ORG)。
+                            </p>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="tab-2">
+                            <p>本研究中文命名实体识别的BiLSTM-CRF模型如下：
+                                <img src="../img/bilstm-crf模型.png" style="width: 400px;"><br>
+                                该模型主要包括3层:</br>
+                                1、look-up层，旨在将每一个字符的表示从one-hot表示转换为字符嵌入；</br>
+                                2、BiLSTM层，有效地使用过去和未来的输入信息并自动提取特征。</br>
+                                3、CRF层，在一个句子中标记每个字符的标签</br>
+
+                            </p>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="tab-3">
+                            <p> 1、数据集准备</br>
+                                <img src="../img/数据集准备.png" style="width: 400px;"><br>
+                                2、训练:利用训练数据训练命名实体识别模型。</br>
+                                3、测试:利用已训练好的模型进行测试。输入中文句子，返回识别结果。</br>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div>
+                    <div style="margin:10px 0;height:40px;">
+                        <h4 style="float:left;margin:8px 0;font-size:20px;font-weight:bold;">请输入待识别内容：</h4>
+                        <button id="NER" class="btn btn-primary cixing" type="button" style="float:right;margin:0;">识别</button>
+                    </div>
+                    <textarea id="inputSentence" class="text" style="width:100%;height:100px;margin:0;"></textarea></div>
+                <h3 class="text-center" style="margin:20px 0 0px 0;font-weight:bold;font-size:20px;">命名实体识别结果</h3>
+                <div id="analysisResult" class="text" style="height:320px;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+    <footer style="color:rgb(47,85,151);width:100%;height:35px;line-height:35px;background-color:#2f5597;background-position:bottom;margin:0px;padding:0;position:fixed;bottom:0;">
+        <p class="text-center" style="font-family:微软雅黑;color:rgb(255,255,255);">©copyright 2018 武汉大学信息检索与知识挖掘研究所 </p>
+    </footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
+</body>
+<script type="text/javascript">
+    $(function(){
+        $("#NER").click(function(){
+            $.ajax({
+                type:"POST",
+                url:"http://127.0.0.1:5000/index",
+                dataType:"json",
+                data:JSON.stringify({
+                    "sentence":$("#inputSentence").val()
+                }),
+                contentType:'application/json;charset=UTF-8',
+                success:function(data){
+                    console.log(data);
+                    $("#analysisResult").text("");
+                    $("#analysisResult").append(
+                        "<p class=\"result1\" style=\"float:left;color:#ffffff;padding:5px;font-size:20px;" +
+                        "font-weight:bold;background-color:#c7c7c7;margin:10px 10px;\">人物：</p>\n" +
+                        "<p class=\"result\">"+data.PER+"</p>"+
+                        "<p class=\"result1\" style=\"float:left;color:#ffffff;padding:5px;font-size:20px;" +
+                        "font-weight:bold;background-color:#c7c7c7;margin:10px 10px;\">地点：</p>\n" +
+                        "<p class=\"result\">"+data.LOC+"</p>"+
+                        "<p class=\"result1\" style=\"float:left;color:#ffffff;padding:5px;font-size:20px;" +
+                        "font-weight:bold;background-color:#c7c7c7;margin:10px 10px;\">组织：</p>\n" +
+                        "<p class=\"result\">"+data.ORG+"</p>"
+                    );
+                },
+                error:function(jqXHR){
+                    alert("发生错误：+"+jqXHR.status);
+                }
+            })
+        })
+    })
+</script>
+</html>

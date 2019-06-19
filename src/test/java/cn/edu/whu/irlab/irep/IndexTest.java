@@ -39,6 +39,9 @@ public class IndexTest {
     @Autowired
     public FullIndexServiceImpl fullIndexService;
 
+    @Autowired
+    public IndexTypeConstructor indexTypeConstructor;
+
     public String folderPath = "resources/doc_ch";//待处理文档的文件夹路径
 
     @Test
@@ -46,7 +49,7 @@ public class IndexTest {
         File fileFolder = new File(folderPath);
         String analyzerName = "standard";
         boolean isRemoveStopWord = true;
-        String indexType = IndexTypeConstructor.indexTypeConstructor(analyzerName, isRemoveStopWord);
+        String indexType = indexTypeConstructor.indexTypeConstructor(analyzerName, isRemoveStopWord);
 
         //向records表中插入数据
         if (fileFolder.exists()) {
@@ -54,8 +57,7 @@ public class IndexTest {
             for (File file :
                     files) {
                 Doc doc = new Doc(file.getPath(), file.getName());
-                Analyzer analyzer = preProcessor.analyzerSelector(analyzerName);
-                ArrayList<String> termList = doc.preProcess(analyzer, isRemoveStopWord);
+                ArrayList<String> termList = doc.preProcess(analyzerName, isRemoveStopWord);
                 int num = 0;
                 for (String s :
                         termList) {

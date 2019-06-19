@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IR&amp;NLP</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{../css/styles.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{../css/styles.css}">
+</head>
+
+<body>
+<nav class="navbar navbar-light navbar-expand-md" style="background-color:rgb(47,85,151);position:relative;">
+    <div class="container-fluid"><a class="navbar-brand" href="../../index.html" style="width:340px;background-image:url(../../img/logo.png);background-size:cover;height:40px;padding:10px 0px;"></a><button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"></button>
+        <div
+                class="collapse navbar-collapse" id="navcol-1" style="/*text-align:right;*/position:absolute;right:20px;">
+            <ul class="nav navbar-nav" style="margin:0 0 0 0px;">
+                <li class="nav-item" role="presentation" style="margin:0 5px;"><a class="nav-link" href="../../index.html">首页</a></li>
+                <li class="nav-item" role="presentation" style="margin:0 5px;"><a class="nav-link active" href="../../IRforCN.html">信息检索实验</a></li>
+                <li class="nav-item" role="presentation" style="margin:0 5px;"><a class="nav-link" href="../../NLP.html">NLP实验</a></li>
+                <li class="nav-item" role="presentation" style="margin:0 5px;"><a class="nav-link" href="../../explanation.html">文档与支持</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<nav class="navbar navbar-light navbar-expand-md">
+    <div class="container-fluid"><a href="../IRforEN/performance.html" class="navbar-brand brand">中文</a><button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-2"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navcol-2" style="position:absolute;right: 500px;">
+            <ul class="nav navbar-nav" style="margin:0 0 0 0px;">
+                <li class="nav-item align-self-center" role="presentation" style="margin:0 5px;"><a href="preprocessing.html" class="nav-link" style="color:rgb(0,0,0);">文档预处理</a></li>
+                <li class="nav-item" role="presentation" style="margin:0 5px;"><a href="invertedindex.html" class="nav-link" style="color:rgb(0,0,0);">倒排索引表</a></li>
+                <li class="dropdown" style="/*color:rgb(0,0,0);*/"><a data-toggle="dropdown" aria-expanded="false" href="#" class="dropdown-toggle nav-link dropdown-toggle" style="color:rgb(0,0,0);">文档检索</a>
+                    <div role="menu" class="dropdown-menu" style="background-color:rgba(199,199,199,0.5);">
+                        <a role="presentation" href="informationretrieval/boolean.html" class="dropdown-item">布尔模型</a>
+                        <a role="presentation" href="informationretrieval/vectorSpaceModel.html" class="dropdown-item">向量空间模型</a>
+                        <a role="presentation" href="informationretrieval/probabilityModel.html" class="dropdown-item">概率检索模型</a>
+                        <a role="presentation" href="informationretrieval/languageModel.html" class="dropdown-item">语言模型</a></div>
+                </li>
+                <li role="presentation" class="nav-item align-self-center" style="margin:0 5px;"><a href="performance.html" class="nav-link active" style="color:rgb(0,0,0);font-style:normal;font-family:Microsoft Yahei;font-weight:normal;margin:0;height:30px;line-height:5px;border:solid;border-radius:10px;border-color:rgb(0,0,0);border-width:3px;">检索模型性能</a></li>
+
+            </ul>
+        </div>
+        <div style="height: 38px;display:-webkit-box;-ms-flex-wrap:wrap;flex-wrap:wrap;align-items:stretch;right:10px;float:right;margin:6px;">
+            <div style="display:-webkit-box;display:flex;margin-right:-1px;"><span style="display:-webkit-box;display:flex;align-items:center;padding: 0 10px;margin-bottom:0;font-size: 16px;font-weight:400;line-height:1.5;color:#495057;text-align:center;white-space:nowrap;background-color:#e9ecef;border:1px solid #ced4da;border-radius:.25rem;">请选择标准查询</span></div>
+            <select id="queryList" style="font-size:16px;height:38px;">
+                <option value="我的世界合成表" selected="">我的世界合成表</option>
+                <option value="广东会计信息服务平台">广东会计信息服务平台</option>
+                <option value="生死狙击好号和密码有金币">生死狙击好号和密码有金币</option>
+                <option value="笔记本怎么开热点">笔记本怎么开热点</option>
+                <option value="购买火车票12306">购买火车票12306</option>
+                <option value="风尘劫txt下载">风尘劫txt下载</option>
+                <option value="澳门签证多久签一次">澳门签证多久签一次</option>
+                <option value="名捕震关东">名捕震关东</option>
+                <option value="广场舞一生兄弟一生情">广场舞一生兄弟一生情</option>
+                <option value="qq群共享文件下载失败">qq群共享文件下载失败</option>
+            </select>
+            <div style="display:-webkit-box;display:flex;margin-left:-1px;"><button id="calculate" class="btn btn-primary" type="button" style="border-top-left-radius:0;border-bottom-left-radius:0; padding: 0px 10px;font-size: 16px;">计算</button></div>
+        </div></div>
+</nav>
+<div style="margin: 10px 0 0 0;">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div style="/*table-layout:auto;*/">
+                    <ul class="nav nav-tabs" style="/*nav-down:initial;*//*nav-left:inherit;*/font-size:15px;font-family:微软雅黑;font-weight:bold;">
+                        <li class="nav-item" style="background-color:#c7c7c7;color:rgba(255,255,255,0);"><a class="nav-link" role="tab" data-toggle="tab" href="#tab-11" style="font-family:微软雅黑;/*background-color:#c7c7c7;*//*color:#4472c4;*/">参考排序</a></li>
+                        <li class="nav-item" style="background-color:#c7c7c7;/*font-family:微软雅黑;*/color:#4472c4;"><a class="nav-link active" role="tab" data-toggle="tab" href="#tab-12">介绍</a></li>
+                    </ul>
+                    <div class="tab-content" style="overflow-x:hidden;font-family:微软雅黑;font-size:15px;margin:0;height:450px;">
+                        <div class="tab-pane fade" role="tabpanel" id="tab-11" style="/*overflow:scroll;*/">
+                            <div class="table-responsive" style="text-align:center;font-family:Microsoft Yahei;">
+                                <table class="table">
+                                    <thead style="color:#000000;">
+                                    <tr style="border-bottom:3px solid rgb(0,0,0)">
+                                        <th style="width:40px">序号</th>
+                                        <th style="width:80px;">文档ID</th>
+                                        <th>文档名</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id='standard'></tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                        <div class="tab-pane fade show active" role="tabpanel" id="tab-12">
+                            <p>
+                                <strong>简介</strong><br>
+                                采用相关的指标对布尔检索模型、向量空间模型、概率检索模型以及语言检索模型的检索结果进行测评。<br>
+                                <br>
+                                <strong>评价标准数据集</strong><br>
+                                本研究采用搜狗实验室提供的标准数据集。<br><br>
+                                <strong>指标介绍</strong><br>
+
+                                1.针对单个查询式的检索性能评价指标<br>
+                                （1）查准率（P值）：查准率=检出的相关文档数/检出文档数；P@5、p@10、p2@0分别表示检索结果的前5个、前
+                                10个以及前20个的查准率。<br>
+                                （2）查全率（R值）：召回率=检出的相关文档数/相关文档数；recall@5、recall@10、recall@20分别表示
+                                检索结果的前5个、前10个以及前20个的召回率。<br>
+                                （3）F1值：F1值是查准率和查全率的调和平均值，此时查准率和查全率的权重一样。<br>
+                                （4）平均查准率（AP值）：对不同查全率点上的查准率进行平均。<br>
+                                （5）NDCG值：NDCG是归一化折损累计增益，其根据文档在检索结果列表中的位置来测量文档的有用性或增益。增
+                                益从结果列表的顶部累积到底部，每个结果的增益在较低等级处打折，然后进行求和，最后进行归一化处理；
+                                NDCG@5、NDCG@10、NDCG@20分别表示检索结果的前5个、前10个以及前20个的归一化折损累计增益。<br>
+                                2.平均检索性能评价指标<br>
+                                平均检索性能评价指标，是对多个查询式（本系统使用10个）的检索性能评价指标求均值得到。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div style="/*table-layout:auto;*/">
+                    <ul class="nav nav-tabs" style="/*nav-down:initial;*//*nav-left:inherit;*/font-size:15px;font-family:微软雅黑;font-weight:bold;">
+                        <li class="nav-item" style="background-color:#c7c7c7;color:rgba(255,255,255,0);">
+                            <a class="nav-link active" role="tab" data-toggle="tab" href="#tab-21" style="font-family:微软雅黑;/*background-color:#c7c7c7;*//*color:#4472c4;*/">布尔</a></li>
+                        <li class="nav-item" style="background-color:#c7c7c7;/*font-family:微软雅黑;*/color:#4472c4;">
+                            <a class="nav-link" role="tab" data-toggle="tab" href="#tab-22">向量空间</a></li>
+                        <li class="nav-item" style="background-color:#c7c7c7;/*font-family:微软雅黑;*/">
+                            <a class="nav-link" role="tab" data-toggle="tab" href="#tab-23" style="font-family:微软雅黑;">概率</a></li>
+                        <li class="nav-item" style="background-color:#c7c7c7;/*font-family:微软雅黑;*/">
+                            <a class="nav-link" role="tab" data-toggle="tab" href="#tab-24">语言</a></li>
+                    </ul>
+                    <div class="tab-content" style="overflow-x:hidden;font-family:微软雅黑;font-size:15px;margin:0;height:450px;">
+                        <div class="tab-pane fade show active" role="tabpanel" id="tab-21" style="/*overflow:scroll;*/">
+                            <div class="table-responsive" style="text-align:center;font-family:Microsoft Yahei;">
+                                <table class="table">
+                                    <thead style="color:#000000;">
+                                    <tr style="border-bottom:3px solid rgb(0,0,0)">
+                                        <th style="width:70px">文档ID</th>
+                                        <th>文档名</th>
+                                        <th style="width:70px">是否准确</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id='bool'></tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" role="tabpanel" id="tab-22">
+                            <div class="table-responsive" style="text-align:center;font-family:Microsoft Yahei;">
+                                <table class="table">
+                                    <thead style="color:#000000;">
+                                    <tr style="border-bottom:3px solid rgb(0,0,0)">
+                                        <th style="width:70px">文档ID</th>
+                                        <th>文档名</th>
+                                        <th style="width:70px">是否准确</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id='vsm'></tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" role="tabpanel" id="tab-23">
+                            <div class="table-responsive" style="text-align:center;font-family:Microsoft Yahei;">
+                                <table class="table">
+                                    <thead style="color:#000000;">
+                                    <tr style="border-bottom:3px solid rgb(0,0,0)">
+                                        <th style="width:70px">文档ID</th>
+                                        <th>文档名</th>
+                                        <th style="width:70px">是否准确</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id='probabilityModel'></tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" role="tabpanel" id="tab-24">
+                            <div class="table-responsive" style="text-align:center;font-family:Microsoft Yahei;">
+                                <table class="table">
+                                    <thead style="color:#000000;">
+                                    <tr style="border-bottom:3px solid rgb(0,0,0)">
+                                        <th style="width:70px">文档ID</th>
+                                        <th>文档名</th>
+                                        <th style="width:70px">是否准确</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id='languageModel'></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div style="/*table-layout:auto;*/">
+                    <ul class="nav nav-tabs" style="/*nav-down:initial;*//*nav-left:inherit;*/font-size:15px;font-family:微软雅黑;font-weight:bold;">
+                        <li class="nav-item" style="background-color:#c7c7c7;color:rgba(255,255,255,0);"><a role="tab" data-toggle="tab" href="#tab-1" class="nav-link active" style="font-family:微软雅黑;/*background-color:#c7c7c7;*//*color:#4472c4;*/">单项指标</a></li>
+                        <li class="nav-item" style="background-color:#c7c7c7;/*font-family:微软雅黑;*/color:#4472c4;"><a role="tab" data-toggle="tab" href="#tab-2" class="nav-link">综合性能</a></li>
+                    </ul>
+                    <div class="tab-content" style="margin:0;height:450px;">
+                        <div role="tabpanel" class="tab-pane fade show active" id="tab-1" style="/*overflow:scroll;*/">
+                        </div>
+                        <div role="tabpanel" class="tab-pane fade" id="tab-2">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer style="color:rgb(47,85,151);width:100%;height:35px;line-height:35px;background-color:#2f5597;background-position:bottom;margin:0px;padding:0;position:fixed;bottom:0;">
+        <p class="text-center" style="font-family:微软雅黑;color:rgb(255,255,255);">©copyright 2018 武汉大学信息检索与知识挖掘研究所 </p>
+    </footer>
+</div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
+</body>
+<script type="text/javascript">
+    $(function () {
+
+        $("#calculate").click(function () {
+            var query=$("#queryList option:selected").val();
+            $.ajax({
+                type:"POST",
+                url:"performance/results",
+                data:{"query":query},
+                dataType:"json",
+                contentType:"application/x-www-form-urlencoded; charset=utf-8",
+                traditional: true,
+                success:function(json){
+                    console.log(json);
+                    var bool=json.bool;
+                    var vsm=json.vsm;
+                    var probabilityModel=json.probabilityModel;
+                    var languageModel=json.languageModel;
+                    var standard=json.standard;
+
+                    $('#bool').text("");
+                    $('#vsm').text("");
+                    $('#probabilityModel').text("");
+                    $('#languageModel').text("");
+                    $('#standard').text("");
+
+                    $.each(bool,function (index,value) {
+                        $('#bool').append("<tr>\n"+
+                            "<td class=\"smallTableForTd\" >"+value.web_id+"</td>\n"+
+                            "<td class=\"smallTableForTd\" >"+value.title+"</td>\n"+
+                            "<td class=\"smallTableForTd\" >"+value.isExisting+"</td>\n"+
+                            "</tr>\n"
+                        );
+                    });
+
+                    $.each(vsm,function (index,value) {
+                        $('#vsm').append("<tr>\n"+
+                            "<td class=\"smallTableForTd\" >"+value.web_id+"</td>\n"+
+                            "<td class=\"smallTableForTd\" >"+value.title+"</td>\n"+
+                            "<td class=\"smallTableForTd\" >"+value.isExisting+"</td>\n"+
+                            "</tr>\n"
+                        );
+                    })
+
+                    $.each(probabilityModel,function (index,value) {
+                        $('#probabilityModel').append("<tr>\n"+
+                            "<td class=\"smallTableForTd\" >"+value.web_id+"</td>\n"+
+                            "<td class=\"smallTableForTd\" >"+value.title+"</td>\n"+
+                            "<td class=\"smallTableForTd\" >"+value.isExisting+"</td>\n"+
+                            "</tr>\n"
+                        );
+                    })
+
+                    $.each(languageModel,function (index,value) {
+                        $('#languageModel').append("<tr>\n"+
+                            "<td class=\"smallTableForTd\" >"+value.web_id+"</td>\n"+
+                            "<td class=\"smallTableForTd\" >"+value.title+"</td>\n"+
+                            "<td class=\"smallTableForTd\" >"+value.isExisting+"</td>\n"+
+                            "</tr>\n"
+                        );
+                    });
+
+                    $.each(standard,function (index,value) {
+                        $('#standard').append("<tr>\n"+
+                            "<td class=\"smallTableForTd\" >"+value.rank+"</td>\n"+
+                            "<td class=\"smallTableForTd\" >"+value.web_id+"</td>\n"+
+                            "<td class=\"smallTableForTd\" >"+value.title+"</td>\n"+
+                            "</tr>\n"
+                        );
+                    });
+
+
+
+                    $('#tab-1').append(
+                        "                               <div class=\"table-responsive\" style=\"font-size:16px;\">\n" +
+                        "                                    <table class=\"table\">\n" +
+                        "                                        <tbody>\n" +
+                        "                                        <tr class=\"table-primary\">\n" +
+                        "                                            <td colspan=\"2\" style=\"text-align:center;\"><strong>AP</strong></td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr>\n" +
+                        "                                            <td>布尔模型</td>\n" +
+                        "                                            <td>"+json.bool_evaluation.AP+"</td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr>\n" +
+                        "                                            <td>向量空间模型</td>\n" +
+                        "                                            <td>"+json.vsm_evaluation.AP+"</td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr>\n" +
+                        "                                            <td>概率模型</td>\n" +
+                        "                                            <td>"+json.probabilityModel_evaluation.AP+"</td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr>\n" +
+                        "                                            <td>语言模型</td>\n" +
+                        "                                            <td>"+json.languageModel_evaluation.AP+"</td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr class=\"table-primary\">\n" +
+                        "                                            <td colspan=\"2\" style=\"text-align:center;\"><strong>F1</strong></td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr>\n" +
+                        "                                            <td>布尔模型</td>\n" +
+                        "                                            <td>"+json.bool_evaluation.F1+"</td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr>\n" +
+                        "                                            <td>向量空间模型</td>\n" +
+                        "                                            <td>"+json.vsm_evaluation.F1+"</td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr>\n" +
+                        "                                            <td>概率模型</td>\n" +
+                        "                                            <td>"+json.probabilityModel_evaluation.F1+"</td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr>\n" +
+                        "                                            <td>语言模型</td>\n" +
+                        "                                            <td>"+json.languageModel_evaluation.F1+"</td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr class=\"table-primary\">\n" +
+                        "                                            <td colspan=\"2\" style=\"text-align:center;\"><strong>NDCG</strong></td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr>\n" +
+                        "                                            <td>布尔模型</td>\n" +
+                        "                                            <td>"+json.bool_evaluation.NGDC+"</td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr>\n" +
+                        "                                            <td>向量空间模型</td>\n" +
+                        "                                            <td>"+json.vsm_evaluation.NGDC+"</td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr>\n" +
+                        "                                            <td>概率模型</td>\n" +
+                        "                                            <td>"+json.probabilityModel_evaluation.NGDC+"</td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr>\n" +
+                        "                                            <td>语言模型</td>\n" +
+                        "                                            <td>"+json.languageModel_evaluation.NGDC+"</td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr class=\"table-primary\">\n" +
+                        "                                            <td colspan=\"2\" style=\"text-align:center;\"><strong>NDCG@5</strong></td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr>\n" +
+                        "                                            <td>布尔模型</td>\n" +
+                        "                                            <td>"+json.bool_evaluation.NGDC5+"</td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr>\n" +
+                        "                                            <td>向量空间模型</td>\n" +
+                        "                                            <td>"+json.vsm_evaluation.NGDC5+"</td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr>\n" +
+                        "                                            <td>概率模型</td>\n" +
+                        "                                            <td>"+json.probabilityModel_evaluation.NGDC5+"</td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr>\n" +
+                        "                                            <td>语言模型</td>\n" +
+                        "                                            <td>"+json.languageModel_evaluation.NGDC5+"</td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr class=\"table-primary\">\n" +
+                        "                                            <td colspan=\"2\" style=\"text-align:center;\"><strong>NDCG@10</strong></td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr>\n" +
+                        "                                            <td>布尔模型</td>\n" +
+                        "                                            <td>"+json.bool_evaluation.NGDC10+"</td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr>\n" +
+                        "                                            <td>向量空间模型</td>\n" +
+                        "                                            <td>"+json.vsm_evaluation.NGDC10+"</td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr>\n" +
+                        "                                            <td>概率模型</td>\n" +
+                        "                                            <td>"+json.probabilityModel_evaluation.NGDC10+"</td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr>\n" +
+                        "                                            <td>语言模型</td>\n" +
+                        "                                            <td>"+json.languageModel_evaluation.NGDC10+"</td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr class=\"table-primary\">\n" +
+                        "                                            <td colspan=\"2\" style=\"text-align:center;\"><strong>NDCG@20</strong></td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr>\n" +
+                        "                                            <td>布尔模型</td>\n" +
+                        "                                            <td>"+json.bool_evaluation.NGDC20+"</td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr>\n" +
+                        "                                            <td>向量空间模型</td>\n" +
+                        "                                            <td>"+json.vsm_evaluation.NGDC20+"</td>\n"+
+                        "                                        </tr>\n" +
+                        "                                        <tr>\n" +
+                        "                                            <td>概率模型</td>\n" +
+                        "                                            <td>"+json.probabilityModel_evaluation.NGDC20+"</td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr>\n" +
+                        "                                            <td>语言模型</td>\n" +
+                        "                                            <td>"+json.languageModel_evaluation.NGDC20+"</td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr class=\"table-primary\">\n" +
+                        "                                            <td colspan=\"2\" style=\"text-align:center;\"><strong>p</strong></td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr>\n" +
+                        "                                            <td>布尔模型</td>\n" +
+                        "                                            <td>"+json.bool_evaluation.p+"</td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr>\n" +
+                        "                                            <td>向量空间模型</td>\n" +
+                        "                                            <td>"+json.vsm_evaluation.p+"</td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr>\n" +
+                        "                                            <td>概率模型</td>\n" +
+                        "                                            <td>"+json.probabilityModel_evaluation.p+"</td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr>\n" +
+                        "                                            <td>语言模型</td>\n" +
+                        "                                            <td>"+json.languageModel_evaluation.p+"</td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr class=\"table-primary\">\n" +
+                        "                                            <td colspan=\"2\" style=\"text-align:center;\"><strong>p@5</strong></td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr>\n" +
+                        "                                            <td>布尔模型</td>\n" +
+                        "                                            <td>"+json.bool_evaluation.p5+"</td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr>\n" +
+                        "                                            <td>向量空间模型</td>\n" +
+                        "                                            <td>"+json.vsm_evaluation.p5+"</td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr>\n" +
+                        "                                            <td>概率模型</td>\n" +
+                        "                                            <td>"+json.probabilityModel_evaluation.p5+"</td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr>\n" +
+                        "                                            <td>语言模型</td>\n" +
+                        "                                            <td>"+json.languageModel_evaluation.p5+"</td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr class=\"table-primary\">\n" +
+                        "                                            <td colspan=\"2\" style=\"text-align:center;\"><strong>p@10</strong></td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr>\n" +
+                        "                                            <td>布尔模型</td>\n" +
+                        "                                            <td>"+json.bool_evaluation.p10+"</td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr>\n" +
+                        "                                            <td>向量空间模型</td>\n" +
+                        "                                            <td>"+json.vsm_evaluation.p10+"</td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr>\n" +
+                        "                                            <td>概率模型</td>\n" +
+                        "                                            <td>"+json.probabilityModel_evaluation.p10+"</td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr>\n" +
+                        "                                            <td>语言模型</td>\n" +
+                        "                                            <td>"+json.languageModel_evaluation.p10+"</td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr class=\"table-primary\">\n" +
+                        "                                            <td colspan=\"2\" style=\"text-align:center;\"><strong>p@20</strong></td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr>\n" +
+                        "                                            <td>布尔模型</td>\n" +
+                        "                                            <td>"+json.bool_evaluation.p20+"</td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr>\n" +
+                        "                                            <td>向量空间模型</td>\n" +
+                        "                                            <td>"+json.vsm_evaluation.p20+"</td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr>\n" +
+                        "                                            <td>概率模型</td>\n" +
+                        "                                            <td>"+json.probabilityModel_evaluation.p20+"</td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr>\n" +
+                        "                                            <td>语言模型</td>\n" +
+                        "                                            <td>"+json.languageModel_evaluation.p20+"</td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr class=\"table-primary\">\n" +
+                        "                                            <td colspan=\"2\" style=\"text-align:center;\"><strong>recall</strong></td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr>\n" +
+                        "                                            <td>布尔模型</td>\n" +
+                        "                                            <td>"+json.bool_evaluation.recall+"</td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr>\n" +
+                        "                                            <td>向量空间模型</td>\n" +
+                        "                                            <td>"+json.vsm_evaluation.recall+"</td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr>\n" +
+                        "                                            <td>概率模型</td>\n" +
+                        "                                            <td>"+json.probabilityModel_evaluation.recall+"</td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr>\n" +
+                        "                                            <td>语言模型</td>\n" +
+                        "                                            <td>"+json.languageModel_evaluation.recall+"</td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr class=\"table-primary\">\n" +
+                        "                                            <td colspan=\"2\" style=\"text-align:center;\"><strong>recall@5</strong></td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr>\n" +
+                        "                                            <td>布尔模型</td>\n" +
+                        "                                            <td>"+json.bool_evaluation.recall5+"</td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr>\n" +
+                        "                                            <td>向量空间模型</td>\n" +
+                        "                                            <td>"+json.vsm_evaluation.recall5+"</td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr>\n" +
+                        "                                            <td>概率模型</td>\n" +
+                        "                                            <td>"+json.probabilityModel_evaluation.recall5+"</td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr>\n" +
+                        "                                            <td>语言模型</td>\n" +
+                        "                                            <td>"+json.languageModel_evaluation.recall5+"</td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr class=\"table-primary\">\n" +
+                        "                                            <td colspan=\"2\" style=\"text-align:center;\"><strong>recall@10</strong></td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr>\n" +
+                        "                                            <td>布尔模型</td>\n" +
+                        "                                            <td>"+json.bool_evaluation.recall10+"</td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr>\n" +
+                        "                                            <td>向量空间模型</td>\n" +
+                        "                                            <td>"+json.vsm_evaluation.recall10+"</td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr>\n" +
+                        "                                            <td>概率模型</td>\n" +
+                        "                                            <td>"+json.probabilityModel_evaluation.recall10+"</td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr>\n" +
+                        "                                            <td>语言模型</td>\n" +
+                        "                                            <td>"+json.languageModel_evaluation.recall10+"</td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr class=\"table-primary\">\n" +
+                        "                                            <td colspan=\"2\" style=\"text-align:center;\"><strong>recall@10</strong></td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr>\n" +
+                        "                                            <td>布尔模型</td>\n" +
+                        "                                            <td>"+json.bool_evaluation.recall10+"</td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr>\n" +
+                        "                                            <td>向量空间模型</td>\n" +
+                        "                                            <td>"+json.vsm_evaluation.recall10+"</td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr>\n" +
+                        "                                            <td>概率模型</td>\n" +
+                        "                                            <td>"+json.probabilityModel_evaluation.recall10+"</td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr>\n" +
+                        "                                            <td>语言模型</td>\n" +
+                        "                                            <td>"+json.languageModel_evaluation.recall10+"</td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr class=\"table-primary\">\n" +
+                        "                                            <td colspan=\"2\" style=\"text-align:center;\"><strong>recall@20</strong></td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr>\n" +
+                        "                                            <td>布尔模型</td>\n" +
+                        "                                            <td>"+json.bool_evaluation.recall20+"</td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr>\n" +
+                        "                                            <td>向量空间模型</td>\n" +
+                        "                                            <td>"+json.vsm_evaluation.recall20+"</td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr>\n" +
+                        "                                            <td>概率模型</td>\n" +
+                        "                                            <td>"+json.probabilityModel_evaluation.recall20+"</td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr>\n" +
+                        "                                            <td>语言模型</td>\n" +
+                        "                                            <td>"+json.languageModel_evaluation.recall20+"</td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        </tbody>\n" +
+                        "                                    </table>\n" +
+                        "                                </div>\n")
+
+                    $("#tab-2").append(
+                        "                                <div class=\"table-responsive\" style=\"font-size:16px;\">\n" +
+                        "                                    <table class=\"table\">\n" +
+                        "                                        <tbody>\n" +
+                        "                                        <tr class=\"table-primary\">\n" +
+                        "                                            <td colspan=\"2\" style=\"text-align:center;\"><strong>F1</strong></td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr>\n" +
+                        "                                            <td>布尔模型</td>\n" +
+                        "                                            <td>"+json.avg.bool.F1+"</td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr>\n" +
+                        "                                            <td>向量空间模型</td>\n" +
+                        "                                            <td>"+json.avg.vsm.F1+"</td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr>\n" +
+                        "                                            <td>概率模型</td>\n" +
+                        "                                            <td>"+json.avg.probabilityModel.F1+"</td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr>\n" +
+                        "                                            <td>语言模型</td>\n" +
+                        "                                            <td>"+json.avg.languagemodel.F1+"</td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr class=\"table-primary\">\n" +
+                        "                                            <td colspan=\"2\" style=\"text-align:center;\"><strong>MAP</strong></td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr>\n" +
+                        "                                            <td>布尔模型</td>\n" +
+                        "                                            <td>"+json.avg.bool.MAP+"</td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr>\n" +
+                        "                                            <td>向量空间模型</td>\n" +
+                        "                                            <td>"+json.avg.vsm.MAP+"</td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr>\n" +
+                        "                                            <td>概率模型</td>\n" +
+                        "                                            <td>"+json.avg.probabilityModel.MAP+"</td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr>\n" +
+                        "                                            <td>语言模型</td>\n" +
+                        "                                            <td>"+json.avg.languagemodel.MAP+"</td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr class=\"table-primary\">\n" +
+                        "                                            <td colspan=\"2\" style=\"text-align:center;\"><strong>NDCG</strong></td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr>\n" +
+                        "                                            <td>布尔模型</td>\n" +
+                        "                                            <td>"+json.avg.bool.NGDC+"</td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr>\n" +
+                        "                                            <td>向量空间模型</td>\n" +
+                        "                                            <td>"+json.avg.vsm.NGDC+"</td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr>\n" +
+                        "                                            <td>概率模型</td>\n" +
+                        "                                            <td>"+json.avg.probabilityModel.NGDC+"</td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr>\n" +
+                        "                                            <td>语言模型</td>\n" +
+                        "                                            <td>"+json.avg.languagemodel.NGDC+"</td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr class=\"table-primary\">\n" +
+                        "                                            <td colspan=\"2\" style=\"text-align:center;\"><strong>p</strong></td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr>\n" +
+                        "                                            <td>布尔模型</td>\n" +
+                        "                                            <td>"+json.avg.bool.p+"</td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr>\n" +
+                        "                                            <td>向量空间模型</td>\n" +
+                        "                                            <td>"+json.avg.vsm.p+"</td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr>\n" +
+                        "                                            <td>概率模型</td>\n" +
+                        "                                            <td>"+json.avg.probabilityModel.p+"</td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr>\n" +
+                        "                                            <td>语言模型</td>\n" +
+                        "                                            <td>"+json.avg.languagemodel.p+"</td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr class=\"table-primary\">\n" +
+                        "                                            <td colspan=\"2\" style=\"text-align:center;\"><strong>recall</strong></td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr>\n" +
+                        "                                            <td>布尔模型</td>\n" +
+                        "                                            <td>"+json.avg.bool.recall+"</td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr>\n" +
+                        "                                            <td>向量空间模型</td>\n" +
+                        "                                            <td>"+json.avg.vsm.recall+"</td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr>\n" +
+                        "                                            <td>概率模型</td>\n" +
+                        "                                            <td>"+json.avg.probabilityModel.recall+"</td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        <tr>\n" +
+                        "                                            <td>语言模型</td>\n" +
+                        "                                            <td>"+json.avg.languagemodel.recall+"</td>\n" +
+                        "                                        </tr>\n" +
+                        "                                        </tbody>\n" +
+                        "                                    </table>\n" +
+                        "                                </div>\n"
+                    )
+
+                },
+                error:function(){
+                    alert("检索出错！");
+                    $("#results").text("");// 清空数据
+                }
+            })//end of ajax
+        })//求Bij功能
+    })
+</script>
+
+</html>

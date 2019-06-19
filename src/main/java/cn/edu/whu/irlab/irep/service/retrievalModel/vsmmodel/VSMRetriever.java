@@ -10,6 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.*;
 
+/**
+ * @author gcr
+ * @version 1.0
+ * @date 2019-06-18 23:36
+ * @desc 向量空间模型检索器
+ */
 public class VSMRetriever {
 
     @Autowired
