@@ -48,22 +48,6 @@ public class ExperimentController {
 
     public String folderPath = "resources/doc_ch";
 
-    /**
-     * 中文预处理控制层
-     *
-     * @param token            待处理字符串
-     * @param analyzerName     分词器名称
-     * @param isRemoveStopWord 是否去停用词
-     * @return 预处理结果
-     */
-    @RequestMapping("/preProcess")
-    public String preProcessController(@RequestParam(name = "token") String token,
-                                       @RequestParam(name = "analyzerName") String analyzerName,
-                                       @RequestParam(name = "isRemoveStopWord") boolean isRemoveStopWord) {
-        ArrayList<String> termList = preProcessor.preProcess(token, analyzerName, isRemoveStopWord);
-        String string = termList.toString();
-        return string;
-    }
 
     public String preProcessEnController(@RequestParam(name = "token") String token,
                                          @RequestParam(name = "isRemoveStopWord") boolean isRemoveStopWord,
