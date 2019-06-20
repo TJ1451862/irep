@@ -2,6 +2,7 @@ package cn.edu.whu.irlab.irep.service.util;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -14,13 +15,16 @@ public class Find {
     private static String webId_FileName=null;
     private static String doc_list=null;
 
-    public static int findId(String fileName,boolean isChinese){
+    @Autowired
+    public ReadDoc readDoc;
+
+    public int findId(String fileName,boolean isChinese){
 
         int web_Id=0;
         String dataDir = null;
         if (webId_FileName==null){
             dataDir = "resources/map/Id_Name.json";
-            webId_FileName =ReadDoc.readDoc(dataDir);
+            webId_FileName =readDoc.readDoc(dataDir);
         }
         JSONObject json = JSON.parseObject(webId_FileName);
         if(isChinese){
@@ -50,14 +54,14 @@ public class Find {
         if(isChinese){
             if (webId_title == null) {
                 dataDir = "resources/map/webid_title.json";
-                webId_title =ReadDoc.readDoc(dataDir);
+                webId_title =readDoc.readDoc(dataDir);
             }
             JSONObject jsonObject= JSON.parseObject(webId_title);
             title=jsonObject.getString(ID);
         }else {
             if (webId_title_eng == null) {
                 dataDir = "resources/map/en_webid_title.json";
-                webId_title_eng =ReadDoc.readDoc(dataDir);
+                webId_title_eng =readDoc.readDoc(dataDir);
             }
             JSONObject jsonObject= JSON.parseObject(webId_title_eng);
             title=jsonObject.getString(ID);
@@ -74,7 +78,7 @@ public class Find {
 
         if (webId_FileName==null){
             dataDir = "resources/map/Id_Name.json";
-            webId_FileName =ReadDoc.readDoc(dataDir);
+            webId_FileName =readDoc.readDoc(dataDir);
         }
 
         JSONObject jsonObject= JSON.parseObject(webId_FileName);
@@ -85,7 +89,7 @@ public class Find {
             dataDir1="resources/doc_en/"+ docName+"_eng.txt";
         }
 
-        doc=ReadDoc.readDoc(dataDir1);
+        doc=readDoc.readDoc(dataDir1);
         return doc;
     }
 }

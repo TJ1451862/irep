@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 public class IndexController {
 
-    @RequestMapping(value = "index.html")
-    public String indexController(){
+    @RequestMapping(value = "/index.html")
+    public String index(){
         return "index";
     }
 

@@ -1,6 +1,7 @@
 package cn.edu.whu.irlab.irep.controller;
 
 import cn.edu.whu.irlab.irep.service.preProcess.PreProcessor;
+import cn.edu.whu.irlab.irep.service.util.Find;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
@@ -23,6 +24,9 @@ public class PreprocessorController {
     @Autowired
     public PreProcessor preProcessor;
 
+    @Autowired
+    public Find find;
+
     /**
      * 中文预处理控制层
      *
@@ -39,6 +43,18 @@ public class PreprocessorController {
         String string = termList.toString();
         return string;
     }
+
+    /**
+     * 返回文章
+     *
+     * @param docId 文章id
+     * @return
+     */
+    @RequestMapping("/getDoc")
+    public String selectDoc(@RequestParam(name = "docId") int docId) {
+        return find.findDoc(docId, true);
+    }
+
 
 
 }

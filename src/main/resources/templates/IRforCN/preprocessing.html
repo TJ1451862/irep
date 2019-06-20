@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" th:href="@{../css/styles.min.css}">
     <link rel="stylesheet" type="text/css" th:href="@{../css/styles.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{../css/myStyles.css}">
 </head>
 
 <body style="background-size:cover;">
@@ -52,13 +53,13 @@
                                                                           class="dropdown-toggle nav-link dropdown-toggle"
                                                                           style="color:rgb(0,0,0);">文档检索</a>
                     <div role="menu" class="dropdown-menu" style="background-color:rgba(199,199,199,0.5);"><a
-                            role="presentation" href="informationretrieval/boolean.html"
+                            role="presentation" href="Retrieval/boolean.html"
                             class="dropdown-item">布尔模型</a><a role="presentation"
-                                                             href="informationretrieval/vectorSpaceModel.html"
+                                                             href="Retrieval/vectorSpaceModel.html"
                                                              class="dropdown-item">向量空间模型</a><a role="presentation"
-                                                                                                href="informationretrieval/probabilityModel.html"
+                                                                                                href="Retrieval/probabilityModel.html"
                                                                                                 class="dropdown-item">概率检索模型</a><a
-                            role="presentation" href="informationretrieval/languageModel.html" class="dropdown-item">语言模型</a>
+                            role="presentation" href="Retrieval/languageModel.html" class="dropdown-item">语言模型</a>
                     </div>
                 </li>
                 <li class="nav-item" role="presentation" style="margin:0 5px;"><a href="performance.html"
@@ -177,7 +178,7 @@
                     <div style="/*text-align:center;*/float:none;margin:auto;">
                         <div style="height:40px;">
                             <div style="float:left;width:50%;">
-                                <h3 style="/*float:right;*/height:40px;line-height:40px;font-size:20px;padding:0;margin:0;color:rgb(0,0,0);font-family:微软雅黑;float:none;font-weight:bold;">
+                                <h3 class="title">
                                     <strong>原文件</strong></h3>
                             </div>
                             <div style="float:right;height:40px;">
@@ -191,7 +192,7 @@
                                             -
                                         </button>
                                         <input
-                                                type="text" value="0" id="web_id"
+                                                type="text" value="0" id="docId"
                                                 style="width:40px;height:30px;float:left;text-align:center;"/>
                                         <button class="btn btn-primary" type="button" id="num-jia"
                                                 style="border-bottom-left-radius:0px;border-top-left-radius:0px;height:30px;background-color:#4472c4;padding:0px;width:30px;display:inline-block;top:0px;float:left;">
@@ -204,23 +205,46 @@
                         <div id="originalFile" class="text" style="height:180px;"></div>
                     </div>
                     <div style="border-width:0;margin:20px 0;height:50px;">
-                        <div style="width:500px;float:none;margin:auto;">
-                            <div style="float:left;width:33%;text-align:center;">
-                                <button class="btn btn-primary smallButton" type="button" id="segment">分词</button>
-                            </div>
-                            <div style="float:left;width:66%;">
-                                <div style="float:left;width:50%;text-align:center;">
-                                    <button class="btn btn-primary smallButton" type="button" id="removePuncuation">
-                                        去标点
+                        <table>
+                            <tbody>
+                            <tr>
+                                <td>
+                                    <h3 class="title">选择分词器：</h3>
+                                </td>
+                                <td>
+                                    <select class="d-none float-none d-flex justify-content-center align-items-center align-content-center align-self-center visible"
+                                            style="height:30px;font-size:20px;font-family:微软雅黑;width:100%;">
+                                        <option value="standard" selected="">标准分词器</option>
+                                        <option value="whitespace">空格分词器</option>
+                                        <option value="simple">简单分词器</option>
+                                        <option value="CJK">二分法分词器</option>
+                                        <option value="smartChinese">中文智能分词器</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <div class="form-check .align-self-center" style="margin-left:10px;width:100%;">
+                                        <input class="form-check-input" type="checkbox" id="formCheck-1"
+                                               style="width: 20px;height: 20px;vertical-align: middle;position: relative;margin: auto 0;">
+                                        <label class="form-check-label title" for="formCheck-1" style="margin: auto 10px auto 5px">
+                                            去停用词</label>
+                                    </div>
+                                </td>
+                                <td>
+                                    <button class="btn btn-primary btn-sm smallButton" type="button" id="preprocess"
+                                            style="margin-left:10px;font-size:20px;height:40px;width:120px;">处理
                                     </button>
-                                </div>
-                                <div style="float:left;width:50%;text-align:center;">
-                                    <button class="btn btn-primary smallButton" type="button" id="removeStopwords">
-                                        去停用词
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
+                                </td>
+                                <td>
+                                    <img class="float-right" src="../assets/img/捕获.png" id="processnextStep"
+                                         style="display:none;width:100px;height:60px;margin-top:-9px;margin-right:22px;"><a
+                                        class="btn btn-primary btn-sm smallButton" role="button"
+                                        href="IRforCN/invertedindex.html"
+                                        id="processnextStep2"
+                                        style="margin-left:0px;font-size:18px;height:40px;display:none;">下一步</a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
                     <div style="float:none;margin:auto;">
                         <h3 style="height:40px;line-height:40px;font-size:20px;padding:0;margin:0;color:rgb(0,0,0);font-family:微软雅黑;font-weight:bold;">
@@ -243,7 +267,7 @@
 <script type="text/javascript">
     var num_jia = document.getElementById("num-jia");
     var num_jian = document.getElementById("num-jian");
-    var input_num = document.getElementById("web_id");
+    var input_num = document.getElementById("docId");
     num_jia.onclick = function () {
         if (input_num.value < 165)
             input_num.value = parseInt(input_num.value) + 1;
@@ -263,21 +287,20 @@
 <script type="text/javascript">
     $(function () {
         var json1 = null;
-        $("#web_id").change(function () {
+        $("#docId").change(function () {
             $("#originalFile").text("");//初始化
-            var web_id = $("#web_id").val();
-            if ((web_id <= 165) && (web_id >= 0)) {
+            var docId = $("#docId").val();
+            if ((docId <= 165) && (docId >= 0)) {
                 $.ajax({
                     type: "POST",
-                    url: "preprocessing/result",
-                    data: {"web_id": web_id},
-                    dataType: "json",
+                    url: "preprocessing/getDoc",
+                    data: {"docId": docId},
+                    dataType: "text",
                     contentType: "application/x-www-form-urlencoded; charset=utf-8",
                     traditional: true,
                     success: function (result) {
                         console.log(result);
-                        json1 = result;
-                        $("#originalFile").append(json1.doc);
+                        $("#originalFile").append(result);
                     },
                     error: function () {
                         alert("检索出错！");
@@ -290,18 +313,17 @@
         })
         $("#num-jia").click(function () {
             $("#originalFile").text("");//初始化
-            var web_id = $("#web_id").val();
+            var docId = $("#docId").val();
             $.ajax({
                 type: "POST",
-                url: "preprocessing/result",
-                data: {"web_id": web_id},
-                dataType: "json",
+                url: "preprocessing/getDoc",
+                data: {"docId": docId},
+                dataType: "text",
                 contentType: "application/x-www-form-urlencoded; charset=utf-8",
                 traditional: true,
                 success: function (result) {
                     console.log(result);
-                    json1 = result;
-                    $("#originalFile").append(result.doc);
+                    $("#originalFile").append(result);
 
                 },
                 error: function () {
@@ -312,18 +334,17 @@
         })
         $("#num-jian").click(function () {
             $("#originalFile").text("");//初始化
-            var web_id = $("#web_id").val();
+            var docId = $("#docId").val();
             $.ajax({
                 type: "POST",
-                url: "preprocessing/result",
-                data: {"web_id": web_id},
-                dataType: "json",
+                url: "preprocessing/getDoc",
+                data: {"docId": docId},
+                dataType: "text",
                 contentType: "application/x-www-form-urlencoded; charset=utf-8",
                 traditional: true,
                 success: function (result) {
                     console.log(result);
-                    json1 = result;
-                    $("#originalFile").append(result.doc);
+                    $("#originalFile").append(result);
 
                 },
                 error: function () {

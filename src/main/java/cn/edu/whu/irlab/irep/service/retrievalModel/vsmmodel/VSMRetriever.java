@@ -6,7 +6,11 @@ import cn.edu.whu.irlab.irep.service.impl.FullIndexServiceImpl;
 import cn.edu.whu.irlab.irep.service.impl.InvertedIndexServiceImpl;
 import cn.edu.whu.irlab.irep.service.util.Find;
 import cn.edu.whu.irlab.irep.service.util.IndexTypeConstructor;
+import cn.edu.whu.irlab.irep.service.util.ReadDoc;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.util.*;
 
@@ -26,6 +30,9 @@ public class VSMRetriever {
 
     @Autowired
     public Find find;
+
+    @Autowired
+    public ReadDoc readDoc;
 
     @Autowired
     public IndexTypeConstructor indexTypeConstructor;
@@ -214,6 +221,14 @@ public class VSMRetriever {
         resultAfterSort = result;
         Comparator comparator = new ResultComparator();
         Collections.sort(resultAfterSort, comparator);
+    }
+
+    public JSONObject modelTypeConstuctor(){
+        JSONObject modelType=new JSONObject();
+        modelType.put("modelName","vsm");
+        modelType.put("formulaID",formulaID);
+        modelType.put("smoothParam",smoothParam);
+        return modelType;
     }
 
     /**

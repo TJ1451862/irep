@@ -1,0 +1,17 @@
+/*for preprocessing.html */
+.title{
+    height:40px;
+    line-height:40px;
+    font-size:20px;
+    padding:0;
+    margin:0;
+    color:rgb(0,0,0);
+    font-family:微软雅黑;
+    float:none;
+    font-weight:bold;
+}
+
+/*表格共5列，每列等宽*/
+.fifth td{
+    width: 20%;
+}

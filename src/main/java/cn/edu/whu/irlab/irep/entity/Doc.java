@@ -13,6 +13,12 @@ public class Doc {
     @Autowired
     public PreProcessor preProcessor;
 
+    @Autowired
+    public Find find;
+
+    @Autowired
+    public ReadDoc readDoc;
+
     private int id;
     private String filePath;
     private String fileName;
@@ -22,8 +28,8 @@ public class Doc {
     public Doc(String filePath,String fileName){
         this.filePath=filePath;
         this.fileName=fileName;
-        this.content= ReadDoc.readDoc(filePath);
-        this.id= Find.findId(fileName,true);
+        this.content= readDoc.readDoc(filePath);
+        this.id= find.findId(fileName,true);
     }
 
     public Doc(int id) {

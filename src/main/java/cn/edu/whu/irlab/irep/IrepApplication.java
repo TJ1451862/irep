@@ -5,7 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-@MapperScan("cn.edu.whu.irlab.irlep.mapper")
+@MapperScan("cn.edu.whu.irlab.irep.mapper")
 public class IrepApplication {
 
     public static void main(String[] args) {
