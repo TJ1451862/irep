@@ -79,7 +79,7 @@
                     <div class="col-md-6">
                         <div class="table-responsive justify-content-center" id="invertedindextable1"
                              style="width:300px;margin: auto">
-                            <table class="table table-bordered test">
+                            <table class="table-bordered test" style="color: #000;">
                                 <caption class="text-dark"
                                          style="padding-top:5px;padding-bottom:5px;text-align:center;font-family:微软雅黑">
                                     a. 词典
@@ -141,7 +141,7 @@
                     <div class="col-md-6">
                         <div style="text-align: center">
                             <div class="table-responsive" id="invertedindextable2" style="width:300px;margin: auto">
-                                <table class="table table-bordered test">
+                                <table class="table-bordered test" style="color: #000;">
                                     <caption class="text-dark"
                                              style="width:300px;text-align:center;padding-top:5px;padding-bottom:5px;font-family:微软雅黑">
                                         b. 倒排记录表
@@ -280,7 +280,7 @@
                     </ul>
                     <div class="tab-content" style="height:405px;margin-right:0;">
                         <div class="tab-pane" role="tabpanel" id="tab-1">
-                            <p class="tip" style="margin:0;"><br></p>
+
                         </div>
                         <div class="tab-pane active" role="tabpanel" id="tab-2">
                             <p>
@@ -327,7 +327,7 @@
                     <label>
                         <input type="radio" name="modelType" value="lm"> 语言模型
                     </label>
-                    <button id="nextStep" class="btn btn-primary smallButton" role="button"
+                    <button id="nextStepOfInvertedIndex" class="btn btn-primary smallButton" role="button"
                             style="height:40px;line-height:40px;margin-left: 50px;">下一步>>>
                     </button>
                 </div>
@@ -335,12 +335,11 @@
         </div>
     </div>
 </div>
-<div th:include="include::foot"></div>
+<div th:include="include::foot" />
 
+<div th:include="include::script" />
 <script type="text/javascript" src="/js/vue.min.js"></script>
-<script type="text/javascript" th:src="@{../js/jquery.min.js}"></script>
-<script type="text/javascript" th:src="@{../js/bootstrap.bundle.min.js}"></script>
-<script type="text/javascript" th:src="@{../js/invertedIndex.js}"></script>
+
 </body>
 
 </html>
