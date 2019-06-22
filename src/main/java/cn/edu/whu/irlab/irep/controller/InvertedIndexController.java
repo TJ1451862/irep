@@ -77,14 +77,4 @@ public class InvertedIndexController {
         JSONArray jsonArray = JSON.parseArray(JSON.toJSONString(invertedIndexList));
         return jsonArray;
     }
-
-    @ResponseBody
-    @RequestMapping("/getDoc")
-    public String getDocController(@RequestParam(name = "docId") int docId, @RequestParam(name = "term") String term) {
-        String doc=find.findDoc(docId,true);
-        String string= doc.replaceAll(term,"<strong>"+term+"</strong>");
-        return string;
-    }
-
-
 }

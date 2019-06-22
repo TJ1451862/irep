@@ -53,25 +53,25 @@ public class IndexController {
         return "IRforCN/preProcessing";
     }
 
-    @RequestMapping(value = "IRforCN/informationretrieval/boolean.html")
+    @RequestMapping(value = "IRforCN/Retrieval/boolean.html")
     public String booleanCnController(){
-        return "IRforCN/informationretrieval/boolean";
+        return "IRforCN/Retrieval/boolean";
     }
 
 
-    @RequestMapping(value = "IRforCN/informationretrieval/languageModel.html")
+    @RequestMapping(value = "IRforCN/Retrieval/languageModel.html")
     public String languageModelCnController(){
-        return "IRforCN/informationretrieval/languageModel";
+        return "IRforCN/Retrieval/languageModel";
     }
 
-    @RequestMapping(value = "IRforCN/informationretrieval/probabilityModel.html")
+    @RequestMapping(value = "IRforCN/Retrieval/probabilityModel.html")
     public String probabilityModelCnController(){
-        return "IRforCN/informationretrieval/probabilityModel";
+        return "IRforCN/Retrieval/probabilityModel";
     }
 
-    @RequestMapping(value = "IRforCN/informationretrieval/vectorSpaceModel.html")
+    @RequestMapping(value = "IRforCN/Retrieval/vectorSpaceModel.html")
     public String vectorSpaceModelModelCnController(){
-        return "IRforCN/informationretrieval/vectorSpaceModel";
+        return "IRforCN/Retrieval/vectorSpaceModel";
     }
 
     @RequestMapping(value = "IRforEN/invertedIndex.html")
@@ -89,25 +89,25 @@ public class IndexController {
         return "IRforEN/preProcessing";
     }
 
-    @RequestMapping(value = "IRforEN/informationretrieval/boolean.html")
+    @RequestMapping(value = "IRforEN/Retrieval/boolean.html")
     public String booleanEnController(){
-        return "IRforEN/informationretrieval/boolean";
+        return "IRforEN/Retrieval/boolean";
     }
 
 
-    @RequestMapping(value = "IRforEN/informationretrieval/languageModel.html")
+    @RequestMapping(value = "IRforEN/Retrieval/languageModel.html")
     public String languageModelEnController(){
-        return "IRforEN/informationretrieval/languageModel";
+        return "IRforEN/Retrieval/languageModel";
     }
 
-    @RequestMapping(value = "IRforEN/informationretrieval/probabilityModel.html")
+    @RequestMapping(value = "IRforEN/Retrieval/probabilityModel.html")
     public String probabilityModelEnController(){
-        return "IRforEN/informationretrieval/probabilityModel";
+        return "IRforEN/Retrieval/probabilityModel";
     }
 
-    @RequestMapping(value = "IRforEN/informationretrieval/vectorSpaceModel.html")
+    @RequestMapping(value = "IRforEN/Retrieval/vectorSpaceModel.html")
     public String vectorSpaceModelModelEnController(){
-        return "IRforEN/informationretrieval/vectorSpaceModel";
+        return "IRforEN/Retrieval/vectorSpaceModel";
     }
 
     @RequestMapping(value = "NLP/LexicalAnalysis.html")
