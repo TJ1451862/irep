@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>中文信息检索实验</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css">
-    <link rel="stylesheet" th:href="@{css/styles.min.css}">
+    <link rel="stylesheet" th:href="@{css/styles.css}">
     <link rel="stylesheet" type="text/css" th:href="@{css/styles.css}">
 
 <body style="background-size:cover;background-position:top;background-repeat:no-repeat;background-image:url(img/background1.png)">
@@ -40,12 +40,12 @@
                 class="collapse navbar-collapse" id="navcol-2" style="position:absolute;right:20px;">
             <ul class="nav navbar-nav" style="margin:0 0 0 0px;">
                 <li class="nav-item align-self-center" role="presentation" style="margin:0 5px;"><a class="nav-link"
-                                                                                                    href="IRforCN/preprocessing.html"
+                                                                                                    href="IRforCN/preProcessing.html"
                                                                                                     style="/*background-color:rgba(0,176,240,0.16);*/height:30px;line-height:5px;border:solid;border-radius:10px;border-color:rgb(0,0,0);border-width:3px;color:black;">文档预处理</a>
                 </li>
                 <li
                         class="nav-item align-self-center" role="presentation" style="margin:0 5px;"><a class="nav-link"
-                                                                                                        href="IRforCN/invertedindex.html"
+                                                                                                        href="IRforCN/invertedIndex.html"
                                                                                                         style="/*background-color:rgba(0,176,240,0.16);*/height:30px;line-height:5px;border:solid;border-radius:10px;border-color:rgb(0,0,0);border-width:3px;color:black;">倒排索引表</a>
                 </li>
                 <li
@@ -82,20 +82,17 @@
             <div class="col-md-6 align-self-center">
                 <img src="img/framework.png" width="600px">
                 <a class="btn btn-primary float-none d-flex flex-row justify-content-center align-items-center
-                align-content-center align-self-center" role="button" href="IRforCN/preprocessing.html"
+                align-content-center align-self-center" role="button" href="IRforCN/preProcessing.html"
                    style="font-size:20px;font-family:微软雅黑;background-color:#4472c4;margin-top:8px;margin-left:33%;
                    margin-right:0px;width:200px;">开始实验</a></div>
         </div>
         </div>
     </div>
 </div>
-<footer style="color:rgb(47,85,151);width:100%;height:35px;line-height:35px;background-color:#2f5597;background-position:bottom;margin:0px;padding:0;position:fixed;bottom:0;">
-    <p class="text-center" style="font-family:微软雅黑;color:rgb(255,255,255);">©copyright 2018 武汉大学信息检索与知识挖掘研究所 </p>
-</footer>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" type=”text/javascript”></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.bundle.min.js"
-        type=”text/javascript”></script>
-<script th:src="@{js/script.min.js}"></script>
+
+<div th:include="include::foot"/>
+<div th:include="include::script"/>
+
 </body>
 
 </html>

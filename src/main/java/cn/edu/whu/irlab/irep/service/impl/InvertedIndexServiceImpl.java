@@ -21,10 +21,7 @@ public class InvertedIndexServiceImpl {
         return invertedIndexMapper.selectByIndexType(indexType);
     }
 
-    public List<InvertedIndex> selectByIndexTypeAndTerm(String indexType,String term){
-        InvertedIndex invertedIndex=new InvertedIndex();
-        invertedIndex.setTerm(term);
-        invertedIndex.setIndexType(indexType);
-        return invertedIndexMapper.selectByIndexTypeAndTerm(invertedIndex);
+    public List<InvertedIndex> select(InvertedIndex invertedIndex){
+        return invertedIndexMapper.select(invertedIndex);
     }
 }

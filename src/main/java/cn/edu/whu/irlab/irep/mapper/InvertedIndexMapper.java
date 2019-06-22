@@ -15,5 +15,5 @@ public interface InvertedIndexMapper {
 
     List<InvertedIndex> selectByIndexType(String indexType);
 
-    List<InvertedIndex> selectByIndexTypeAndTerm(InvertedIndex invertedIndex);
+    List<InvertedIndex> select(InvertedIndex invertedIndex);
 }

@@ -34,19 +34,10 @@ public class ExperimentController {
     @Autowired
     public PreProcessor preProcessor;
 
-    @Autowired
-    public FullIndexServiceImpl fullIndexService;
-
-    @Autowired
-    public InvertedIndexServiceImpl invertedIndexService;
-
-    @Autowired
-    IndexTypeConstructor indexTypeConstructor;
 
     @Autowired
     public Find find;
 
-    public String folderPath = "resources/doc_ch";
 
 
     public String preProcessEnController(@RequestParam(name = "token") String token,
@@ -56,39 +47,5 @@ public class ExperimentController {
         return string;
     }
 
-    /**
-     * @param analyzerName     分词器名称
-     * @param isRemoveStopWord 是否去停用词
-     * @return 全体倒排索引表
-     */
-    @RequestMapping("/fullIndex")
-    public List<FullIndex> selectFullIndexController(@RequestParam(name = "analyzerName") String analyzerName,
-                                                     @RequestParam(name = "isRemoveStopWord") boolean isRemoveStopWord) {
-        String indexType = indexTypeConstructor.indexTypeConstructor(analyzerName, isRemoveStopWord);
-        List<FullIndex> fullIndexList = fullIndexService.selectFullIndexByIndexType(indexType);
-        if (fullIndexList == null) {
-            IndexGenerator indexGenerator = new IndexGenerator(folderPath, analyzerName, isRemoveStopWord);
-            indexGenerator.generateIndex();
-            fullIndexList = fullIndexService.selectFullIndexByIndexType(indexType);
-        }
-        return fullIndexList;
-    }
-
-    //返回invertedIndex
-
-    /**
-     * @param analyzerName     分词器名称
-     * @param isRemoveStopWord 是否去停用词
-     * @param term             词项
-     * @return 倒排索引表
-     */
-    @RequestMapping("/invertedIndex")
-    public List<InvertedIndex> selectInvertedIndexController(@RequestParam(name = "analyzerName") String analyzerName,
-                                                             @RequestParam(name = "isRemoveStopWord") boolean isRemoveStopWord,
-                                                             @RequestParam(name = "term") String term) {
-        String indexType = indexTypeConstructor.indexTypeConstructor(analyzerName, isRemoveStopWord);
-        List<InvertedIndex> invertedIndexList = invertedIndexService.selectByIndexTypeAndTerm(indexType, term);
-        return invertedIndexList;
-    }
 
 }

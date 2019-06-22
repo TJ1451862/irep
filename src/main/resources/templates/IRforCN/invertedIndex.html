@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:include="include::header"/>
+
+<body>
+<nav class="navbar navbar-light navbar-expand-md" style="background-color:rgb(47,85,151);position:relative;">
+    <div class="container-fluid"><a class="navbar-brand" href="../../index.html"
+                                    style="width:340px;background-image:url(../../img/logo.png);background-size:cover;height:40px;padding:10px 0px;"></a>
+        <button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"></button>
+        <div
+                class="collapse navbar-collapse" id="navcol-1"
+                style="/*text-align:right;*/position:absolute;right:20px;">
+            <ul class="nav navbar-nav" style="margin:0 0 0 0px;">
+                <li class="nav-item" role="presentation" style="margin:0 5px;"><a class="nav-link"
+                                                                                  href="../../index.html">首页</a></li>
+                <li class="nav-item" role="presentation" style="margin:0 5px;"><a class="nav-link active"
+                                                                                  href="../../IRforCN.html">信息检索实验</a>
+                </li>
+                <li class="nav-item" role="presentation" style="margin:0 5px;"><a class="nav-link"
+                                                                                  href="../../NLP.html">NLP实验</a></li>
+                <li class="nav-item" role="presentation" style="margin:0 5px;"><a class="nav-link"
+                                                                                  href="../../explanation.html">文档与支持</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<nav class="navbar navbar-light navbar-expand-md">
+    <div class="container-fluid"><a href="../IRforEN/invertedindex.html" class="navbar-brand brand">中文</a>
+        <button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-2"><span class="sr-only">Toggle navigation</span><span
+                class="navbar-toggler-icon"></span></button>
+        <div
+                class="collapse navbar-collapse" id="navcol-2" style="position:absolute;right:20px;">
+            <ul class="nav navbar-nav" style="margin:0 0 0 0px;">
+                <li class="nav-item align-self-center" role="presentation" style="margin:0 5px;"><a
+                        href="preProcessing.html" class="nav-link" style="color:rgb(0,0,0);">文档预处理</a></li>
+                <li role="presentation" class="nav-item align-self-center" style="margin:0 5px;"><a
+                        href="invertedIndex.html" class="nav-link active"
+                        style="color:rgb(0,0,0);font-style:normal;font-family:Microsoft Yahei;font-weight:normal;margin:0;height:30px;line-height:5px;border:solid;border-radius:10px;border-color:rgb(0,0,0);border-width:3px;">倒排索引表</a>
+                </li>
+                <li class="dropdown" style="/*color:rgb(0,0,0);*/">
+                    <a data-toggle="dropdown" aria-expanded="false" href="#"
+                       class="dropdown-toggle nav-link dropdown-toggle"
+                       style="color:rgb(0,0,0);">文档检索</a>
+                    <div role="menu" class="dropdown-menu" style="background-color:rgba(199,199,199,0.5);"><a
+                            role="presentation" href="Retrieval/boolean.html" class="dropdown-item">布尔模型</a><a
+                            role="presentation" href="Retrieval/vectorSpaceModel.html"
+                            class="dropdown-item">向量空间模型</a>
+                        <a role="presentation" href="Retrieval/probabilityModel.html"
+                           class="dropdown-item">概率检索模型</a>
+                        <a role="presentation"
+                           href="Retrieval/languageModel.html"
+                           class="dropdown-item">语言模型</a>
+                    </div>
+                </li>
+                <li class="nav-item" role="presentation" style="margin:0 5px;">
+                    <a href="performance.html" class="nav-link" style="color:rgb(0,0,0);">检索模型性能</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<h3 id="heading1" class="text-center" style="font-family:Microsoft Yahei;font-weight:bold;margin:10px 0 10px;">小试牛刀</h3>
+<h3 id="heading2" class="text-center"
+    style="font-family:Microsoft Yahei;font-weight:bold;margin:10px 0 10px;display: none">倒排索引表</h3>
+<div id="rrapp" v-cloak>
+    <div class="container">
+        <div class="row">
+            <div id="test" class="col-md-8" style="padding:0;">
+                <div class="row">
+                    <p style="width:520px;margin-left:100px;">
+                        以如下几篇文档为例，完成下方词典表格和“schizophrenia”的倒排记录表<br/>
+                        文档0 breakthrough drug for schizophrenia<br/>
+                        文档1 new schizophrenia drug<br/>
+                        文档2 new hopes for schizophrenia patients<br/>
+                    </p>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="table-responsive justify-content-center" id="invertedindextable1"
+                             style="width:300px;margin: auto">
+                            <table class="table table-bordered test">
+                                <caption class="text-dark"
+                                         style="padding-top:5px;padding-bottom:5px;text-align:center;font-family:微软雅黑">
+                                    a. 词典
+                                </caption>
+                                <thead>
+                                <tr>
+                                    <th class="flex-row justify-content-center align-self-center">词项
+                                    </th>
+                                    <th>文档频率</th>
+                                </tr>
+                                </thead>
+                                <tbody style="width:300px;">
+                                <tr style="height:30px;">
+                                    <td style="width:108px;text-align:center;height:30px;">breakthrough</td>
+                                    <td>
+                                        <input type="text" required id="input1" style="width:100px;height:25px;"/>
+                                    </td>
+                                </tr>
+                                <tr style="height:30px;">
+                                    <td>drug</td>
+                                    <td>
+                                        <input type="text" required id="input2" style="width:100px;height:25px;"/>
+                                    </td>
+                                </tr>
+                                <tr style="height:30px;">
+                                    <td>for</td>
+                                    <td>
+                                        <input type="text" required id="input3" style="width:100px;height:25px;"/>
+                                    </td>
+                                </tr>
+                                <tr style="height:30px;">
+                                    <td>schizophrenia</td>
+                                    <td>
+                                        <input type="text" required id="input4" style="width:100px;height:25px;"/>
+                                    </td>
+                                </tr>
+                                <tr style="height:30px;">
+                                    <td>new</td>
+                                    <td>
+                                        <input type="text" required id="input5" style="width:100px;height:25px;"/>
+                                    </td>
+                                </tr>
+                                <tr style="height:30px;">
+                                    <td>hopes</td>
+                                    <td>
+                                        <input type="text" required id="input6" style="width:100px;height:25px;"/>
+                                    </td>
+                                </tr>
+                                <tr style="height:30px;">
+                                    <td>patients</td>
+                                    <td>
+                                        <input type="text" required id="input7" style="width:100px;height:25px;"/>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div style="text-align: center">
+                            <div class="table-responsive" id="invertedindextable2" style="width:300px;margin: auto">
+                                <table class="table table-bordered test">
+                                    <caption class="text-dark"
+                                             style="width:300px;text-align:center;padding-top:5px;padding-bottom:5px;font-family:微软雅黑">
+                                        b. 倒排记录表
+                                    </caption>
+                                    <thead>
+                                    <tr>
+                                        <th>文档ID</th>
+                                        <th>词项频率</th>
+                                        <th>位置索引</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>0</td>
+                                        <td>
+                                            <input type="text" required id="input8" style="width:50px;height:25px;"/>
+                                        </td>
+                                        <td>
+                                            <input type="text" required id="input9" style="width:50px;height:25px;"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>
+                                            <input type="text" required id="input10" style="width:50px;height:25px;"/>
+                                        </td>
+                                        <td>
+                                            <input type="text" required id="input11" style="width:50px;height:25px;"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td>
+                                            <input type="text" required id="input12" style="width:50px;height:25px;"/>
+                                        </td>
+                                        <td>
+                                            <input type="text" id="input13" style="width:50px;height:25px;"/>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <button class="btn btn-primary smallButton" type="button" id="invertedIndexConfirm">
+                                确定
+                            </button>
+                            <button class="btn btn-primary smallButton " type="button" id="createIndex"
+                                    style="/*display: none;*/">
+                                生成索引表
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="fullIndexTable" class="col-md-4" style="padding:0;display: none">
+                <div class="tab-pane active" role="tabpanel" style="display: table">
+                    <div class="table-responsive"
+                         style="background-color:#92a5c6;">
+                        <table class="table" style="table-layout: fixed;margin-bottom: 0">
+                            <thead class="justify-content-center align-items-center align-content-center align-self-center"
+                                   style="text-align:center;vertical-align:middle;">
+                            <tr style="font-weight:bold;color:#ffffff;">
+                                <td colspan="2" style="background-color:rgb(146,165,198);width:170px ">词典</td>
+                                <td rowspan="2" style="background-color:#92a5c6;vertical-align:middle;width: 290px;">
+                                    全体倒排记录表
+                                </td>
+                            </tr>
+                            <tr style="font-weight:bold;color:#ffffff;">
+                                <td style="background-color:#92a5c6;width: 85px;vertical-align: middle">词项词项</td>
+                                <td style="background-color:#92a5c6;width: 85px;">文档频率</td>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+                <div class="tab-pane active" role="tabpanel" style="height: 382px;display: table">
+                    <div class="table-responsive"
+                         style="overflow-x:hidden;overflow-y: scroll;height: 382px;background-color:#92a5c6;">
+                        <table class="table" style="height: 450px;table-layout: fixed">
+                            <tbody id="tbody1"
+                                   class="justify-content-center align-items-center align-content-center align-self-center"
+                                   style="text-align:center;vertical-align:middle;overflow-y: scroll;height: 310px">
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+            <div id="indexTable" class="col-md-4" style="padding:0;display: none">
+                <div class="table-responsive" style="text-align:center;vertical-align:middle;font-family:微软雅黑;
+                    background-color:rgb(178,209,158)">
+                    <table class="table" style="table-layout: fixed;margin-bottom: 0">
+                        <thead style="position:relative;top: 0;">
+                        <tr style="font-weight:bold;color:#ffffff;border-bottom-color:#4472c4;">
+                            <th colspan="3" style="background-color:rgb(178,209,158);border-bottom-color:#4472c4;
+                                    border-bottom:1px;font-size: 20px">倒排记录表
+                            </th>
+                        </tr>
+                        <tr style="font-weight:bold;color:#ffffff;background-color:#b2d19e;">
+                            <td>文档ID</td>
+                            <td>词项频率</td>
+                            <td>位置索引</td>
+                        </tr>
+                        </thead>
+                        <colgroup>
+                            <col width=20% />
+                            <col width=20% />
+                            <col width=60% />
+                        </colgroup>
+                        <tbody style="display: table-footer-group"></tbody>
+                    </table>
+                </div>
+                <div class="table-responsive" style="text-align:center;vertical-align:middle;font-family:微软雅黑;
+                    overflow-y: scroll;height: 383px;background-color:rgb(178,209,158)">
+                    <table class="table" id="table2" style="table-layout: fixed;height: 450px">
+                        <thead style="position:relative;top: 0;"></thead>
+                        <colgroup>
+                            <col width=20% />
+                            <col width=20% />
+                            <col width=60% />
+                        </colgroup>
+                        <tbody id="tbody2" style="display: table-footer-group"></tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-4" style="padding:0;">
+                <div>
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item" style="background-color:#c7c7c7;">
+                            <a class="nav-link" role="tab" data-toggle="tab" href="#tab-1"
+                               style="padding:6px 16px;font-size: 20px;">文档</a>
+                        </li>
+                        <li class="nav-item" style="background-color:#c7c7c7;">
+                            <a class="nav-link active" role="tab" data-toggle="tab" href="#tab-2"
+                               style="padding:6px 16px;font-size:20px">介绍</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content" style="height:405px;margin-right:0;">
+                        <div class="tab-pane" role="tabpanel" id="tab-1">
+                            <p class="tip" style="margin:0;"><br></p>
+                        </div>
+                        <div class="tab-pane active" role="tabpanel" id="tab-2">
+                            <p>
+                                <strong>倒排索引（inverted index）</strong>也常被称为反向索引、置入档案或反向档案，是一种索引方
+                                法，被用来存储在全文搜索下某个单词在一个文档或者一组文档中的存储位置的映射。它是文档检索系统中最常用
+                                的数据结构。通过倒排索引，可以根据单词快速获取包含这个单词的文档列表。倒排索引主要由两个部分组成：“
+                                <strong>词项词典（dictionary）</strong>”和“<strong>全体倒排记录表（postings）</strong>”。<br>
+                                <br>
+                                每个词项都所对应的记录出现该词的文档列表称为<strong>倒排记录表（posting list）</strong>或<strong>
+                                倒排表（inverted list）。</strong>倒排表中每个元素记录的是该词项在此元素中的出现信息（包括出现次
+                                数和出现位置）<br>
+                                <br>
+                                <strong>文档频率（document frequency）</strong>：出现某词项的文档数目，也就是每个倒排记录表的长度。<br>
+                                <br>
+                                <strong>词项频率（term frequency）：</strong>词项在文档中出现的次数。<br>
+                                <br>
+                                <strong>位置信息索引（positional index）：</strong>简称位置索引，倒排记录中特定词项出现在特定文
+                                档的中位置信息。<br>
+                                <br>
+                                <strong>建立倒排索引的主要步骤</strong><br>
+                                1、收集待建索引的文档<br>
+                                2、对这些文档中文本进行词条化<br>
+                                3、对词条进行语言学预处理，得到词项<br>
+                                4、根据词项对所有文档建立索引<br>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="selectModel" class="row" style="display:none;margin-top: 10px">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label class="control-label title">请选择检索模型：</label>
+                    <label>
+                        <input type="radio" name="modelType" value="bool"> 布尔模型
+                    </label>
+                    <label>
+                        <input type="radio" name="modelType" value="vsm"> 向量空间模型
+                    </label>
+                    <label>
+                        <input type="radio" name="modelType" value="pbm"> 概率检索模型
+                    </label>
+                    <label>
+                        <input type="radio" name="modelType" value="lm"> 语言模型
+                    </label>
+                    <button id="nextStep" class="btn btn-primary smallButton" role="button"
+                            style="height:40px;line-height:40px;margin-left: 50px;">下一步>>>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:include="include::foot"></div>
+
+<script type="text/javascript" src="/js/vue.min.js"></script>
+<script type="text/javascript" th:src="@{../js/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{../js/bootstrap.bundle.min.js}"></script>
+<script type="text/javascript" th:src="@{../js/invertedIndex.js}"></script>
+</body>
+
+</html>

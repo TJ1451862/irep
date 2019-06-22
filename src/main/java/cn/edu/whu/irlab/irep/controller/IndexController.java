@@ -38,9 +38,9 @@ public class IndexController {
         return "explanation";
     }
 
-    @RequestMapping(value = "IRforCN/invertedindex.html")
+    @RequestMapping(value = "IRforCN/invertedIndex.html")
     public String iicnController(){
-        return "IRforCN/invertedindex";
+        return "IRforCN/invertedIndex";
     }
 
     @RequestMapping(value = "IRforCN/performance.html")
@@ -48,9 +48,9 @@ public class IndexController {
         return "IRforCN/performance";
     }
 
-    @RequestMapping(value = "IRforCN/preprocessing.html")
-    public String preprocessingCnController(){
-        return "IRforCN/preprocessing";
+    @RequestMapping(value = "IRforCN/preProcessing.html")
+    public String preProcessingCnController(){
+        return "IRforCN/preProcessing";
     }
 
     @RequestMapping(value = "IRforCN/informationretrieval/boolean.html")
@@ -74,9 +74,9 @@ public class IndexController {
         return "IRforCN/informationretrieval/vectorSpaceModel";
     }
 
-    @RequestMapping(value = "IRforEN/invertedindex.html")
+    @RequestMapping(value = "IRforEN/invertedIndex.html")
     public String iienController(){
-        return "IRforEN/invertedindex";
+        return "IRforEN/invertedIndex";
     }
 
     @RequestMapping(value = "IRforEN/performance.html")
@@ -84,9 +84,9 @@ public class IndexController {
         return "IRforEN/performance";
     }
 
-    @RequestMapping(value = "IRforEN/preprocessing.html")
-    public String preprocessingEnController(){
-        return "IRforEN/preprocessing";
+    @RequestMapping(value = "IRforEN/preProcessing.html")
+    public String preProcessingEnController(){
+        return "IRforEN/preProcessing";
     }
 
     @RequestMapping(value = "IRforEN/informationretrieval/boolean.html")

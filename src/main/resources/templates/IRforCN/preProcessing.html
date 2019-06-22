@@ -1,15 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.w3.org/1999/xhtml">
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IR&amp;NLP</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css">
-    <link rel="stylesheet" th:href="@{../css/styles.min.css}">
-    <link rel="stylesheet" type="text/css" th:href="@{../css/styles.css}">
-    <link rel="stylesheet" type="text/css" th:href="@{../css/myStyles.css}">
-</head>
+<head th:include="include::header"></head>
+
 
 <body style="background-size:cover;">
 <nav class="navbar navbar-light navbar-expand-md" style="background-color:rgb(47,85,151);position:relative;">
@@ -35,18 +28,18 @@
     </div>
 </nav>
 <nav class="navbar navbar-light navbar-expand-md">
-    <div class="container-fluid"><a href="../IRforEN/preprocessing.html" class="navbar-brand brand">中文</a>
+    <div class="container-fluid"><a href="../IRforEN/preProcessing.html" class="navbar-brand brand">中文</a>
         <button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-2"><span class="sr-only">Toggle navigation</span><span
                 class="navbar-toggler-icon"></span></button>
         <div
                 class="collapse navbar-collapse" id="navcol-2" style="position:absolute;right:20px;">
             <ul class="nav navbar-nav" style="margin:0 0 0 0px;">
                 <li role="presentation" class="nav-item align-self-center" style="margin:0 5px;"><a
-                        href="preprocessing.html" class="nav-link active"
+                        href="preProcessing.html" class="nav-link active"
                         style="color:rgb(0,0,0);font-style:normal;font-family:Microsoft Yahei;font-weight:normal;margin:0;height:30px;line-height:5px;border:solid;border-radius:10px;border-color:rgb(0,0,0);border-width:3px;">文档预处理</a>
                 </li>
                 <li class="nav-item align-self-center" role="presentation" style="margin:0 5px;"><a
-                        href="invertedindex.html" class="nav-link" style="color:rgb(0,0,0);">倒排索引表</a></li>
+                        href="invertedIndex.html" class="nav-link" style="color:rgb(0,0,0);">倒排索引表</a></li>
                 <li
                         class="dropdown" style="/*color:rgb(0,0,0);*/"><a data-toggle="dropdown" aria-expanded="false"
                                                                           href="#"
@@ -191,9 +184,8 @@
                                                 style="float:left;border-bottom-right-radius:0px;border-top-right-radius:0px;height:30px;width:30px;background-color:#4472c4;padding:0px;">
                                             -
                                         </button>
-                                        <input
-                                                type="text" value="0" id="docId"
-                                                style="width:40px;height:30px;float:left;text-align:center;"/>
+                                        <input type="text" value="0" id="docId"
+                                               style="width:40px;height:30px;float:left;text-align:center;"/>
                                         <button class="btn btn-primary" type="button" id="num-jia"
                                                 style="border-bottom-left-radius:0px;border-top-left-radius:0px;height:30px;background-color:#4472c4;padding:0px;width:30px;display:inline-block;top:0px;float:left;">
                                             +
@@ -212,7 +204,8 @@
                                     <h3 class="title">选择分词器：</h3>
                                 </td>
                                 <td>
-                                    <select class="d-none float-none d-flex justify-content-center align-items-center align-content-center align-self-center visible"
+                                    <select id="analyzerName"
+                                            class="d-none float-none d-flex justify-content-center align-items-center align-content-center align-self-center visible"
                                             style="height:30px;font-size:20px;font-family:微软雅黑;width:100%;">
                                         <option value="standard" selected="">标准分词器</option>
                                         <option value="whitespace">空格分词器</option>
@@ -223,24 +216,23 @@
                                 </td>
                                 <td>
                                     <div class="form-check .align-self-center" style="margin-left:10px;width:100%;">
-                                        <input class="form-check-input" type="checkbox" id="formCheck-1"
+                                        <input class="form-check-input" type="checkbox" id="isRemoveStopWord"
+                                               name="isRemoveStopWord"
                                                style="width: 20px;height: 20px;vertical-align: middle;position: relative;margin: auto 0;">
-                                        <label class="form-check-label title" for="formCheck-1" style="margin: auto 10px auto 5px">
+                                        <label class="form-check-label title" for="isRemoveStopWord"
+                                               style="margin: auto 10px auto 5px">
                                             去停用词</label>
                                     </div>
                                 </td>
                                 <td>
-                                    <button class="btn btn-primary btn-sm smallButton" type="button" id="preprocess"
-                                            style="margin-left:10px;font-size:20px;height:40px;width:120px;">处理
+                                    <button class="btn btn-primary btn-sm smallButton" type="button" id="preProcess"
+                                            style="margin:0 20px;font-size:20px;height:40px;width:120px;">处理
                                     </button>
                                 </td>
                                 <td>
-                                    <img class="float-right" src="../assets/img/捕获.png" id="processnextStep"
-                                         style="display:none;width:100px;height:60px;margin-top:-9px;margin-right:22px;"><a
-                                        class="btn btn-primary btn-sm smallButton" role="button"
-                                        href="IRforCN/invertedindex.html"
-                                        id="processnextStep2"
-                                        style="margin-left:0px;font-size:18px;height:40px;display:none;">下一步</a>
+                                    <a id="nextStep" class="btn btn-primary smallButton" role="button"
+                                       th:href="@{invertedIndex.html}"
+                                       style="line-height:40px; display:none;margin-left: 90px;">下一步>>></a>
                                 </td>
                             </tr>
                             </tbody>
@@ -250,7 +242,6 @@
                         <h3 style="height:40px;line-height:40px;font-size:20px;padding:0;margin:0;color:rgb(0,0,0);font-family:微软雅黑;font-weight:bold;">
                             预处理结果</h3>
                         <div id="result" class="text" style="height:180px;">
-                            <p></p>
                         </div>
                     </div>
                 </div>
@@ -258,114 +249,7 @@
         </div>
     </div>
 </div>
-<footer style="color:rgb(47,85,151);width:100%;height:35px;line-height:35px;background-color:#2f5597;background-position:bottom;margin:0px;padding:0;position:fixed;bottom:0;">
-    <p class="text-center" style="font-family:微软雅黑;color:rgb(255,255,255);">©copyright 2018 武汉大学信息检索与知识挖掘研究所 </p>
-</footer>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
+<div th:include="include::foot"/>
+<div th:include="include::script"/>
 </body>
-<script type="text/javascript">
-    var num_jia = document.getElementById("num-jia");
-    var num_jian = document.getElementById("num-jian");
-    var input_num = document.getElementById("docId");
-    num_jia.onclick = function () {
-        if (input_num.value < 165)
-            input_num.value = parseInt(input_num.value) + 1;
-    }
-    num_jian.onclick = function () {
-
-        if (input_num.value <= 0) {
-            input_num.value = 0;
-        } else {
-
-            input_num.value = parseInt(input_num.value) - 1;
-        }
-
-    }
-</script>
-
-<script type="text/javascript">
-    $(function () {
-        var json1 = null;
-        $("#docId").change(function () {
-            $("#originalFile").text("");//初始化
-            var docId = $("#docId").val();
-            if ((docId <= 165) && (docId >= 0)) {
-                $.ajax({
-                    type: "POST",
-                    url: "preprocessing/getDoc",
-                    data: {"docId": docId},
-                    dataType: "text",
-                    contentType: "application/x-www-form-urlencoded; charset=utf-8",
-                    traditional: true,
-                    success: function (result) {
-                        console.log(result);
-                        $("#originalFile").append(result);
-                    },
-                    error: function () {
-                        alert("检索出错！");
-                        $("#originalFile").text("");// 清空数据
-                    }
-                })//end of ajax
-            } else {
-                alert("请输入0-165之间的任意整数");
-            }
-        })
-        $("#num-jia").click(function () {
-            $("#originalFile").text("");//初始化
-            var docId = $("#docId").val();
-            $.ajax({
-                type: "POST",
-                url: "preprocessing/getDoc",
-                data: {"docId": docId},
-                dataType: "text",
-                contentType: "application/x-www-form-urlencoded; charset=utf-8",
-                traditional: true,
-                success: function (result) {
-                    console.log(result);
-                    $("#originalFile").append(result);
-
-                },
-                error: function () {
-                    alert("检索出错！");
-                    $("#results").text("");// 清空数据
-                }
-            })//end of ajax
-        })
-        $("#num-jian").click(function () {
-            $("#originalFile").text("");//初始化
-            var docId = $("#docId").val();
-            $.ajax({
-                type: "POST",
-                url: "preprocessing/getDoc",
-                data: {"docId": docId},
-                dataType: "text",
-                contentType: "application/x-www-form-urlencoded; charset=utf-8",
-                traditional: true,
-                success: function (result) {
-                    console.log(result);
-                    $("#originalFile").append(result);
-
-                },
-                error: function () {
-                    alert("检索出错！");
-                    $("#results").text("");// 清空数据
-                }
-            })//end of ajax
-        })
-        $("#segment").click(function () {
-            $("#result").text("");//初始化
-            $("#result").append(json1.segment);
-        })
-        $("#removePuncuation").click(function () {
-            $("#result").text("");//初始化
-            $("#result").append(json1.removePun);
-        })
-        $("#removeStopwords").click(function () {
-            $("#result").text("");//初始化
-            $("#result").append(json1.removeStopWords);
-        })
-
-    })
-</script>
 </html>

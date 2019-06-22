@@ -1,30 +1,21 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.w3.org/1999/xhtml">
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>首页</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css">
-    <link rel="stylesheet" th:href="@{css/styles.min.css}">
-    <link rel="stylesheet" type="text/css" th:href="@{css/styles.css}">
-</head>
+<head th:include="include::header"></head>
 
 <body class="body1">
 <div th:include="common/top::top"/>
 <h1 class="text-center"
     style="height:80px;line-height:80px;font-size:80px;padding:0;margin:180px 0px 40px;color:rgb(32,56,100);font-family:微软雅黑;">
     IR&amp;NLP虚拟实验教学平台<br></h1>
-<div style="text-align:center;margin:18px;padding:auto;"><a class="btn btn-primary" role="button" href="IRforCN.html"
+<div style="text-align:center;margin:18px;padding:auto;">
+    <a class="btn btn-primary" role="button" href="IRforCN.html"
                                                             style="width:300px;height:80px;margin:0 60px;font-size:45px;font-family:微软雅黑;/*line-height:auto;*/background-color:rgb(89,118,166);text-align:center;position:relative;/*left:25%;*/">信息检索实验</a>
-    <a
-            class="btn btn-primary" role="button" th:href="@{NLP.html}"
-            style="width:300px;height:80px;font-size:45px;line-height:68px;text-align:center;background-color:rgb(89,118,166);display:inline-block;margin:0px 60px;position:relative;/*left:75%;*/font-family:微软雅黑;">NLP实验</a>
+    <a class="btn btn-primary" role="button" th:href="@{NLP.html}"
+       style="width:300px;height:80px;font-size:45px;line-height:68px;text-align:center;background-color:rgb(89,118,166);display:inline-block;margin:0px 60px;position:relative;/*left:75%;*/font-family:微软雅黑;">NLP实验</a>
 </div>
-<div th:include="common/footer::foot"></div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
-<script th:src="@{js/script.min.js}"></script>
+<div th:include="include::foot"/>
+<div th:include="include::script"/>
 </body>
 
 </html>

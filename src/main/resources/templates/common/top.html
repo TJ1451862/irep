@@ -5,8 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>导航栏</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css">
-    <link rel="stylesheet" th:href="@{css/styles.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{css/bootstrap.min.css}">
     <link rel="stylesheet" type="text/css" th:href="@{css/styles.css}">
 </head>
 
@@ -14,7 +13,8 @@
 <div th:fragment="top">
     <nav class="navbar navbar-light navbar-expand-md" style="background-color:rgb(47,85,151);position:relative;">
         <div class="container-fluid">
-            <a class="navbar-brand" href="../index.html" style="width:340px;background-image:url(img/logo.png);background-size:cover;height:40px;padding:10px 0px;"></a>
+            <a class="navbar-brand" href="../index.html"
+               style="width:340px;background-image:url(img/logo.png);background-size:cover;height:40px;padding:10px 0px;"></a>
             <button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"></button>
             <div class="collapse navbar-collapse" id="navcol-1" style="position:absolute;right:20px;">
                 <ul class="nav navbar-nav" style="margin:0 0 0 0px;">
@@ -36,9 +36,11 @@
     </nav>
 
 </div>
+<div th:fragment="script">
+    <script type="text/javascript" th:src="@{js/jquery.min.js}"></script>
+</div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
-<script th:src="@{js/script.min.js}"></script>
 </body>
 
 </html>

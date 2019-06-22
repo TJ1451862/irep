@@ -1,17 +1,54 @@
-/*for preprocessing.html */
-.title{
-    height:40px;
-    line-height:40px;
-    font-size:20px;
-    padding:0;
-    margin:0;
-    color:rgb(0,0,0);
-    font-family:微软雅黑;
-    float:none;
-    font-weight:bold;
+/**
+common
+ */
+.title {
+    height: 40px;
+    line-height: 40px;
+    font-size: 20px;
+    padding: 0;
+    margin: 0;
+    color: rgb(0, 0, 0);
+    font-family: 微软雅黑;
+    float: none;
+    font-weight: bold;
 }
 
+/**
+preProcessing.html
+ */
 /*表格共5列，每列等宽*/
-.fifth td{
+.fifth td {
     width: 20%;
+}
+
+.test th {
+    width: 150px;
+    text-align: center;
+}
+
+.test td {
+    width: 150px;
+    text-align: center;
+    height: 30px;
+}
+
+/**
+invertedIndex.html
+ */
+.table td {
+    padding: 2px;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+    text-align: center;
+
+}
+
+/*超出部分显示省略号*/
+.award-name {
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 100%;
 }

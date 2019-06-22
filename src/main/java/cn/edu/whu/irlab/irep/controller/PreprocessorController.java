@@ -18,7 +18,7 @@ import java.util.ArrayList;
  * @desc 中文文档预处理交互层
  **/
 @RestController
-@RequestMapping("IRforCN/preprocessing")
+@RequestMapping("IRforCN/preProcessing")
 public class PreprocessorController {
 
     @Autowired
@@ -41,6 +41,7 @@ public class PreprocessorController {
                                        @RequestParam(name = "isRemoveStopWord") boolean isRemoveStopWord) {
         ArrayList<String> termList = preProcessor.preProcess(token, analyzerName, isRemoveStopWord);
         String string = termList.toString();
+        System.out.println(string);
         return string;
     }
 
