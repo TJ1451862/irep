@@ -11,6 +11,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 import java.util.*;
 
@@ -33,9 +34,6 @@ public class VSMRetriever {
 
     @Autowired
     public ReadDoc readDoc;
-
-    @Autowired
-    public IndexTypeConstructor indexTypeConstructor;
 
     private String indexType;//索引类型
 
@@ -62,7 +60,8 @@ public class VSMRetriever {
                         double smoothParam,
                         String analyzerName,
                         boolean isRemoveStopWord) {
-        this.indexType = indexTypeConstructor.indexTypeConstructor(analyzerName,isRemoveStopWord);
+
+        this.indexType = IndexTypeConstructor.indexTypeConstructor(analyzerName,isRemoveStopWord);
         this.formulaID = formulaID;
         this.smoothParam = smoothParam;
         this.analyzerName = analyzerName;

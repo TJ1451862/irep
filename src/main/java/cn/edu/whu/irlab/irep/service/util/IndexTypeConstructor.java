@@ -9,10 +9,9 @@ import org.springframework.stereotype.Service;
  * @desc IndexType构造器
  **/
 
-@Service
 public class IndexTypeConstructor {
 
-    public String indexTypeConstructor(String analyzer,boolean isRemoveStopWord){
+    public static String indexTypeConstructor(String analyzer,boolean isRemoveStopWord){
         String indexType;
         String suffixPositive="_remove";
         String suffixNegative="_not_remove";

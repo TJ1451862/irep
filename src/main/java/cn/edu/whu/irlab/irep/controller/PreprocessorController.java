@@ -22,9 +22,6 @@ import java.util.ArrayList;
 public class PreprocessorController {
 
     @Autowired
-    public PreProcessor preProcessor;
-
-    @Autowired
     public Find find;
 
     /**
@@ -39,7 +36,7 @@ public class PreprocessorController {
     public String preProcessController(@RequestParam(name = "token") String token,
                                        @RequestParam(name = "analyzerName") String analyzerName,
                                        @RequestParam(name = "isRemoveStopWord") boolean isRemoveStopWord) {
-        ArrayList<String> termList = preProcessor.preProcess(token, analyzerName, isRemoveStopWord);
+        ArrayList<String> termList = PreProcessor.preProcess(token, analyzerName, isRemoveStopWord);
         String string = termList.toString();
         System.out.println(string);
         return string;

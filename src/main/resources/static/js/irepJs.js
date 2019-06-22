@@ -1,4 +1,20 @@
 /**
+ * 增减input中的数字大小
+ * @type {HTMLElement}
+ */
+function num_jia(upperLimit, stepLength) {
+    var input_num = $("[name='input_num']").get(0);
+    if (input_num.value < upperLimit)
+        input_num.value = parseFloat(input_num.value) + stepLength;
+}
+
+function num_jian(lowerLimit, stepLength) {
+    var input_num = $("[name='input_num']").get(0);
+    if (input_num.value > lowerLimit)
+        input_num.value = parseFloat(input_num.value) - stepLength;
+}
+
+/**
  * preProcessing.html
  */
 $(function () {
@@ -217,13 +233,13 @@ $('#nextStepOfInvertedIndex').click(function () {
     var storage = window.localStorage;
     storage.model = model;
     if (model == "vsm") {
-        $(location).attr("href","../IRforCN/Retrieval/vectorSpaceModel.html");
+        $(location).attr("href", "../IRforCN/Retrieval/vectorSpaceModel.html");
     } else if (model == "bool") {
-        $(location).attr("href","../IRforCN/Retrieval/boolean.html");
+        $(location).attr("href", "../IRforCN/Retrieval/boolean.html");
     } else if (model == "pbm") {
-        $(location).attr("href","../IRforCN/Retrieval/probabilityModel.html");
+        $(location).attr("href", "../IRforCN/Retrieval/probabilityModel.html");
     } else if (model == "lm") {
-        $(location).attr("href","../IRforCN/Retrieval/languageModel.html");
+        $(location).attr("href", "../IRforCN/Retrieval/languageModel.html");
     }
 
 });
@@ -317,7 +333,7 @@ function selectInvertedIndex(term) {
             $("#result").text("");// 清空数据
         }
     })//end of ajax
-}
+};
 
 /**
  * 获取文章，并强调词项
@@ -355,7 +371,56 @@ function getDoc(docId, term) {
             $("#tab-1").text("");// 清空数据
         }
     })//end of ajax
-}
+};
+
+var json = null;
+/**
+ * vectorSpaceModel.html
+ */
+$("#searchForVSM").click(function () {
+
+    $("#first").hide();
+    $("#second").show();
+    var storage = window.localStorage;
+    var query = $("#inputForVSM").val();
+    var formulaID =parseInt($("input[name='formula']:checked").val());
+    var smoothParam = $("#smoothParam").val();
+    var analyzerName = storage.analyzerName;
+    var isRemoveStopWord = storage.isRemoveStopWord;
+
+    $("#searchResults").text("");
+    $.ajax({
+        type: "POST",
+        url: "vectorSpaceModel/vsmSearch",
+        dataType: "json",
+        data: {
+            "query": query,
+            "formulaId": "1",
+            "smoothParam": smoothParam,
+            "analyzerName": analyzerName,
+            "isRemoveStopWord": isRemoveStopWord
+        },
+        contentType: "application/x-www-form-urlencoded; charset=utf-8",
+        traditional: true,
+        success: function (result) {
+            console.log(result);
+            // json = result;
+            // $.each(result, function (index, obj) {
+            //     var str1 = obj.content.substring(0, 90) + "......";
+            //     $('#searchResults').append("<a id='" + index + "' href='' class='ra' style='font-size: 20px;font-family=Microsoft Yahei;font-weight: bold; margin-right: 20px' data-toggle='modal' data-target='#myModal' onclick='getContent(this.id)' >" + obj.title + "</a>");
+            //     $('#searchResults').append("<br>");
+            //     $('#searchResults').append("<p>" + str1 + "</p>");
+            //
+            // });
+            // $searchResults = $("#searchResults").find("*");
+        },
+        error: function () {
+            alert("检索出错！");
+            $("#searchResults").text("");// 清空数据
+        }
+    })
+});//检索功能
+
 
 
 

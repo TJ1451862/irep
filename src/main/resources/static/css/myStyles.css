@@ -52,3 +52,23 @@ invertedIndex.html
     white-space: nowrap;
     width: 100%;
 }
+
+#TF label p{
+    background:#4472c4;
+    color:#ffffff;
+    font-size:20px;
+    font-weight: bold;
+    width:200px;
+    text-align:center;
+    height:32px;
+    display: inline-block;
+}
+
+#TF input{
+    height:18px;
+    width:18px;
+}
+
+.form-check{
+    padding-left: 0;
+}

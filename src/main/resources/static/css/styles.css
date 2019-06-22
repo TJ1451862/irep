@@ -68,13 +68,6 @@ p {
     }
 }
 
-.col-md-6 {
-    position: relative;
-    width: 100%;
-    min-height: 1px;
-    padding-right: 30px;
-    padding-left: 30px;
-}
 
 .suojin {
     padding: 10px;
@@ -208,9 +201,10 @@ p {
     }}
 
 .col-md-6{
-    position:relative;width:100%;min-height:1px;padding-right:30px;padding-left:30px
+    position:relative;
+    width:100%;
+    min-height:1px;
 }
-
 
 .bigButton{
     margin:0 5px 0 0;background-color:#ccc;color:#000;font-family:"微软雅黑";padding:6px

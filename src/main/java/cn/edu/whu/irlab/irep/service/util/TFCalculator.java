@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 
-@Service
 public class TFCalculator {
 
 
@@ -18,7 +17,7 @@ public class TFCalculator {
      *                  4:tf = tf > 0 ? 1 : 0;
      *                  5:(1+log(tf))/(1+log(avg(tfs))) avg(tfs)为所有tf的平均值
      */
-    public Map<String, Double> calculateTF(Map<String, Double> tfMap, int formulaID, double smoothParam) {
+    public static Map<String, Double> calculateTF(Map<String, Double> tfMap, int formulaID, double smoothParam) {
         Map<String, Double> result = new HashMap<>();
         double tf = 0;
         double max = calculateBasicParam(tfMap, "max");
@@ -50,7 +49,7 @@ public class TFCalculator {
         return result;
     }
 
-    private double calculateBasicParam(Map<String, Double> tfMap, String sign) {
+    private static double calculateBasicParam(Map<String, Double> tfMap, String sign) {
         double param = 0;
         double temptf = 0;
         double sum = 0;

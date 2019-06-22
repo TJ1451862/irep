@@ -27,8 +27,7 @@ public class InvertedIndexController {
     @Autowired
     public InvertedIndexServiceImpl invertedIndexService;
 
-    @Autowired
-    IndexTypeConstructor indexTypeConstructor;
+
 
     @Autowired
     public Find find;
@@ -44,7 +43,7 @@ public class InvertedIndexController {
     @RequestMapping("/fullIndex")
     public JSONArray selectFullIndexController(@RequestParam(name = "analyzerName") String analyzerName,
                                                @RequestParam(name = "isRemoveStopWord") boolean isRemoveStopWord) {
-        String indexType = indexTypeConstructor.indexTypeConstructor(analyzerName, isRemoveStopWord);
+        String indexType = IndexTypeConstructor.indexTypeConstructor(analyzerName, isRemoveStopWord);
         List<FullIndex> fullIndexList = fullIndexService.selectFullIndexByIndexType(indexType);
         if (fullIndexList == null) {
             IndexGenerator indexGenerator = new IndexGenerator(folderPath, analyzerName, isRemoveStopWord);
@@ -69,7 +68,7 @@ public class InvertedIndexController {
     public JSONArray selectInvertedIndexController(@RequestParam(name = "analyzerName") String analyzerName,
                                                    @RequestParam(name = "isRemoveStopWord") boolean isRemoveStopWord,
                                                    @RequestParam(name = "term") String term) {
-        String indexType = indexTypeConstructor.indexTypeConstructor(analyzerName, isRemoveStopWord);
+        String indexType = IndexTypeConstructor.indexTypeConstructor(analyzerName, isRemoveStopWord);
         InvertedIndex invertedIndex = new InvertedIndex();
         invertedIndex.setTerm(term);
         invertedIndex.setIndexType(indexType);

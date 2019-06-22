@@ -21,11 +21,10 @@ import java.util.ArrayList;
  * @desc 中文预处理器
  **/
 
-@Service
 public class PreProcessor {
 
 
-    public ArrayList<String> preProcess(String token,String analyzerName,boolean isRemoveStopWord){
+    public static ArrayList<String> preProcess(String token,String analyzerName,boolean isRemoveStopWord){
         ArrayList<String> result=new ArrayList<>();
         String terms;
         if (isRemoveStopWord){
@@ -40,7 +39,7 @@ public class PreProcessor {
     }
 
     //分词
-    public String outputAnalyzer(String token, String analyzerName){
+    public static String outputAnalyzer(String token, String analyzerName){
         Analyzer analyzer=analyzerSelector(analyzerName);
         StringBuilder stringBuilder =new StringBuilder();
         StringReader reader=new StringReader(token);
@@ -61,8 +60,12 @@ public class PreProcessor {
         return outPut;
     }
 
-    //去标点
-    public ArrayList<String> removePunctuation(String seg){
+    /**
+     * 去标点
+     * @param seg 待处理字符串
+     * @return 去标点结果
+     */
+    public static ArrayList<String> removePunctuation(String seg){
         String splits = seg.replaceAll("\\pP|\\pS|\\pM|\\pN|\\pC", "");// 去除标点符号
 
         splits = splits.replaceAll(" "," " );
@@ -90,8 +93,12 @@ public class PreProcessor {
         return termList;
     }
 
-    //去停用词
-    public ArrayList<String> removeStopWords(ArrayList<String> termList){
+    /**
+     * 去停用词
+     * @param termList 待处理
+     * @return 处理结果
+     */
+    public static ArrayList<String> removeStopWords(ArrayList<String> termList){
         ArrayList<String> terms = termList;
         String dataDir = null;
         try{
@@ -119,7 +126,7 @@ public class PreProcessor {
      *                     CJK 二分法分词器
      *                     smartChinese 中文智能分词器
      * */
-    public Analyzer analyzerSelector(String analyzerName){
+    public static Analyzer analyzerSelector(String analyzerName){
         Analyzer analyzer=null;
         switch (analyzerName){
             case "standard":

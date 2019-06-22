@@ -5,6 +5,7 @@ import cn.edu.whu.irlab.irep.service.util.TFCalculator;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,7 +16,7 @@ public class QueryForVSM extends Query {
 
     private List<VectorI> vector=new ArrayList<>();
 
-    private Map<String,Double> tfMap;
+    private Map<String,Double> tfMap=new HashMap<>();
 
     public QueryForVSM(String content, String analyzerName, boolean isRemoveStopWord) {
         super(content, analyzerName, isRemoveStopWord);

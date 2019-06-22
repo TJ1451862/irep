@@ -7,9 +7,6 @@ import java.util.ArrayList;
 
 public class Query {
 
-    @Autowired
-    public PreProcessor preProcessor;
-
     private String content;
 
     private ArrayList<String> preProcessResult;
@@ -32,6 +29,6 @@ public class Query {
     }
 
     public void setPreProcessResult(String analyzerName,boolean isRemoveStopWord) {
-        this.preProcessResult = preProcessor.preProcess(content,analyzerName,isRemoveStopWord);
+        this.preProcessResult = PreProcessor.preProcess(content,analyzerName,isRemoveStopWord);
     }
 }
