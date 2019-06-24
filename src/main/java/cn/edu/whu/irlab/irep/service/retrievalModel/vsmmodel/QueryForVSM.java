@@ -1,8 +1,7 @@
 package cn.edu.whu.irlab.irep.service.retrievalModel.vsmmodel;
 
 import cn.edu.whu.irlab.irep.entity.Query;
-import cn.edu.whu.irlab.irep.service.util.TFCalculator;
-import org.springframework.beans.factory.annotation.Autowired;
+import cn.edu.whu.irlab.irep.service.util.Calculator;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,9 +9,6 @@ import java.util.List;
 import java.util.Map;
 
 public class QueryForVSM extends Query {
-
-    @Autowired
-    public TFCalculator tfCalculator;
 
     private List<VectorI> vector=new ArrayList<>();
 
@@ -43,7 +39,7 @@ public class QueryForVSM extends Query {
                 tfMap.put(term,1.0);
             }
         }
-        tfMap=tfCalculator.calculateTF(tfMap,formulaID,smoothParam);
+        tfMap= Calculator.calculateTF(tfMap,formulaID,smoothParam);
     }
 
     public List<VectorI> getVector() {

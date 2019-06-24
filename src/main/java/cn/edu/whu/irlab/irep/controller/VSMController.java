@@ -40,99 +40,167 @@ public class VSMController {
     @Autowired
     public ReadDoc readDoc;
 
-
     @Autowired
     public ResultServiceImpl resultService;
 
+    @Autowired
+    public VSMRetriever vsmRetriever;
+
     /**
-     * 向量空间模型 检索功能 控制层
+     * 返回检索结果
      *
      * @param queryContent     查询语句
      * @param formulaId        TF计算公式ID
      * @param smoothParam      平滑系数
      * @param analyzerName     分词器名称
      * @param isRemoveStopWord 是否去停用词
-     * @return 检索结果和各中间结果
+     * @return 检索结果
      */
     @ResponseBody
     @RequestMapping("/vsmSearch")
-    public JSONObject vsmSearch(@RequestParam(name = "query") String queryContent,
-                                @RequestParam(name = "formulaId") int formulaId,
-                                @RequestParam(name = "smoothParam") double smoothParam,
-                                @RequestParam(name = "analyzerName") String analyzerName,
-                                @RequestParam(name = "isRemoveStopWord") boolean isRemoveStopWord) {
-        JSONObject result = new JSONObject();
-        //put 检索结果
+    public JSONArray vsmSearchController(@RequestParam(name = "query") String queryContent,
+                                         @RequestParam(name = "formulaId") int formulaId,
+                                         @RequestParam(name = "smoothParam") double smoothParam,
+                                         @RequestParam(name = "analyzerName") String analyzerName,
+                                         @RequestParam(name = "isRemoveStopWord") boolean isRemoveStopWord) {
+        isNeedSearch(queryContent, formulaId, smoothParam, analyzerName, isRemoveStopWord);
         JSONArray searchResult = new JSONArray();
-        VSMRetriever retriever = new VSMRetriever(queryContent, formulaId, smoothParam, analyzerName, isRemoveStopWord);
-        retriever.search();
-
-        List<ResultI> resultIList = retriever.getResultAfterSort();
+        List<ResultI> resultIList = vsmRetriever.getResultAfterSort();
         for (int i = 0; i < resultIList.size(); i++) {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("title", resultIList.get(i).getTitle());
             jsonObject.put("content", find.findDoc(resultIList.get(i).getDocID(), true));
             searchResult.add(jsonObject);
         }
-        result.put("searchResult", searchResult);
+        return searchResult;
+    }
 
-        //put IDF
-        Map<String, Double> term_idf = retriever.getTerm_idf();
-        result.put("idf", JSON.parseObject(JSON.toJSONString(term_idf)));
+    @ResponseBody
+    @RequestMapping("/idf")
+    public Map<String, Double> getIdfController(@RequestParam(name = "query") String queryContent,
+                                                @RequestParam(name = "formulaId") int formulaId,
+                                                @RequestParam(name = "smoothParam") double smoothParam,
+                                                @RequestParam(name = "analyzerName") String analyzerName,
+                                                @RequestParam(name = "isRemoveStopWord") boolean isRemoveStopWord) {
+        isNeedSearch(queryContent, formulaId, smoothParam, analyzerName, isRemoveStopWord);
+        return vsmRetriever.getTerm_idf();
+    }
 
-        //put 查询预处理结果
+    @ResponseBody
+    @RequestMapping("/ppq")
+    public JSONObject ppqController(@RequestParam(name = "query") String queryContent,
+                                    @RequestParam(name = "formulaId") int formulaId,
+                                    @RequestParam(name = "smoothParam") double smoothParam,
+                                    @RequestParam(name = "analyzerName") String analyzerName,
+                                    @RequestParam(name = "isRemoveStopWord") boolean isRemoveStopWord) {
         JSONObject ppq = new JSONObject();
-        ppq.put("查询语句", queryContent);
-        ppq.put("预处理结果", retriever.getQuery().getPreProcessResult());
-        result.put("PPQ", ppq);
+        isNeedSearch(queryContent, formulaId, smoothParam, analyzerName, isRemoveStopWord);
+        ppq.put("query", queryContent);
+        ppq.put("result", vsmRetriever.getQuery().getPreProcessResult());
+        return ppq;
+    }
 
-        //put 查询的tf
-        Map<String, Double> qtf = retriever.getQuery().getTfMap();
-        result.put("qtf", qtf);
+    @ResponseBody
+    @RequestMapping("/tfOfQuery")
+    public Map<String, Double> getQueryTfController(@RequestParam(name = "query") String queryContent,
+                                                    @RequestParam(name = "formulaId") int formulaId,
+                                                    @RequestParam(name = "smoothParam") double smoothParam,
+                                                    @RequestParam(name = "analyzerName") String analyzerName,
+                                                    @RequestParam(name = "isRemoveStopWord") boolean isRemoveStopWord) {
+        isNeedSearch(queryContent, formulaId, smoothParam, analyzerName, isRemoveStopWord);
+        return vsmRetriever.getQuery().getTfMap();
+    }
 
-        //put 查询的vector
-        List<VectorI> vector = retriever.getQuery().getVector();
+    @ResponseBody
+    @RequestMapping("/vectorOfQuery")
+    public List<JSONObject> getQueryVectorController(@RequestParam(name = "query") String queryContent,
+                                                     @RequestParam(name = "formulaId") int formulaId,
+                                                     @RequestParam(name = "smoothParam") double smoothParam,
+                                                     @RequestParam(name = "analyzerName") String analyzerName,
+                                                     @RequestParam(name = "isRemoveStopWord") boolean isRemoveStopWord) {
+        isNeedSearch(queryContent, formulaId, smoothParam, analyzerName, isRemoveStopWord);
+        List<VectorI> vector = vsmRetriever.getQuery().getVector();
         List<JSONObject> vectorOfQuery = new ArrayList<>();
         for (int i = 0; i < vector.size(); i++) {
-            JSONObject jsonObject = new JSONObject(JSON.parseObject(vector.get(i).toString()));
+            JSONObject jsonObject = new JSONObject(JSON.parseObject(JSON.toJSONString(vector.get(i))));
             vectorOfQuery.add(jsonObject);
         }
-        result.put("vectorOfQuery", vectorOfQuery);
+        return vectorOfQuery;
+    }
 
-        //put 文档的tf
-        List<DocForVSM> docForVSMList = retriever.getDocForVSMList();
+    @ResponseBody
+    @RequestMapping("/tfsOfDocs")
+    public List<JSONObject> getTfsOfDocsController(@RequestParam(name = "query") String queryContent,
+                                                   @RequestParam(name = "formulaId") int formulaId,
+                                                   @RequestParam(name = "smoothParam") double smoothParam,
+                                                   @RequestParam(name = "analyzerName") String analyzerName,
+                                                   @RequestParam(name = "isRemoveStopWord") boolean isRemoveStopWord) {
+        isNeedSearch(queryContent, formulaId, smoothParam, analyzerName, isRemoveStopWord);
+        List<DocForVSM> docForVSMList = vsmRetriever.getDocForVSMList();
         List<JSONObject> tfsOfDocs = new ArrayList<>();
         for (int i = 0; i < docForVSMList.size(); i++) {
             JSONObject jsonObject = new JSONObject();
             JSONObject tfsJson;
             jsonObject.put("title", find.findTitle(docForVSMList.get(i).getId(), true));
+            jsonObject.put("docId", docForVSMList.get(i).getId());
             tfsJson = JSON.parseObject(JSON.toJSONString(docForVSMList.get(i).getTfMap()));
             jsonObject.put("tfs", tfsJson);
             tfsOfDocs.add(jsonObject);
         }
-        result.put("tfsOfDocs", tfsOfDocs);
-
-        //put 文档的vector
-        List<JSONObject> vectorsForDocs = new ArrayList<>();
-        for (int i = 0; i < docForVSMList.size(); i++) {
-            JSONObject jsonObject = new JSONObject();
-            JSONObject vectorJson;
-            jsonObject.put("title", find.findTitle(docForVSMList.get(i).getId(), true));
-            vectorJson = JSON.parseObject(JSON.toJSONString(docForVSMList.get(i).getVector()));
-            jsonObject.put("tfs", vectorJson);
-            vectorsForDocs.add(jsonObject);
-        }
-
-        //put 相似度
-        List<ResultI> similarity = retriever.getResult();
-        result.put("similarity", similarity);
-
-        //put 排序后的相似度
-        result.put("sortSimilarity", resultIList);
-        return result;
+        return tfsOfDocs;
     }
 
-//    public void insertResult(@RequestParam(name = "formulaId") int formulaId,
+    @ResponseBody
+    @RequestMapping("vectorsOfDocs")
+    public List<JSONObject> getVectorsOfDocsController(@RequestParam(name = "query") String queryContent,
+                                                       @RequestParam(name = "formulaId") int formulaId,
+                                                       @RequestParam(name = "smoothParam") double smoothParam,
+                                                       @RequestParam(name = "analyzerName") String analyzerName,
+                                                       @RequestParam(name = "isRemoveStopWord") boolean isRemoveStopWord) {
+        isNeedSearch(queryContent, formulaId, smoothParam, analyzerName, isRemoveStopWord);
+        List<JSONObject> vectorsForDocs = new ArrayList<>();
+        List<DocForVSM> docForVSMList = vsmRetriever.getDocForVSMList();
+        for (int i = 0; i < docForVSMList.size(); i++) {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("title", find.findTitle(docForVSMList.get(i).getId(), true));
+            jsonObject.put("docId", docForVSMList.get(i).getId());
+            JSONArray vectorJson = new JSONArray();
+            List<VectorI> docVector = docForVSMList.get(i).getVector();
+            for (int j = 0; j < docVector.size(); j++) {
+                VectorI vectorI=docVector.get(j);
+                JSONObject object =JSONObject.parseObject(JSONObject.toJSONString(vectorI));
+                vectorJson.add(object);
+            }
+            jsonObject.put("vector", vectorJson);
+            vectorsForDocs.add(jsonObject);
+        }
+        return vectorsForDocs;
+    }
+
+    @ResponseBody
+    @RequestMapping("/similarity")
+    public List<ResultI> getSimilarityController(@RequestParam(name = "query") String queryContent,
+                                                 @RequestParam(name = "formulaId") int formulaId,
+                                                 @RequestParam(name = "smoothParam") double smoothParam,
+                                                 @RequestParam(name = "analyzerName") String analyzerName,
+                                                 @RequestParam(name = "isRemoveStopWord") boolean isRemoveStopWord) {
+        isNeedSearch(queryContent, formulaId, smoothParam, analyzerName, isRemoveStopWord);
+        return vsmRetriever.getResult();
+
+    }
+
+    @ResponseBody
+    @RequestMapping("/similarityAfterSort")
+    public List<ResultI> getSimilarityAfterSortController(@RequestParam(name = "query") String queryContent,
+                                                          @RequestParam(name = "formulaId") int formulaId,
+                                                          @RequestParam(name = "smoothParam") double smoothParam,
+                                                          @RequestParam(name = "analyzerName") String analyzerName,
+                                                          @RequestParam(name = "isRemoveStopWord") boolean isRemoveStopWord) {
+        isNeedSearch(queryContent, formulaId, smoothParam, analyzerName, isRemoveStopWord);
+        return vsmRetriever.getResultAfterSort();
+    }
+
+    //    public void insertResult(@RequestParam(name = "formulaId") int formulaId,
 //                             @RequestParam(name = "smoothParam") double smoothParam,
 //                             @RequestParam(name = "analyzerName") String analyzerName,
 //                             @RequestParam(name = "isRemoveStopWord") boolean isRemoveStopWord) {
@@ -161,4 +229,24 @@ public class VSMController {
 //            }
 //        }
 //    }
+
+    /**
+     * 判断是否需要检索
+     *
+     * @param queryContent     查询语句
+     * @param formulaId        TF计算公式ID
+     * @param smoothParam      平滑系数
+     * @param analyzerName     分词器名称
+     * @param isRemoveStopWord 是否去停用词
+     */
+    public void isNeedSearch(@RequestParam(name = "query") String queryContent,
+                             @RequestParam(name = "formulaId") int formulaId,
+                             @RequestParam(name = "smoothParam") double smoothParam,
+                             @RequestParam(name = "analyzerName") String analyzerName,
+                             @RequestParam(name = "isRemoveStopWord") boolean isRemoveStopWord) {
+        if (vsmRetriever.getResult().size() == 0 || !vsmRetriever.getQuery().getContent().equals(queryContent)) {
+            vsmRetriever.initVSMRetriever(queryContent, formulaId, smoothParam, analyzerName, isRemoveStopWord);
+            vsmRetriever.search();
+        }
+    }
 }

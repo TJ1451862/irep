@@ -132,13 +132,13 @@
                                     <div class="align-self-center"
                                          style="height:40px;font-weight:bold;text-align:center;float:right;font-family:Microsoft Yahei;font-weight:bold;">
                                         <div style="display:block;height:30px;position:relative;top:5px;">
-                                            <button class="btn btn-primary" type="button" id="jian" onclick="num_jian(0.01,0.10)"
+                                            <button class="btn btn-primary" type="button" id="jian" onclick="num_jian(this,0.01,0.10)"
                                                     style="float:left;border-radius: 0;height:30px;width:30px;background-color:#4472c4;padding:0px;">
                                                 -
                                             </button>
                                             <input type="text" value="0.5" id="smoothParam" name="input_num"
                                                    style="width:40px;height:30px;float:left;text-align:center;"/>
-                                            <button class="btn btn-primary" type="button" id="jia" onclick="num_jia(0.9,0.10)"
+                                            <button class="btn btn-primary" type="button" id="jia" onclick="num_jia(this,0.9,0.10)"
                                                     style="border-radius: 0;height:30px;background-color:#4472c4;padding:0px;width:30px;display:inline-block;top:0px;float:left;">
                                                 +
                                             </button>
@@ -369,7 +369,6 @@
                                 <button id="return" class="btn btn-primary" type="button" style="background-color:#4472c4;
                                 font-size:16px;float:right;margin:10px 0;">返回
                                 </button>
-
                             </div>
                         </div>
                     </div>
@@ -384,9 +383,9 @@
                             <div style="margin:5px 0;">
                                 <button id="queryVector" class="btn btn-primary bigButton" type="button">求查询向量</button>
                                 <img src="../../img/箭头左.png" height="20px"/>
-                                <button id="tfForQuery" class="btn btn-primary bigButton" type="button">求查询的TF</button>
+                                <button id="tfOfQuery" class="btn btn-primary bigButton" type="button">求查询的TF</button>
                                 <img src="../../img/箭头左.png" height="20px"/>
-                                <button id="preprocessQuery" class="btn btn-primary bigButton" type="button">查询预处理
+                                <button id="preProcessQuery" class="btn btn-primary bigButton" type="button">查询预处理
                                 </button>
                                 <img src="../../img/箭头左.png" height="20px"/>
                                 <button id="idf" class="btn btn-primary bigButton" type="button">求文档IDF</button>
@@ -395,16 +394,16 @@
                                 <img src="../../img/图片1.png" width="20px" style="margin:0 50px;"/>
                             </div>
                             <div style="margin:5px 0;">
-                                <button id="tfForDocs" class="btn btn-primary bigButton" type="button">求各文档TF</button>
+                                <button id="tfsOfDocs" class="btn btn-primary bigButton" type="button">求各文档TF</button>
                                 <img src="../../img/箭头右.png" height="20px"/>
-                                <button id="vectorsForDocs" class="btn btn-primary bigButton" type="button">求文档向量
+                                <button id="vectorsOfDocs" class="btn btn-primary bigButton" type="button">求文档向量
                                 </button>
                                 <img src="../../img/箭头右.png" height="20px"/>
                                 <button id="similarity" class="btn btn-primary bigButton"
                                         type="button">求相似度
                                 </button>
                                 <img src="../../img/箭头右.png" height="20px"/>
-                                <button id="sortSimilarity" class="btn btn-primary bigButton" type="button">按相似度降序排序
+                                <button id="similarityAfterSort" class="btn btn-primary bigButton" type="button">按相似度降序排序
                                 </button>
                             </div>
                         </div>
@@ -413,20 +412,46 @@
                 <div class="row">
                     <div class="col">
                         <div class="row" style="margin:0;">
-                            <div class="col" style="-ms-flex:0 0 90%;flex:0 0 90%;max-width:90%;padding:0;">
+                            <div class="col-md-11">
                                 <div style="float:none;margin:auto;">
                                     <h3 class="text-center" style="/*float:right;*/height:40px;line-height:40px;
                                     font-size:20px;padding:0;margin:10px;color:rgb(0,0,0);font-family:微软雅黑;font-weight:bold;">
                                         中间结果</h3>
                                 </div>
-                                <div id="results" class="suojin text" style="height:310px;margin:0;"></div>
+                                <div id="results" class="suojin text" style="height:310px;margin-bottom: 10px"></div>
+                                <div class="row">
+                                    <div class="col">
+                                        <div style="float:right;height:40px;">
+                                            <h3 style="float:left;font-family:微软雅黑;font-size:20px;height:40px;line-height:40px;margin:0;font-weight:bold;color:rgb(68,114,196);">
+                                                请选择文档ID：</h3>
+                                            <!--购物车小工具-->
+                                            <div class="align-self-center"
+                                                 style="height:40px;font-weight:bold;text-align:center;float:right;font-family:Microsoft Yahei;font-weight:bold;">
+                                                <div style="display:block;height:30px;position:relative;top:5px;">
+                                                    <button class="btn btn-primary" type="button" id="minusDocId" onclick="num_jian(this,0,1)"
+                                                            style="float:left;border-bottom-right-radius:0px;border-top-right-radius:0px;height:30px;width:30px;background-color:#4472c4;padding:0px;">
+                                                        -
+                                                    </button>
+                                                    <input type="text" value="0" id="docIdInVSM" name="input_num"
+                                                           style="width:40px;height:30px;float:left;text-align:center;"/>
+                                                    <button class="btn btn-primary" type="button" id="plusDocId" onclick="num_jia(this,165,1)"
+                                                            style="border-bottom-left-radius:0px;border-top-left-radius:0px;height:30px;background-color:#4472c4;padding:0px;width:30px;display:inline-block;top:0px;float:left;">
+                                                        +
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
                             </div>
-                            <div class="col" style="-ms-flex:0 0 10%;flex:0 0 10%;max-width:10%;padding:0;">
+                            <div class="col-md-1">
                                 <button class="btn btn-primary" type="button"
-                                        style="display:block;margin:60px 15px 0 ;background-color:#4472c4;"><i
+                                        style="display:block;margin-top: 60px;background-color:#4472c4;"><i
                                         class="fa fa-undo"></i></button>
                                 <button class="btn btn-primary" type="button"
-                                        style="display:block;margin:10px 15px;background-color:#4472c4;"><i
+                                        style="display:block;margin-top: 15px;background-color:#4472c4;"><i
                                         class="fa fa-repeat"></i></button>
                             </div>
                         </div>
@@ -439,433 +464,4 @@
 <div th:include="include::foot"/>
 <div th:include="include::script"/>
 </body>
-<script type="text/javascript">
-    var json = null;
-    var $searchResults = null;
-
-    $(function () {
-
-        // $("#searchResults").bind('DOMNodeInserted',function () {
-        //     if(stateForSearchResults==0){
-        //         $up0ForSearchResults=$("#searchResults").find("*");
-        //         stateForSearchResults=1;
-        //     }else {
-        //         $up1ForSearchResults=$("#searchResults").find("*");
-        //         stateForSearchResults=0;
-        //     }
-        // })//监听检索结果div变化
-
-        $("#return").click(function () {
-            $("#searchResults").text("");
-            $("#searchResults").append($searchResults);
-
-            // if(stateForSearchResults==0){
-            //     $("#searchResults").text("");
-            //     $("#searchResults").append($up0ForSearchResults);
-            // }else {
-            //     $("#searchResults").text("");
-            //     $("#searchResults").append($up1ForSearchResults);
-            // }
-        });//返回上一步
-
-        $("#introduce").click(function () {
-            $("#first").show();
-            $("#second").hide();
-        });//显示介绍界面
-
-
-        $("#idf").click(function () {
-            $("#results").text("");
-            $.ajax({
-                type: "POST",
-                url: "vectorSpaceModel/idf",
-                dataType: "json",
-                contentType: "application/x-www-form-urlencoded; charset=utf-8",
-                traditional: true,
-                success: function (idf) {
-                    console.log(idf);
-                    $("#results").append(
-                        "<div class=\"table-responsive\" style=\"text-align:center;font-family:Microsoft Yahei;\">\n" +
-                        "    <table class=\"table\">\n" +
-                        "        <thead style=\"color:#000000;\">\n" +
-                        "            <tr style='border-bottom:3px solid rgb(0,0,0)'>\n" +
-                        "                <th>词项</th>\n" +
-                        "                <th>idf</th>\n" +
-                        "                <th>词项</th>\n" +
-                        "                <th>idf</th>\n" +
-                        "            </tr>\n" +
-                        "        </thead>\n" +
-                        "        <tbody id='tbody'></tbody>\n" +
-                        "    </table>\n" +
-                        "</div>");
-
-                    var item1, idf1;
-                    var select = 0;
-                    $.each(idf, function (index, obj) {
-                        if (select == 0) {
-                            item1 = index;
-                            idf1 = obj;
-                            select = 1;
-                            $('#tbody').append("<tr>\n" +
-                                "<td class=\"smallTableForTd\" >" + item1 + "</td>\n" +
-                                "<td class=\"smallTableForTd\" >" + idf1 + "</td>\n" +
-                                "</tr>\n"
-                            );
-                        } else {
-                            item1 = index;
-                            idf1 = obj;
-                            select = 0;
-                            $('#tbody').children().last().append(
-                                "<td class=\"smallTableForTd\" >" + item1 + "</td>\n" +
-                                "<td class=\"smallTableForTd\" >" + idf1 + "</td>\n"
-                            );
-                        }
-                    });//end of each
-                },
-                error: function () {
-                    alert("检索出错！");
-                    $("#results").text("");// 清空数据
-                }
-            })//end of ajax
-        })//求idf功能
-
-        $("#preprocessQuery").click(function () {
-            var query = $("#inputForVSM").val();
-            $("#results").text("");//清空数据
-            $.ajax({
-                type: "POST",
-                url: "vectorSpaceModel/PPQ",
-                data: {"query": query},
-                dataType: "json",
-                contentType: "application/x-www-form-urlencoded; charset=utf-8",
-                traditional: true,
-                success: function (result) {
-                    console.log(result);
-                    $("#results").append(
-                        "查询语句内容：" + query + "<br>" +
-                        "去标点结果：" + result.punRemove + "<br>" +
-                        "分词结果：" + result.fenci + "<br>" +
-                        "去停用词结果：" + result.stopwordsRemove
-                    )
-                },
-                error: function () {
-                    alert("检索出错！");
-                    $("#results").text("");// 清空数据
-                }
-            })//end of ajax
-        })//查询预处理
-
-        $("#tfForQuery").click(function () {
-            var query = $("#inputForVSM").val();
-            $("#results").text("");//清空数据
-            $.ajax({
-                type: "POST",
-                url: "vectorSpaceModel/TFforQuery",
-                data: {"query": query},
-                dataType: "json",
-                contentType: "application/x-www-form-urlencoded; charset=utf-8",
-                traditional: true,
-                success: function (tf) {
-                    console.log(tf);
-                    $("#results").append(
-                        "<div class=\"table-responsive\" style=\"text-align:center;font-family:Microsoft Yahei;\">\n" +
-                        "    <table class=\"table\">\n" +
-                        "        <thead style=\"color:#000000;\">\n" +
-                        "            <tr style='border-bottom:3px solid rgb(0,0,0)'>\n" +
-                        "                <th>词项</th>\n" +
-                        "                <th>TF</th>\n" +
-                        "                <th>词项</th>\n" +
-                        "                <th>TF</th>\n" +
-                        "            </tr>\n" +
-                        "        </thead>\n" +
-                        "        <tbody id='tbody'></tbody>\n" +
-                        "    </table>\n" +
-                        "</div>");
-
-                    var item1, tf1;
-                    var select = 0;
-
-                    $.each(tf, function (index, obj) {
-                        if (select == 0) {
-                            item1 = index;
-                            tf1 = obj;
-                            select = 1;
-                            $('#tbody').append("<tr>\n" +
-                                "<td class=\"smallTableForTd\" >" + item1 + "</td>\n" +
-                                "<td class=\"smallTableForTd\" >" + tf1 + "</td>\n" +
-                                "</tr>\n"
-                            );
-                        } else {
-                            item1 = index;
-                            tf1 = obj;
-                            select = 0;
-                            $('#tbody').children().last().append(
-                                "<td class=\"smallTableForTd\" >" + item1 + "</td>\n" +
-                                "<td class=\"smallTableForTd\" >" + tf1 + "</td>\n"
-                            );
-                        }
-                    });//end of each
-                },
-                error: function () {
-                    alert("检索出错！");
-                    $("#results").text("");// 清空数据
-                }
-            })//end of ajax
-        })//求查询的TF
-
-        $("#queryVector").click(function () {
-            var query = $("#inputForVSM").val();
-            $("#results").text("");//清空数据
-            $.ajax({
-                type: "POST",
-                url: "vectorSpaceModel/vectorForQuery",
-                data: {"query": query},
-                dataType: "json",
-                contentType: "application/x-www-form-urlencoded; charset=utf-8",
-                traditional: true,
-                success: function (vectors) {
-                    console.log(vectors);
-                    $("#results").append(
-                        "<div class=\"table-responsive\" style=\"text-align:center;font-family:Microsoft Yahei;\">\n" +
-                        "    <table class=\"table\">\n" +
-                        "        <thead style=\"color:#000000;\">\n" +
-                        "            <tr style='border-bottom:3px solid rgb(0,0,0)'>\n" +
-                        "                <th>词项</th>\n" +
-                        "                <th>第几位</th>\n" +
-                        "                <th>值</th>\n" +
-                        "            </tr>\n" +
-                        "        </thead>\n" +
-                        "        <tbody id='tbody'></tbody>\n" +
-                        "    </table>\n" +
-                        "</div>");
-
-                    $.each(vectors, function (index, obj) {
-                        console.log(obj);
-                        $('#tbody').append("<tr>\n" +
-                            "<td class=\"smallTableForTd\" >" + obj.term + "</td>\n" +
-                            "<td class=\"smallTableForTd\" >" + obj.num + "</td>\n" +
-                            "<td class=\"smallTableForTd\" >" + obj.tfidf + "</td>\n" +
-                            "</tr>\n"
-                        );
-                    });//end of each
-                },
-                error: function () {
-                    alert("检索出错！");
-                    $("#results").text("");// 清空数据
-                }
-            })//end of ajax
-        })//求查询向量
-
-        $("#tfForDocs").click(function () {
-            $("#results").text("");//清空数据
-            $.ajax({
-                type: "POST",
-                url: "vectorSpaceModel/tfForDoc",
-                dataType: "json",
-                contentType: "application/x-www-form-urlencoded; charset=utf-8",
-                traditional: true,
-                success: function (tfs) {
-                    // console.log(tfs);
-                    var num = 0;
-                    $.each(tfs, function (index, json) {
-                        $("#results").append(
-                            "<div class=\"table-responsive\" style=\"text-align:center;font-family:Microsoft Yahei;font-size: 16px;\">\n" +
-                            "    <table class=\"table\">\n" +
-                            "        <thead style=\"color:#000000;\">\n" +
-                            "            <tr class=\"table-primary\">\n" +
-                            "                <td colspan=\"4\" style=\"text-align:center;\"><strong>" + index + "</strong></td>\n" +
-                            "            </tr>\n" +
-                            "            <tr style='border-bottom:3px solid rgb(0,0,0)'>\n" +
-                            "                <th class=\"smallTableForTd\" >词项</th>\n" +
-                            "                <th class=\"smallTableForTd\" >TF</th>\n" +
-                            "                <th class=\"smallTableForTd\" >词项</th>\n" +
-                            "                <th class=\"smallTableForTd\" >TF</th>\n" +
-                            "            </tr>\n" +
-                            "        </thead>\n" +
-                            "        <tbody id='tbody" + num + "'></tbody>\n" +
-                            "    </table>\n" +
-                            "</div>"
-                        );
-                        // console.log(json)
-                        var item1, tf1;
-                        var select = 0;
-                        $.each(json, function (index1, obj1) {
-                            if (select == 0) {
-                                item1 = index1;
-                                tf1 = obj1;
-                                select = 1;
-                                $('#tbody' + num + '').append("<tr>\n" +
-                                    "<td class=\"smallTableForTd\" >" + item1 + "</td>\n" +
-                                    "<td class=\"smallTableForTd\" >" + tf1 + "</td>\n" +
-                                    "</tr>\n"
-                                );
-                            } else {
-                                item1 = index1;
-                                tf1 = obj1;
-                                select = 0;
-                                $('#tbody' + num + '').children().last().append(
-                                    "<td class=\"smallTableForTd\" >" + item1 + "</td>\n" +
-                                    "<td class=\"smallTableForTd\" >" + tf1 + "</td>\n"
-                                );
-                            }
-                        });//end of each
-                        num++;
-                    })//end of each
-
-                },
-                error: function () {
-                    alert("检索出错！");
-                    $("#results").text("");// 清空数据
-                }
-            })//end of ajax
-        })//求各文档的TF
-
-        $("#vectorsForDocs").click(function () {
-            $("#results").text("");//清空数据
-            $.ajax({
-                type: "POST",
-                url: "vectorSpaceModel/vectorsForDocs",
-                dataType: "json",
-                contentType: "application/x-www-form-urlencoded; charset=utf-8",
-                traditional: true,
-                success: function (vectors) {
-                    // console.log(tfs);
-                    var num = 0;
-                    $.each(vectors, function (index, json) {
-                        $("#results").append(
-                            "<div class=\"table-responsive\" style=\"text-align:center;font-family:Microsoft Yahei;font-size: 16px;\">\n" +
-                            "    <table class=\"table\">\n" +
-                            "        <thead style=\"color:#000000;\">\n" +
-                            "            <tr class=\"table-primary\">\n" +
-                            "                <td colspan=\"4\" style=\"text-align:center;\"><strong>" + index + "</strong></td>\n" +
-                            "            </tr>\n" +
-                            "            <tr style='border-bottom:3px solid rgb(0,0,0)'>\n" +
-                            "                <th class=\"smallTableForTd\" >词项</th>\n" +
-                            "                <th class=\"smallTableForTd\" >第几位</th>\n" +
-                            "                <th class=\"smallTableForTd\" >值</th>\n" +
-                            "            </tr>\n" +
-                            "        </thead>\n" +
-                            "        <tbody id='tbody" + num + "'></tbody>\n" +
-                            "    </table>\n" +
-                            "</div>"
-                        );
-                        // console.log(json)
-                        $.each(json, function (index, obj) {
-                            console.log(obj);
-                            $('#tbody' + num + '').append("<tr>\n" +
-                                "<td class=\"smallTableForTd\" >" + obj.term + "</td>\n" +
-                                "<td class=\"smallTableForTd\" >" + obj.num + "</td>\n" +
-                                "<td class=\"smallTableForTd\" >" + obj.tfidf + "</td>\n" +
-                                "</tr>\n"
-                            );
-                        });//end of each
-                        num++;
-                    })//end of each
-
-                },
-                error: function () {
-                    alert("检索出错！");
-                    $("#results").text("");// 清空数据
-                }
-            })//end of ajax
-        })//求各文档的向量
-
-        $("#sortSimilarity").click(function () {
-            var query = $("#inputForVSM").val();
-            $("#results").text("");//清空数据
-            $.ajax({
-                type: "POST",
-                url: "vectorSpaceModel/sortSimilarity",
-                data: {"query": query},
-                dataType: "json",
-                contentType: "application/x-www-form-urlencoded; charset=utf-8",
-                traditional: true,
-                success: function (similarity) {
-                    console.log(similarity);
-                    $("#results").append(
-                        "<div class=\"table-responsive\" style=\"text-align:center;font-family:Microsoft Yahei;\">\n" +
-                        "    <table class=\"table\">\n" +
-                        "        <thead style=\"color:#000000;\">\n" +
-                        "            <tr style='border-bottom:3px solid rgb(0,0,0)'>\n" +
-                        "                <th style='width:60px'>文档ID</th>\n" +
-                        "                <th>文档名</th>\n" +
-                        "                <th>相似度</th>\n" +
-                        "            </tr>\n" +
-                        "        </thead>\n" +
-                        "        <tbody id='tbody'></tbody>\n" +
-                        "    </table>\n" +
-                        "</div>");
-
-                    $.each(similarity, function (index, obj) {
-                        console.log(obj);
-                        $('#tbody').append("<tr>\n" +
-                            "<td class=\"smallTableForTd\" >" + obj.web_id + "</td>\n" +
-                            "<td class=\"smallTableForTd\" >" + obj.title + "</td>\n" +
-                            "<td class=\"smallTableForTd\" >" + obj.similarity + "</td>\n" +
-                            "</tr>\n"
-                        );
-                    });//end of each
-                },
-                error: function () {
-                    alert("检索出错！");
-                    $("#results").text("");// 清空数据
-                }
-            })//end of ajax
-        })//求相似度
-
-        $("#similarity").click(function () {
-            var query = $("#inputForVSM").val();
-            $("#results").text("");//清空数据
-            $.ajax({
-                type: "POST",
-                url: "vectorSpaceModel/similarity",
-                data: {"query": query},
-                dataType: "json",
-                contentType: "application/x-www-form-urlencoded; charset=utf-8",
-                traditional: true,
-                success: function (similarity) {
-                    console.log(similarity);
-                    $("#results").append(
-                        "<div class=\"table-responsive\" style=\"text-align:center;font-family:Microsoft Yahei;\">\n" +
-                        "    <table class=\"table\">\n" +
-                        "        <thead style=\"color:#000000;\">\n" +
-                        "            <tr style='border-bottom:3px solid rgb(0,0,0)'>\n" +
-                        "                <th style='width:60px'>文档ID</th>\n" +
-                        "                <th>文档名</th>\n" +
-                        "                <th>相似度</th>\n" +
-                        "            </tr>\n" +
-                        "        </thead>\n" +
-                        "        <tbody id='tbody'></tbody>\n" +
-                        "    </table>\n" +
-                        "</div>");
-
-                    $.each(similarity, function (index, obj) {
-                        console.log(obj);
-                        $('#tbody').append("<tr>\n" +
-                            "<td class=\"smallTableForTd\" >" + obj.web_id + "</td>\n" +
-                            "<td class=\"smallTableForTd\" >" + obj.title + "</td>\n" +
-                            "<td class=\"smallTableForTd\" >" + obj.similarity + "</td>\n" +
-                            "</tr>\n"
-                        );
-                    });//end of each
-                },
-                error: function () {
-                    alert("检索出错！");
-                    $("#results").text("");// 清空数据
-                }
-            })//end of ajax
-        })//按相似度降序排序
-
-
-    });
-
-    function getContent(id) {
-        $.each(json, function (index, obj) {
-            if (index == id) {
-                $("#searchResults").text("");
-                $("#searchResults").append(obj.content);
-            }
-        });
-    };
-</script>
 </html>

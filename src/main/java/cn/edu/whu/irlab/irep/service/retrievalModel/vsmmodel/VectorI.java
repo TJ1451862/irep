@@ -1,6 +1,6 @@
 package cn.edu.whu.irlab.irep.service.retrievalModel.vsmmodel;
 
-public class VectorI {
+public class VectorI  {
 
     private String term;
 
@@ -29,9 +29,9 @@ public class VectorI {
     @Override
     public String toString() {
         return "VectorI{" +
-                "term='" + term + '\'' +
-                ", num=" + num +
-                ", value=" + value +
+                "term:'" + term + '\'' +
+                ", num:" + num +
+                ", value:" + value +
                 '}';
     }
 }
