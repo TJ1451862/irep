@@ -1,11 +1,12 @@
 package cn.edu.whu.irlab.irep.service.util;
 
+import cn.edu.whu.irlab.irep.service.retrievalModel.vsmmodel.VectorI;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 
-public class TFCalculator {
+public class Calculator {
 
 
     /**
@@ -49,6 +50,7 @@ public class TFCalculator {
         return result;
     }
 
+
     private static double calculateBasicParam(Map<String, Double> tfMap, String sign) {
         double param = 0;
         double temptf = 0;
@@ -81,5 +83,18 @@ public class TFCalculator {
         return param;
     }
 
+    /**
+     * 计算向量的模长
+     * @param vector 向量
+     * @return
+     */
+    public static double calculateModule(List<VectorI> vector){
+        double module=0;
+        for (int i = 0; i <vector.size(); i++) {
+            module += Math.pow(vector.get(i).getValue(),2);
+        }
+        module=Math.pow(module,0.5);
+        return module;
+    }
 
 }

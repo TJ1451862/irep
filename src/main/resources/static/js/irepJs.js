@@ -1,15 +1,17 @@
+var storage = window.localStorage;
+
 /**
  * 增减input中的数字大小
  * @type {HTMLElement}
  */
-function num_jia(upperLimit, stepLength) {
-    var input_num = $("[name='input_num']").get(0);
+function num_jia(obj, upperLimit, stepLength) {
+    var input_num = obj.previousElementSibling;
     if (input_num.value < upperLimit)
         input_num.value = parseFloat(input_num.value) + stepLength;
 }
 
-function num_jian(lowerLimit, stepLength) {
-    var input_num = $("[name='input_num']").get(0);
+function num_jian(obj, lowerLimit, stepLength) {
+    var input_num = obj.nextElementSibling;
     if (input_num.value > lowerLimit)
         input_num.value = parseFloat(input_num.value) - stepLength;
 }
@@ -44,7 +46,7 @@ $(function () {
         } else {
             alert("请输入0-165之间的任意整数");
         }
-    })
+    });
     $("#num-jia").click(function () {
         $("#originalFile").text("");//初始化
         var docId = $("#docId").val();
@@ -85,7 +87,7 @@ $(function () {
                 $("#originalFile").text("");// 清空数据
             }
         })//end of ajax
-    })
+    });
 
     /**
      * 获取处理结果
@@ -95,7 +97,7 @@ $(function () {
         var isRSW = $("input[name='isRemoveStopWord']").is(':checked') == true ? true : false;
         var aN = $("#analyzerName option:selected").val();
         var token = $("#originalFile").text();
-        var storage = window.localStorage;
+
         storage.isRemoveStopWord = isRSW;
         storage.analyzerName = aN;
         console.log(token);
@@ -230,7 +232,7 @@ $("#invertedIndexConfirm").click(function () {
  */
 $('#nextStepOfInvertedIndex').click(function () {
     var model = $("input[name='modelType']:checked").val();
-    var storage = window.localStorage;
+
     storage.model = model;
     if (model == "vsm") {
         $(location).attr("href", "../IRforCN/Retrieval/vectorSpaceModel.html");
@@ -257,9 +259,9 @@ $("#createIndex").click(function () {
     $("#selectModel").show();
 
     //从localStorage中获取参数
-    var storage = window.localStorage;
+
     var isRSW = storage.isRemoveStopWord;
-    var aN = storage.analyzerName
+    var aN = storage.analyzerName;
     console.log(isRSW + aN);
 
     //获取全体倒排索引表
@@ -298,7 +300,7 @@ $("#createIndex").click(function () {
  */
 function selectInvertedIndex(term) {
     //从localStorage中获取参数
-    var storage = window.localStorage;
+
     var isRSW = storage.isRemoveStopWord;
     var aN = storage.analyzerName;
 
@@ -373,17 +375,23 @@ function getDoc(docId, term) {
     })//end of ajax
 };
 
-var json = null;
+
 /**
  * vectorSpaceModel.html
  */
+var json = null;
+var $searchResults = null;
+var tempJson = null;
+var tempSign = 0;//0:当前tempJson中存储的是tfs，1：当前tempJson中存储的是vectors
+/**
+ * 检索功能
+ */
 $("#searchForVSM").click(function () {
-
     $("#first").hide();
     $("#second").show();
-    var storage = window.localStorage;
+
     var query = $("#inputForVSM").val();
-    var formulaID =parseInt($("input[name='formula']:checked").val());
+    var formulaID = parseInt($("input[name='formula']:checked").val());
     var smoothParam = $("#smoothParam").val();
     var analyzerName = storage.analyzerName;
     var isRemoveStopWord = storage.isRemoveStopWord;
@@ -395,7 +403,7 @@ $("#searchForVSM").click(function () {
         dataType: "json",
         data: {
             "query": query,
-            "formulaId": "1",
+            "formulaId": formulaID,
             "smoothParam": smoothParam,
             "analyzerName": analyzerName,
             "isRemoveStopWord": isRemoveStopWord
@@ -404,22 +412,611 @@ $("#searchForVSM").click(function () {
         traditional: true,
         success: function (result) {
             console.log(result);
-            // json = result;
-            // $.each(result, function (index, obj) {
-            //     var str1 = obj.content.substring(0, 90) + "......";
-            //     $('#searchResults').append("<a id='" + index + "' href='' class='ra' style='font-size: 20px;font-family=Microsoft Yahei;font-weight: bold; margin-right: 20px' data-toggle='modal' data-target='#myModal' onclick='getContent(this.id)' >" + obj.title + "</a>");
-            //     $('#searchResults').append("<br>");
-            //     $('#searchResults').append("<p>" + str1 + "</p>");
-            //
-            // });
-            // $searchResults = $("#searchResults").find("*");
+            json = result;
+            $.each(result, function (index, obj) {
+                var str1 = obj.content.substring(0, 90) + "......";
+                $('#searchResults').append("<a id='" + index + "' href='' class='ra'  data-toggle='modal' data-target='#myModal' onclick='getContent(this.id)' >" + obj.title + "</a>");
+                $('#searchResults').append("<br>");
+                $('#searchResults').append("<p>" + str1 + "</p>");
+
+            });
+            $searchResults = $("#searchResults").find("*");
         },
         error: function () {
             alert("检索出错！");
             $("#searchResults").text("");// 清空数据
         }
     })
-});//检索功能
+});
+
+/**
+ * 求idf功能
+ */
+$("#idf").click(function () {
+    $("#results").text("");
+
+    var query = $("#inputForVSM").val();
+    var formulaID = parseInt($("input[name='formula']:checked").val());
+    var smoothParam = $("#smoothParam").val();
+    var analyzerName = storage.analyzerName;
+    var isRemoveStopWord = storage.isRemoveStopWord;
+
+    $.ajax({
+        type: "POST",
+        url: "vectorSpaceModel/idf",
+        data: {
+            "query": query,
+            "formulaId": formulaID,
+            "smoothParam": smoothParam,
+            "analyzerName": analyzerName,
+            "isRemoveStopWord": isRemoveStopWord
+        },
+        dataType: "json",
+        contentType: "application/x-www-form-urlencoded; charset=utf-8",
+        traditional: true,
+        success: function (idf) {
+            console.log(idf);
+            $("#results").append(
+                "<div class=\"table-responsive smallTable\">\n" +
+                "    <table>\n" +
+                "        <thead>\n" +
+                "            <tr>\n" +
+                "                <th>词项</th>\n" +
+                "                <th>idf</th>\n" +
+                "                <th>词项</th>\n" +
+                "                <th>idf</th>\n" +
+                "            </tr>\n" +
+                "        </thead>\n" +
+                "        <colgroup>\n" +
+                "            <col width=25% />\n" +
+                "            <col width=25% />\n" +
+                "            <col width=25% />\n" +
+                "            <col width=25% />" +
+                "        </colgroup>\n" +
+                "        <tbody id='tbody'></tbody>\n" +
+                "    </table>\n" +
+                "</div>");
+
+            var item1, idf1;
+            var select = 0;
+            $.each(idf, function (index, obj) {
+                if (select == 0) {
+                    item1 = index;
+                    idf1 = obj;
+                    select = 1;
+                    $('#tbody').append(
+                        "<tr>\n" +
+                        "    <td>" + item1 + "</td>\n" +
+                        "    <td>" + idf1.toFixed(4) + "</td>\n" +
+                        "</tr>\n"
+                    );
+                } else {
+                    item1 = index;
+                    idf1 = obj;
+                    select = 0;
+                    $('#tbody').children().last().append(
+                        "<td class=\"smallTableForTd\" >" + item1 + "</td>\n" +
+                        "<td class=\"smallTableForTd\" >" + idf1.toFixed(4) + "</td>\n"
+                    );
+                }
+            });//end of each
+        },
+        error: function () {
+            alert("检索出错！");
+            $("#results").text("");// 清空数据
+        }
+    })//end of ajax
+});
+
+/**
+ * 查询预处理结果
+ */
+$("#preProcessQuery").click(function () {
+
+    var query = $("#inputForVSM").val();
+    var formulaID = parseInt($("input[name='formula']:checked").val());
+    var smoothParam = $("#smoothParam").val();
+    var analyzerName = storage.analyzerName;
+    var isRemoveStopWord = storage.isRemoveStopWord;
+
+    $("#results").text("");//清空数据
+    $.ajax({
+        type: "POST",
+        url: "vectorSpaceModel/ppq",
+        data: {
+            "query": query,
+            "formulaId": formulaID,
+            "smoothParam": smoothParam,
+            "analyzerName": analyzerName,
+            "isRemoveStopWord": isRemoveStopWord
+        },
+        dataType: "json",
+        contentType: "application/x-www-form-urlencoded; charset=utf-8",
+        traditional: true,
+        success: function (result) {
+            $("#results").append(
+                "查询语句内容：" + query + "<br>" +
+                "预处理结果：" + result.result + "<br>"
+            )
+        },
+        error: function () {
+            alert("检索出错！");
+            $("#results").text("");// 清空数据
+        }
+    })//end of ajax
+});
+/**
+ * 求查询的tf
+ */
+$("#tfOfQuery").click(function () {
+    var query = $("#inputForVSM").val();
+    var formulaID = parseInt($("input[name='formula']:checked").val());
+    var smoothParam = $("#smoothParam").val();
+    var analyzerName = storage.analyzerName;
+    var isRemoveStopWord = storage.isRemoveStopWord;
+
+    $("#results").text("");//清空数据
+    $.ajax({
+        type: "POST",
+        url: "vectorSpaceModel/tfOfQuery",
+        data: {
+            "query": query,
+            "formulaId": formulaID,
+            "smoothParam": smoothParam,
+            "analyzerName": analyzerName,
+            "isRemoveStopWord": isRemoveStopWord
+        },
+        dataType: "json",
+        contentType: "application/x-www-form-urlencoded; charset=utf-8",
+        traditional: true,
+        success: function (tf) {
+            console.log(tf);
+            $("#results").append(
+                "<div class=\"table-responsive smallTable\">\n" +
+                "    <table>\n" +
+                "        <thead>\n" +
+                "            <tr>\n" +
+                "                <th>词项</th>\n" +
+                "                <th>TF</th>\n" +
+                "                <th>词项</th>\n" +
+                "                <th>TF</th>\n" +
+                "            </tr>\n" +
+                "        </thead>\n" +
+                "        <tbody id='tbody'></tbody>\n" +
+                "    </table>\n" +
+                "</div>");
+
+            var item1, tf1;
+            var select = 0;
+
+            $.each(tf, function (index, obj) {
+                if (select == 0) {
+                    item1 = index;
+                    tf1 = obj;
+                    select = 1;
+                    $('#tbody').append("<tr>\n" +
+                        "<td>" + item1 + "</td>\n" +
+                        "<td>" + tf1 + "</td>\n" +
+                        "</tr>\n"
+                    );
+                } else {
+                    item1 = index;
+                    tf1 = obj;
+                    select = 0;
+                    $('#tbody').children().last().append(
+                        "<td>" + item1 + "</td>\n" +
+                        "<td>" + tf1 + "</td>\n"
+                    );
+                }
+            });//end of each
+        },
+        error: function () {
+            alert("检索出错！");
+            $("#results").text("");// 清空数据
+        }
+    })//end of ajax
+});
+
+/**
+ * 求查询向量
+ */
+$("#queryVector").click(function () {
+    var query = $("#inputForVSM").val();
+    var formulaID = parseInt($("input[name='formula']:checked").val());
+    var smoothParam = $("#smoothParam").val();
+    var analyzerName = storage.analyzerName;
+    var isRemoveStopWord = storage.isRemoveStopWord;
+
+    $("#results").text("");//清空数据
+    $.ajax({
+        type: "POST",
+        url: "vectorSpaceModel/vectorOfQuery",
+        data: {
+            "query": query,
+            "formulaId": formulaID,
+            "smoothParam": smoothParam,
+            "analyzerName": analyzerName,
+            "isRemoveStopWord": isRemoveStopWord
+        },
+        dataType: "json",
+        contentType: "application/x-www-form-urlencoded; charset=utf-8",
+        traditional: true,
+        success: function (vectors) {
+            $("#results").append(
+                "<div class=\"table-responsive smallTable\">\n" +
+                "    <table>\n" +
+                "        <thead>\n" +
+                "            <tr>\n" +
+                "                <th>词项</th>\n" +
+                "                <th>第几位</th>\n" +
+                "                <th>值</th>\n" +
+                "            </tr>\n" +
+                "        </thead>\n" +
+                "        <colgroup>\n" +
+                "            <col width=30% />\n" +
+                "            <col width=30% />\n" +
+                "            <col width=40% />\n" +
+                "        </colgroup>\n" +
+                "        <tbody id='tbody'></tbody>\n" +
+                "    </table>\n" +
+                "</div>");
+
+            $.each(vectors, function (index, obj) {
+                $('#tbody').append("<tr>\n" +
+                    "<td>" + obj.term + "</td>\n" +
+                    "<td>" + obj.num + "</td>\n" +
+                    "<td>" + obj.value.toFixed(4) + "</td>\n" +
+                    "</tr>\n"
+                );
+            });//end of each
+        },
+        error: function () {
+            alert("检索出错！");
+            $("#results").text("");// 清空数据
+        }
+    })//end of ajax
+});
+/**
+ * 求各文档的TF
+ */
+$("#tfsOfDocs").click(function () {
+
+    var query = $("#inputForVSM").val();
+    var formulaID = parseInt($("input[name='formula']:checked").val());
+    var smoothParam = $("#smoothParam").val();
+    var analyzerName = storage.analyzerName;
+    var isRemoveStopWord = storage.isRemoveStopWord;
+
+    $("#results").text("");//清空数据
+    $.ajax({
+        type: "POST",
+        url: "vectorSpaceModel/tfsOfDocs",
+        data: {
+            "query": query,
+            "formulaId": formulaID,
+            "smoothParam": smoothParam,
+            "analyzerName": analyzerName,
+            "isRemoveStopWord": isRemoveStopWord
+        },
+        dataType: "json",
+        contentType: "application/x-www-form-urlencoded; charset=utf-8",
+        traditional: true,
+        success: function (tfs) {
+            tempSign = 0;
+            var docIdInVSM = $("#docIdInVSM").val();
+            tempJson = tfs;
+            append(docIdInVSM);
+        },
+        error: function () {
+            alert("检索出错！");
+            $("#results").text("");// 清空数据
+        }
+    })//end of ajax
+});
+/**
+ * 求各文档的向量
+ */
+$("#vectorsOfDocs").click(function () {
+
+    $("#results").text("");//清空数据
+    var query = $("#inputForVSM").val();
+    var formulaID = parseInt($("input[name='formula']:checked").val());
+    var smoothParam = $("#smoothParam").val();
+    var analyzerName = storage.analyzerName;
+    var isRemoveStopWord = storage.isRemoveStopWord;
+
+    $.ajax({
+        type: "POST",
+        url: "vectorSpaceModel/vectorsOfDocs",
+        data: {
+            "query": query,
+            "formulaId": formulaID,
+            "smoothParam": smoothParam,
+            "analyzerName": analyzerName,
+            "isRemoveStopWord": isRemoveStopWord
+        },
+        dataType: "json",
+        contentType: "application/x-www-form-urlencoded; charset=utf-8",
+        traditional: true,
+        success: function (vectors) {
+            tempSign = 1;
+            tempJson = vectors;
+            var docIdInVSM = $("#docIdInVSM").val();
+            append(docIdInVSM);
+        },
+        error: function () {
+            alert("检索出错！");
+            $("#results").text("");// 清空数据
+        }
+    })//end of ajax
+})//求各文档的向量
+/**
+ * 获取并显示下一个的文档的tf或Vector
+ */
+$("#plusDocId").click(function () {
+    $("#results").text("");//清空数据
+    var docIdInVSM = $("#docIdInVSM").val();
+    append(docIdInVSM);
+});
+/**
+ * 获取并显示上一个文档的tf或Vector
+ */
+$("#minusDocId").click(function () {
+    $("#results").text("");//清空数据
+    var docIdInVSM = $("#docIdInVSM").val();
+    append(docIdInVSM);
+});
+/**
+ * 获取当前文档的tf或Vector
+ */
+$("#docIdInVSM").change(function () {
+    $("#results").text("");//清空数据
+    var docIdInVSM = $("#docIdInVSM").val();
+    if ((docIdInVSM <= 165) && (docIdInVSM >= 0)) {
+        append(docIdInVSM);
+    } else {
+        alert("请输入0-165之间的任意整数");
+    }
+});
+/**
+ * 求相似度
+ */
+$("#similarity").click(function () {
+    $("#results").text("");//清空数据
+    var query = $("#inputForVSM").val();
+    var formulaID = parseInt($("input[name='formula']:checked").val());
+    var smoothParam = $("#smoothParam").val();
+    var analyzerName = storage.analyzerName;
+    var isRemoveStopWord = storage.isRemoveStopWord;
+    $.ajax({
+        type: "POST",
+        url: "vectorSpaceModel/similarity",
+        data: {
+            "query": query,
+            "formulaId": formulaID,
+            "smoothParam": smoothParam,
+            "analyzerName": analyzerName,
+            "isRemoveStopWord": isRemoveStopWord
+        },
+        dataType: "json",
+        contentType: "application/x-www-form-urlencoded; charset=utf-8",
+        traditional: true,
+        success: function (result) {
+            console.log(result);
+            $("#results").append(
+                "<div class=\"table-responsive smallTable\">\n" +
+                "    <table>\n" +
+                "        <thead>\n" +
+                "            <tr>\n" +
+                "                <th>ID</th>\n" +
+                "                <th>文档名</th>\n" +
+                "                <th>相似度</th>\n" +
+                "            </tr>\n" +
+                "        </thead>\n" +
+                "        <colgroup>\n" +
+                "            <col width=10% />\n" +
+                "            <col width=70% />\n" +
+                "            <col width=20% />\n" +
+                "        </colgroup>\n" +
+                "        <tbody id='tbody'></tbody>\n" +
+                "    </table>\n" +
+                "</div>");
+            $.each(result, function (index, obj) {
+                console.log(obj);
+                $('#tbody').append("<tr>\n" +
+                    "<td>" + obj.docID + "</td>\n" +
+                    "<td>" + obj.title + "</td>\n" +
+                    "<td>" + obj.similarity.toFixed(5) + "</td>\n" +
+                    "</tr>\n"
+                );
+            });//end of each
+        },
+        error: function () {
+            alert("检索出错！");
+            $("#results").text("");// 清空数据
+        }
+    })//end of ajax
+});
+/**
+ * 按相似度降序排序
+ */
+$("#similarityAfterSort").click(function () {
+
+    $("#results").text("");//清空数据
+    var query = $("#inputForVSM").val();
+    var formulaID = parseInt($("input[name='formula']:checked").val());
+    var smoothParam = $("#smoothParam").val();
+    var analyzerName = storage.analyzerName;
+    var isRemoveStopWord = storage.isRemoveStopWord;
+    $.ajax({
+        type: "POST",
+        url: "vectorSpaceModel/similarityAfterSort",
+        data: {
+            "query": query,
+            "formulaId": formulaID,
+            "smoothParam": smoothParam,
+            "analyzerName": analyzerName,
+            "isRemoveStopWord": isRemoveStopWord
+        },
+        dataType: "json",
+        contentType: "application/x-www-form-urlencoded; charset=utf-8",
+        traditional: true,
+        success: function (result) {
+            console.log(result);
+            $("#results").append(
+                "<div class=\"table-responsive smallTable\">\n" +
+                "    <table>\n" +
+                "        <thead>\n" +
+                "            <tr>\n" +
+                "                <th>ID</th>\n" +
+                "                <th>文档名</th>\n" +
+                "                <th>相似度</th>\n" +
+                "            </tr>\n" +
+                "        </thead>\n" +
+                "        <colgroup>\n" +
+                "            <col width=10% />\n" +
+                "            <col width=70% />\n" +
+                "            <col width=20% />\n" +
+                "        </colgroup>\n" +
+                "        <tbody id='tbody'></tbody>\n" +
+                "    </table>\n" +
+                "</div>");
+            $.each(result, function (index, obj) {
+                console.log(obj);
+                $('#tbody').append("<tr>\n" +
+                    "<td>" + obj.docID + "</td>\n" +
+                    "<td>" + obj.title + "</td>\n" +
+                    "<td>" + obj.similarity.toFixed(5) + "</td>\n" +
+                    "</tr>\n"
+                );
+            });//end of each
+        },
+        error: function () {
+            alert("检索出错！");
+            $("#results").text("");// 清空数据
+        }
+    })//end of ajax
+});
+
+
+/**
+ * 获取文档内容
+ * @param id
+ */
+function getContent(id) {
+    $.each(json, function (index, obj) {
+        if (index == id) {
+            $("#searchResults").text("");
+            $("#searchResults").append(obj.content);
+        }
+    });
+};
+
+/**
+ * 显示对应文档Id的TF或Vectors
+ * @param docIdInVSM
+ */
+function append(docIdInVSM) {
+    if (tempSign == 0) {
+        $.each(tempJson, function (index, json) {
+            if (json.docId == docIdInVSM) {
+                $("#results").append(
+                    "<div class=\"table-responsive smallTable\">\n" +
+                    "    <table>\n" +
+                    "        <thead >\n" +
+                    "            <tr class=\"table-primary\">\n" +
+                    "                <td colspan=\"4\" style=\"text-align:center;\"><strong>" + json.title + "</strong></td>\n" +
+                    "            </tr>\n" +
+                    "            <tr style='border-bottom:3px solid rgb(0,0,0)'>\n" +
+                    "                <th>词项</th>\n" +
+                    "                <th>TF</th>\n" +
+                    "                <th>词项</th>\n" +
+                    "                <th>TF</th>\n" +
+                    "            </tr>\n" +
+                    "        </thead>\n" +
+                    "        <tbody id='tbody'></tbody>\n" +
+                    "    </table>\n" +
+                    "</div>"
+                );
+                var item1, tf1;
+                var select = 0;
+                $.each(json.tfs, function (index1, obj1) {
+                    if (select == 0) {
+                        item1 = index1;
+                        tf1 = obj1;
+                        select = 1;
+                        $("#tbody").append(
+                            "<tr>\n" +
+                            "    <td>" + item1 + "</td>\n" +
+                            "    <td>" + tf1 + "</td>\n" +
+                            "</tr>\n"
+                        );
+                    } else {
+                        item1 = index1;
+                        tf1 = obj1;
+                        select = 0;
+                        $("#tbody").children().last().append(
+                            "<td>" + item1 + "</td>\n" +
+                            "<td>" + tf1 + "</td>\n"
+                        );
+                    }
+                });//end of each
+            }
+        })//end of each
+    } else if (tempSign == 1) {
+        $.each(tempJson, function (index, json) {
+            if (json.docId == docIdInVSM) {
+                $("#results").append(
+                    "<div class=\"table-responsive smallTable\">\n" +
+                    "    <table>\n" +
+                    "        <thead>\n" +
+                    "            <tr class=\"table-primary\">\n" +
+                    "                <td colspan=\"4\" style=\"text-align:center;\"><strong>" + json.title + "</strong></td>\n" +
+                    "            </tr>\n" +
+                    "            <tr>\n" +
+                    "                <th>词项</th>\n" +
+                    "                <th>第几位</th>\n" +
+                    "                <th>值</th>\n" +
+                    "            </tr>\n" +
+                    "        </thead>\n" +
+                    "        <colgroup>\n" +
+                    "            <col width=30% />\n" +
+                    "            <col width=30% />\n" +
+                    "            <col width=40% />\n" +
+                    "        </colgroup>\n" +
+                    "        <tbody id='tbody'></tbody>\n" +
+                    "    </table>\n" +
+                    "</div>");
+                $.each(json.vector, function (index, obj) {
+                    $("#tbody").append("<tr>\n" +
+                        "<td>" + obj.term + "</td>\n" +
+                        "<td>" + obj.num + "</td>\n" +
+                        "<td>" + obj.value.toFixed(4) + "</td>\n" +
+                        "</tr>\n"
+                    );
+                });//end of each
+            }
+        })//end of each
+    }
+}
+
+/**
+ * 返回上一步
+ */
+$("#return").click(function () {
+    $("#searchResults").text("");
+    $("#searchResults").append($searchResults);
+});
+/**
+ * 显示介绍页面
+ */
+$("#introduce").click(function () {
+    $("#first").show();
+    $("#second").hide();
+});//显示介绍界面
+
+
+
 
 
 
