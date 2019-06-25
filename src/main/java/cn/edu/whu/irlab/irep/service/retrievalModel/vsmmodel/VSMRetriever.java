@@ -8,7 +8,6 @@ import cn.edu.whu.irlab.irep.service.impl.InvertedIndexServiceImpl;
 import cn.edu.whu.irlab.irep.service.util.Calculator;
 import cn.edu.whu.irlab.irep.service.util.Find;
 import cn.edu.whu.irlab.irep.service.util.IndexTypeConstructor;
-import cn.edu.whu.irlab.irep.service.util.ReadDoc;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,12 +30,6 @@ public class VSMRetriever {
 
     @Autowired
     public InvertedIndexServiceImpl invertedIndexService;
-
-    @Autowired
-    public Find find;
-
-    @Autowired
-    public ReadDoc readDoc;
 
     private String indexType;//索引类型
 
@@ -221,7 +214,7 @@ public class VSMRetriever {
         for (int i = 0; i < docForVSMList.size(); i++) {
             List<VectorI> vector = docForVSMList.get(i).getVector();
             docId = docForVSMList.get(i).getId();
-            title = find.findTitle(docId, true);
+            title = Find.findTitle(docId, true);
             for (int j = 0; j < query.getVector().size(); j++) {
                 String term = query.getVector().get(j).getTerm();
                 double valueOfQuery = query.getVector().get(j).getValue();
@@ -246,17 +239,12 @@ public class VSMRetriever {
      */
     public void sortSimilarity() {
         List <ResultI> resultIList=new ArrayList<>();
-        System.out.println("未排序");
         for (int i = 0; i < result.size(); i++) {
             resultIList.add(result.get(i));
         }
         resultAfterSort = bubbleSort(resultIList);
 //        Comparator comparator = new ResultComparator();
 //        Collections.sort(resultAfterSort);
-        System.out.println("已排序");
-        for (int i = 0; i < resultAfterSort.size(); i++) {
-            System.out.println(resultAfterSort.get(i));
-        }
     }
 
     /**

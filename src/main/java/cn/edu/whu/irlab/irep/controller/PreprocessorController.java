@@ -21,8 +21,6 @@ import java.util.ArrayList;
 @RequestMapping("IRforCN/preProcessing")
 public class PreprocessorController {
 
-    @Autowired
-    public Find find;
 
     /**
      * 中文预处理控制层
@@ -38,7 +36,6 @@ public class PreprocessorController {
                                        @RequestParam(name = "isRemoveStopWord") boolean isRemoveStopWord) {
         ArrayList<String> termList = PreProcessor.preProcess(token, analyzerName, isRemoveStopWord);
         String string = termList.toString();
-        System.out.println(string);
         return string;
     }
 
@@ -50,7 +47,7 @@ public class PreprocessorController {
      */
     @RequestMapping("/getDoc")
     public String selectDoc(@RequestParam(name = "docId") int docId) {
-        return find.findDoc(docId, true);
+        return Find.findDoc(docId, true);
     }
 
 

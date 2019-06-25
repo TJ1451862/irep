@@ -55,7 +55,6 @@ public class PreProcessor {
         }
         analyzer.close();
         String outPut=String.valueOf(stringBuilder);
-        System.out.println("分词完成");
         return outPut;
     }
 
@@ -88,7 +87,6 @@ public class PreProcessor {
                 termList.add(word);
             }
         }
-        System.out.println( "去标点完成");
         return termList;
     }
 
@@ -113,7 +111,6 @@ public class PreProcessor {
         }catch (IOException e){
             e.printStackTrace();
         }
-        System.out.println("去停用词完成");
         return terms;
     }
 

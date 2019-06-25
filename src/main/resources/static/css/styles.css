@@ -207,13 +207,14 @@ p {
     vertical-align:top;
 }
 
-.table tbody{
-    overflow-y: auto;
+::-webkit-scrollbar{
+    display:none;
 }
 
 .over{
     background-color: red;
 }
+
 
 
 

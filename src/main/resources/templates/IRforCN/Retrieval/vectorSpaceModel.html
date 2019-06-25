@@ -1,7 +1,11 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head xmlns:th="http://www.w3.org/1999/xhtml">
 
-<head th:include="include::header"/>
+<head th:include="include::header">
+    <script type="text/javascript"
+            src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+</head>
 <body>
 <!--导航栏-->
 <nav class="navbar navbar-light navbar-expand-md" style="background-color:rgb(47,85,151);position:relative;">
@@ -91,13 +95,23 @@
                                 <div class="form-check">
                                     <label>
                                         <input name="formula" id="TF1" type="radio" checked="" value="1">
-                                        <p>TF</p>
+                                        <p>
+                                            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                                                <msub><mi>tf</mi><mi>t,d</mi></msub>
+                                            </math>
+                                        </p>
                                     </label>
                                 </div>
                                 <div class="form-check">
                                     <label>
                                         <input name="formula" id="TF4" type="radio" value="4">
-                                        <p> tf > 0 ? 1 : 0</p>
+                                        <p>
+                                            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                                                <mrow>
+                                                    <msub><mi>tf</mi><mi>t,d</mi></msub><mo>&#62</mo><mn>0</mn><mo>?</mo><mn>1</mn><mo>:</mo><mn>0</mn>
+                                                </mrow>
+                                            </math>
+                                        </p>
                                     </label>
                                 </div>
 
@@ -106,13 +120,28 @@
                                 <div class="form-check">
                                     <label>
                                         <input name="formula" id="TF2" type="radio" value="2">
-                                        <p>1+log(TF)</p>
+                                        <p>
+                                            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                                                <mrow>
+                                                    <mn>1</mn><mo>+</mo><mi>log(</mi><msub><mi>tf</mi><mi>t,d</mi></msub><mo>)</mo>
+                                                </mrow>
+                                            </math>
+                                        </p>
                                     </label>
                                 </div>
                                 <div class="form-check">
                                     <label>
                                         <input name="formula" id="TF5" type="radio" value="5">
-                                        <p>(1+log(tf))/(1+log(avg(tfs)))</p>
+                                        <p><math xmlns="http://www.w3.org/1998/Math/MathML">
+                                            <mrow>
+                                                <mfrac>
+                                                    <mrow>
+                                                        <mn>1</mn><mo>+</mo><mi>log(</mi><msub><mi>tf</mi><mi>t,d</mi></msub><mo>)</mo>
+                                                    </mrow>
+                                                    <mrow> <mn>1</mn><mo>+</mo><mi>log(</mi><msub><mi>ave</mi><mi>t	&#8712d</mi></msub><mo>(</mo><msub><mi>tf</mi><mi>t,d</mi></msub><mo>)</mo><mo>)</mo> </mrow>
+                                                </mfrac>
+                                            </mrow>
+                                        </math></p>
                                     </label>
                                 </div>
 
@@ -123,7 +152,19 @@
                                 <div class="form-check" style="display: inline-block">
                                     <label>
                                         <input name="formula" id="TF3" type="radio" value="3">
-                                        <p>a+(1-a)TF/max(TF)</p>
+                                        <p>
+                                            <math xmlns="http://www.w3.org/1998/Math/MathML" >
+                                                <mi>a</mi><mo>+</mo>
+                                                <mrow>
+                                                    <mfrac>
+                                                        <mrow>
+                                                            <mi>a</mi><mo>&#215</mo><msub><mi>tf</mi><mi>t,d</mi></msub>
+                                                        </mrow>
+                                                        <mrow><msub><mi>max</mi><mi>t</mi></msub><mo>(</mo><msub><mi>tf</mi><mi>t,d</mi></msub><mo>)</mo></mrow>
+                                                    </mfrac>
+                                                </mrow>
+                                            </math>
+                                        </p>
                                     </label>
                                 </div>
                                 <div style="margin-left: 10px;display: inline-block">
