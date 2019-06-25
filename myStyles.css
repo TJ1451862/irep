@@ -1,0 +1,121 @@
+/**
+common
+ */
+.title {
+    height: 40px;
+    line-height: 40px;
+    font-size: 20px;
+    padding: 0;
+    margin: 0;
+    color: rgb(0, 0, 0);
+    font-family: 微软雅黑;
+    float: none;
+    font-weight: bold;
+}
+
+/**
+preProcessing.html
+ */
+/*表格共5列，每列等宽*/
+.fifth td {
+    width: 20%;
+}
+
+.test th {
+    width: 150px;
+    text-align: center;
+}
+
+.test td {
+    width: 150px;
+    text-align: center;
+    height: 30px;
+}
+
+/**
+invertedIndex.html
+ */
+.table td {
+    padding: 2px;
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 20px;
+    text-align: center;
+}
+
+/*超出部分显示省略号*/
+.award-name {
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 100%;
+}
+
+#TF label p{
+    background:#4472c4;
+    color:#ffffff;
+    font-size:18px;
+    font-weight: bold;
+    width:200px;
+    text-align:center;
+    height:45px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#TF input{
+    height:18px;
+    width:18px;
+}
+
+.form-check{
+    padding-left: 0;
+}
+
+/**
+vectorSpaceModel.html
+ */
+.ra{
+    font-size: 20px;
+    font-family:Microsoft Yahei;
+    font-weight: bold;
+    margin-right: 20px
+}
+
+.modelTable td,.modelTable th{
+    padding: 2px;
+    vertical-align: top;
+    table-layout: fixed;
+    color: black;
+    font-size: 20px;
+}
+
+.smallTable{
+    text-align:center;
+    font-family:Microsoft Yahei;
+    overflow-x: hidden;
+}
+
+.smallTable table{
+    width:inherit;
+    table-layout: fixed
+}
+
+.smallTable thead{
+    color:#000000;
+}
+
+.smallTable thead tr{
+    border-bottom:3px solid rgb(0,0,0)
+}
+
+.smallTable td {
+    padding: 2px;
+    vertical-align: top;
+    border-bottom: 1px solid rgb(0, 0, 0);
+}
+
+
+
