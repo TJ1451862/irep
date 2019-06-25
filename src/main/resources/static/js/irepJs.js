@@ -131,7 +131,7 @@ $(function () {
 
 
 /**
- * invertedIndex.html
+ *  dIndex.html
  */
 /**
  * 小试牛刀

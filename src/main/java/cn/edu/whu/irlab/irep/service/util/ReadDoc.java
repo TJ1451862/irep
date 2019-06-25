@@ -10,7 +10,6 @@ import java.io.*;
  * @date 2018-09-08 0:27
  * @desc 读文件的工具类
  **/
-@Service
 public class ReadDoc {
 
     /**
@@ -18,7 +17,7 @@ public class ReadDoc {
      * @param docPath
      * @return
      */
-    public String readDoc(String docPath)//读文件
+    public static String readDoc(String docPath)//读文件
     {
 //        String result = "";
 //        String encoding="UTF-8";

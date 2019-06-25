@@ -35,12 +35,6 @@ import java.util.Map;
 public class VSMController {
 
     @Autowired
-    public Find find;
-
-    @Autowired
-    public ReadDoc readDoc;
-
-    @Autowired
     public ResultServiceImpl resultService;
 
     @Autowired
@@ -69,7 +63,7 @@ public class VSMController {
         for (int i = 0; i < resultIList.size(); i++) {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("title", resultIList.get(i).getTitle());
-            jsonObject.put("content", find.findDoc(resultIList.get(i).getDocID(), true));
+            jsonObject.put("content", Find.findDoc(resultIList.get(i).getDocID(), true));
             searchResult.add(jsonObject);
         }
         return searchResult;
@@ -141,7 +135,7 @@ public class VSMController {
         for (int i = 0; i < docForVSMList.size(); i++) {
             JSONObject jsonObject = new JSONObject();
             JSONObject tfsJson;
-            jsonObject.put("title", find.findTitle(docForVSMList.get(i).getId(), true));
+            jsonObject.put("title", Find.findTitle(docForVSMList.get(i).getId(), true));
             jsonObject.put("docId", docForVSMList.get(i).getId());
             tfsJson = JSON.parseObject(JSON.toJSONString(docForVSMList.get(i).getTfMap()));
             jsonObject.put("tfs", tfsJson);
@@ -162,7 +156,7 @@ public class VSMController {
         List<DocForVSM> docForVSMList = vsmRetriever.getDocForVSMList();
         for (int i = 0; i < docForVSMList.size(); i++) {
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("title", find.findTitle(docForVSMList.get(i).getId(), true));
+            jsonObject.put("title", Find.findTitle(docForVSMList.get(i).getId(), true));
             jsonObject.put("docId", docForVSMList.get(i).getId());
             JSONArray vectorJson = new JSONArray();
             List<VectorI> docVector = docForVSMList.get(i).getVector();

@@ -27,10 +27,8 @@ public class InvertedIndexController {
     @Autowired
     public InvertedIndexServiceImpl invertedIndexService;
 
-
-
     @Autowired
-    public Find find;
+    public IndexGenerator indexGenerator;
 
     public String folderPath = "resources/doc_ch";
 
@@ -45,13 +43,13 @@ public class InvertedIndexController {
                                                @RequestParam(name = "isRemoveStopWord") boolean isRemoveStopWord) {
         String indexType = IndexTypeConstructor.indexTypeConstructor(analyzerName, isRemoveStopWord);
         List<FullIndex> fullIndexList = fullIndexService.selectFullIndexByIndexType(indexType);
-        if (fullIndexList == null) {
-            IndexGenerator indexGenerator = new IndexGenerator(folderPath, analyzerName, isRemoveStopWord);
+        if (fullIndexList.size() == 0) {
+            indexGenerator.initIndexGenerator(folderPath, analyzerName, isRemoveStopWord);
             indexGenerator.generateIndex();
             fullIndexList = fullIndexService.selectFullIndexByIndexType(indexType);
         }
         JSONArray jsonArray = JSON.parseArray(JSON.toJSONString(fullIndexList));
-        System.out.println(jsonArray);
+//        System.out.println(jsonArray);
         return jsonArray;
     }
 

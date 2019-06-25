@@ -11,6 +11,7 @@ import cn.edu.whu.irlab.irep.service.preProcess.PreProcessor;
 import cn.edu.whu.irlab.irep.service.util.IndexTypeConstructor;
 import org.apache.lucene.analysis.Analyzer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -24,12 +25,8 @@ import java.util.Map;
  * @date 2019-06-17 15:59
  * @desc 生成倒排索引
  **/
-
+@Service
 public class IndexGenerator {
-
-
-    @Autowired
-    public PreProcessor preProcessor;
 
     @Autowired
     public RecordServiceImpl recordService;
@@ -39,9 +36,6 @@ public class IndexGenerator {
 
     @Autowired
     public FullIndexServiceImpl fullIndexService;
-
-    @Autowired
-    public IndexTypeConstructor indexTypeConstructor;
 
     private String folderPath;//包含待处理的文档的文件夹路径
 
@@ -58,11 +52,11 @@ public class IndexGenerator {
      * @param isRemoveStopWord 是否去停用词
      *
      * */
-    public IndexGenerator(String folderPath, String analyzerName, boolean isRemoveStopWord) {
+    public void initIndexGenerator(String folderPath, String analyzerName, boolean isRemoveStopWord) {
         this.folderPath = folderPath;
         this.analyzerName = analyzerName;
         this.isRemoveStopWord = isRemoveStopWord;
-        this.indexType = indexTypeConstructor.indexTypeConstructor(analyzerName, isRemoveStopWord);
+        this.indexType = IndexTypeConstructor.indexTypeConstructor(analyzerName, isRemoveStopWord);
     }
 
     /**
@@ -94,12 +88,12 @@ public class IndexGenerator {
                     record.setDocId(doc.getId());
                     record.setLocation(num);
                     record.setIndexType(indexType);
-                    System.out.println(record.toString());
                     recordService.insert(record);
                     num++;
                 }
             }
         }
+        System.out.println("Record插入完成！");
     }
 
     /**
@@ -148,6 +142,7 @@ public class IndexGenerator {
             invertedIndex.setLocations(locations);
             invertedIndexService.insert(invertedIndex);
         }
+        System.out.println("invertedIndex插入成功");
     }
 
     /**
@@ -194,5 +189,6 @@ public class IndexGenerator {
             fullIndex.setIds(ids);
             fullIndexService.insert(fullIndex);
         }
+        System.out.println("fullIndex插入成功");
     }
 }
