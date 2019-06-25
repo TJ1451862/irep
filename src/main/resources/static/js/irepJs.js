@@ -1,4 +1,11 @@
 var storage = window.localStorage;
+//倒排索引页面表格行背景色
+var colorOver1= "rgb(47,82,143)"; //表格1鼠标经过时的颜色
+var colorOver2= "rgb(112,173,71)"; //表格2鼠标经过时的颜色
+var colorClick1="rgb(178,209,158)"; //表格1鼠标点击的颜色
+var colorClick2="green"; //表格2鼠标点击的颜色
+var colorNone1="rgb(146,165,198)";//表格1行默认背景颜色
+var colorNone2="rgb(178,209,158)";//表格2行默认背景色
 
 /**
  * 增减input中的数字大小
@@ -278,7 +285,7 @@ $("#createIndex").click(function () {
         success: function (result) {
             var str = "";
             $.each(result, function (index, value) {
-                str += "<tr style='height: 35px' term=\"" + value.term + "\" onclick=\"selectInvertedIndex(this.getAttribute('term'))\">\n" +
+                str += "<tr style='height: 35px'  term=\"" + value.term + "\" onmouseover=\'mouseOverTable1(this)\' onmouseout=\'mouseOutTable1(this)\' onclick=\"selectInvertedIndex(this,this.getAttribute('term'))\">\n" +
                     "    <td width='85px' >" + value.term + "</td>\n" +
                     "    <td width='85px'>" + value.df + "</td>\n" +
                     "    <td class='award-name' width='290px'>" + value.ids + "</td>\n" +
@@ -298,11 +305,20 @@ $("#createIndex").click(function () {
  * 获取invertedIndex中的数据
  * @param term 词项
  */
-function selectInvertedIndex(term) {
+function selectInvertedIndex(obj,term) {
     //从localStorage中获取参数
-
     var isRSW = storage.isRemoveStopWord;
     var aN = storage.analyzerName;
+    var tab1 = document.getElementById("tbody1");
+    var rows1 = tab1.rows;
+    for(var c=0;c<rows1.length;c++){
+        if(rows1[c]==obj){
+           rows1[c].style.backgroundColor=colorClick1;
+           localStorage.setItem("invertedrowNo1",c);
+        }else{
+            rows1[c].style.backgroundColor=colorNone1;
+        }
+    }
 
     console.log(term);
     $("#tbody2").text("");//初始化
@@ -322,7 +338,7 @@ function selectInvertedIndex(term) {
             console.log(result);
             var str = "";
             $.each(result, function (index, value) {
-                str += "<tr style='height: 35px' docId=\"" + value.docId + "\" term=\"" + value.term + "\" onclick=\"getDoc(this.getAttribute('docId'),this.getAttribute('term'))\">\n" +
+                str += "<tr style='height: 35px'  docId=\"" + value.docId + "\" term=\"" + value.term + "\" onmouseover=\'mouseOverTable2(this)\' onmouseout=\'mouseOutTable2(this)\' onclick=\"getDoc(this,this.getAttribute('docId'),this.getAttribute('term'))\">\n" +
                     "     <td>" + value.docId + "</td>\n" +
                     "     <td>" + value.tf + "</td>\n" +
                     "     <td class='award-name'>" + value.locations + "</td>\n" +
@@ -335,14 +351,67 @@ function selectInvertedIndex(term) {
             $("#result").text("");// 清空数据
         }
     })//end of ajax
-};
+}
+
+function mouseOverTable1(obj){
+    var tab1 = document.getElementById("tbody1");
+    var rows1 = tab1.rows;
+    var no=localStorage.getItem("invertedrowNo1");
+    for(var c=0;c<rows1.length;c++){
+        if(c!=no && rows1[c]==obj){
+            rows1[c].style.backgroundColor=colorOver1;
+        }
+    }
+}
+function mouseOutTable1(obj){
+    var tab1 = document.getElementById("tbody1");
+    var rows1 = tab1.rows;
+    var no=localStorage.getItem("invertedrowNo1");
+    for(var c=0;c<rows1.length;c++){
+        if(c!=no &&rows1[c]==obj){
+            rows1[c].style.backgroundColor=colorNone1;
+        }
+    }
+}
+
+function mouseOverTable2(obj){
+    var tab2 = document.getElementById("tbody2");
+    var rows2 = tab2.rows;
+    var No=localStorage.getItem("invertedrowNo2");
+    for(var d=0;d<rows2.length;d++){
+        if(d!=No && rows2[d]==obj){
+            rows2[d].style.backgroundColor=colorOver2;
+        }
+    }
+}
+function mouseOutTable2(obj){
+    var tab2 = document.getElementById("tbody2");
+    var rows2 = tab2.rows;
+    var No=localStorage.getItem("invertedrowNo2");
+    for(var d=0;d<rows2.length;d++){
+        if(d!=No &&rows2[d]==obj){
+            rows2[d].style.backgroundColor=colorNone2;
+        }
+    }
+}
 
 /**
  * 获取文章，并强调词项
  * @param docId 文章Id
  * @param term 待强调的词项
  */
-function getDoc(docId, term) {
+function getDoc(obj,docId, term) {
+    var tab2 = document.getElementById("tbody2");
+    var rows2 = tab2.rows;
+    for(var c=0;c<rows2.length;c++){
+        if(rows2[c]==obj){
+            rows2[c].style.backgroundColor=colorClick2;
+            localStorage.setItem("invertedrowNo2",c);
+        }else{
+            rows2[c].style.backgroundColor=colorNone2;
+        }
+    }
+
     $("#tab-1").text("");//初始化
     console.log(docId, term);
 
@@ -373,8 +442,7 @@ function getDoc(docId, term) {
             $("#tab-1").text("");// 清空数据
         }
     })//end of ajax
-};
-
+}
 
 /**
  * vectorSpaceModel.html

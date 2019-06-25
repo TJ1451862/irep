@@ -55,12 +55,14 @@ invertedIndex.html
 #TF label p{
     background:#4472c4;
     color:#ffffff;
-    font-size:20px;
+    font-size:18px;
     font-weight: bold;
     width:200px;
     text-align:center;
-    height:32px;
-    display: inline-block;
+    height:45px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #TF input{
