@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.edu.whu.irlab.irep.mapper.UserMapper" >
+  <resultMap id="BaseResultMap" type="cn.edu.whu.irlab.irep.entity.User" >
+    <result column="" property="id" jdbcType="INTEGER" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="works" property="works" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="DATE" />
+    <result column="u1" property="u1" jdbcType="VARCHAR" />
+    <result column="u2" property="u2" jdbcType="VARCHAR" />
+    <result column="u3" property="u3" jdbcType="VARCHAR" />
+    <result column="u4" property="u4" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id,username,password,phone,email,works,create_time,u1,u2,u3,u4
+  </sql>
+  <insert id="addUser" parameterType="cn.edu.whu.irlab.irep.entity.User" >
+    insert into user (username, password, phone, email, works, create_time)
+    values (#{username,jdbcType=VARCHAR}, #{password,jdbcType=INTEGER}, #{phone,jdbcType=VARCHAR},
+      #{email,jdbcType=VARCHAR}, #{works,jdbcType=INTEGER}, sysdate())
+  </insert>
+  <insert id="insertUser" parameterType="cn.edu.whu.irlab.irep.entity.User" >
+    insert into full_index
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="works != null" >
+        works,
+      </if>
+      create_time
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=INTEGER},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="works != null" >
+        #{works,jdbcType=VARCHAR},
+      </if>
+      sysdate()
+    </trim>
+  </insert>
+
+  <select id="selectAllUser" parameterType="cn.edu.whu.irlab.irep.entity.User" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/>
+    from user
+  </select>
+
+  <select id="selectUserByUsernameAndPassword" parameterType="cn.edu.whu.irlab.irep.entity.User" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/>
+    from user
+    <where>
+        <if test="username != null" >
+            AND username = #{username},
+        </if>
+        <if test="password != null" >
+            AND password = #{password}
+        </if>
+    </where>
+  </select>
+
+  <select id="selectUserByPhone" parameterType="cn.edu.whu.irlab.irep.entity.User" resultMap="BaseResultMap">
+      select <include refid="Base_Column_List"/>
+      from user
+      <where>
+          <if test="phone != null" >
+              AND phone = #{phone}
+          </if>
+      </where>
+  </select>
+
+  <select id="selectUserByEmail" parameterType="cn.edu.whu.irlab.irep.entity.User" resultMap="BaseResultMap">
+      select <include refid="Base_Column_List"/>
+      from user
+      <where>
+          <if test="email != null" >
+              AND email = #{email}
+          </if>
+      </where>
+  </select>
+</mapper>
