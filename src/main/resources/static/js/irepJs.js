@@ -172,10 +172,9 @@ $(".exaConfirm").click(function (){
         }
     }
     //如果全部答对则答题部分隐藏，实验部分出现；
-    if(correctNum==8){
-        // $($(this)[0].parentNode).hide();
+    if(correctNum==1){
         $($(this)[0].parentNode).hide();
-        $($(this)[0].parentNode).next().show();
+        $("#experimentPart").show();
     }
 
     // if($(this)[0].parentNode.id=="preExamination"){
