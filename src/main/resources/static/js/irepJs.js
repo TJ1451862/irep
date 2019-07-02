@@ -135,46 +135,81 @@ $(function () {
             alert("请选择待处理的原文件")
         }
     })
-
 });
 
 // 各界面答题部分
 $(".exaConfirm").click(function (){
-    var $fillResults=$(".fillIn input");// 填空题填写的答案
     var correctNum=0; //正确的题数，全部答对才可进入下一步
-    // 对应各个页面
+    var Answer=[];
+    // 对应各个页面的答案
     if($(this)[0].parentNode.id=="preExamination"){
-        // 判断填空题是否正确
-        for(var i=0;i<$fillResults.length;i++){
-            if($fillResults[i].value!=preAnswer[i]){
-                $fillResults[i].style.backgroundColor="red";
-            }else{
-                correctNum=correctNum+1;
-                $fillResults[i].style.backgroundColor="";
-            }
-        }
-        // 判断选择题是否正确
-        for(var j=0;j<$(".multipleChoice").length;j++){
-            var r='';
-            var $choices=$(".multipleChoice:eq("+j+")").find("input");
-            for(var m=0;m<$choices.length;m++){
-                if($choices[m].checked){
-                    r=r+$choices[m].value;
-                }
-            }
-            if(preAnswer[j+4]!=r){
-               $(".multipleChoice:eq("+j+")").css("background","red");
-            }else{
-                $(".multipleChoice:eq("+j+")").css("background","");
-                correctNum=correctNum+1;
-            }
-        }
-        //如果全部答对则答题部分隐藏，实验部分出现；
-        if(correctNum==8){
-            $("#preExamination").hide();
-            $("#experimentPart").show();
+        Answer=preAnswer
+    }
+    var $fillResults=$(".fillIn input");// 填空题填写的答案
+    // 判断填空题是否正确
+    for(var i=0;i<$fillResults.length;i++){
+        if($fillResults[i].value!=Answer[i]){
+            $fillResults[i].style.backgroundColor="red";
+        }else{
+            correctNum=correctNum+1;
+            $fillResults[i].style.backgroundColor="";
         }
     }
+    // 判断选择题是否正确
+    for(var j=0;j<$(".multipleChoice").length;j++){
+        var r='';
+        var $choices=$(".multipleChoice:eq("+j+")").find("input");
+        for(var m=0;m<$choices.length;m++){
+            if($choices[m].checked){
+                r=r+$choices[m].value;
+            }
+        }
+        if(Answer[j+4]!=r){
+            $(".multipleChoice:eq("+j+")").css("background","red");
+        }else{
+            $(".multipleChoice:eq("+j+")").css("background","");
+            correctNum=correctNum+1;
+        }
+    }
+    //如果全部答对则答题部分隐藏，实验部分出现；
+    if(correctNum==8){
+        // $($(this)[0].parentNode).hide();
+        $($(this)[0].parentNode).hide();
+        $($(this)[0].parentNode).next().show();
+    }
+
+    // if($(this)[0].parentNode.id=="preExamination"){
+    //     // 判断填空题是否正确
+    //     for(var i=0;i<$fillResults.length;i++){
+    //         if($fillResults[i].value!=Answer[i]){
+    //             $fillResults[i].style.backgroundColor="red";
+    //         }else{
+    //             correctNum=correctNum+1;
+    //             $fillResults[i].style.backgroundColor="";
+    //         }
+    //     }
+    //     // 判断选择题是否正确
+    //     for(var j=0;j<$(".multipleChoice").length;j++){
+    //         var r='';
+    //         var $choices=$(".multipleChoice:eq("+j+")").find("input");
+    //         for(var m=0;m<$choices.length;m++){
+    //             if($choices[m].checked){
+    //                 r=r+$choices[m].value;
+    //             }
+    //         }
+    //         if(Answer[j+4]!=r){
+    //            $(".multipleChoice:eq("+j+")").css("background","red");
+    //         }else{
+    //             $(".multipleChoice:eq("+j+")").css("background","");
+    //             correctNum=correctNum+1;
+    //         }
+    //     }
+    //     //如果全部答对则答题部分隐藏，实验部分出现；
+    //     if(correctNum==8){
+    //         $("#preExamination").hide();
+    //         $("#experimentPart").show();
+    //     }
+    // }
 });
 
 /**

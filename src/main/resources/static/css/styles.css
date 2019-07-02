@@ -213,7 +213,7 @@ p {
 
 /*填空题部分css*/
 .fillIn{
-    font-size: 18px;
+    font-size: 16px;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -234,7 +234,7 @@ p {
 
 /*选择题部分css*/
 .multipleChoice{
-    font-size:18px;
+    font-size:16px;
     margin-bottom:10px;
     margin-left:15px;
 
@@ -247,14 +247,15 @@ p {
 /*答题确定按钮*/
 .exaConfirm{
     margin-left:600px;
-    margin-top:10px;
+    margin-top:-10px;
+    margin-bottom:50px;
     background-color: #4472c4;
     font-family: "微软雅黑";
     width: 120px;
     height: 45px;
     font-weight: bold;
     color: #ffffff;
-    font-size: 20px;
+    font-size:14px;
 }
 
 
