@@ -9,14 +9,14 @@
         <result column="index_type" property="indexType" jdbcType="VARCHAR"/>
     </resultMap>
     <sql id="Base_Column_List">
-    term, doc_id, tf,locations, index_type
-  </sql>
+        term, doc_id, tf,locations, index_type
+    </sql>
 
     <insert id="insert" parameterType="cn.edu.whu.irlab.irep.entity.InvertedIndex">
-    insert into inverted_index (term, doc_id, tf,locations, index_type)
-    values (#{term,jdbcType=VARCHAR}, #{docId,jdbcType=INTEGER}, #{tf,jdbcType=INTEGER}, 
-      #{locations,jdbcType=VARCHAR}, #{indexType,jdbcType=VARCHAR})
-  </insert>
+        insert into inverted_index (term, doc_id, tf,locations, index_type)
+        values (#{term,jdbcType=VARCHAR}, #{docId,jdbcType=INTEGER}, #{tf,jdbcType=INTEGER},
+        #{locations,jdbcType=VARCHAR}, #{indexType,jdbcType=VARCHAR})
+    </insert>
     <insert id="insertSelective" parameterType="cn.edu.whu.irlab.irep.entity.InvertedIndex">
         insert into inverted_index
         <trim prefix="(" suffix=")" suffixOverrides=",">

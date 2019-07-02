@@ -75,7 +75,7 @@ public class DruidDataSourceConfig extends DataSourceProperties {
     private String connectionProperties;
 
     @Bean     //声明其为Bean实例
-    public DataSource dataSource(){
+    public DataSource dataSource() {
         DruidDataSource datasource = new DruidDataSource();
 
         datasource.setUrl(this.dbUrl);

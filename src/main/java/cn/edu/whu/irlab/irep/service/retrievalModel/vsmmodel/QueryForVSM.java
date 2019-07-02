@@ -10,9 +10,9 @@ import java.util.Map;
 
 public class QueryForVSM extends Query {
 
-    private List<VectorI> vector=new ArrayList<>();
+    private List<VectorI> vector = new ArrayList<>();
 
-    private Map<String,Double> tfMap=new HashMap<>();
+    private Map<String, Double> tfMap = new HashMap<>();
 
     public QueryForVSM(String content, String analyzerName, boolean isRemoveStopWord) {
         super(content, analyzerName, isRemoveStopWord);
@@ -20,7 +20,7 @@ public class QueryForVSM extends Query {
 
     public QueryForVSM(String content, String analyzerName, boolean isRemoveStopWord, int formulaID, double smoothParam) {
         super(content, analyzerName, isRemoveStopWord);
-        setTfMap(formulaID,smoothParam);
+        setTfMap(formulaID, smoothParam);
     }
 
 
@@ -29,17 +29,17 @@ public class QueryForVSM extends Query {
     }
 
     public void setTfMap(int formulaID, double smoothParam) {
-        ArrayList<String> termList=this.getPreProcessResult();
-        for (int i = 0; i <termList.size() ; i++) {
-            String term =termList.get(i);
-            if (tfMap.containsKey(term)){
-                double tf=tfMap.get(term);
-                tfMap.put(term,tf+1);
-            }else {
-                tfMap.put(term,1.0);
+        ArrayList<String> termList = this.getPreProcessResult();
+        for (int i = 0; i < termList.size(); i++) {
+            String term = termList.get(i);
+            if (tfMap.containsKey(term)) {
+                double tf = tfMap.get(term);
+                tfMap.put(term, tf + 1);
+            } else {
+                tfMap.put(term, 1.0);
             }
         }
-        tfMap= Calculator.calculateTF(tfMap,formulaID,smoothParam);
+        tfMap = Calculator.calculateTF(tfMap, formulaID, smoothParam);
     }
 
     public List<VectorI> getVector() {

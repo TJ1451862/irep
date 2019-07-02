@@ -12,13 +12,20 @@
 
 <body>
 <nav class="navbar navbar-light navbar-expand-md" style="background-color:rgb(47,85,151);position:relative;">
-    <div class="container-fluid"><a class="navbar-brand" href="../index.html" style="width:340px;background-image:url(../img/logo.png);background-size:cover;height:40px;padding:10px 0px;"></a><button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"></button>
+    <div class="container-fluid"><a class="navbar-brand" href="../index.html"
+                                    style="width:340px;background-image:url(../img/logo.png);background-size:cover;height:40px;padding:10px 0px;"></a>
+        <button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"></button>
         <div class="collapse navbar-collapse" id="navcol-1" style="/*text-align:right;*/position:absolute;right:20px;">
             <ul class="nav navbar-nav" style="margin:0 0 0 0px;">
-                <li class="nav-item" role="presentation" style="margin:0 5px;"><a class="nav-link" href="../index.html">首页</a></li>
-                <li class="nav-item" role="presentation" style="margin:0 5px;"><a class="nav-link" href="../IRforCN.html">信息检索实验</a></li>
-                <li class="nav-item" role="presentation" style="margin:0 5px;"><a class="nav-link active" href="../NLP.html">NLP实验</a></li>
-                <li class="nav-item" role="presentation" style="margin:0 5px;"><a class="nav-link" href="../explanation.html">文档与支持</a></li>
+                <li class="nav-item" role="presentation" style="margin:0 5px;"><a class="nav-link" href="../index.html">首页</a>
+                </li>
+                <li class="nav-item" role="presentation" style="margin:0 5px;"><a class="nav-link"
+                                                                                  href="../IRforCN.html">信息检索实验</a></li>
+                <li class="nav-item" role="presentation" style="margin:0 5px;"><a class="nav-link active"
+                                                                                  href="../NLP.html">NLP实验</a></li>
+                <li class="nav-item" role="presentation" style="margin:0 5px;"><a class="nav-link"
+                                                                                  href="../explanation.html">文档与支持</a>
+                </li>
             </ul>
         </div>
     </div>
@@ -28,9 +35,16 @@
         <div
                 class="collapse navbar-collapse" id="navcol-2" style="position:absolute;right:20px;">
             <ul class="nav navbar-nav" style="margin:0 0 0 0px;">
-                <li class="nav-item align-self-center" role="presentation" style="margin:0 5px;"><a href="LexicalAnalysis.html" class="nav-link" style="color:rgb(0,0,0);">分词</a></li>
-                <li role="presentation" class="nav-item align-self-center" style="margin:0 5px;"><a href="POSTagging.html" class="nav-link active" style="color:rgb(0,0,0);font-style:normal;font-family:Microsoft Yahei;font-weight:normal;margin:0;height:30px;line-height:5px;border:solid;border-radius:10px;border-color:rgb(0,0,0);border-width:3px;">词性标注</a></li>
-                <li class="nav-item" role="presentation" style="margin:0 5px;"><a href="NamedEntityRecognition.html" class="nav-link" style="color:rgb(0,0,0);">命名实体识别</a></li>
+                <li class="nav-item align-self-center" role="presentation" style="margin:0 5px;"><a
+                        href="LexicalAnalysis.html" class="nav-link" style="color:rgb(0,0,0);">分词</a></li>
+                <li role="presentation" class="nav-item align-self-center" style="margin:0 5px;"><a
+                        href="POSTagging.html" class="nav-link active"
+                        style="color:rgb(0,0,0);font-style:normal;font-family:Microsoft Yahei;font-weight:normal;margin:0;height:30px;line-height:5px;border:solid;border-radius:10px;border-color:rgb(0,0,0);border-width:3px;">词性标注</a>
+                </li>
+                <li class="nav-item" role="presentation" style="margin:0 5px;"><a href="NamedEntityRecognition.html"
+                                                                                  class="nav-link"
+                                                                                  style="color:rgb(0,0,0);">命名实体识别</a>
+                </li>
             </ul>
         </div>
     </div>
@@ -42,9 +56,12 @@
             <div class="col-md-4">
                 <div>
                     <ul class="nav nav-tabs">
-                        <li class="nav-item"><a role="tab" data-toggle="tab" href="#tab-1" class="nav-link active">简介</a></li>
-                        <li class="nav-item"><a role="tab" data-toggle="tab" href="#tab-2" class="nav-link">词性标注集</a></li>
-                        <li class="nav-item"><a role="tab" data-toggle="tab" href="#tab-3" class="nav-link">常用技术</a></li>
+                        <li class="nav-item"><a role="tab" data-toggle="tab" href="#tab-1"
+                                                class="nav-link active">简介</a></li>
+                        <li class="nav-item"><a role="tab" data-toggle="tab" href="#tab-2" class="nav-link">词性标注集</a>
+                        </li>
+                        <li class="nav-item"><a role="tab" data-toggle="tab" href="#tab-3" class="nav-link">常用技术</a>
+                        </li>
                     </ul>
                     <div class="tab-content" style="height:500px;">
                         <div role="tabpanel" class="tab-pane active" id="tab-1">
@@ -75,19 +92,22 @@
                 <div>
                     <div style="margin:10px 0;height:40px;">
                         <h4 style="float:left;margin:8px 0;font-size:20px;font-weight:bold;">请输入待标注内容：</h4>
-                        <button id="postag" class="btn btn-primary cixing" type="button" style="float:right;margin:0;">标注</button>
+                        <button id="postag" class="btn btn-primary cixing" type="button" style="float:right;margin:0;">
+                            标注
+                        </button>
                     </div>
                     <textarea id="inputSentence" class="text" style="width:100%;height:100px;margin:0;"></textarea>
                 </div>
                 <h3 class="text-center" style="margin:20px 0 0px 0;font-weight:bold;font-size:20px;">词性标注结果</h3>
                 <div class="text" style="height:320px;">
-                    <div id="postTagResult" style="height:50%;border-bottom:solid;border-color:#000000;overflow-y: scroll;"></div>
+                    <div id="postTagResult"
+                         style="height:50%;border-bottom:solid;border-color:#000000;overflow-y: scroll;"></div>
                     <div id="postTag" style="height:50%;overflow-y:scroll;">
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
     <footer style="color:rgb(47,85,151);width:100%;height:35px;line-height:35px;background-color:#2f5597;background-position:bottom;margin:0px;padding:0;position:fixed;bottom:0;">
         <p class="text-center" style="font-family:微软雅黑;color:rgb(255,255,255);">©copyright 2018 武汉大学信息检索与知识挖掘研究所 </p>
     </footer>
@@ -96,17 +116,17 @@
 </body>
 <script type="text/javascript">
 
-    function select_wtype(el){
+    function select_wtype(el) {
         var wtype = $(el).attr("option-data");
         $('#postTag .current').removeClass("current").addClass("cixing");
 
         $('.stress').removeClass("stress").addClass("result");
         $(el).removeClass("result").addClass("stress");
 
-        $('[cixing="'+ wtype +'"]').addClass("current");
+        $('[cixing="' + wtype + '"]').addClass("current");
     }
 
-    function select_type(el){
+    function select_type(el) {
         var type = $(el).attr("cixing");
         $('#postTag .current').removeClass('current').addClass("cixing");
         $(el).removeClass('cixing').addClass('current');
@@ -116,8 +136,8 @@
     }
 
 
-    $(document).ready(function(){
-        $("#postag").click(function(){
+    $(document).ready(function () {
+        $("#postag").click(function () {
             $.ajax({
                 type: "POST",
                 url: "http://127.0.0.1:5000/POSTagging/",
@@ -126,87 +146,116 @@
                 }),
                 contentType: 'application/json',
                 dataType: "json",
-                success: function(data){
+                success: function (data) {
                     //console.log(data);
                     $("#postTag").text("");
                     $("#postTagResult").text("");
-                    var result=data.msg;
-                    var map=new Map();
-                    $.each(result,function (index,obj) {
+                    var result = data.msg;
+                    var map = new Map();
+                    $.each(result, function (index, obj) {
                         //console.log(obj);
-                        $.each(obj,function (key,value) {
-                            console.log(key+":"+value);
+                        $.each(obj, function (key, value) {
+                            console.log(key + ":" + value);
                             $("#postTagResult").append(
-                                "<span class=\"result\" onclick=\"select_wtype(this)\" option-data="+value+">"+key+"</span>"
+                                "<span class=\"result\" onclick=\"select_wtype(this)\" option-data=" + value + ">" + key + "</span>"
                             );
-                            map.set(value," ");
+                            map.set(value, " ");
                         })
                     });
 
                     map.forEach(function (value, key, map) {
-                        var tag="";
+                        var tag = "";
                         switch (key) {
-                            case "n":tag="名词";
+                            case "n":
+                                tag = "名词";
                                 break;
-                            case "np":tag="人名";
+                            case "np":
+                                tag = "人名";
                                 break;
-                            case "ns":tag="地名";
+                            case "ns":
+                                tag = "地名";
                                 break;
-                            case "ni":tag="机构名";
+                            case "ni":
+                                tag = "机构名";
                                 break;
-                            case "nz":tag="其他专名";
+                            case "nz":
+                                tag = "其他专名";
                                 break;
-                            case "m":tag="数词";
+                            case "m":
+                                tag = "数词";
                                 break;
-                            case "q":tag="量词";
+                            case "q":
+                                tag = "量词";
                                 break;
-                            case "mq":tag="数量词";
+                            case "mq":
+                                tag = "数量词";
                                 break;
-                            case "t":tag="时间词";
+                            case "t":
+                                tag = "时间词";
                                 break;
-                            case "f":tag="方位词";
+                            case "f":
+                                tag = "方位词";
                                 break;
-                            case "s":tag="处所词";
+                            case "s":
+                                tag = "处所词";
                                 break;
-                            case "v":tag="动词";
+                            case "v":
+                                tag = "动词";
                                 break;
-                            case "a":tag="形容词";
+                            case "a":
+                                tag = "形容词";
                                 break;
-                            case "d":tag="副词";
+                            case "d":
+                                tag = "副词";
                                 break;
-                            case "h":tag="前接成分";
+                            case "h":
+                                tag = "前接成分";
                                 break;
-                            case "k":tag="后接成分";
+                            case "k":
+                                tag = "后接成分";
                                 break;
-                            case "i":tag="习语";
+                            case "i":
+                                tag = "习语";
                                 break;
-                            case "id":tag="成语";
-                            break;
-                            case "j":tag="简称";
+                            case "id":
+                                tag = "成语";
                                 break;
-                            case "r":tag="代词";
+                            case "j":
+                                tag = "简称";
                                 break;
-                            case "c":tag="连词";
+                            case "r":
+                                tag = "代词";
                                 break;
-                            case "p":tag="介词";
+                            case "c":
+                                tag = "连词";
                                 break;
-                            case "u":tag="助词";
+                            case "p":
+                                tag = "介词";
                                 break;
-                            case "y":tag="语气助词";
+                            case "u":
+                                tag = "助词";
                                 break;
-                            case "e":tag="叹词";
+                            case "y":
+                                tag = "语气助词";
                                 break;
-                            case "o":tag="拟声词";
+                            case "e":
+                                tag = "叹词";
                                 break;
-                            case "g":tag="语速";
+                            case "o":
+                                tag = "拟声词";
                                 break;
-                            case "w":tag="标点";
+                            case "g":
+                                tag = "语速";
                                 break;
-                            case "x":tag="其它";
+                            case "w":
+                                tag = "标点";
+                                break;
+                            case "x":
+                                tag = "其它";
                                 break;
                         }
                         $("#postTag").append(
-                            "<button class=\"btn btn-primary cixing\" type=\"button\" onclick=\"select_type(this)\" cixing=\""+key+"\">"+tag+key+"</button>\n"
+                            "<button class=\"btn btn-primary cixing\" type=\"button\" onclick=\"select_type(this)\" cixing=\"" + key + "\">" + tag + key + "</button>\n"
                         )
                     });
 
@@ -217,7 +266,7 @@
                         $("#analysisResult").val("出现错误：" + data.msg);
                     }
                 },
-                error: function(jqXHR){
+                error: function (jqXHR) {
                     alert("发生错误：" + jqXHR.status);
                 },
             });

@@ -19,11 +19,11 @@ public class Doc {
     private String title;
     private String content;
 
-    public Doc(String filePath,String fileName){
-        this.filePath=filePath;
-        this.fileName=fileName;
-        this.content= ReadDoc.readDoc(filePath);
-        this.id= Find.findId(fileName,true);
+    public Doc(String filePath, String fileName) {
+        this.filePath = filePath;
+        this.fileName = fileName;
+        this.content = ReadDoc.readDoc(filePath);
+        this.id = Find.findId(fileName, true);
     }
 
     public Doc(int id) {
@@ -31,8 +31,8 @@ public class Doc {
     }
 
     //预处理文档
-    public ArrayList<String> preProcess(String analyzerName,boolean isRemoveStopWord){
-        return preProcessor.preProcess(content,analyzerName,isRemoveStopWord);
+    public ArrayList<String> preProcess(String analyzerName, boolean isRemoveStopWord) {
+        return preProcessor.preProcess(content, analyzerName, isRemoveStopWord);
     }
 
     public void setId(int id) {

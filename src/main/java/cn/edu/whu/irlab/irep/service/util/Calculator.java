@@ -85,15 +85,16 @@ public class Calculator {
 
     /**
      * 计算向量的模长
+     *
      * @param vector 向量
      * @return
      */
-    public static double calculateModule(List<VectorI> vector){
-        double module=0;
-        for (int i = 0; i <vector.size(); i++) {
-            module += Math.pow(vector.get(i).getValue(),2);
+    public static double calculateModule(List<VectorI> vector) {
+        double module = 0;
+        for (int i = 0; i < vector.size(); i++) {
+            module += Math.pow(vector.get(i).getValue(), 2);
         }
-        module=Math.pow(module,0.5);
+        module = Math.pow(module, 0.5);
         return module;
     }
 

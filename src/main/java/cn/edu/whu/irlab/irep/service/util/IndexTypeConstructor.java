@@ -11,12 +11,12 @@ import org.springframework.stereotype.Service;
 
 public class IndexTypeConstructor {
 
-    public static String indexTypeConstructor(String analyzer,boolean isRemoveStopWord){
+    public static String indexTypeConstructor(String analyzer, boolean isRemoveStopWord) {
         String indexType;
-        String suffixPositive="_remove";
-        String suffixNegative="_not_remove";
-        if (isRemoveStopWord) indexType=analyzer+suffixPositive;
-        else indexType=analyzer+suffixNegative;
+        String suffixPositive = "_remove";
+        String suffixNegative = "_not_remove";
+        if (isRemoveStopWord) indexType = analyzer + suffixPositive;
+        else indexType = analyzer + suffixNegative;
         return indexType;
     }
 

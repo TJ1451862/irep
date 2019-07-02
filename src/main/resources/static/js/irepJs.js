@@ -1,11 +1,11 @@
 var storage = window.localStorage;
 //倒排索引页面表格行背景色
-var colorOver1= "rgb(47,82,143)"; //表格1鼠标经过时的颜色
-var colorOver2= "rgb(112,173,71)"; //表格2鼠标经过时的颜色
-var colorClick1="rgb(178,209,158)"; //表格1鼠标点击的颜色
-var colorClick2="green"; //表格2鼠标点击的颜色
-var colorNone1="rgb(146,165,198)";//表格1行默认背景颜色
-var colorNone2="rgb(178,209,158)";//表格2行默认背景色
+var colorOver1 = "rgb(47,82,143)"; //表格1鼠标经过时的颜色
+var colorOver2 = "rgb(112,173,71)"; //表格2鼠标经过时的颜色
+var colorClick1 = "rgb(178,209,158)"; //表格1鼠标点击的颜色
+var colorClick2 = "green"; //表格2鼠标点击的颜色
+var colorNone1 = "rgb(146,165,198)";//表格1行默认背景颜色
+var colorNone2 = "rgb(178,209,158)";//表格2行默认背景色
 
 /**
  * 增减input中的数字大小
@@ -305,18 +305,18 @@ $("#createIndex").click(function () {
  * 获取invertedIndex中的数据
  * @param term 词项
  */
-function selectInvertedIndex(obj,term) {
+function selectInvertedIndex(obj, term) {
     //从localStorage中获取参数
     var isRSW = storage.isRemoveStopWord;
     var aN = storage.analyzerName;
     var tab1 = document.getElementById("tbody1");
     var rows1 = tab1.rows;
-    for(var c=0;c<rows1.length;c++){
-        if(rows1[c]==obj){
-           rows1[c].style.backgroundColor=colorClick1;
-           localStorage.setItem("invertedrowNo1",c);
-        }else{
-            rows1[c].style.backgroundColor=colorNone1;
+    for (var c = 0; c < rows1.length; c++) {
+        if (rows1[c] == obj) {
+            rows1[c].style.backgroundColor = colorClick1;
+            localStorage.setItem("invertedrowNo1", c);
+        } else {
+            rows1[c].style.backgroundColor = colorNone1;
         }
     }
 
@@ -353,44 +353,46 @@ function selectInvertedIndex(obj,term) {
     })//end of ajax
 }
 
-function mouseOverTable1(obj){
+function mouseOverTable1(obj) {
     var tab1 = document.getElementById("tbody1");
     var rows1 = tab1.rows;
-    var no=localStorage.getItem("invertedrowNo1");
-    for(var c=0;c<rows1.length;c++){
-        if(c!=no && rows1[c]==obj){
-            rows1[c].style.backgroundColor=colorOver1;
-        }
-    }
-}
-function mouseOutTable1(obj){
-    var tab1 = document.getElementById("tbody1");
-    var rows1 = tab1.rows;
-    var no=localStorage.getItem("invertedrowNo1");
-    for(var c=0;c<rows1.length;c++){
-        if(c!=no &&rows1[c]==obj){
-            rows1[c].style.backgroundColor=colorNone1;
+    var no = localStorage.getItem("invertedrowNo1");
+    for (var c = 0; c < rows1.length; c++) {
+        if (c != no && rows1[c] == obj) {
+            rows1[c].style.backgroundColor = colorOver1;
         }
     }
 }
 
-function mouseOverTable2(obj){
-    var tab2 = document.getElementById("tbody2");
-    var rows2 = tab2.rows;
-    var No=localStorage.getItem("invertedrowNo2");
-    for(var d=0;d<rows2.length;d++){
-        if(d!=No && rows2[d]==obj){
-            rows2[d].style.backgroundColor=colorOver2;
+function mouseOutTable1(obj) {
+    var tab1 = document.getElementById("tbody1");
+    var rows1 = tab1.rows;
+    var no = localStorage.getItem("invertedrowNo1");
+    for (var c = 0; c < rows1.length; c++) {
+        if (c != no && rows1[c] == obj) {
+            rows1[c].style.backgroundColor = colorNone1;
         }
     }
 }
-function mouseOutTable2(obj){
+
+function mouseOverTable2(obj) {
     var tab2 = document.getElementById("tbody2");
     var rows2 = tab2.rows;
-    var No=localStorage.getItem("invertedrowNo2");
-    for(var d=0;d<rows2.length;d++){
-        if(d!=No &&rows2[d]==obj){
-            rows2[d].style.backgroundColor=colorNone2;
+    var No = localStorage.getItem("invertedrowNo2");
+    for (var d = 0; d < rows2.length; d++) {
+        if (d != No && rows2[d] == obj) {
+            rows2[d].style.backgroundColor = colorOver2;
+        }
+    }
+}
+
+function mouseOutTable2(obj) {
+    var tab2 = document.getElementById("tbody2");
+    var rows2 = tab2.rows;
+    var No = localStorage.getItem("invertedrowNo2");
+    for (var d = 0; d < rows2.length; d++) {
+        if (d != No && rows2[d] == obj) {
+            rows2[d].style.backgroundColor = colorNone2;
         }
     }
 }
@@ -400,15 +402,15 @@ function mouseOutTable2(obj){
  * @param docId 文章Id
  * @param term 待强调的词项
  */
-function getDoc(obj,docId, term) {
+function getDoc(obj, docId, term) {
     var tab2 = document.getElementById("tbody2");
     var rows2 = tab2.rows;
-    for(var c=0;c<rows2.length;c++){
-        if(rows2[c]==obj){
-            rows2[c].style.backgroundColor=colorClick2;
-            localStorage.setItem("invertedrowNo2",c);
-        }else{
-            rows2[c].style.backgroundColor=colorNone2;
+    for (var c = 0; c < rows2.length; c++) {
+        if (rows2[c] == obj) {
+            rows2[c].style.backgroundColor = colorClick2;
+            localStorage.setItem("invertedrowNo2", c);
+        } else {
+            rows2[c].style.backgroundColor = colorNone2;
         }
     }
 
@@ -448,13 +450,14 @@ function getDoc(obj,docId, term) {
  * vectorSpaceModel.html
  */
 var json = null;
-var $searchResults = null;
+var $results = null;
 var tempJson = null;
 var tempSign = 0;//0:当前tempJson中存储的是tfs，1：当前tempJson中存储的是vectors
 /**
  * 检索功能
  */
 $("#searchForVSM").click(function () {
+
     $("#first").hide();
     $("#second").show();
 
@@ -464,7 +467,7 @@ $("#searchForVSM").click(function () {
     var analyzerName = storage.analyzerName;
     var isRemoveStopWord = storage.isRemoveStopWord;
 
-    $("#searchResults").text("");
+    $("#results").text("");
     $.ajax({
         type: "POST",
         url: "vectorSpaceModel/vsmSearch",
@@ -483,16 +486,16 @@ $("#searchForVSM").click(function () {
             json = result;
             $.each(result, function (index, obj) {
                 var str1 = obj.content.substring(0, 90) + "......";
-                $('#searchResults').append("<a id='" + index + "' href='' class='ra'  data-toggle='modal' data-target='#myModal' onclick='getContent(this.id)' >" + obj.title + "</a>");
-                $('#searchResults').append("<br>");
-                $('#searchResults').append("<p>" + str1 + "</p>");
+                $('#results').append("<a id='" + index + "' href='' class='ra'  data-toggle='modal' data-target='#myModal' onclick='getContent(this.id)' >" + obj.title + "</a>");
+                $('#results').append("<br>");
+                $('#results').append("<p>" + str1 + "</p>");
 
             });
-            $searchResults = $("#searchResults").find("*");
+            $results = $("#results").find("*");
         },
         error: function () {
             alert("检索出错！");
-            $("#searchResults").text("");// 清空数据
+            $("#results").text("");// 清空数据
         }
     })
 });
@@ -974,8 +977,8 @@ $("#similarityAfterSort").click(function () {
 function getContent(id) {
     $.each(json, function (index, obj) {
         if (index == id) {
-            $("#searchResults").text("");
-            $("#searchResults").append(obj.content);
+            $("#results").text("");
+            $("#results").append(obj.content);
         }
     });
 };
@@ -1016,7 +1019,7 @@ function append(docIdInVSM) {
                         $("#tbody").append(
                             "<tr>\n" +
                             "    <td>" + item1 + "</td>\n" +
-                            "    <td>" + tf1 + "</td>\n" +
+                            "    <td>" + tf1.toFixed(4) + "</td>\n" +
                             "</tr>\n"
                         );
                     } else {
@@ -1025,7 +1028,7 @@ function append(docIdInVSM) {
                         select = 0;
                         $("#tbody").children().last().append(
                             "<td>" + item1 + "</td>\n" +
-                            "<td>" + tf1 + "</td>\n"
+                            "<td>" + tf1.toFixed(4) + "</td>\n"
                         );
                     }
                 });//end of each
@@ -1072,8 +1075,8 @@ function append(docIdInVSM) {
  * 返回上一步
  */
 $("#return").click(function () {
-    $("#searchResults").text("");
-    $("#searchResults").append($searchResults);
+    $("#results").text("");
+    $("#results").append($results);
 });
 /**
  * 显示介绍页面

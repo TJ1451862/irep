@@ -13,11 +13,11 @@ import java.util.ArrayList;
 
 /**
  * 打印语汇单元的信息
- * @author user
  *
+ * @author user
  */
 public class AnalyzerUtils {
-    public static String displayToken(String str,Analyzer a) throws IOException {
+    public static String displayToken(String str, Analyzer a) throws IOException {
         TokenStream stream = a.tokenStream("content", new StringReader(str));
         /*
          * TokenStream相当于一条流
@@ -28,14 +28,14 @@ public class AnalyzerUtils {
          * 随着这个TokenStream增加
          */
         CharTermAttribute cta = stream.addAttribute(CharTermAttribute.class);
-        ArrayList result=new ArrayList();
-        StringBuffer sb=new StringBuffer();
-        String s=new String();
+        ArrayList result = new ArrayList();
+        StringBuffer sb = new StringBuffer();
+        String s = new String();
         stream.reset();
         try {
             cta.setEmpty();
-            while(stream.incrementToken()){
-                System.out.print("["+cta+"]");
+            while (stream.incrementToken()) {
+                System.out.print("[" + cta + "]");
                 result.add(cta);
                 result.add(" ");
                 sb.append(cta);
@@ -44,12 +44,12 @@ public class AnalyzerUtils {
                 //如果直接打印Stream的话,toString打印如下：
                 //(来,startOffset=1,endOffset=2,positionIncrement=1,type=<IDEOGRAPHIC>)
             }
-            s=new String(sb);
+            s = new String(sb);
             System.out.println();
         } catch (IOException e) {
             e.printStackTrace();
-        }finally{
-          //PolicyUtils.IO.close(stream, cta);
+        } finally {
+            //PolicyUtils.IO.close(stream, cta);
         }
         //return result;
         stream.end();
@@ -57,12 +57,14 @@ public class AnalyzerUtils {
         return s;
 
     }
+
     /**
      * 打印详细信息的语汇单元
+     *
      * @param str
      * @param a
      */
-    public static void displayAllToken(String str,Analyzer a){
+    public static void displayAllToken(String str, Analyzer a) {
         TokenStream stream = a.tokenStream("content", new StringReader(str));
         //位置增量
         PositionIncrementAttribute pia = stream.addAttribute(PositionIncrementAttribute.class);
@@ -73,10 +75,10 @@ public class AnalyzerUtils {
         //分词的类型
         TypeAttribute ta = stream.addAttribute(TypeAttribute.class);
         try {
-            while(stream.incrementToken()){
-                System.out.print(pia.getPositionIncrement()+":");
-                System.out.print(cta+"["+oa.startOffset()+"-"+
-                        oa.endOffset()+"-"+ta.type());
+            while (stream.incrementToken()) {
+                System.out.print(pia.getPositionIncrement() + ":");
+                System.out.print(cta + "[" + oa.startOffset() + "-" +
+                        oa.endOffset() + "-" + ta.type());
                 System.out.println();
             }
             System.out.println();

@@ -32,10 +32,9 @@ public class RecordServiceImpl {
         return recordMapper.insert(record);
     }
 
-    public List<Record> selectByIndexType(String indexType){
+    public List<Record> selectByIndexType(String indexType) {
         return recordMapper.selectByIndexType(indexType);
     }
-
 
 
 }

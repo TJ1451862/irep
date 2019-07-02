@@ -227,7 +227,7 @@ public class VSMRetriever {
             }
             similarity = similarity / (Calculator.calculateModule(query.getVector()) * Calculator.calculateModule(vector));
             //保留5位显示
-            if (similarity>0.00001){
+            if (similarity > 0.00001) {
                 ResultI resultI = new ResultI(docId, title, similarity);
                 result.add(resultI);
             }
@@ -238,7 +238,7 @@ public class VSMRetriever {
      * 按相似度降序排序
      */
     public void sortSimilarity() {
-        List <ResultI> resultIList=new ArrayList<>();
+        List<ResultI> resultIList = new ArrayList<>();
         for (int i = 0; i < result.size(); i++) {
             resultIList.add(result.get(i));
         }
@@ -312,5 +312,13 @@ public class VSMRetriever {
 
     public void setResultAfterSort(List<ResultI> resultAfterSort) {
         this.resultAfterSort = resultAfterSort;
+    }
+
+    public int getFormulaID() {
+        return formulaID;
+    }
+
+    public double getSmoothParam() {
+        return smoothParam;
     }
 }

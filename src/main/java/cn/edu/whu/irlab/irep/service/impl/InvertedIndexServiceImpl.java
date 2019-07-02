@@ -13,15 +13,15 @@ public class InvertedIndexServiceImpl {
     @Autowired
     public InvertedIndexMapper invertedIndexMapper;
 
-    public int insert(InvertedIndex invertedIndex){
+    public int insert(InvertedIndex invertedIndex) {
         return invertedIndexMapper.insert(invertedIndex);
     }
 
-    public List<InvertedIndex> selectByIndexType(String indexType){
+    public List<InvertedIndex> selectByIndexType(String indexType) {
         return invertedIndexMapper.selectByIndexType(indexType);
     }
 
-    public List<InvertedIndex> select(InvertedIndex invertedIndex){
+    public List<InvertedIndex> select(InvertedIndex invertedIndex) {
         return invertedIndexMapper.select(invertedIndex);
     }
 }

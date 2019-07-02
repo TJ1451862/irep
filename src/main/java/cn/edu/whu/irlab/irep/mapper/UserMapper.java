@@ -11,9 +11,14 @@ import java.util.List;
  **/
 public interface UserMapper {
     int addUser(User user);
+
     int insertUser(User user);
+
     List<User> selectAllUser();
+
     User selectUserByUsernameAndPassword(User user);
+
     User selectUserByPhone(User user);
+
     User selectUserByEmail(User user);
 }

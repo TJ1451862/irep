@@ -11,9 +11,9 @@ public class Query {
 
     private ArrayList<String> preProcessResult;
 
-    public Query(String content,String analyzerName,boolean isRemoveStopWord) {
+    public Query(String content, String analyzerName, boolean isRemoveStopWord) {
         this.content = content;
-        setPreProcessResult(analyzerName,isRemoveStopWord);
+        setPreProcessResult(analyzerName, isRemoveStopWord);
     }
 
     public String getContent() {
@@ -28,7 +28,7 @@ public class Query {
         return preProcessResult;
     }
 
-    public void setPreProcessResult(String analyzerName,boolean isRemoveStopWord) {
-        this.preProcessResult = PreProcessor.preProcess(content,analyzerName,isRemoveStopWord);
+    public void setPreProcessResult(String analyzerName, boolean isRemoveStopWord) {
+        this.preProcessResult = PreProcessor.preProcess(content, analyzerName, isRemoveStopWord);
     }
 }

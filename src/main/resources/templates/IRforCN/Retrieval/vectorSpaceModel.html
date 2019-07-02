@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <head xmlns:th="http://www.w3.org/1999/xhtml">
 
-<head th:include="include::header">
-    <script type="text/javascript"
-            src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-    </script>
-</head>
+    <head th:include="include::header">
+        <script type="text/javascript"
+                src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+        </script>
+    </head>
 <body>
 <!--导航栏-->
 <nav class="navbar navbar-light navbar-expand-md" style="background-color:rgb(47,85,151);position:relative;">
@@ -97,7 +97,10 @@
                                         <input name="formula" id="TF1" type="radio" checked="" value="1">
                                         <p>
                                             <math xmlns="http://www.w3.org/1998/Math/MathML">
-                                                <msub><mi>tf</mi><mi>t,d</mi></msub>
+                                                <msub>
+                                                    <mi>tf</mi>
+                                                    <mi>t,d</mi>
+                                                </msub>
                                             </math>
                                         </p>
                                     </label>
@@ -108,7 +111,16 @@
                                         <p>
                                             <math xmlns="http://www.w3.org/1998/Math/MathML">
                                                 <mrow>
-                                                    <msub><mi>tf</mi><mi>t,d</mi></msub><mo>&#62</mo><mn>0</mn><mo>?</mo><mn>1</mn><mo>:</mo><mn>0</mn>
+                                                    <msub>
+                                                        <mi>tf</mi>
+                                                        <mi>t,d</mi>
+                                                    </msub>
+                                                    <mo>&#62</mo>
+                                                    <mn>0</mn>
+                                                    <mo>?</mo>
+                                                    <mn>1</mn>
+                                                    <mo>:</mo>
+                                                    <mn>0</mn>
                                                 </mrow>
                                             </math>
                                         </p>
@@ -123,7 +135,14 @@
                                         <p>
                                             <math xmlns="http://www.w3.org/1998/Math/MathML">
                                                 <mrow>
-                                                    <mn>1</mn><mo>+</mo><mi>log(</mi><msub><mi>tf</mi><mi>t,d</mi></msub><mo>)</mo>
+                                                    <mn>1</mn>
+                                                    <mo>+</mo>
+                                                    <mi>log(</mi>
+                                                    <msub>
+                                                        <mi>tf</mi>
+                                                        <mi>t,d</mi>
+                                                    </msub>
+                                                    <mo>)</mo>
                                                 </mrow>
                                             </math>
                                         </p>
@@ -132,16 +151,40 @@
                                 <div class="form-check">
                                     <label>
                                         <input name="formula" id="TF5" type="radio" value="5">
-                                        <p><math xmlns="http://www.w3.org/1998/Math/MathML">
-                                            <mrow>
-                                                <mfrac>
-                                                    <mrow>
-                                                        <mn>1</mn><mo>+</mo><mi>log(</mi><msub><mi>tf</mi><mi>t,d</mi></msub><mo>)</mo>
-                                                    </mrow>
-                                                    <mrow> <mn>1</mn><mo>+</mo><mi>log(</mi><msub><mi>ave</mi><mi>t	&#8712d</mi></msub><mo>(</mo><msub><mi>tf</mi><mi>t,d</mi></msub><mo>)</mo><mo>)</mo> </mrow>
-                                                </mfrac>
-                                            </mrow>
-                                        </math></p>
+                                        <p>
+                                            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                                                <mrow>
+                                                    <mfrac>
+                                                        <mrow>
+                                                            <mn>1</mn>
+                                                            <mo>+</mo>
+                                                            <mi>log(</mi>
+                                                            <msub>
+                                                                <mi>tf</mi>
+                                                                <mi>t,d</mi>
+                                                            </msub>
+                                                            <mo>)</mo>
+                                                        </mrow>
+                                                        <mrow>
+                                                            <mn>1</mn>
+                                                            <mo>+</mo>
+                                                            <mi>log(</mi>
+                                                            <msub>
+                                                                <mi>ave</mi>
+                                                                <mi>t &#8712d</mi>
+                                                            </msub>
+                                                            <mo>(</mo>
+                                                            <msub>
+                                                                <mi>tf</mi>
+                                                                <mi>t,d</mi>
+                                                            </msub>
+                                                            <mo>)</mo>
+                                                            <mo>)</mo>
+                                                        </mrow>
+                                                    </mfrac>
+                                                </mrow>
+                                            </math>
+                                        </p>
                                     </label>
                                 </div>
 
@@ -153,14 +196,31 @@
                                     <label>
                                         <input name="formula" id="TF3" type="radio" value="3">
                                         <p>
-                                            <math xmlns="http://www.w3.org/1998/Math/MathML" >
-                                                <mi>a</mi><mo>+</mo>
+                                            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                                                <mi>a</mi>
+                                                <mo>+</mo>
                                                 <mrow>
                                                     <mfrac>
                                                         <mrow>
-                                                            <mi>a</mi><mo>&#215</mo><msub><mi>tf</mi><mi>t,d</mi></msub>
+                                                            <mi>a</mi>
+                                                            <mo>&#215</mo>
+                                                            <msub>
+                                                                <mi>tf</mi>
+                                                                <mi>t,d</mi>
+                                                            </msub>
                                                         </mrow>
-                                                        <mrow><msub><mi>max</mi><mi>t</mi></msub><mo>(</mo><msub><mi>tf</mi><mi>t,d</mi></msub><mo>)</mo></mrow>
+                                                        <mrow>
+                                                            <msub>
+                                                                <mi>max</mi>
+                                                                <mi>t</mi>
+                                                            </msub>
+                                                            <mo>(</mo>
+                                                            <msub>
+                                                                <mi>tf</mi>
+                                                                <mi>t,d</mi>
+                                                            </msub>
+                                                            <mo>)</mo>
+                                                        </mrow>
                                                     </mfrac>
                                                 </mrow>
                                             </math>
@@ -173,13 +233,15 @@
                                     <div class="align-self-center"
                                          style="height:40px;font-weight:bold;text-align:center;float:right;font-family:Microsoft Yahei;font-weight:bold;">
                                         <div style="display:block;height:30px;position:relative;top:5px;">
-                                            <button class="btn btn-primary" type="button" id="jian" onclick="num_jian(this,0.01,0.10)"
+                                            <button class="btn btn-primary" type="button" id="jian"
+                                                    onclick="num_jian(this,0.01,0.10)"
                                                     style="float:left;border-radius: 0;height:30px;width:30px;background-color:#4472c4;padding:0px;">
                                                 -
                                             </button>
                                             <input type="text" value="0.5" id="smoothParam" name="input_num"
                                                    style="width:40px;height:30px;float:left;text-align:center;"/>
-                                            <button class="btn btn-primary" type="button" id="jia" onclick="num_jia(this,0.9,0.10)"
+                                            <button class="btn btn-primary" type="button" id="jia"
+                                                    onclick="num_jia(this,0.9,0.10)"
                                                     style="border-radius: 0;height:30px;background-color:#4472c4;padding:0px;width:30px;display:inline-block;top:0px;float:left;">
                                                 +
                                             </button>
@@ -192,212 +254,249 @@
                         </div>
                     </div>
                 </div>
+                <!--简介-->
                 <div id="first" class="row" style="margin:40px 0 0 0;display:block">
                     <div class="col">
-                        <div class="row">
-                            <ul class="nav nav-tabs col"
-                                style="-ms-flex:0 0 500px;flex:0 0 500px;max-width:40px;padding:0;display:inline-block;">
-                                <li class="nav-item nav-tabs-vertical"><a role="tab" data-toggle="tab" href="#tab-4"
-                                                                          class="nav-link active"
-                                                                          style="border-top-left-radius:.25rem;border-top-right-radius:0;border-bottom-left-radius:.25rem;padding:16px 8px;">简<br/>介</a>
-                                </li>
-                                <li class="nav-item nav-tabs-vertical"
-                                    style="margin:0 -1px 0 0;"><a role="tab" data-toggle="tab" href="#tab-5"
-                                                                  class="nav-link"
-                                                                  style="border-top-left-radius:.25rem;border-top-right-radius:0;border-bottom-left-radius:.25rem;padding:16px 8px;">流<br/>程</a>
-                                </li>
-                                <li class="nav-item nav-tabs-vertical"
-                                    style="margin:0 -1px 0 0;"><a role="tab" data-toggle="tab" href="#tab-6"
-                                                                  class="nav-link"
-                                                                  style="border-top-left-radius:.25rem;border-top-right-radius:0;border-bottom-left-radius:.25rem;padding:16px 8px;">优<br/>劣</a>
-                                </li>
+                        <div style="margin:37px 0 0 0;">
+                            <ul class="nav nav-tabs">
+                                <li class="nav-item"><a role="tab" data-toggle="tab" href="#tab-1"
+                                                        class="nav-link active">简介</a></li>
+                                <li class="nav-item"><a role="tab" data-toggle="tab" href="#tab-2"
+                                                        class="nav-link">流程</a></li>
+                                <li class="nav-item"><a role="tab" data-toggle="tab" href="#tab-3"
+                                                        class="nav-link">优劣</a></li>
                             </ul>
-                            <div class="tab-content col" style="height:470px;">
-                                <div role="tabpanel" class="tab-pane active" id="tab-4">
-                                    <p>
-                                        <strong>向量空间模型（vector space model 简称：VSM）：</strong>一系列文档在同一向量空间中的表示被称为向量空间模型。其把对文本内容的处理简化为向量空间中的向量运算，并且它以空间上的相似度表达语义的相似度。<br>
-                                        <br>
-                                        <strong>文档频率（document frequency）
-                                            <math>
-                                                <msub>
-                                                    <mi>df</mi>
-                                                    <mn>t</mn>
-                                                </msub>
-                                            </math>
-                                            ：</strong>
-                                        出现词项的t文档数目，也就是每个倒排记录表的长度。<br>
-                                        <br>
-                                        <strong>词项频率（term frequency）
-                                            <math>
-                                                <msub>
-                                                    <mi>tf</mi>
-                                                    <mn>t,d</mn>
-                                                </msub>
-                                            </math>
-                                            ：</strong>
-                                        词项t在文档d中出现的次数。<br>
-                                        <br>
-                                        <strong>逆文档频率（inverse document frequency）
-                                            <math>
-                                                <msub>
-                                                    <mi>idf</mi>
-                                                    <mn>t</mn>
-                                                </msub>
-                                            </math>
-                                            ：</strong>
-                                        因为
-                                        <math>
-                                            <msub>
-                                                <mi>df</mi>
-                                                <mn>t</mn>
-                                            </msub>
-                                        </math>
-                                        本身较大，需要将其映射到一个较小的范
-                                        围。设文档集中所有文档数为N，词项idf为：<br>
-                                        <math style="display: block">
-                                            <msub>
-                                                <mi>idf</mi>
-                                                <mn>t</mn>
-                                            </msub>
-                                            <mo>=</mo>
-                                            <msub>
-                                                <mi>log</mi>
-                                                <mn>2</mn>
-                                            </msub>
-                                            <mfrac>
-                                                <mrow>
-                                                    <mn>N</mn>
-                                                </mrow>
-                                                <mrow>
-                                                    <msub>
-                                                        <mi>df</mi>
-                                                        <mn>t</mn>
-                                                    </msub>
-                                                </mrow>
-                                            </mfrac>
-                                        </math>
-                                    </p>
+                            <div class="tab-content suojin" style="height:250px;">
+                                <div role="tabpanel" class="tab-pane active" id="tab-1">
+                                    <p>布尔模型是基于集合论和布尔代数的一种简单检索模型，它的特点是查找那些对于某个查询词返回为“真”的文档。在该模
+                                        型中，一个查询词就是一个布尔表达式，包括关键词以及逻辑运算符。由于文档必须严格符合检索词的要求才能够被检索
+                                        出来，因此布尔检索模型又被称为“完全匹配检索”(Exact-Match Retrieval)。</p>
                                 </div>
-                                <div role="tabpanel" class="tab-pane" id="tab-5">
+                                <div role="tabpanel" class="tab-pane" id="tab-2">
                                     <p>
-                                        1.计算
-                                        <math>
-                                            <msub>
-                                                <mi>idf</mi>
-                                                <mn>t</mn>
-                                            </msub>
-                                        </math>
-                                        ：利用倒排索引表中的文档频率参数求出各个词项逆文档频率<br>
-                                        逆文档频率因子（
-                                        <math>
-                                            <msub>
-                                                <mi>idf</mi>
-                                                <mn>t</mn>
-                                            </msub>
-                                        </math>
-                                        ）–全局（文档集合）<br>
-                                        计算公式：
-                                        <math>
-                                            <msub>
-                                                <mi>idf</mi>
-                                                <mn>t</mn>
-                                            </msub>
-                                            <mo>=</mo>
-                                            <msub>
-                                                <mi>log</mi>
-                                                <mn>2</mn>
-                                            </msub>
-                                            <mfrac>
-                                                <mrow>
-                                                    <mn>N</mn>
-                                                </mrow>
-                                                <mrow>
-                                                    <msub>
-                                                        <mi>df</mi>
-                                                        <mn>t</mn>
-                                                    </msub>
-                                                </mrow>
-                                            </mfrac>
-                                        </math><!--idf计算公式-->
-                                        <br>
-                                        N代表文档集合中的文档总数<br>
-                                        2.计算词频因子:
-                                        将查询语句也看作一个文档，分别计算查询语句与文档集中各词的词频因子。<br>
-                                        词频因子（
-                                        <math>
-                                            <msub>
-                                                <mi>tf</mi>
-                                                <mn>t,d</mn>
-                                            </msub>
-                                        </math>
-                                        )–局部（一个文档）：最简单的就是直接利用词频数
-                                        <math>
-                                            <msub>
-                                                <mi>tf</mi>
-                                                <mn>t,d</mn>
-                                            </msub>
-                                        </math>
-                                        作为词频因子值。<br>
-                                        平滑公式：
-                                        <math>
-                                            <msubsup>
-                                                <mo>tf</mo>
-                                                <mn>t,d</mn>
-                                                <mn>&nbsp;'</mn>
-                                            </msubsup>
-                                            <mo>=</mo>
-                                            <mn>1</mn>
-                                            <mo>+</mo>
-                                            <mo>log(</mo>
-                                            <msub>
-                                                <mi>tf</mi>
-                                                <mn>t,d</mn>
-                                            </msub>
-                                            <mn>)</mn>
-                                        </math>
-                                        <br>
-                                        3.计算向量：按照词典中的顺序建立各个文档的词项向量，向量中每一个词的权值一般采用TF-IDF框架计算。（查询语句也看作一个文档进行计算）<br>
-                                        词频因子（TF)–局部（一个文档）：最简单的就是直接利用词频数作为TF值。<br>
-                                        平滑公式：
-                                        <math>
-                                            <msub>
-                                                <mi>W</mi>
-                                                <mn>tf</mn>
-                                            </msub>
-                                            <mo>=</mo>
-                                            <mn>1</mn>
-                                            <mo>+</mo>
-                                            <mo>log(</mo>
-                                            <msub>
-                                                <mi>tf</mi>
-                                                <mn>t,d</mn>
-                                            </msub>
-                                            <mo>)</mo>
-                                        </math>
-                                        <br>
-                                        4.相似度计算：查询与某文档的相似度为查询向量和文档向量余弦值。（或查询向量的但闻向量与文档向量的单位向量的点积）<br>
-                                        5.按照文档和查询的相似性得分从高到低排序作为搜索结果。<br>
-
-
-                                    </p>
+                                        1.基于文档语料建立倒排索引；<br/>
+                                        2.根据检索词获取倒排索引中对应的postings，更新结果列表；<br/>
+                                        3.根据检索表达式中的逻辑运算符对结果列表和相应postings中的文档ID进行逻辑操作，更新计算结果至结果列表中，
+                                        循环以上操作至最后一个检索词；<br/>
+                                        4.返回检索结果列表，即满足用户检索需求的文档。<br/>
+                                        <br/>
+                                        <br/>
+                                        <br/></p>
                                 </div>
-                                <div role="tabpanel" class="tab-pane" id="tab-6">
-                                    <p>
-                                        <strong>优点</strong><br>
-                                        基于线性代数的简单模型；词组的权重不是二元的；允许计算文档和索引之间的连续。
-                                        <br>
-                                        <br>
-                                        <strong>缺点</strong><br>
-                                        不适用于较长的文件；检索词组必须与文件中出现的词组精确匹配；语义敏感度不佳；易导致“假阴性匹配”；忽略词组间的相关性。
-                                        <br>
-                                        <br>
-                                    </p>
+                                <div role="tabpanel" class="tab-pane" id="tab-3">
+                                    <p><strong>优势：</strong><br/>1.  简单，简化了复杂的检索过程<br/>2.
+                                         易于理解，结构化的提问方式与用户的思维习惯一致<br/><strong>劣势：</strong><br/>1.
+                                         对检索结果平等对待，不能按照用户定义的重要性排序输出<br/>2.  完全匹配可能导致检出的文档过多或过少，难以控制检索结果的输出量<br/>3.
+                                         很难满足用户复杂的需求，对用户的检索技能有较高的要求</p>
                                 </div>
                             </div>
                         </div>
+
+                        <!--<div class="row">-->
+                        <!--<ul class="nav nav-tabs col"-->
+                        <!--style="-ms-flex:0 0 500px;flex:0 0 500px;max-width:40px;padding:0;display:inline-block;">-->
+                        <!--<li class="nav-item nav-tabs-vertical"><a role="tab" data-toggle="tab" href="#tab-4"-->
+                        <!--class="nav-link active"-->
+                        <!--style="border-top-left-radius:.25rem;border-top-right-radius:0;border-bottom-left-radius:.25rem;padding:16px 8px;">简<br/>介</a>-->
+                        <!--</li>-->
+                        <!--<li class="nav-item nav-tabs-vertical"-->
+                        <!--style="margin:0 -1px 0 0;"><a role="tab" data-toggle="tab" href="#tab-5"-->
+                        <!--class="nav-link"-->
+                        <!--style="border-top-left-radius:.25rem;border-top-right-radius:0;border-bottom-left-radius:.25rem;padding:16px 8px;">流<br/>程</a>-->
+                        <!--</li>-->
+                        <!--<li class="nav-item nav-tabs-vertical"-->
+                        <!--style="margin:0 -1px 0 0;"><a role="tab" data-toggle="tab" href="#tab-6"-->
+                        <!--class="nav-link"-->
+                        <!--style="border-top-left-radius:.25rem;border-top-right-radius:0;border-bottom-left-radius:.25rem;padding:16px 8px;">优<br/>劣</a>-->
+                        <!--</li>-->
+                        <!--</ul>-->
+                        <!--<div class="tab-content col" style="height:300px;">-->
+                        <!--<div role="tabpanel" class="tab-pane active" id="tab-4">-->
+                        <!--<p>-->
+                        <!--<strong>向量空间模型（vector space model 简称：VSM）：</strong>一系列文档在同一向量空间中的表示被称为向量空间模型。其把对文本内容的处理简化为向量空间中的向量运算，并且它以空间上的相似度表达语义的相似度。<br>-->
+                        <!--<br>-->
+                        <!--<strong>文档频率（document frequency）-->
+                        <!--<math>-->
+                        <!--<msub>-->
+                        <!--<mi>df</mi>-->
+                        <!--<mn>t</mn>-->
+                        <!--</msub>-->
+                        <!--</math>-->
+                        <!--：</strong>-->
+                        <!--出现词项的t文档数目，也就是每个倒排记录表的长度。<br>-->
+                        <!--<br>-->
+                        <!--<strong>词项频率（term frequency）-->
+                        <!--<math>-->
+                        <!--<msub>-->
+                        <!--<mi>tf</mi>-->
+                        <!--<mn>t,d</mn>-->
+                        <!--</msub>-->
+                        <!--</math>-->
+                        <!--：</strong>-->
+                        <!--词项t在文档d中出现的次数。<br>-->
+                        <!--<br>-->
+                        <!--<strong>逆文档频率（inverse document frequency）-->
+                        <!--<math>-->
+                        <!--<msub>-->
+                        <!--<mi>idf</mi>-->
+                        <!--<mn>t</mn>-->
+                        <!--</msub>-->
+                        <!--</math>-->
+                        <!--：</strong>-->
+                        <!--因为-->
+                        <!--<math>-->
+                        <!--<msub>-->
+                        <!--<mi>df</mi>-->
+                        <!--<mn>t</mn>-->
+                        <!--</msub>-->
+                        <!--</math>-->
+                        <!--本身较大，需要将其映射到一个较小的范-->
+                        <!--围。设文档集中所有文档数为N，词项idf为：<br>-->
+                        <!--<math style="display: block">-->
+                        <!--<msub>-->
+                        <!--<mi>idf</mi>-->
+                        <!--<mn>t</mn>-->
+                        <!--</msub>-->
+                        <!--<mo>=</mo>-->
+                        <!--<msub>-->
+                        <!--<mi>log</mi>-->
+                        <!--<mn>2</mn>-->
+                        <!--</msub>-->
+                        <!--<mfrac>-->
+                        <!--<mrow>-->
+                        <!--<mn>N</mn>-->
+                        <!--</mrow>-->
+                        <!--<mrow>-->
+                        <!--<msub>-->
+                        <!--<mi>df</mi>-->
+                        <!--<mn>t</mn>-->
+                        <!--</msub>-->
+                        <!--</mrow>-->
+                        <!--</mfrac>-->
+                        <!--</math>-->
+                        <!--</p>-->
+                        <!--</div>-->
+                        <!--<div role="tabpanel" class="tab-pane" id="tab-5">-->
+                        <!--<p>-->
+                        <!--1.计算-->
+                        <!--<math>-->
+                        <!--<msub>-->
+                        <!--<mi>idf</mi>-->
+                        <!--<mn>t</mn>-->
+                        <!--</msub>-->
+                        <!--</math>-->
+                        <!--：利用倒排索引表中的文档频率参数求出各个词项逆文档频率<br>-->
+                        <!--逆文档频率因子（-->
+                        <!--<math>-->
+                        <!--<msub>-->
+                        <!--<mi>idf</mi>-->
+                        <!--<mn>t</mn>-->
+                        <!--</msub>-->
+                        <!--</math>-->
+                        <!--）–全局（文档集合）<br>-->
+                        <!--计算公式：-->
+                        <!--<math>-->
+                        <!--<msub>-->
+                        <!--<mi>idf</mi>-->
+                        <!--<mn>t</mn>-->
+                        <!--</msub>-->
+                        <!--<mo>=</mo>-->
+                        <!--<msub>-->
+                        <!--<mi>log</mi>-->
+                        <!--<mn>2</mn>-->
+                        <!--</msub>-->
+                        <!--<mfrac>-->
+                        <!--<mrow>-->
+                        <!--<mn>N</mn>-->
+                        <!--</mrow>-->
+                        <!--<mrow>-->
+                        <!--<msub>-->
+                        <!--<mi>df</mi>-->
+                        <!--<mn>t</mn>-->
+                        <!--</msub>-->
+                        <!--</mrow>-->
+                        <!--</mfrac>-->
+                        <!--</math>&lt;!&ndash;idf计算公式&ndash;&gt;-->
+                        <!--<br>-->
+                        <!--N代表文档集合中的文档总数<br>-->
+                        <!--2.计算词频因子:-->
+                        <!--将查询语句也看作一个文档，分别计算查询语句与文档集中各词的词频因子。<br>-->
+                        <!--词频因子（-->
+                        <!--<math>-->
+                        <!--<msub>-->
+                        <!--<mi>tf</mi>-->
+                        <!--<mn>t,d</mn>-->
+                        <!--</msub>-->
+                        <!--</math>-->
+                        <!--)–局部（一个文档）：最简单的就是直接利用词频数-->
+                        <!--<math>-->
+                        <!--<msub>-->
+                        <!--<mi>tf</mi>-->
+                        <!--<mn>t,d</mn>-->
+                        <!--</msub>-->
+                        <!--</math>-->
+                        <!--作为词频因子值。<br>-->
+                        <!--平滑公式：-->
+                        <!--<math>-->
+                        <!--<msubsup>-->
+                        <!--<mo>tf</mo>-->
+                        <!--<mn>t,d</mn>-->
+                        <!--<mn>&nbsp;'</mn>-->
+                        <!--</msubsup>-->
+                        <!--<mo>=</mo>-->
+                        <!--<mn>1</mn>-->
+                        <!--<mo>+</mo>-->
+                        <!--<mo>log(</mo>-->
+                        <!--<msub>-->
+                        <!--<mi>tf</mi>-->
+                        <!--<mn>t,d</mn>-->
+                        <!--</msub>-->
+                        <!--<mn>)</mn>-->
+                        <!--</math>-->
+                        <!--<br>-->
+                        <!--3.计算向量：按照词典中的顺序建立各个文档的词项向量，向量中每一个词的权值一般采用TF-IDF框架计算。（查询语句也看作一个文档进行计算）<br>-->
+                        <!--词频因子（TF)–局部（一个文档）：最简单的就是直接利用词频数作为TF值。<br>-->
+                        <!--平滑公式：-->
+                        <!--<math>-->
+                        <!--<msub>-->
+                        <!--<mi>W</mi>-->
+                        <!--<mn>tf</mn>-->
+                        <!--</msub>-->
+                        <!--<mo>=</mo>-->
+                        <!--<mn>1</mn>-->
+                        <!--<mo>+</mo>-->
+                        <!--<mo>log(</mo>-->
+                        <!--<msub>-->
+                        <!--<mi>tf</mi>-->
+                        <!--<mn>t,d</mn>-->
+                        <!--</msub>-->
+                        <!--<mo>)</mo>-->
+                        <!--</math>-->
+                        <!--<br>-->
+                        <!--4.相似度计算：查询与某文档的相似度为查询向量和文档向量余弦值。（或查询向量的但闻向量与文档向量的单位向量的点积）<br>-->
+                        <!--5.按照文档和查询的相似性得分从高到低排序作为搜索结果。<br>-->
+
+
+                        <!--</p>-->
+                        <!--</div>-->
+                        <!--<div role="tabpanel" class="tab-pane" id="tab-6">-->
+                        <!--<p>-->
+                        <!--<strong>优点</strong><br>-->
+                        <!--基于线性代数的简单模型；词组的权重不是二元的；允许计算文档和索引之间的连续。-->
+                        <!--<br>-->
+                        <!--<br>-->
+                        <!--<strong>缺点</strong><br>-->
+                        <!--不适用于较长的文件；检索词组必须与文件中出现的词组精确匹配；语义敏感度不佳；易导致“假阴性匹配”；忽略词组间的相关性。-->
+                        <!--<br>-->
+                        <!--<br>-->
+                        <!--</p>-->
+                        <!--</div>-->
+                        <!--</div>-->
+                        <!--</div>-->
                     </div>
                 </div>
-                <div id="second" class="row" style="display: none">
+                <!--检索结果-->
+                <div class="row" style="display: none">
                     <div class="col">
                         <div class="row" style="margin:0;">
                             <div class="col" style="padding:0;">
@@ -414,9 +513,8 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-6" style="padding:0 10px 0 55px;">
-                <div class="row">
+                <!--查看检索流程-->
+                <div id="second" class="row" style="display: none">
                     <div class="col">
                         <h3 style="/*float:right;*/font-size:20px;padding:0;margin:0;color:rgb(0,0,0);font-family:微软雅黑;font-weight:bold;height:25px;">
                             查看检索流程</h3>
@@ -444,12 +542,15 @@
                                         type="button">求相似度
                                 </button>
                                 <img src="../../img/箭头右.png" height="20px"/>
-                                <button id="similarityAfterSort" class="btn btn-primary bigButton" type="button">按相似度降序排序
+                                <button id="similarityAfterSort" class="btn btn-primary bigButton" type="button">
+                                    按相似度降序排序
                                 </button>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="col-md-6" style="padding:0 10px 0 55px;">
                 <div class="row">
                     <div class="col">
                         <div class="row" style="margin:0;">
@@ -469,13 +570,15 @@
                                             <div class="align-self-center"
                                                  style="height:40px;font-weight:bold;text-align:center;float:right;font-family:Microsoft Yahei;font-weight:bold;">
                                                 <div style="display:block;height:30px;position:relative;top:5px;">
-                                                    <button class="btn btn-primary" type="button" id="minusDocId" onclick="num_jian(this,0,1)"
+                                                    <button class="btn btn-primary" type="button" id="minusDocId"
+                                                            onclick="num_jian(this,0,1)"
                                                             style="float:left;border-bottom-right-radius:0px;border-top-right-radius:0px;height:30px;width:30px;background-color:#4472c4;padding:0px;">
                                                         -
                                                     </button>
                                                     <input type="text" value="0" id="docIdInVSM" name="input_num"
                                                            style="width:40px;height:30px;float:left;text-align:center;"/>
-                                                    <button class="btn btn-primary" type="button" id="plusDocId" onclick="num_jia(this,165,1)"
+                                                    <button class="btn btn-primary" type="button" id="plusDocId"
+                                                            onclick="num_jia(this,165,1)"
                                                             style="border-bottom-left-radius:0px;border-top-left-radius:0px;height:30px;background-color:#4472c4;padding:0px;width:30px;display:inline-block;top:0px;float:left;">
                                                         +
                                                     </button>

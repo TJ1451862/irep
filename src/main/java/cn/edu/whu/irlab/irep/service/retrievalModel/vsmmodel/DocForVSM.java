@@ -10,9 +10,9 @@ import java.util.Map;
 
 public class DocForVSM extends Doc {
 
-    private List<VectorI> vector=new ArrayList<>();
+    private List<VectorI> vector = new ArrayList<>();
 
-    private Map<String,Double> tfMap=new HashMap<>();
+    private Map<String, Double> tfMap = new HashMap<>();
 
     public DocForVSM(String filePath, String fileName) {
         super(filePath, fileName);
@@ -26,8 +26,8 @@ public class DocForVSM extends Doc {
         return tfMap;
     }
 
-    public void setTfMap(Map<String, Double> tfMap,int formulaID, double smoothParam) {
-        this.tfMap = Calculator.calculateTF(tfMap,formulaID,smoothParam);
+    public void setTfMap(Map<String, Double> tfMap, int formulaID, double smoothParam) {
+        this.tfMap = Calculator.calculateTF(tfMap, formulaID, smoothParam);
     }
 
     public List<VectorI> getVector() {

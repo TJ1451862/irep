@@ -17,7 +17,7 @@ public class RecordServiceTest {
     public RecordServiceImpl recordService;
 
     @Test
-    public void addTest(){
+    public void addTest() {
 
         Record record = new Record();
         record.setTerm("aa");
@@ -32,8 +32,6 @@ public class RecordServiceTest {
 //
 //            e.printStackTrace();
 //        }
-
-
 
 
     }

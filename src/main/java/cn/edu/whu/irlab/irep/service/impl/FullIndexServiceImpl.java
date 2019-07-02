@@ -13,11 +13,11 @@ public class FullIndexServiceImpl {
     @Autowired
     public FullIndexMapper fullIndexMapper;
 
-    public int insert(FullIndex fullIndex){
+    public int insert(FullIndex fullIndex) {
         return fullIndexMapper.insert(fullIndex);
     }
 
-    public List<FullIndex> selectFullIndexByIndexType(String indexType){
+    public List<FullIndex> selectFullIndexByIndexType(String indexType) {
         return fullIndexMapper.selectFullIndexByIndexType(indexType);
     }
 

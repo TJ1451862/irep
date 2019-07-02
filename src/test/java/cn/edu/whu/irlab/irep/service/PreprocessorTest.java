@@ -17,15 +17,14 @@ import java.util.ArrayList;
 @SpringBootTest(classes = IrepApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class PreprocessorTest {
 
-    @Autowired
-    public PreProcessor preProcessor;
+
 
     @Test
-    public void preProcessorTest(){
-        String string="中华人民共和国简称中国，是一个有13亿人口的国家。";
-        String analyzerName="standard";
-        ArrayList<String> arrayList=new ArrayList<>();
-        arrayList= preProcessor.preProcess(string,analyzerName,true);
+    public void preProcessorTest() {
+        String string = "中华人民共和国简称中国，是一个有13亿人口的国家。";
+        String analyzerName = "standard";
+        ArrayList<String> arrayList = new ArrayList<>();
+        arrayList = PreProcessor.preProcess(string, analyzerName, true);
         System.out.println(arrayList);
     }
 

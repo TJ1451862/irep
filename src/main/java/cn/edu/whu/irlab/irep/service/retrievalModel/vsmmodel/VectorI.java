@@ -1,6 +1,6 @@
 package cn.edu.whu.irlab.irep.service.retrievalModel.vsmmodel;
 
-public class VectorI  {
+public class VectorI {
 
     private String term;
 

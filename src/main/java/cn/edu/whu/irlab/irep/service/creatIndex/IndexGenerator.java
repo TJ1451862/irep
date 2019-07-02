@@ -47,11 +47,11 @@ public class IndexGenerator {
 
     /**
      * 构造方法
-     * @param folderPath 包含待处理的文档的文件夹路径
-     * @param analyzerName 分词器名
-     * @param isRemoveStopWord 是否去停用词
      *
-     * */
+     * @param folderPath       包含待处理的文档的文件夹路径
+     * @param analyzerName     分词器名
+     * @param isRemoveStopWord 是否去停用词
+     */
     public void initIndexGenerator(String folderPath, String analyzerName, boolean isRemoveStopWord) {
         this.folderPath = folderPath;
         this.analyzerName = analyzerName;
@@ -61,8 +61,8 @@ public class IndexGenerator {
 
     /**
      * 生成索引数据
-     * */
-    public void generateIndex(){
+     */
+    public void generateIndex() {
         createRecords();
         createInvertedIndex();
         createFullIndex();
@@ -70,7 +70,7 @@ public class IndexGenerator {
 
     /**
      * 生成records数据并插入records表中
-     * */
+     */
     public void createRecords() {
         File fileFolder = new File(folderPath);
 
@@ -98,47 +98,47 @@ public class IndexGenerator {
 
     /**
      * 聚合records中的数据，生成inverted_index中的数据
-     * */
+     */
     public void createInvertedIndex() {
 
         //获取Records表中的数据
         List<Record> recordList;
-        recordList=recordService.selectByIndexType(indexType);
-        System.out.println("成功获取到records数据："+recordList.size()+"条");
+        recordList = recordService.selectByIndexType(indexType);
+        System.out.println("成功获取到records数据：" + recordList.size() + "条");
 
-        Map<String,List<Record>> termId_Record=new HashMap<>();
+        Map<String, List<Record>> termId_Record = new HashMap<>();
         String termID;
 
         //按照term和doc_id聚合record
-        for (Record r:
+        for (Record r :
                 recordList) {
-            List<Record> records=new ArrayList<>();
-            termID=r.getTerm()+r.getDocId();
-            if (termId_Record.containsKey(termID)){
-                records=termId_Record.get(termID);
+            List<Record> records = new ArrayList<>();
+            termID = r.getTerm() + r.getDocId();
+            if (termId_Record.containsKey(termID)) {
+                records = termId_Record.get(termID);
                 records.add(r);
-                termId_Record.put(termID,records);
-            }else {
+                termId_Record.put(termID, records);
+            } else {
                 records.add(r);
-                termId_Record.put(termID,records);
+                termId_Record.put(termID, records);
             }
         }
-        System.out.println("按照term和doc_id聚合record后有"+termId_Record.size()+"条数据");
-        for (String s:
+        System.out.println("按照term和doc_id聚合record后有" + termId_Record.size() + "条数据");
+        for (String s :
                 termId_Record.keySet()) {
-            String locations="";
-            Record tempRecord=termId_Record.get(s).get(0);
-            InvertedIndex invertedIndex=new InvertedIndex();
+            String locations = "";
+            Record tempRecord = termId_Record.get(s).get(0);
+            InvertedIndex invertedIndex = new InvertedIndex();
             invertedIndex.setDocId(tempRecord.getDocId());
             invertedIndex.setIndexType(tempRecord.getIndexType());
             invertedIndex.setTerm(tempRecord.getTerm());
             invertedIndex.setTf(termId_Record.get(s).size());
             //构造locations
-            for (Record r:
+            for (Record r :
                     termId_Record.get(s)) {
-                locations+=r.getLocation()+":";
+                locations += r.getLocation() + ":";
             }
-            locations=locations.substring(0,locations.length()-1);
+            locations = locations.substring(0, locations.length() - 1);
             invertedIndex.setLocations(locations);
             invertedIndexService.insert(invertedIndex);
         }
@@ -147,13 +147,13 @@ public class IndexGenerator {
 
     /**
      * 聚合inverted_index中的数据，生成full_index中的数据
-     * */
-    public void createFullIndex(){
+     */
+    public void createFullIndex() {
 
         //获取inverted_index中的数据
         List<InvertedIndex> invertedIndexList;
         invertedIndexList = invertedIndexService.selectByIndexType(indexType);
-        System.out.println("成功获取到inverted_index中的数据"+invertedIndexList.size()+"条");
+        System.out.println("成功获取到inverted_index中的数据" + invertedIndexList.size() + "条");
         Map<String, List<InvertedIndex>> termInvertedIndex = new HashMap<>();
         String term;
 
@@ -171,7 +171,7 @@ public class IndexGenerator {
                 termInvertedIndex.put(term, invertedIndexes);
             }
         }
-        System.out.println("按照term聚合inverted_index后有"+termInvertedIndex.size()+"条数据");
+        System.out.println("按照term聚合inverted_index后有" + termInvertedIndex.size() + "条数据");
         for (String s :
                 termInvertedIndex.keySet()) {
             String ids = "";
@@ -183,9 +183,9 @@ public class IndexGenerator {
             //构造ids
             for (InvertedIndex i :
                     termInvertedIndex.get(s)) {
-                ids+=i.getDocId()+":";
+                ids += i.getDocId() + ":";
             }
-            ids=ids.substring(0,ids.length()-1);
+            ids = ids.substring(0, ids.length() - 1);
             fullIndex.setIds(ids);
             fullIndexService.insert(fullIndex);
         }

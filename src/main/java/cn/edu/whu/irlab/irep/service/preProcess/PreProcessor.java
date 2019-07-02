@@ -23,65 +23,66 @@ import java.util.ArrayList;
 public class PreProcessor {
 
 
-    public static ArrayList<String> preProcess(String token,String analyzerName,boolean isRemoveStopWord){
-        ArrayList<String> result=new ArrayList<>();
+    public static ArrayList<String> preProcess(String token, String analyzerName, boolean isRemoveStopWord) {
+        ArrayList<String> result = new ArrayList<>();
         String terms;
-        if (isRemoveStopWord){
-            terms=outputAnalyzer(token,analyzerName);
-            result=removePunctuation(terms);
-            result=removeStopWords(result);
-        }else {
-            terms=outputAnalyzer(token,analyzerName);
-            result=removePunctuation(terms);
+        if (isRemoveStopWord) {
+            terms = outputAnalyzer(token, analyzerName);
+            result = removePunctuation(terms);
+            result = removeStopWords(result);
+        } else {
+            terms = outputAnalyzer(token, analyzerName);
+            result = removePunctuation(terms);
         }
         return result;
     }
 
     //分词
-    public static String outputAnalyzer(String token, String analyzerName){
-        Analyzer analyzer=analyzerSelector(analyzerName);
-        StringBuilder stringBuilder =new StringBuilder();
-        StringReader reader=new StringReader(token);
-        try{
-            TokenStream tokenStream=analyzer.tokenStream(token,reader);
+    public static String outputAnalyzer(String token, String analyzerName) {
+        Analyzer analyzer = analyzerSelector(analyzerName);
+        StringBuilder stringBuilder = new StringBuilder();
+        StringReader reader = new StringReader(token);
+        try {
+            TokenStream tokenStream = analyzer.tokenStream(token, reader);
             tokenStream.reset();
-            while (tokenStream.incrementToken()){
-                CharTermAttribute charTermAttribute =tokenStream.getAttribute(CharTermAttribute.class);
+            while (tokenStream.incrementToken()) {
+                CharTermAttribute charTermAttribute = tokenStream.getAttribute(CharTermAttribute.class);
                 stringBuilder.append(charTermAttribute.toString());
                 stringBuilder.append(" ");
             }
-        }catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
         analyzer.close();
-        String outPut=String.valueOf(stringBuilder);
+        String outPut = String.valueOf(stringBuilder);
         return outPut;
     }
 
     /**
      * 去标点
+     *
      * @param seg 待处理字符串
      * @return 去标点结果
      */
-    public static ArrayList<String> removePunctuation(String seg){
+    public static ArrayList<String> removePunctuation(String seg) {
         String splits = seg.replaceAll("\\pP|\\pS|\\pM|\\pN|\\pC", "");// 去除标点符号
 
-        splits = splits.replaceAll(" "," " );
-        splits = splits.replaceAll(" "," " );
-        splits = splits.replaceAll("  "," " );
-        splits = splits.replaceAll("ą"," " );
-        splits = splits.replaceAll("ȁ"," " );
-        splits = splits.replaceAll("É"," " );
-        splits = splits.replaceAll("Ï"," " );
-        splits = splits.replaceAll("丶"," " );
-        splits = splits.replaceAll("[a-zA-Z]","" );//去英文
+        splits = splits.replaceAll(" ", " ");
+        splits = splits.replaceAll(" ", " ");
+        splits = splits.replaceAll("  ", " ");
+        splits = splits.replaceAll("ą", " ");
+        splits = splits.replaceAll("ȁ", " ");
+        splits = splits.replaceAll("É", " ");
+        splits = splits.replaceAll("Ï", " ");
+        splits = splits.replaceAll("丶", " ");
+        splits = splits.replaceAll("[a-zA-Z]", "");//去英文
 
         String[] sWords = splits.split(" ");
         ArrayList<String> termList = new ArrayList();
         for (int i = 0; i < sWords.length; i++) {
-            String word=sWords[i];
-            if (word==null||word.equals("")||word.equals(" ") || word.equals("  ")){}
-            else {
+            String word = sWords[i];
+            if (word == null || word.equals("") || word.equals(" ") || word.equals("  ")) {
+            } else {
                 word = word.trim();
                 word = word.replace("  ", "");
                 termList.add(word);
@@ -92,13 +93,14 @@ public class PreProcessor {
 
     /**
      * 去停用词
+     *
      * @param termList 待处理
      * @return 处理结果
      */
-    public static ArrayList<String> removeStopWords(ArrayList<String> termList){
+    public static ArrayList<String> removeStopWords(ArrayList<String> termList) {
         ArrayList<String> terms = termList;
         String dataDir = null;
-        try{
+        try {
             dataDir = "resources/StopWordTable.txt";
             BufferedReader br1 = new BufferedReader(new InputStreamReader(new FileInputStream(dataDir), "UTF-8"));//构造一个BufferedReader类来读停用词表
             String string1 = null;
@@ -108,7 +110,7 @@ public class PreProcessor {
             }
             br1.close();
             terms.removeAll(stopWord);//去停用词
-        }catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return terms;
@@ -121,26 +123,27 @@ public class PreProcessor {
      *                     simple 简单分词器
      *                     CJK 二分法分词器
      *                     smartChinese 中文智能分词器
-     * */
-    public static Analyzer analyzerSelector(String analyzerName){
-        Analyzer analyzer=null;
-        switch (analyzerName){
+     */
+    public static Analyzer analyzerSelector(String analyzerName) {
+        Analyzer analyzer = null;
+        switch (analyzerName) {
             case "standard":
-                analyzer=new StandardAnalyzer();
+                analyzer = new StandardAnalyzer();
                 break;
             case "whitespace":
-                analyzer=new WhitespaceAnalyzer();
+                analyzer = new WhitespaceAnalyzer();
                 break;
             case "simple":
-                analyzer=new SimpleAnalyzer();
+                analyzer = new SimpleAnalyzer();
                 break;
             case "CJK":
-                analyzer=new CJKAnalyzer();
+                analyzer = new CJKAnalyzer();
                 break;
             case "smartChinese":
-                analyzer=new SmartChineseAnalyzer();
+                analyzer = new SmartChineseAnalyzer();
                 break;
-            default:break;
+            default:
+                break;
         }
         return analyzer;
     }

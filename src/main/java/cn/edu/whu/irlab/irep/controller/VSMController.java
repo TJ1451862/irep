@@ -161,8 +161,8 @@ public class VSMController {
             JSONArray vectorJson = new JSONArray();
             List<VectorI> docVector = docForVSMList.get(i).getVector();
             for (int j = 0; j < docVector.size(); j++) {
-                VectorI vectorI=docVector.get(j);
-                JSONObject object =JSONObject.parseObject(JSONObject.toJSONString(vectorI));
+                VectorI vectorI = docVector.get(j);
+                JSONObject object = JSONObject.parseObject(JSONObject.toJSONString(vectorI));
                 vectorJson.add(object);
             }
             jsonObject.put("vector", vectorJson);
@@ -194,35 +194,46 @@ public class VSMController {
         return vsmRetriever.getResultAfterSort();
     }
 
-    //    public void insertResult(@RequestParam(name = "formulaId") int formulaId,
-//                             @RequestParam(name = "smoothParam") double smoothParam,
-//                             @RequestParam(name = "analyzerName") String analyzerName,
-//                             @RequestParam(name = "isRemoveStopWord") boolean isRemoveStopWord) {
-//        String standardQuery = readDoc.readDoc("resources/results/standardQuery");
-//        String indexType = indexTypeConstructor.indexTypeConstructor(analyzerName, isRemoveStopWord);
-//        String modelType;
-//        JSONArray queryList = JSONArray.parseArray(standardQuery);
-//        for (int i = 0; i < queryList.size(); i++) {
-//            String queryContent=queryList.getJSONObject(i).getString("query");
-//            int queryId=queryList.getJSONObject(i).getIntValue("queryId");
-//            VSMRetriever retriever = new VSMRetriever(queryContent, formulaId, smoothParam, analyzerName, isRemoveStopWord);
-//            modelType=retriever.modelTypeConstuctor().toJSONString();
-//            retriever.search();
-//            List<ResultI> resultAfterSort = retriever.getResultAfterSort();
-//            for (int j = 0; j < resultAfterSort.size(); j++) {
-//                Result result = new Result();
-//                result.setIndexType(indexType);
-//                result.setDocId(resultAfterSort.get(i).getDocID());
-//                result.setDocRank(j);
-//                result.setIsChinese(1);
-//                result.setQuery(queryContent);
-//                result.setQueryId(queryId);
-//                result.setTitle(resultAfterSort.get(i).getTitle());
-//                result.setModelType(modelType);
-//                resultService.insertSelective(result);
-//            }
-//        }
-//    }
+    public void insertResult(@RequestParam(name = "formulaId") int formulaId,
+                             @RequestParam(name = "smoothParam") double smoothParam,
+                             @RequestParam(name = "analyzerName") String analyzerName,
+                             @RequestParam(name = "isRemoveStopWord") boolean isRemoveStopWord) {
+
+        String standardQuery = ReadDoc.readDoc("resources/results/standardQuery");
+        String indexType = IndexTypeConstructor.indexTypeConstructor(analyzerName, isRemoveStopWord);
+        String modelType = vsmRetriever.modelTypeConstuctor().toJSONString();
+
+        Result result1 = new Result();
+        result1.setModelType(modelType);
+        result1.setIndexType(indexType);
+        result1.setIsChinese(1);
+        List<Result> resultList=resultService.selectResult(result1);
+
+        if (resultList.size()==0){
+            JSONArray queryList = JSONArray.parseArray(standardQuery);
+            for (int i = 0; i < queryList.size(); i++) {
+                String queryContent = queryList.getJSONObject(i).getString("query");
+                int queryId = queryList.getJSONObject(i).getIntValue("queryId");
+                vsmRetriever.initVSMRetriever(queryContent, formulaId, smoothParam, analyzerName, isRemoveStopWord);
+                vsmRetriever.search();
+                List<ResultI> resultAfterSort = vsmRetriever.getResultAfterSort();
+                for (int j = 0; j < resultAfterSort.size(); j++) {
+                    Result result = new Result();
+                    result.setIndexType(indexType);
+                    result.setDocId(resultAfterSort.get(i).getDocID());
+                    result.setDocRank(j);
+                    result.setIsChinese(1);
+                    result.setQuery(queryContent);
+                    result.setQueryId(queryId);
+                    result.setTitle(resultAfterSort.get(i).getTitle());
+                    result.setModelType(modelType);
+                    resultService.insertSelective(result);
+                }
+            }
+        }
+
+
+    }
 
     /**
      * 判断是否需要检索
@@ -238,7 +249,10 @@ public class VSMController {
                              @RequestParam(name = "smoothParam") double smoothParam,
                              @RequestParam(name = "analyzerName") String analyzerName,
                              @RequestParam(name = "isRemoveStopWord") boolean isRemoveStopWord) {
-        if (vsmRetriever.getResult().size() == 0 || !vsmRetriever.getQuery().getContent().equals(queryContent)) {
+        if (vsmRetriever.getResult().size() == 0 ||
+                !vsmRetriever.getQuery().getContent().equals(queryContent) ||
+                vsmRetriever.getFormulaID() != formulaId ||
+                vsmRetriever.getSmoothParam() != smoothParam) {
             vsmRetriever.initVSMRetriever(queryContent, formulaId, smoothParam, analyzerName, isRemoveStopWord);
             vsmRetriever.search();
         }

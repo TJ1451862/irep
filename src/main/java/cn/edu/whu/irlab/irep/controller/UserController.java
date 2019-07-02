@@ -24,37 +24,38 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+
     @RequestMapping(value = "/login")
     @ResponseBody
-    public Map<String,String> loginController(User user){
-        Map<String,String> map = new HashMap<>();
-        if(userService.selectUser(user) == null){
-            map.put("code","0");
-            map.put("message","用户名或者密码错误");
-        }else{
-            map.put("code","1");
-            map.put("message","登录成功");
+    public Map<String, String> loginController(User user) {
+        Map<String, String> map = new HashMap<>();
+        if (userService.selectUser(user) == null) {
+            map.put("code", "0");
+            map.put("message", "用户名或者密码错误");
+        } else {
+            map.put("code", "1");
+            map.put("message", "登录成功");
         }
         return map;
     }
 
     @RequestMapping(value = "/sign")
-    public String signController(User user, ModelMap modelMap){
-        if(userService.selectUserByPhone(user) != null){
-            modelMap.put("code",1);
-            modelMap.put("message","当前手机号已经被注册过了");
-        }else if(userService.selectUserByEmail(user) != null){
-            modelMap.put("code",2);
-            modelMap.put("message","当前邮箱已经被注册过了");
-        }else if(userService.selectUser(user) != null){
-            modelMap.put("code",3);
-            modelMap.put("message","当前用户名或者密码已经被注册过了");
-        }else if(userService.insertUserService(user) != 1){
-            modelMap.put("code",4);
-            modelMap.put("message","注册失败，请联系系统管理员");
-        }else{
-            modelMap.put("code",0);
-            modelMap.put("message","注册成功");
+    public String signController(User user, ModelMap modelMap) {
+        if (userService.selectUserByPhone(user) != null) {
+            modelMap.put("code", 1);
+            modelMap.put("message", "当前手机号已经被注册过了");
+        } else if (userService.selectUserByEmail(user) != null) {
+            modelMap.put("code", 2);
+            modelMap.put("message", "当前邮箱已经被注册过了");
+        } else if (userService.selectUser(user) != null) {
+            modelMap.put("code", 3);
+            modelMap.put("message", "当前用户名或者密码已经被注册过了");
+        } else if (userService.insertUserService(user) != 1) {
+            modelMap.put("code", 4);
+            modelMap.put("message", "注册失败，请联系系统管理员");
+        } else {
+            modelMap.put("code", 0);
+            modelMap.put("message", "注册成功");
         }
         return "signIn.html";
     }

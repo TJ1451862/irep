@@ -27,8 +27,7 @@ import java.util.Map;
 public class IndexTest {
 
 
-    @Autowired
-    public PreProcessor preProcessor;
+
 
     @Autowired
     public RecordServiceImpl recordService;
@@ -39,8 +38,6 @@ public class IndexTest {
     @Autowired
     public FullIndexServiceImpl fullIndexService;
 
-    @Autowired
-    public IndexTypeConstructor indexTypeConstructor;
 
     public String folderPath = "resources/doc_ch";//待处理文档的文件夹路径
 
@@ -49,7 +46,7 @@ public class IndexTest {
         File fileFolder = new File(folderPath);
         String analyzerName = "standard";
         boolean isRemoveStopWord = true;
-        String indexType = indexTypeConstructor.indexTypeConstructor(analyzerName, isRemoveStopWord);
+        String indexType = IndexTypeConstructor.indexTypeConstructor(analyzerName, isRemoveStopWord);
 
         //向records表中插入数据
         if (fileFolder.exists()) {
@@ -151,9 +148,9 @@ public class IndexTest {
             //构造ids
             for (InvertedIndex i :
                     termInvertedIndex.get(s)) {
-                ids+=i.getDocId()+":";
+                ids += i.getDocId() + ":";
             }
-            ids=ids.substring(0,ids.length()-1);
+            ids = ids.substring(0, ids.length() - 1);
             fullIndex.setIds(ids);
             fullIndexService.insert(fullIndex);
         }

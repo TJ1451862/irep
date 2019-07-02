@@ -52,39 +52,39 @@ invertedIndex.html
     width: 100%;
 }
 
-#TF label p{
-    background:#4472c4;
-    color:#ffffff;
-    font-size:18px;
+#TF label p {
+    background: #4472c4;
+    color: #ffffff;
+    font-size: 18px;
     font-weight: bold;
-    width:200px;
-    text-align:center;
-    height:45px;
+    width: 200px;
+    text-align: center;
+    height: 45px;
     display: inline-flex;
     justify-content: center;
     align-items: center;
 }
 
-#TF input{
-    height:18px;
-    width:18px;
+#TF input {
+    height: 18px;
+    width: 18px;
 }
 
-.form-check{
+.form-check {
     padding-left: 0;
 }
 
 /**
 vectorSpaceModel.html
  */
-.ra{
+.ra {
     font-size: 20px;
-    font-family:Microsoft Yahei;
+    font-family: Microsoft Yahei;
     font-weight: bold;
     margin-right: 20px
 }
 
-.modelTable td,.modelTable th{
+.modelTable td, .modelTable th {
     padding: 2px;
     vertical-align: top;
     table-layout: fixed;
@@ -92,23 +92,23 @@ vectorSpaceModel.html
     font-size: 20px;
 }
 
-.smallTable{
-    text-align:center;
-    font-family:Microsoft Yahei;
+.smallTable {
+    text-align: center;
+    font-family: Microsoft Yahei;
     overflow-x: hidden;
 }
 
-.smallTable table{
-    width:inherit;
+.smallTable table {
+    width: inherit;
     table-layout: fixed
 }
 
-.smallTable thead{
-    color:#000000;
+.smallTable thead {
+    color: #000000;
 }
 
-.smallTable thead tr{
-    border-bottom:3px solid rgb(0,0,0)
+.smallTable thead tr {
+    border-bottom: 3px solid rgb(0, 0, 0)
 }
 
 .smallTable td {

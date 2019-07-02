@@ -27,8 +27,7 @@ public class PerformanceTest {
     @Autowired
     public ResultServiceImpl resultService;
 
-    @Autowired
-    public ReadDoc readDoc;
+
 
     @Test
     public void insertStandard() {
@@ -37,7 +36,7 @@ public class PerformanceTest {
 
         String standardDir = "resources/results/standard/standard.json";
 
-        standardObject = JSONObject.parseObject(readDoc.readDoc(standardDir));//读标准排序
+        standardObject = JSONObject.parseObject(ReadDoc.readDoc(standardDir));//读标准排序
 
         int queryId = 0;
         for (String s :
@@ -67,24 +66,24 @@ public class PerformanceTest {
      */
     @Test
     public void getStandardQuery() {
-        Result result=new Result();
+        Result result = new Result();
         result.setIsChinese(1);
         result.setIndexType("standard");
         result.setModelType("standard");
         result.setDocRank(1);
-        List<Result> resultList=resultService.selectResult(result);
-        JSONArray jsonArray=new JSONArray();
+        List<Result> resultList = resultService.selectResult(result);
+        JSONArray jsonArray = new JSONArray();
         for (int i = 0; i < resultList.size(); i++) {
-            JSONObject jsonObject=new JSONObject();
-            jsonObject.put("queryId",resultList.get(i).getQueryId());
-            jsonObject.put("query",resultList.get(i).getQuery());
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("queryId", resultList.get(i).getQueryId());
+            jsonObject.put("query", resultList.get(i).getQuery());
             jsonArray.add(jsonObject);
         }
         System.out.println(jsonArray);
     }
 
     @Test
-    public void importStandardQuery(){
-        System.out.println(readDoc.readDoc("resources/results/standardQuery"));
+    public void importStandardQuery() {
+        System.out.println(ReadDoc.readDoc("resources/results/standardQuery"));
     }
 }

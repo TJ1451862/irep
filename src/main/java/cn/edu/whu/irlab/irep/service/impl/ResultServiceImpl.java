@@ -13,11 +13,11 @@ public class ResultServiceImpl {
     @Autowired
     public ResultMapper resultMapper;
 
-    public int insertSelective(Result result){
+    public int insertSelective(Result result) {
         return resultMapper.insertSelective(result);
     }
 
-    public List<Result> selectResult(Result result){
+    public List<Result> selectResult(Result result) {
         return resultMapper.selectResult(result);
     }
 }
