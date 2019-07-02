@@ -211,10 +211,51 @@ p {
     display:none;
 }
 
-.over{
-    background-color: red;
+/*填空题部分css*/
+.fillIn{
+    font-size: 18px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+    margin-left:15px;
 }
 
+.fillInBox{
+    border:0;
+    border-bottom:1px solid #878787;
+    width:100px;
+    margin-left:10px;
+    margin-right:10px;
+    text-align: center;
+    height:24px;
+    background-color: #fdfdfe;
+}
+
+/*选择题部分css*/
+.multipleChoice{
+    font-size:18px;
+    margin-bottom:10px;
+    margin-left:15px;
+
+}
+
+.chooseBox{
+    margin-left:15px;
+}
+
+/*答题确定按钮*/
+.exaConfirm{
+    margin-left:600px;
+    margin-top:10px;
+    background-color: #4472c4;
+    font-family: "微软雅黑";
+    width: 120px;
+    height: 45px;
+    font-weight: bold;
+    color: #ffffff;
+    font-size: 20px;
+}
 
 
 
