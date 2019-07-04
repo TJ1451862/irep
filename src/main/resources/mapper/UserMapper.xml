@@ -75,7 +75,7 @@
         from user
         <where>
             <if test="username != null">
-                AND username = #{username},
+                AND username = #{username}
             </if>
             <if test="password != null">
                 AND password = #{password}
@@ -100,7 +100,7 @@
         from user
         <where>
             <if test="phone != null">
-                AND phone = #{phone},
+                AND phone = #{phone}
             </if>
             <if test="username != null">
                 AND username = #{username}
@@ -125,7 +125,7 @@
         from user
         <where>
             <if test="email != null">
-                AND email = #{email},
+                AND email = #{email}
             </if>
             <if test="username != null">
                 AND username = #{username}
@@ -136,7 +136,7 @@
     <update id="updateUserByUsername" parameterType="cn.edu.whu.irlab.irep.entity.User">
         update user
         <set>
-            <if test="password != password">password = #{password}</if>
+            <if test="password != null">password = #{password}</if>
         </set>
         where username = #{username}
     </update>

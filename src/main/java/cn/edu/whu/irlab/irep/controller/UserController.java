@@ -79,6 +79,7 @@ public class UserController {
      */
     @RequestMapping(value = "/update")
     public String updatePassword(User user,ModelMap modelMap){
+        System.out.println("user:"+user);
         //通过手机号和用户名查询是否该用户注册过，通过邮箱和用户名查询是否注册过，二者任选一个成功就可以修改密码
         if(userService.selectUserByPhoneAndUsername(user) != null || userService.selectUserByEmailAndUsername(user) != null){
             int i = userService.updateUserByUsername(user);
