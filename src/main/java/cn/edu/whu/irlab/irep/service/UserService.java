@@ -22,6 +22,15 @@ public interface UserService {
     //根据手机号码查询用户信息
     User selectUserByPhone(User user);
 
-    //根据邮箱查询用信息
+    //根据手机号码和用户名查询用户信息
+    User selectUserByPhoneAndUsername(User user);
+
+    //根据邮箱查询用户信息
     User selectUserByEmail(User user);
+
+    //根据邮箱和用户名查询用户信息
+    User selectUserByEmailAndUsername(User user);
+
+    //根据用户名修改密码
+    int updateUserByUsername(User user);
 }

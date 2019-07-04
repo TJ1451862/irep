@@ -94,6 +94,20 @@
         </where>
     </select>
 
+    <select id="selectUserByPhoneAndUsername" parameterType="cn.edu.whu.irlab.irep.entity.User" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from user
+        <where>
+            <if test="phone != null">
+                AND phone = #{phone},
+            </if>
+            <if test="username != null">
+                AND username = #{username}
+            </if>
+        </where>
+    </select>
+
     <select id="selectUserByEmail" parameterType="cn.edu.whu.irlab.irep.entity.User" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
@@ -104,4 +118,26 @@
             </if>
         </where>
     </select>
+
+    <select id="selectUserByEmailAndUsername" parameterType="cn.edu.whu.irlab.irep.entity.User" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from user
+        <where>
+            <if test="email != null">
+                AND email = #{email},
+            </if>
+            <if test="username != null">
+                AND username = #{username}
+            </if>
+        </where>
+    </select>
+
+    <update id="updateUserByUsername" parameterType="cn.edu.whu.irlab.irep.entity.User">
+        update user
+        <set>
+            <if test="password != password">password = #{password}</if>
+        </set>
+        where username = #{username}
+    </update>
 </mapper>

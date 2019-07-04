@@ -24,5 +24,11 @@ public interface UserMapper {
 
     User selectUserByPhone(User user);
 
+    User selectUserByPhoneAndUsername(User user);
+
     User selectUserByEmail(User user);
+
+    User selectUserByEmailAndUsername(User user);
+
+    int updateUserByUsername(User user);
 }
