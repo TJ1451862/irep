@@ -50,7 +50,7 @@ public class PerformanceTest {
                 result.setDocRank(jsonObject.getIntValue("rank"));
                 result.setTitle(jsonObject.getString("title"));
                 result.setRetrieverId("1000_00");
-                System.out.println(result);
+//                System.out.println(result);
                 resultService.insertSelective(result);
             }
             queryId++;

@@ -9,6 +9,80 @@ var colorNone2 = "rgb(178,209,158)";//表格2行默认背景色
 var preAnswer = ["去停用词", "分词", "字符串", "出现频率", "abcd", "abcd", "abc", "d"] //预处理页面答案，选择题给出正确选项的value值
 
 /**
+ * login.html
+ */
+/**
+ * 登录功能
+ */
+$("#login").click(function () {
+    var userName = $("#userName").val();
+    var password = $("#password").val();
+
+    $.ajax({
+        type: "POST",
+        url: "user/login",
+        data: {
+            "username": userName,
+            "password": password
+        },
+        dataType: "json",
+        contentType: "application/x-www-form-urlencoded; charset=utf-8",
+        traditional: true,
+        success: function (result) {
+            if(result.code==0){
+                alert(result.message)
+            }else if (result.code==1){
+                $(location).attr("href", "/index.html");
+            }
+            console.log(result);
+        },
+        error: function (result) {
+            alert("检索出错！");
+        }
+    });
+});
+
+/**
+ * sign.html
+ */
+
+$("#signIn").click(function () {
+    var userName=$("#userName").val();
+    var password=$("#password").val();
+    var phone=$("#phone").val();
+    var email=$("#email").val();
+    var works=$("#works").val();
+
+    $.ajax({
+        type: "POST",
+        url: "user/signIn",
+        data: {
+            "username": userName,
+            "password": password,
+            "phone":phone,
+            "email":email,
+            "works":works
+        },
+        dataType: "json",
+        contentType: "application/x-www-form-urlencoded; charset=utf-8",
+        traditional: true,
+        success: function (result) {
+            console.log(result);
+            if(result.code!=0){
+                alert(result.message)
+            }else {
+                $(location).attr("href", "/login.html");
+            }
+        },
+        error: function (result) {
+            alert("注册失败");
+        }
+
+    })
+});
+
+
+/**
  * 增减input中的数字大小
  * @type {HTMLElement}
  */

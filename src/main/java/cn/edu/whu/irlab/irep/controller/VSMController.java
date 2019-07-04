@@ -3,8 +3,10 @@ package cn.edu.whu.irlab.irep.controller;
 
 import cn.edu.whu.irlab.irep.entity.Result;
 import cn.edu.whu.irlab.irep.entity.Retriever;
+import cn.edu.whu.irlab.irep.entity.UserRetriever;
 import cn.edu.whu.irlab.irep.service.impl.ResultServiceImpl;
 import cn.edu.whu.irlab.irep.service.impl.RetrieverServiceImpl;
+import cn.edu.whu.irlab.irep.service.impl.UserRetrieverServiceImpl;
 import cn.edu.whu.irlab.irep.service.retrievalModel.vsmmodel.DocForVSM;
 import cn.edu.whu.irlab.irep.service.retrievalModel.vsmmodel.ResultI;
 import cn.edu.whu.irlab.irep.service.retrievalModel.vsmmodel.VSMRetriever;
@@ -43,6 +45,9 @@ public class VSMController {
 
     @Autowired
     public RetrieverServiceImpl retrieverService;
+
+    @Autowired
+    public UserRetrieverServiceImpl userRetrieverService;
 
     /**
      * 返回检索结果
@@ -201,16 +206,12 @@ public class VSMController {
     /**
      * 向result表中插入结果数据
      * 如果数据不存在则插入，如果数据存在则不插入
-     * @param formulaId
-     * @param smoothParam
-     * @param analyzerName
-     * @param isRemoveStopWord
      */
     @RequestMapping("/insertResult")
     public void insertResultController(@RequestParam(name = "formulaId") int formulaId,
-                             @RequestParam(name = "smoothParam") double smoothParam,
-                             @RequestParam(name = "analyzerName") String analyzerName,
-                             @RequestParam(name = "isRemoveStopWord") boolean isRemoveStopWord) {
+                                       @RequestParam(name = "smoothParam") double smoothParam,
+                                       @RequestParam(name = "analyzerName") String analyzerName,
+                                       @RequestParam(name = "isRemoveStopWord") boolean isRemoveStopWord) {
 
         String standardQuery = ReadDoc.readDoc("resources/results/standardQuery");
 
@@ -226,9 +227,9 @@ public class VSMController {
         String retrieverId = Constructor.retrieverIdConstructor(retriever);
         retriever.setRetrieverId(retrieverId);
 
+        //检查数据库中是否已经存在标准查询的检索结果数据，如果没有则生成并插入
         Retriever retriever1 = retrieverService.selectByPrimaryKey(retrieverId);
         if (retriever1 == null) {
-
             //插入retriever
             retrieverService.insert(retriever);
             JSONArray queryList = JSONArray.parseArray(standardQuery);
@@ -251,6 +252,30 @@ public class VSMController {
                 }
             }
         }
+
+        //保存检索器
+        /**
+         * 请写一个获取当前userId的方法
+         */
+        int userId = 1;
+        int retrieverNum = 0;
+        UserRetriever userRetriever = userRetrieverService.selectByPrimaryKey(userId);
+        switch (retrieverNum) {
+            case 1:
+                userRetriever.setRetriever1(retrieverId);
+                break;
+            case 2:
+                userRetriever.setRetriever2(retrieverId);
+                break;
+            case 3:
+                userRetriever.setRetriever3(retrieverId);
+                break;
+            default:
+                userRetriever.setRetriever1(retrieverId);
+                break;
+        }
+
+
     }
 
     /**

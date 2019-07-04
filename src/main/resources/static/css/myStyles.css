@@ -14,6 +14,41 @@ common
 }
 
 /**
+signIn.html
+ */
+.signIn {
+    display:flex;
+    margin:0 auto 20px auto;
+    width:350px;
+}
+
+.signIn .ic {
+    border:1px solid #cdcfd1;
+    width:44px;
+    height:44px;
+    float:left;
+    border-radius:2px 0 0 2px;
+}
+
+.signIn .ic .icon {
+    font-size:30px;
+    line-height:40px;
+    color:#4472c4;
+}
+
+.signIn .input {
+    height:44px;
+    width:295px;
+    float:left;
+    padding:0 10px;
+    border:1px solid #cdcfd1;
+    border-left:none;
+    border-radius:0 2px 2px 0;
+}
+
+
+
+/**
 preProcessing.html
  */
 /*表格共5列，每列等宽*/

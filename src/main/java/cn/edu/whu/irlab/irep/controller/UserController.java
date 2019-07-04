@@ -24,34 +24,38 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-
     /**
      * 参数说明：User对象里面必须有用户名，密码
-     * @param user
-     * @return
+     * @param user 登录用户
+     * @return 登录成功信息
      */
+    //请将userId存到session中
     @RequestMapping(value = "/login")
     @ResponseBody
-    public Map<String, String> loginController(User user) {
-        Map<String, String> map = new HashMap<>();
-        if (userService.selectUser(user) == null) {
-            map.put("code", "0");
-            map.put("message", "用户名或者密码错误");
+    public ModelMap loginController(User user) {
+        ModelMap modelMap=new ModelMap();
+        User user1=userService.selectUser(user);
+        if (user1== null) {
+            modelMap.put("code", 0);
+            modelMap.put("message", "用户名或者密码错误");
         } else {
-            map.put("code", "1");
-            map.put("message", "登录成功");
+            modelMap.put("code", 1);
+            modelMap.put("message", "登录成功");
+            modelMap.put("userId",user1.getId());
         }
-        return map;
+        return modelMap;
     }
 
     /**
      * 参数说明：User对象里面必须有用户名，密码，手机号和邮箱，工作单位
      * @param user
-     * @param modelMap
      * @return
      */
-    @RequestMapping(value = "/sign")
-    public String signController(User user, ModelMap modelMap) {
+    @RequestMapping(value = "/signIn")
+    @ResponseBody
+    public ModelMap signController(User user) {
+        user.setWork("武汉大学");
+        ModelMap modelMap=new ModelMap();
         if (userService.selectUserByPhone(user) != null) {
             modelMap.put("code", 1);
             modelMap.put("message", "当前手机号已经被注册过了");
@@ -68,8 +72,11 @@ public class UserController {
             modelMap.put("code", 0);
             modelMap.put("message", "注册成功");
         }
-        return "signIn.html";
+        return modelMap;
     }
+
+
+
 
     /**
      * 参数说明：User对象里面必须有用户名，新的密码，手机号和邮箱

@@ -23,7 +23,7 @@
         #{email,jdbcType=VARCHAR}, #{works,jdbcType=INTEGER}, sysdate())
     </insert>
     <insert id="insertUser" parameterType="cn.edu.whu.irlab.irep.entity.User">
-        insert into full_index
+        insert into user
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="username != null">
                 username,
