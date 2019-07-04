@@ -200,13 +200,14 @@ public class VSMController {
 
     /**
      * 向result表中插入结果数据
-     *
+     * 如果数据不存在则插入，如果数据存在则不插入
      * @param formulaId
      * @param smoothParam
      * @param analyzerName
      * @param isRemoveStopWord
      */
-    public void insertResult(@RequestParam(name = "formulaId") int formulaId,
+    @RequestMapping("/insertResult")
+    public void insertResultController(@RequestParam(name = "formulaId") int formulaId,
                              @RequestParam(name = "smoothParam") double smoothParam,
                              @RequestParam(name = "analyzerName") String analyzerName,
                              @RequestParam(name = "isRemoveStopWord") boolean isRemoveStopWord) {
@@ -227,10 +228,11 @@ public class VSMController {
 
         Retriever retriever1 = retrieverService.selectByPrimaryKey(retrieverId);
         if (retriever1 == null) {
+
             //插入retriever
             retrieverService.insert(retriever);
-
             JSONArray queryList = JSONArray.parseArray(standardQuery);
+
             for (int i = 0; i < queryList.size(); i++) {
                 String queryContent = queryList.getJSONObject(i).getString("query");
                 int queryId = queryList.getJSONObject(i).getIntValue("queryId");
