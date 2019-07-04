@@ -7,21 +7,19 @@
         <result column="doc_id" property="docId" jdbcType="INTEGER"/>
         <result column="doc_rank" property="docRank" jdbcType="INTEGER"/>
         <result column="title" property="title" jdbcType="VARCHAR"/>
-        <result column="is_chinese" property="isChinese" jdbcType="INTEGER"/>
-        <result column="index_type" property="indexType" jdbcType="VARCHAR"/>
-        <result column="model_type" property="modelType" jdbcType="VARCHAR"/>
+        <result column="retriever_id" property="retrieverId" jdbcType="VARCHAR"/>
     </resultMap>
-    <sql id="selectResultVo">
-        select query_id, query, doc_id, doc_rank, title, is_chinese, index_type, model_type from result
-    </sql>
+    <sql id="Base_Column_List">
+    query_id, query, doc_id, doc_rank, title, retriever_id
+  </sql>
     <insert id="insert" parameterType="cn.edu.whu.irlab.irep.entity.Result">
-        insert into result (query_id, query, doc_id,
-        doc_rank, title, is_chinese,
-        index_type, model_type)
-        values (#{queryId,jdbcType=INTEGER}, #{query,jdbcType=VARCHAR}, #{docId,jdbcType=INTEGER},
-        #{docRank,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{isChinese,jdbcType=INTEGER},
-        #{indexType,jdbcType=VARCHAR}, #{modelType,jdbcType=VARCHAR})
-    </insert>
+    insert into result (query_id, query, doc_id, 
+      doc_rank, title, retriever_id
+      )
+    values (#{queryId,jdbcType=INTEGER}, #{query,jdbcType=VARCHAR}, #{docId,jdbcType=INTEGER}, 
+      #{docRank,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{retrieverId,jdbcType=VARCHAR}
+      )
+  </insert>
     <insert id="insertSelective" parameterType="cn.edu.whu.irlab.irep.entity.Result">
         insert into result
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -40,14 +38,8 @@
             <if test="title != null">
                 title,
             </if>
-            <if test="isChinese != null">
-                is_chinese,
-            </if>
-            <if test="indexType != null">
-                index_type,
-            </if>
-            <if test="modelType != null">
-                model_type,
+            <if test="retrieverId != null">
+                retriever_id,
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -66,43 +58,33 @@
             <if test="title != null">
                 #{title,jdbcType=VARCHAR},
             </if>
-            <if test="isChinese != null">
-                #{isChinese,jdbcType=INTEGER},
-            </if>
-            <if test="indexType != null">
-                #{indexType,jdbcType=VARCHAR},
-            </if>
-            <if test="modelType != null">
-                #{modelType,jdbcType=VARCHAR},
+            <if test="retrieverId != null">
+                #{retrieverId,jdbcType=VARCHAR},
             </if>
         </trim>
     </insert>
-    <select id="selectResult" resultMap="BaseResultMap" parameterType="cn.edu.whu.irlab.irep.entity.Result">
-        <include refid="selectResultVo"/>
+    <select id="select" parameterType="cn.edu.whu.irlab.irep.entity.Result">
+        select
+        <include refid="Base_Column_List"/>
+        from result
         <where>
-            <if test="queryId != null and queryId!= ''">
-                and query_id=#{queryId,jdbcType=INTEGER}
+            <if test="queryId != null and queryId != ''">
+                and query_id= #{queryId,jdbcType=INTEGER}
             </if>
-            <if test="query!=null and query!=''">
-                and query=#{query,jdbcType=VARCHAR}
+            <if test="query != null and query != ''">
+                and query= #{query,jdbcType=VARCHAR}
             </if>
-            <if test="docId!=null and docId!=''">
-                and doc_id=#{docId,jdbcType=INTEGER}
+            <if test="docId != null and docId != ''">
+                and doc_id= #{docId,jdbcType=INTEGER}
             </if>
-            <if test="docRank!=null and docRank!=''">
-                and doc_rank=#{docRank,jdbcType=INTEGER}
+            <if test="docRank != null and docRank != ''">
+                and doc_rank= #{docRank,jdbcType=INTEGER}
             </if>
-            <if test="title!=null and title!=''">
-                and title=#{title,jdbcType=VARCHAR}
+            <if test="title != null and title != ''">
+                and title= #{title,jdbcType=VARCHAR}
             </if>
-            <if test="isChinese!=null and isChinese!=''">
-                and is_chinese=#{isChinese,jdbcType=INTEGER}
-            </if>
-            <if test="indexType!=null and indexType!=''">
-                and index_type=#{indexType,jdbcType=VARCHAR}
-            </if>
-            <if test="modelType!=null and modelType!=''">
-                and model_type=#{modelType,jdbcType=VARCHAR}
+            <if test="retrieverId != null and retrieverId != ''">
+                and retriever_id= #{retrieverId,jdbcType=VARCHAR}
             </if>
         </where>
     </select>

@@ -7,9 +7,7 @@ import cn.edu.whu.irlab.irep.entity.Record;
 import cn.edu.whu.irlab.irep.service.impl.FullIndexServiceImpl;
 import cn.edu.whu.irlab.irep.service.impl.InvertedIndexServiceImpl;
 import cn.edu.whu.irlab.irep.service.impl.RecordServiceImpl;
-import cn.edu.whu.irlab.irep.service.preProcess.PreProcessor;
-import cn.edu.whu.irlab.irep.service.util.IndexTypeConstructor;
-import org.apache.lucene.analysis.Analyzer;
+import cn.edu.whu.irlab.irep.service.util.Constructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -56,7 +54,7 @@ public class IndexGenerator {
         this.folderPath = folderPath;
         this.analyzerName = analyzerName;
         this.isRemoveStopWord = isRemoveStopWord;
-        this.indexType = IndexTypeConstructor.indexTypeConstructor(analyzerName, isRemoveStopWord);
+        this.indexType = Constructor.indexTypeConstructor(analyzerName, isRemoveStopWord);
     }
 
     /**

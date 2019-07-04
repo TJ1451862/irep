@@ -2,19 +2,20 @@ package cn.edu.whu.irlab.irep.controller;
 
 
 import cn.edu.whu.irlab.irep.entity.Result;
+import cn.edu.whu.irlab.irep.entity.Retriever;
 import cn.edu.whu.irlab.irep.service.impl.ResultServiceImpl;
+import cn.edu.whu.irlab.irep.service.impl.RetrieverServiceImpl;
 import cn.edu.whu.irlab.irep.service.retrievalModel.vsmmodel.DocForVSM;
 import cn.edu.whu.irlab.irep.service.retrievalModel.vsmmodel.ResultI;
 import cn.edu.whu.irlab.irep.service.retrievalModel.vsmmodel.VSMRetriever;
 import cn.edu.whu.irlab.irep.service.retrievalModel.vsmmodel.VectorI;
 import cn.edu.whu.irlab.irep.service.util.Find;
-import cn.edu.whu.irlab.irep.service.util.IndexTypeConstructor;
+import cn.edu.whu.irlab.irep.service.util.Constructor;
 import cn.edu.whu.irlab.irep.service.util.ReadDoc;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -39,6 +40,9 @@ public class VSMController {
 
     @Autowired
     public VSMRetriever vsmRetriever;
+
+    @Autowired
+    public RetrieverServiceImpl retrieverService;
 
     /**
      * 返回检索结果
@@ -194,22 +198,38 @@ public class VSMController {
         return vsmRetriever.getResultAfterSort();
     }
 
+    /**
+     * 向result表中插入结果数据
+     *
+     * @param formulaId
+     * @param smoothParam
+     * @param analyzerName
+     * @param isRemoveStopWord
+     */
     public void insertResult(@RequestParam(name = "formulaId") int formulaId,
                              @RequestParam(name = "smoothParam") double smoothParam,
                              @RequestParam(name = "analyzerName") String analyzerName,
                              @RequestParam(name = "isRemoveStopWord") boolean isRemoveStopWord) {
 
         String standardQuery = ReadDoc.readDoc("resources/results/standardQuery");
-        String indexType = IndexTypeConstructor.indexTypeConstructor(analyzerName, isRemoveStopWord);
-        String modelType = vsmRetriever.modelTypeConstuctor().toJSONString();
 
-        Result result1 = new Result();
-        result1.setModelType(modelType);
-        result1.setIndexType(indexType);
-        result1.setIsChinese(1);
-        List<Result> resultList=resultService.selectResult(result1);
+        //初始化retriever
+        Retriever retriever = new Retriever();
+        retriever.setIsChinese(true);
+        retriever.setAnalyzer(analyzerName);
+        retriever.setIsRemoveStopWord(isRemoveStopWord);
+        retriever.setModel("vsm");
+        retriever.setFormulaId(formulaId);
+        retriever.setParamName1("平滑系数");
+        retriever.setParam1((int) (smoothParam * 100));
+        String retrieverId = Constructor.retrieverIdConstructor(retriever);
+        retriever.setRetrieverId(retrieverId);
 
-        if (resultList.size()==0){
+        Retriever retriever1 = retrieverService.selectByPrimaryKey(retrieverId);
+        if (retriever1 == null) {
+            //插入retriever
+            retrieverService.insert(retriever);
+
             JSONArray queryList = JSONArray.parseArray(standardQuery);
             for (int i = 0; i < queryList.size(); i++) {
                 String queryContent = queryList.getJSONObject(i).getString("query");
@@ -219,20 +239,16 @@ public class VSMController {
                 List<ResultI> resultAfterSort = vsmRetriever.getResultAfterSort();
                 for (int j = 0; j < resultAfterSort.size(); j++) {
                     Result result = new Result();
-                    result.setIndexType(indexType);
                     result.setDocId(resultAfterSort.get(i).getDocID());
                     result.setDocRank(j);
-                    result.setIsChinese(1);
                     result.setQuery(queryContent);
                     result.setQueryId(queryId);
                     result.setTitle(resultAfterSort.get(i).getTitle());
-                    result.setModelType(modelType);
+                    result.setRetrieverId(retrieverId);
                     resultService.insertSelective(result);
                 }
             }
         }
-
-
     }
 
     /**

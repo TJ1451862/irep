@@ -1,12 +1,12 @@
 var storage = window.localStorage;
 //倒排索引页面表格行背景色
-var colorOver1= "rgb(47,82,143)"; //表格1鼠标经过时的颜色
-var colorOver2= "rgb(112,173,71)"; //表格2鼠标经过时的颜色
-var colorClick1="rgb(178,209,158)"; //表格1鼠标点击的颜色
-var colorClick2="green"; //表格2鼠标点击的颜色
-var colorNone1="rgb(146,165,198)";//表格1行默认背景颜色
-var colorNone2="rgb(178,209,158)";//表格2行默认背景色
-var preAnswer=["去停用词","分词","字符串","出现频率","abcd","abcd","abc","d"] //预处理页面答案，选择题给出正确选项的value值
+var colorOver1 = "rgb(47,82,143)"; //表格1鼠标经过时的颜色
+var colorOver2 = "rgb(112,173,71)"; //表格2鼠标经过时的颜色
+var colorClick1 = "rgb(178,209,158)"; //表格1鼠标点击的颜色
+var colorClick2 = "green"; //表格2鼠标点击的颜色
+var colorNone1 = "rgb(146,165,198)";//表格1行默认背景颜色
+var colorNone2 = "rgb(178,209,158)";//表格2行默认背景色
+var preAnswer = ["去停用词", "分词", "字符串", "出现频率", "abcd", "abcd", "abc", "d"] //预处理页面答案，选择题给出正确选项的value值
 
 /**
  * 增减input中的数字大小
@@ -75,7 +75,7 @@ $(function () {
                 $("#originalFile").text("");// 清空数据
             }
         })//end of ajax
-    })
+    });
     $("#num-jian").click(function () {
         $("#originalFile").text("");//初始化
         var docId = $("#docId").val();
@@ -138,41 +138,41 @@ $(function () {
 });
 
 // 各界面答题部分
-$(".exaConfirm").click(function (){
-    var correctNum=0; //正确的题数，全部答对才可进入下一步
-    var Answer=[];
+$(".exaConfirm").click(function () {
+    var correctNum = 0; //正确的题数，全部答对才可进入下一步
+    var Answer = [];
     // 对应各个页面的答案
-    if($(this)[0].parentNode.id=="preExamination"){
-        Answer=preAnswer
+    if ($(this)[0].parentNode.id == "preExamination") {
+        Answer = preAnswer
     }
-    var $fillResults=$(".fillIn input");// 填空题填写的答案
+    var $fillResults = $(".fillIn input");// 填空题填写的答案
     // 判断填空题是否正确
-    for(var i=0;i<$fillResults.length;i++){
-        if($fillResults[i].value!=Answer[i]){
-            $fillResults[i].style.backgroundColor="red";
-        }else{
-            correctNum=correctNum+1;
-            $fillResults[i].style.backgroundColor="";
+    for (var i = 0; i < $fillResults.length; i++) {
+        if ($fillResults[i].value != Answer[i]) {
+            $fillResults[i].style.backgroundColor = "red";
+        } else {
+            correctNum = correctNum + 1;
+            $fillResults[i].style.backgroundColor = "";
         }
     }
     // 判断选择题是否正确
-    for(var j=0;j<$(".multipleChoice").length;j++){
-        var r='';
-        var $choices=$(".multipleChoice:eq("+j+")").find("input");
-        for(var m=0;m<$choices.length;m++){
-            if($choices[m].checked){
-                r=r+$choices[m].value;
+    for (var j = 0; j < $(".multipleChoice").length; j++) {
+        var r = '';
+        var $choices = $(".multipleChoice:eq(" + j + ")").find("input");
+        for (var m = 0; m < $choices.length; m++) {
+            if ($choices[m].checked) {
+                r = r + $choices[m].value;
             }
         }
-        if(Answer[j+4]!=r){
-            $(".multipleChoice:eq("+j+")").css("background","red");
-        }else{
-            $(".multipleChoice:eq("+j+")").css("background","");
-            correctNum=correctNum+1;
+        if (Answer[j + 4] != r) {
+            $(".multipleChoice:eq(" + j + ")").css("background", "red");
+        } else {
+            $(".multipleChoice:eq(" + j + ")").css("background", "");
+            correctNum = correctNum + 1;
         }
     }
     //如果全部答对则答题部分隐藏，实验部分出现；
-    if(correctNum==1){
+    if (correctNum == 1) {
         $($(this)[0].parentNode).hide();
         $("#experimentPart").show();
     }
@@ -527,13 +527,16 @@ var json = null;
 var $results = null;
 var tempJson = null;
 var tempSign = 0;//0:当前tempJson中存储的是tfs，1：当前tempJson中存储的是vectors
+
 /**
  * 检索功能
  */
 $("#searchForVSM").click(function () {
 
-    $("#first").hide();
-    $("#second").show();
+    $("#first").hide();//隐藏简介
+    $("#selectDocId").hide();//隐藏选择文档ID按钮
+    $("#second").show();//显示检索流程控制按钮
+    $("#return").show();//显示返回按钮
 
     var query = $("#inputForVSM").val();
     var formulaID = parseInt($("input[name='formula']:checked").val());
@@ -574,12 +577,18 @@ $("#searchForVSM").click(function () {
     })
 });
 
+function init() {
+    $("#selectDocId").hide();//隐藏选择文档ID按钮
+    $("#results").text("");//清空上次结果
+    $("#return").hide();//隐藏返回按钮
+}
+
 /**
  * 求idf功能
  */
 $("#idf").click(function () {
-    $("#results").text("");
 
+    init();
     var query = $("#inputForVSM").val();
     var formulaID = parseInt($("input[name='formula']:checked").val());
     var smoothParam = $("#smoothParam").val();
@@ -658,13 +667,13 @@ $("#idf").click(function () {
  */
 $("#preProcessQuery").click(function () {
 
+    init();
     var query = $("#inputForVSM").val();
     var formulaID = parseInt($("input[name='formula']:checked").val());
     var smoothParam = $("#smoothParam").val();
     var analyzerName = storage.analyzerName;
     var isRemoveStopWord = storage.isRemoveStopWord;
 
-    $("#results").text("");//清空数据
     $.ajax({
         type: "POST",
         url: "vectorSpaceModel/ppq",
@@ -694,13 +703,13 @@ $("#preProcessQuery").click(function () {
  * 求查询的tf
  */
 $("#tfOfQuery").click(function () {
+    init();
     var query = $("#inputForVSM").val();
     var formulaID = parseInt($("input[name='formula']:checked").val());
     var smoothParam = $("#smoothParam").val();
     var analyzerName = storage.analyzerName;
     var isRemoveStopWord = storage.isRemoveStopWord;
 
-    $("#results").text("");//清空数据
     $.ajax({
         type: "POST",
         url: "vectorSpaceModel/tfOfQuery",
@@ -766,13 +775,13 @@ $("#tfOfQuery").click(function () {
  * 求查询向量
  */
 $("#queryVector").click(function () {
+    init();
     var query = $("#inputForVSM").val();
     var formulaID = parseInt($("input[name='formula']:checked").val());
     var smoothParam = $("#smoothParam").val();
     var analyzerName = storage.analyzerName;
     var isRemoveStopWord = storage.isRemoveStopWord;
 
-    $("#results").text("");//清空数据
     $.ajax({
         type: "POST",
         url: "vectorSpaceModel/vectorOfQuery",
@@ -832,7 +841,10 @@ $("#tfsOfDocs").click(function () {
     var analyzerName = storage.analyzerName;
     var isRemoveStopWord = storage.isRemoveStopWord;
 
+    $("#selectDocId").show();//显示选择文档Id按钮
     $("#results").text("");//清空数据
+    $("#return").hide();//隐藏返回按钮
+
     $.ajax({
         type: "POST",
         url: "vectorSpaceModel/tfsOfDocs",
@@ -863,7 +875,9 @@ $("#tfsOfDocs").click(function () {
  */
 $("#vectorsOfDocs").click(function () {
 
+    $("#selectDocId").show();//显示选择文档Id按钮
     $("#results").text("");//清空数据
+    $("#return").hide();//隐藏返回按钮
     var query = $("#inputForVSM").val();
     var formulaID = parseInt($("input[name='formula']:checked").val());
     var smoothParam = $("#smoothParam").val();
@@ -927,7 +941,7 @@ $("#docIdInVSM").change(function () {
  * 求相似度
  */
 $("#similarity").click(function () {
-    $("#results").text("");//清空数据
+    init();
     var query = $("#inputForVSM").val();
     var formulaID = parseInt($("input[name='formula']:checked").val());
     var smoothParam = $("#smoothParam").val();
@@ -987,7 +1001,7 @@ $("#similarity").click(function () {
  */
 $("#similarityAfterSort").click(function () {
 
-    $("#results").text("");//清空数据
+    init();
     var query = $("#inputForVSM").val();
     var formulaID = parseInt($("input[name='formula']:checked").val());
     var smoothParam = $("#smoothParam").val();
