@@ -13,5 +13,5 @@ public interface ResultMapper {
 
     int insertSelective(Result record);
 
-    List<Result> selectResult(Result result);
+    List<Result> select(Result result);
 }

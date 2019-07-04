@@ -1,6 +1,7 @@
 package cn.edu.whu.irlab.irep.service.impl;
 
 import cn.edu.whu.irlab.irep.entity.Result;
+import cn.edu.whu.irlab.irep.entity.Retriever;
 import cn.edu.whu.irlab.irep.mapper.ResultMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,8 @@ public class ResultServiceImpl {
         return resultMapper.insertSelective(result);
     }
 
-    public List<Result> selectResult(Result result) {
-        return resultMapper.selectResult(result);
+    public List<Result> select(Result result) {
+        return resultMapper.select(result);
     }
+
 }

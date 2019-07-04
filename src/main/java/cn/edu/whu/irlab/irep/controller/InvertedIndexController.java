@@ -5,8 +5,7 @@ import cn.edu.whu.irlab.irep.entity.InvertedIndex;
 import cn.edu.whu.irlab.irep.service.creatIndex.IndexGenerator;
 import cn.edu.whu.irlab.irep.service.impl.FullIndexServiceImpl;
 import cn.edu.whu.irlab.irep.service.impl.InvertedIndexServiceImpl;
-import cn.edu.whu.irlab.irep.service.util.Find;
-import cn.edu.whu.irlab.irep.service.util.IndexTypeConstructor;
+import cn.edu.whu.irlab.irep.service.util.Constructor;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +40,7 @@ public class InvertedIndexController {
     @RequestMapping("/fullIndex")
     public JSONArray selectFullIndexController(@RequestParam(name = "analyzerName") String analyzerName,
                                                @RequestParam(name = "isRemoveStopWord") boolean isRemoveStopWord) {
-        String indexType = IndexTypeConstructor.indexTypeConstructor(analyzerName, isRemoveStopWord);
+        String indexType = Constructor.indexTypeConstructor(analyzerName, isRemoveStopWord);
         List<FullIndex> fullIndexList = fullIndexService.selectFullIndexByIndexType(indexType);
         if (fullIndexList.size() == 0) {
             indexGenerator.initIndexGenerator(folderPath, analyzerName, isRemoveStopWord);
@@ -66,7 +65,7 @@ public class InvertedIndexController {
     public JSONArray selectInvertedIndexController(@RequestParam(name = "analyzerName") String analyzerName,
                                                    @RequestParam(name = "isRemoveStopWord") boolean isRemoveStopWord,
                                                    @RequestParam(name = "term") String term) {
-        String indexType = IndexTypeConstructor.indexTypeConstructor(analyzerName, isRemoveStopWord);
+        String indexType = Constructor.indexTypeConstructor(analyzerName, isRemoveStopWord);
         InvertedIndex invertedIndex = new InvertedIndex();
         invertedIndex.setTerm(term);
         invertedIndex.setIndexType(indexType);

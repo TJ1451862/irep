@@ -1,6 +1,8 @@
 package cn.edu.whu.irlab.irep.mapper;
 
 import cn.edu.whu.irlab.irep.entity.User;
+import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
@@ -9,6 +11,8 @@ import java.util.List;
  * @date 2019-06-25 11:10
  * @desc 用户表接口
  **/
+@Mapper
+@Component
 public interface UserMapper {
     int addUser(User user);
 

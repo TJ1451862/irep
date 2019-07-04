@@ -7,9 +7,7 @@ import cn.edu.whu.irlab.irep.entity.Record;
 import cn.edu.whu.irlab.irep.service.impl.FullIndexServiceImpl;
 import cn.edu.whu.irlab.irep.service.impl.InvertedIndexServiceImpl;
 import cn.edu.whu.irlab.irep.service.impl.RecordServiceImpl;
-import cn.edu.whu.irlab.irep.service.preProcess.PreProcessor;
-import cn.edu.whu.irlab.irep.service.util.IndexTypeConstructor;
-import org.apache.lucene.analysis.Analyzer;
+import cn.edu.whu.irlab.irep.service.util.Constructor;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +44,7 @@ public class IndexTest {
         File fileFolder = new File(folderPath);
         String analyzerName = "standard";
         boolean isRemoveStopWord = true;
-        String indexType = IndexTypeConstructor.indexTypeConstructor(analyzerName, isRemoveStopWord);
+        String indexType = Constructor.indexTypeConstructor(analyzerName, isRemoveStopWord);
 
         //向records表中插入数据
         if (fileFolder.exists()) {

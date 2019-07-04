@@ -11,11 +11,7 @@ public class Result {
 
     private String title;
 
-    private Integer isChinese;
-
-    private String indexType;
-
-    private String modelType;
+    private String retrieverId;
 
     public Integer getQueryId() {
         return queryId;
@@ -57,41 +53,11 @@ public class Result {
         this.title = title == null ? null : title.trim();
     }
 
-    public Integer getIsChinese() {
-        return isChinese;
+    public String getRetrieverId() {
+        return retrieverId;
     }
 
-    public void setIsChinese(Integer isChinese) {
-        this.isChinese = isChinese;
-    }
-
-    public String getIndexType() {
-        return indexType;
-    }
-
-    public void setIndexType(String indexType) {
-        this.indexType = indexType == null ? null : indexType.trim();
-    }
-
-    public String getModelType() {
-        return modelType;
-    }
-
-    public void setModelType(String modelType) {
-        this.modelType = modelType == null ? null : modelType.trim();
-    }
-
-    @Override
-    public String toString() {
-        return "Result{" +
-                "queryId=" + queryId +
-                ", query='" + query + '\'' +
-                ", docId=" + docId +
-                ", docRank=" + docRank +
-                ", title='" + title + '\'' +
-                ", isChinese=" + isChinese +
-                ", indexType='" + indexType + '\'' +
-                ", modelType='" + modelType + '\'' +
-                '}';
+    public void setRetrieverId(String retrieverId) {
+        this.retrieverId = retrieverId == null ? null : retrieverId.trim();
     }
 }

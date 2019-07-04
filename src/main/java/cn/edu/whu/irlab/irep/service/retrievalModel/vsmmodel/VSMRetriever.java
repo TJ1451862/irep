@@ -2,16 +2,13 @@ package cn.edu.whu.irlab.irep.service.retrievalModel.vsmmodel;
 
 import cn.edu.whu.irlab.irep.entity.FullIndex;
 import cn.edu.whu.irlab.irep.entity.InvertedIndex;
-import cn.edu.whu.irlab.irep.entity.Record;
 import cn.edu.whu.irlab.irep.service.impl.FullIndexServiceImpl;
 import cn.edu.whu.irlab.irep.service.impl.InvertedIndexServiceImpl;
 import cn.edu.whu.irlab.irep.service.util.Calculator;
 import cn.edu.whu.irlab.irep.service.util.Find;
-import cn.edu.whu.irlab.irep.service.util.IndexTypeConstructor;
-import com.alibaba.fastjson.JSONArray;
+import cn.edu.whu.irlab.irep.service.util.Constructor;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -56,8 +53,7 @@ public class VSMRetriever {
                                  double smoothParam,
                                  String analyzerName,
                                  boolean isRemoveStopWord) {
-
-        this.indexType = IndexTypeConstructor.indexTypeConstructor(analyzerName, isRemoveStopWord);
+        this.indexType = Constructor.indexTypeConstructor(analyzerName, isRemoveStopWord);
         this.formulaID = formulaID;
         this.smoothParam = smoothParam;
         this.analyzerName = analyzerName;
@@ -277,6 +273,7 @@ public class VSMRetriever {
     public Map<String, Double> getTerm_idf() {
         return term_idf;
     }
+
 
     public void setTerm_idf(Map<String, Double> term_idf) {
         this.term_idf = term_idf;
