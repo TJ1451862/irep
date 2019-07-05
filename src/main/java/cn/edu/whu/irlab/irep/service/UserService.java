@@ -17,7 +17,7 @@ public interface UserService {
     List<User> selectAllUserService();
 
     //根据用户名和密码来查询用户信息
-    User selectUser(User user);
+    User selectUser(String username,String password);
 
     //根据手机号码查询用户信息
     User selectUserByPhone(User user);
