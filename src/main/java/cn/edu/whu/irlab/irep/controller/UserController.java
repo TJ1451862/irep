@@ -27,6 +27,12 @@ public class UserController {
     private UserService userService;
 
     /**
+     * 此处的逻辑，前端ajax传入登录的用户名和密码
+     * 此处获取用户名和密码，查询数据库，如果查询到了就将用户信息存到session中
+     * 并且返回code为1，代表登录成功，否则返回code为0，代表登录失败
+     * 获取返回的code的值，对登录成功进行判断
+     * code为1，则用windows.localhref()跳转到主页面
+     * code为0，则在登录页面弹出输入错误的提示信息
      * @param username
      * @param password
      * @param request
@@ -52,6 +58,8 @@ public class UserController {
 
     /**
      * 参数说明：User对象里面必须有用户名，密码，手机号和邮箱，工作单位
+     * 此处逻辑和登录一样，先判断注册信息
+     * 前端根据后端返回的code的值判断注册成功与否
      * @param user
      * @return
      */
@@ -77,8 +85,6 @@ public class UserController {
         }
         return map;
     }
-
-
 
 
     /**
