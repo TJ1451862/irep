@@ -40,10 +40,12 @@
         <!--enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />-->
         <!--<table tableName="full_index" domainObjectName="FullIndex" enableCountByExample="false" enableUpdateByExample="false"-->
         <!--enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />-->
-        <table tableName="result" domainObjectName="Result" enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
+        <!--<table tableName="result" domainObjectName="Result" enableCountByExample="false" enableUpdateByExample="false"-->
+               <!--enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>-->
         <!--<table tableName="retriever" domainObjectName="Retriever" enableCountByExample="false" enableUpdateByExample="false"-->
                <!--enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>-->
+        <table tableName="user_retriever" domainObjectName="UserRetriever" enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
 
     </context>
 </generatorConfiguration>

@@ -34,8 +34,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User selectUser(User user) {
-        return userMapper.selectUserByUsernameAndPassword(user);
+    public User selectUser(String username,String password) {
+        return userMapper.selectUserByUsernameAndPassword(username,password);
     }
 
     @Override
@@ -44,7 +44,22 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User selectUserByPhoneAndUsername(User user) {
+        return userMapper.selectUserByPhoneAndUsername(user);
+    }
+
+    @Override
     public User selectUserByEmail(User user) {
         return userMapper.selectUserByEmail(user);
+    }
+
+    @Override
+    public User selectUserByEmailAndUsername(User user) {
+        return userMapper.selectUserByEmailAndUsername(user);
+    }
+
+    @Override
+    public int updateUserByUsername(User user) {
+        return userMapper.updateUserByUsername(user);
     }
 }

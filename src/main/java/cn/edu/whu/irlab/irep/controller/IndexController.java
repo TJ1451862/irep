@@ -14,7 +14,7 @@ public class IndexController {
 
     /**
      * 首页设置
-     * @return
+     * @return 首页
      */
     @RequestMapping("/")
     public String login() {

@@ -28,7 +28,6 @@ public class PerformanceTest {
     public ResultServiceImpl resultService;
 
 
-
     @Test
     public void insertStandard() {
 
@@ -50,10 +49,8 @@ public class PerformanceTest {
                 result.setQueryId(queryId);
                 result.setDocRank(jsonObject.getIntValue("rank"));
                 result.setTitle(jsonObject.getString("title"));
-                result.setIsChinese(1);
-                result.setIndexType("standard");
-                result.setModelType("standard");
-                System.out.println(result);
+                result.setRetrieverId("1000_00");
+//                System.out.println(result);
                 resultService.insertSelective(result);
             }
             queryId++;
@@ -67,11 +64,9 @@ public class PerformanceTest {
     @Test
     public void getStandardQuery() {
         Result result = new Result();
-        result.setIsChinese(1);
-        result.setIndexType("standard");
-        result.setModelType("standard");
+        result.setRetrieverId("1000_00");
         result.setDocRank(1);
-        List<Result> resultList = resultService.selectResult(result);
+        List<Result> resultList = resultService.select(result);
         JSONArray jsonArray = new JSONArray();
         for (int i = 0; i < resultList.size(); i++) {
             JSONObject jsonObject = new JSONObject();

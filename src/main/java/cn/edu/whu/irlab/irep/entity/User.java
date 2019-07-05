@@ -69,12 +69,12 @@ public class User {
         this.email = email;
     }
 
-    public String getWork() {
+    public String getWorks() {
         return works;
     }
 
-    public void setWork(String work) {
-        this.works = work;
+    public void setWorks(String works) {
+        this.works = works;
     }
 
     public Date getCreateTime() {
