@@ -3,6 +3,7 @@ package cn.edu.whu.irlab.irep.controller;
 
 import cn.edu.whu.irlab.irep.entity.Result;
 import cn.edu.whu.irlab.irep.entity.Retriever;
+import cn.edu.whu.irlab.irep.entity.User;
 import cn.edu.whu.irlab.irep.entity.UserRetriever;
 import cn.edu.whu.irlab.irep.service.impl.ResultServiceImpl;
 import cn.edu.whu.irlab.irep.service.impl.RetrieverServiceImpl;
@@ -18,11 +19,13 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -204,16 +207,19 @@ public class VSMController {
     }
 
     /**
+     *
      * 向result表中插入结果数据
      * 如果数据不存在则插入，如果数据存在则不插入
      */
     @RequestMapping("/insertResult")
-    public void insertResultController(@RequestParam(name = "formulaId") int formulaId,
-                                       @RequestParam(name = "smoothParam") double smoothParam,
-                                       @RequestParam(name = "analyzerName") String analyzerName,
-                                       @RequestParam(name = "isRemoveStopWord") boolean isRemoveStopWord) {
+    @ResponseBody
+    public ModelMap insertResultController(@RequestParam(name = "formulaId") int formulaId,
+                                           @RequestParam(name = "smoothParam") double smoothParam,
+                                           @RequestParam(name = "analyzerName") String analyzerName,
+                                           @RequestParam(name = "isRemoveStopWord") boolean isRemoveStopWord,
+                                           HttpServletRequest request) {
 
-        String standardQuery = ReadDoc.readDoc("resources/results/standardQuery");
+        String standardQuery = ReadDoc.readDoc("resources/results/standardQuery.json");
 
         //初始化retriever
         Retriever retriever = new Retriever();
@@ -254,28 +260,41 @@ public class VSMController {
         }
 
         //保存检索器
-        /**
-         * 请写一个获取当前userId的方法
-         */
-        int userId = 1;
-        int retrieverNum = 0;
-        UserRetriever userRetriever = userRetrieverService.selectByPrimaryKey(userId);
-        switch (retrieverNum) {
-            case 1:
-                userRetriever.setRetriever1(retrieverId);
-                break;
-            case 2:
-                userRetriever.setRetriever2(retrieverId);
-                break;
-            case 3:
-                userRetriever.setRetriever3(retrieverId);
-                break;
-            default:
-                userRetriever.setRetriever1(retrieverId);
-                break;
+        ModelMap modelMap = new ModelMap();
+        User user =(User) request.getSession().getAttribute("user");
+        if (user!=null){
+            int userId = user.getId();
+            int retrieverNum = 0;
+            UserRetriever userRetriever = userRetrieverService.selectByPrimaryKey(userId);
+            if (userRetriever==null){
+                userRetriever=new UserRetriever();
+                userRetriever.setUserId(userId);
+            }
+            switch (retrieverNum) {
+                case 1:
+                    userRetriever.setRetriever1(retrieverId);
+                    break;
+                case 2:
+                    userRetriever.setRetriever2(retrieverId);
+                    break;
+                case 3:
+                    userRetriever.setRetriever3(retrieverId);
+                    break;
+                default:
+                    userRetriever.setRetriever1(retrieverId);
+                    break;
+            }
+            int state = userRetrieverService.insertSelective(userRetriever);
+            if (state == 1) {
+                modelMap.put("code", 1);
+                modelMap.put("message", "保存成功");
+            } else {
+                modelMap.put("code", 0);
+                modelMap.put("message", "保存失败");
+            }
         }
 
-
+        return modelMap;
     }
 
     /**

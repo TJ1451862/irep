@@ -619,6 +619,7 @@ $("#searchForVSM").click(function () {
     var isRemoveStopWord = storage.isRemoveStopWord;
 
     $("#results").text("");
+
     $.ajax({
         type: "POST",
         url: "vectorSpaceModel/vsmSearch",
@@ -1248,7 +1249,39 @@ $("#introduce").click(function () {
     $("#second").hide();
 });//显示介绍界面
 
+/**
+ * 保存当前用户创建的检索器
+ * 进入下一步
+ */
+$("#nextStepOfVSM").click(function () {
+    var formulaID = parseInt($("input[name='formula']:checked").val());
+    var smoothParam = $("#smoothParam").val();
+    var analyzerName = storage.analyzerName;
+    var isRemoveStopWord = storage.isRemoveStopWord;
 
+    $.ajax({
+        type: "POST",
+        url: "vectorSpaceModel/insertResult",
+        data: {
+            "formulaId": formulaID,
+            "smoothParam": smoothParam,
+            "analyzerName": analyzerName,
+            "isRemoveStopWord": isRemoveStopWord
+        },
+        dataType: "json",
+        contentType: "application/x-www-form-urlencoded; charset=utf-8",
+        traditional: true,
+        success: function (result) {
+            console.log(result);
+            $(location).attr("href", "/IRforCN/performance.html");
+        },
+        error: function () {
+            alert("后台错误！");
+        }
+    })//end of ajax
+
+
+});
 
 
 

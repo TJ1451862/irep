@@ -1,7 +1,6 @@
 package cn.edu.whu.irlab.irep.service.util;
 
 import cn.edu.whu.irlab.irep.entity.Retriever;
-import org.springframework.stereotype.Service;
 
 /**
  * @author gcr
