@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="cn.edu.whu.irlab.irep.entity.Retriever" >
     <id column="retriever_id" property="retrieverId" jdbcType="VARCHAR" />
     <result column="is_chinese" property="isChinese" jdbcType="BIT" />
-    <result column="analyzer" property="analyzer" jdbcType="CHAR" />
+    <result column="analyzer" property="analyzer" jdbcType="VARCHAR" />
     <result column="is_remove_stop_word" property="isRemoveStopWord" jdbcType="BIT" />
     <result column="model" property="model" jdbcType="VARCHAR" />
     <result column="formula_id" property="formulaId" jdbcType="INTEGER" />
@@ -32,7 +32,7 @@
       is_remove_stop_word, model, formula_id, 
       param_name1, param1, param_name2, 
       param2)
-    values (#{retrieverId,jdbcType=VARCHAR}, #{isChinese,jdbcType=BIT}, #{analyzer,jdbcType=CHAR}, 
+    values (#{retrieverId,jdbcType=VARCHAR}, #{isChinese,jdbcType=BIT}, #{analyzer,jdbcType=VARCHAR}, 
       #{isRemoveStopWord,jdbcType=BIT}, #{model,jdbcType=VARCHAR}, #{formulaId,jdbcType=INTEGER}, 
       #{paramName1,jdbcType=VARCHAR}, #{param1,jdbcType=INTEGER}, #{paramName2,jdbcType=VARCHAR}, 
       #{param2,jdbcType=INTEGER})
@@ -79,7 +79,7 @@
         #{isChinese,jdbcType=BIT},
       </if>
       <if test="analyzer != null" >
-        #{analyzer,jdbcType=CHAR},
+        #{analyzer,jdbcType=VARCHAR},
       </if>
       <if test="isRemoveStopWord != null" >
         #{isRemoveStopWord,jdbcType=BIT},
@@ -111,7 +111,7 @@
         is_chinese = #{isChinese,jdbcType=BIT},
       </if>
       <if test="analyzer != null" >
-        analyzer = #{analyzer,jdbcType=CHAR},
+        analyzer = #{analyzer,jdbcType=VARCHAR},
       </if>
       <if test="isRemoveStopWord != null" >
         is_remove_stop_word = #{isRemoveStopWord,jdbcType=BIT},
@@ -140,7 +140,7 @@
   <update id="updateByPrimaryKey" parameterType="cn.edu.whu.irlab.irep.entity.Retriever" >
     update retriever
     set is_chinese = #{isChinese,jdbcType=BIT},
-      analyzer = #{analyzer,jdbcType=CHAR},
+      analyzer = #{analyzer,jdbcType=VARCHAR},
       is_remove_stop_word = #{isRemoveStopWord,jdbcType=BIT},
       model = #{model,jdbcType=VARCHAR},
       formula_id = #{formulaId,jdbcType=INTEGER},
