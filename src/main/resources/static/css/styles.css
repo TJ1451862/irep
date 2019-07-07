@@ -13,7 +13,24 @@ p {
     background-size: cover;
     background-position: top;
     background-repeat: no-repeat;
-    background-image: url("../img/background1.png");
+    background-image: url("../img/1.1.2.png");
+    overflow: hidden;
+}
+
+#particles {
+    width: 100%;
+    height: 700px;
+    overflow: hidden;
+    z-index: -1;
+}
+
+#intro {
+    position: absolute;
+    left: 0;
+    top:10px;
+    padding: 0 20px;
+    width: 100%;
+    text-align: center;
 }
 
 .tab-content {
@@ -39,8 +56,8 @@ p {
 }
 
 .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
-    color: #495057;
-    background-color: rgba(68, 114, 196, 0.5);
+    background-color:#80AB77;
+    /*background-color: rgba(68, 114, 196, 0.5);*/
     border: none;
     color: rgb(255, 255, 255);
 }
@@ -73,7 +90,8 @@ p {
 }
 
 .smallButton {
-    background-color: #4472c4;
+    /*background-color: #4472c4;*/
+    background-color: #71AB65;
     font-family: "微软雅黑";
     width: 120px;
     height: 45px;
@@ -225,9 +243,10 @@ p {
 }
 
 .navbar-light .navbar-nav .nav-link {
-    color: #00b0f0;
+    /*color: #00b0f0;*/
+    color:greenyellow;
     font-style: normal;
-    font-weight: 400
+    font-weight: 400;
 }
 
 .brand, .navbar-light .navbar-brand, .navbar-light .navbar-nav .nav-link:focus, .navbar-light .navbar-nav .nav-link:hover {
@@ -241,7 +260,8 @@ p {
 }
 
 .brand {
-    background-color: #92a5c6;
+    background-color: #80AB77;
+    /*background-color: #92a5c6;*/
     text-align: center;
     font-weight: 700;
     height: 35px;
@@ -262,11 +282,12 @@ body {
     background-color: rgba(199, 199, 199, .5);
     font-family: "Microsoft Yahei";
     font-weight: 700;
-    color: #4472c4
+    /*color: #4472c4*/
 }
 
 .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
-    background-color: rgba(68, 114, 196, .5);
+    /*background-color: rgba(68, 114, 196, .5);*/
+    background-color: #80AB77;
     border: none;
 }
 
@@ -341,19 +362,6 @@ body {
     background-color: red;
 }
 
-/*答题确定按钮*/
-.exaConfirm{
-    margin-left:600px;
-    margin-top:-10px;
-    margin-bottom:50px;
-    background-color: #4472c4;
-    font-family: "微软雅黑";
-    width: 120px;
-    height: 45px;
-    font-weight: bold;
-    color: #ffffff;
-    font-size:14px;
-}
 
 
 
