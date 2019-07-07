@@ -11,27 +11,8 @@
 
 <body style="background-size:cover;background-position:top;background-repeat:no-repeat;background-image:url(img/background1.png)">
 
-<nav class="navbar navbar-light navbar-expand-md" style="background-color:rgb(47,85,151);position:relative;">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="../index.html"
-           style="width:340px;background-image:url(img/logo.png);background-size:cover;height:40px;padding:10px 0px;"></a>
-        <button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"></button>
-        <div
-                class="collapse navbar-collapse" id="navcol-1"
-                style="/*text-align:right;*/position:absolute;right:20px;">
-            <ul class="nav navbar-nav" style="margin:0 0 0 0px;">
-                <li class="nav-item" role="presentation" style="margin:0 5px;"><a class="nav-link"
-                                                                                  href="index.html">首页</a></li>
-                <li class="nav-item" role="presentation" style="margin:0 5px;"><a class="nav-link active"
-                                                                                  href="IRforCN.html">信息检索实验</a></li>
-                <li class="nav-item" role="presentation" style="margin:0 5px;"><a class="nav-link"
-                                                                                  href="NLP.html">NLP实验</a></li>
-                <li class="nav-item" role="presentation" style="margin:0 5px;"><a class="nav-link"
-                                                                                  href="explanation.html">文档与支持</a></li>
-            </ul>
-        </div>
-    </div>
-</nav>
+<!--导航栏-->
+<div th:include="common/top::top"/>
 <nav class="navbar navbar-light navbar-expand-md">
     <div class="container-fluid"><a class="navbar-brand brand" href="IRforEN.html">中文</a>
         <button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-2"><span class="sr-only">Toggle navigation</span><span
@@ -79,12 +60,10 @@
                     </p>
                 </div>
             </div>
-            <div class="col-md-6 align-self-center">
-                <img src="img/framework.png" width="600px">
-                <a class="btn btn-primary float-none d-flex flex-row justify-content-center align-items-center
-                align-content-center align-self-center" role="button" href="IRforCN/preProcessing.html"
-                   style="font-size:20px;font-family:微软雅黑;background-color:#4472c4;margin-top:8px;margin-left:33%;
-                   margin-right:0px;width:200px;">开始实验</a></div>
+            <div class="col-md-6 align-self-center" style="margin-top:50px;">
+                <img src="img/framework2.png" width="100%">
+                <a class="smallButton"  href="IRforCN/preProcessing.html"
+                   style="margin-top:10px;margin-left:33%;width:200px;display: flex;align-items: center;justify-content: center;text-decoration: none;color:#ffffff">开始实验</a></div>
         </div>
     </div>
 </div>

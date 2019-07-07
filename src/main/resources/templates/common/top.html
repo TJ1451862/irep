@@ -11,24 +11,24 @@
 
 <body class="body1">
 <div th:fragment="top">
-    <nav class="navbar navbar-light navbar-expand-md" style="background-color:rgb(47,85,151);position:relative;">
+    <nav class="navbar navbar-light navbar-expand-md" style="background-color:#2F5627;position:relative;">
         <div class="container-fluid">
             <a class="navbar-brand" href="../index.html"
-               style="width:340px;background-image:url(img/logo.png);background-size:cover;height:40px;padding:10px 0px;"></a>
+               style="width:340px;background-image:url(/img/logo.png);background-size:cover;height:40px;padding:10px 0px;"></a>
             <button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"></button>
-            <div class="collapse navbar-collapse" id="navcol-1" style="position:absolute;right:20px;">
+            <div class="collapse navbar-collapse" id="navcol-1" style="position:absolute;right:20px">
                 <ul class="nav navbar-nav" style="margin:0 0 0 0px;">
                     <li class="nav-item" role="presentation" style="margin:0 5px;">
-                        <a class="nav-link active" th:href="@{index.html}">首页</a>
+                        <a class="nav-link" th:href="@{/index.html}">首页</a>
                     </li>
                     <li class="nav-item" role="presentation" style="margin:0 5px;">
-                        <a class="nav-link" th:href="@{IRforCN.html}">信息检索实验</a>
+                        <a class="nav-link" th:href="@{/IRforCN.html}">信息检索实验</a>
                     </li>
                     <li class="nav-item" role="presentation" style="margin:0 5px;">
-                        <a class="nav-link" th:href="@{NLP.html}">NLP实验</a>
+                        <a class="nav-link" th:href="@{/NLP.html}">NLP实验</a>
                     </li>
                     <li class="nav-item" role="presentation" style="margin:0 5px;">
-                        <a class="nav-link" th:href="@{explanation.html}">文档与支持</a>
+                        <a class="nav-link" th:href="@{/explanation.html}">文档与支持</a>
                     </li>
                 </ul>
             </div>
@@ -36,8 +36,11 @@
     </nav>
 
 </div>
+
+
 <div th:fragment="script">
     <script type="text/javascript" th:src="@{js/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/irepJs.js}"></script>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>

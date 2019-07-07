@@ -7,28 +7,8 @@
 
 
 <body style="background-size:cover;">
-<nav class="navbar navbar-light navbar-expand-md" style="background-color:rgb(47,85,151);position:relative;">
-    <div class="container-fluid"><a class="navbar-brand" href="../../index.html"
-                                    style="width:340px;background-image:url(../../img/logo.png);background-size:cover;height:40px;padding:10px 0px;"></a>
-        <button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"></button>
-        <div
-                class="collapse navbar-collapse" id="navcol-1"
-                style="/*text-align:right;*/position:absolute;right:20px;">
-            <ul class="nav navbar-nav" style="margin:0 0 0 0px;">
-                <li class="nav-item" role="presentation" style="margin:0 5px;"><a class="nav-link"
-                                                                                  href="../../index.html">首页</a></li>
-                <li class="nav-item" role="presentation" style="margin:0 5px;"><a class="nav-link active"
-                                                                                  href="../../IRforCN.html">信息检索实验</a>
-                </li>
-                <li class="nav-item" role="presentation" style="margin:0 5px;"><a class="nav-link"
-                                                                                  href="../../NLP.html">NLP实验</a></li>
-                <li class="nav-item" role="presentation" style="margin:0 5px;"><a class="nav-link"
-                                                                                  href="../../explanation.html">文档与支持</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
+
+<div th:include="common/top::top"/>
 <nav class="navbar navbar-light navbar-expand-md">
     <div class="container-fluid"><a href="../IRforEN/preProcessing.html" class="navbar-brand brand">中文</a>
         <button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-2"><span class="sr-only">Toggle navigation</span><span
@@ -196,7 +176,7 @@
                             <input type="checkbox" name="items" value="d" class="chooseBox"/>学校
                         </form>
                     </div>
-                    <button class="exaConfirm">确认答案</button>
+                    <button class="btn smallButton" id="exaConfirm" style="margin-left:600px;margin-top:-10px;margin-bottom:50px;border:none">确认答案</button>
                 </div>
 <!--                答题正确前可先隐藏-->
                 <div style="margin-right:50px;display: none;" id="experimentPart">
@@ -207,7 +187,7 @@
                                     <strong>原文件</strong></h3>
                             </div>
                             <div style="float:right;height:40px;">
-                                <h3 style="float:left;font-family:微软雅黑;font-size:20px;height:40px;line-height:40px;margin:0;width:125px;font-weight:bold;color:rgb(68,114,196);">
+                                <h3 style="float:left;font-family:微软雅黑;font-size:20px;height:40px;line-height:40px;margin:0;width:125px;font-weight:bold;color:#70A099">
                                     示例文档ID：</h3>
                                 <!--购物车小工具-->
                                 <div class="align-self-center"
@@ -215,14 +195,14 @@
                                     <div style="display:block;height:30px;position:relative;top:5px;">
                                         <button class="btn btn-primary" type="button" id="num-jian"
                                                 onclick="num_jian(this,0,1)"
-                                                style="float:left;border-bottom-right-radius:0px;border-top-right-radius:0px;height:30px;width:30px;background-color:#4472c4;padding:0px;">
+                                                style="float:left;border-bottom-right-radius:0px;border-top-right-radius:0px;height:30px;width:30px;background-color:#5EA097;padding:0px;">
                                             -
                                         </button>
                                         <input type="text" value="0" id="docId" name="input_num"
                                                style="width:40px;height:30px;float:left;text-align:center;"/>
                                         <button class="btn btn-primary" type="button" id="num-jia"
                                                 onclick="num_jia(this,165,1)"
-                                                style="border-bottom-left-radius:0px;border-top-left-radius:0px;height:30px;background-color:#4472c4;padding:0px;width:30px;display:inline-block;top:0px;float:left;">
+                                                style="border-bottom-left-radius:0px;border-top-left-radius:0px;height:30px;background-color:#5EA097;padding:0px;width:30px;display:inline-block;top:0px;float:left;">
                                             +
                                         </button>
                                     </div>
@@ -260,14 +240,14 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <button class="btn btn-primary btn-sm smallButton" type="button" id="preProcess"
-                                            style="margin:0 20px;font-size:20px;height:40px;width:120px;">处理
+                                    <button class="btn  btn-sm smallButton" type="button" id="preProcess"
+                                            style="margin:0 20px;font-size:20px;height:40px;width:120px;border:none">处理
                                     </button>
                                 </td>
                                 <td>
-                                    <a id="nextStep" class="btn btn-primary smallButton" role="button"
+                                    <a id="nextStep" class="btn smallButton" role="button"
                                        th:href="@{invertedIndex.html}"
-                                       style="line-height:40px; display:none;margin-left: 90px;">下一步>>></a>
+                                       style="line-height:40px; display:none;margin-left: 90px;border:none;color:#ffffff;">下一步>>></a>
                                 </td>
                             </tr>
                             </tbody>

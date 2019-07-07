@@ -6,8 +6,25 @@ var colorClick1="rgb(178,209,158)"; //表格1鼠标点击的颜色
 var colorClick2="green"; //表格2鼠标点击的颜色
 var colorNone1="rgb(146,165,198)";//表格1行默认背景颜色
 var colorNone2="rgb(178,209,158)";//表格2行默认背景色
-var preAnswer=["去停用词","分词","字符串","出现频率","abcd","abcd","abc","d"] //预处理页面答案，选择题给出正确选项的value值
+var preAnswer=["去停用词","分词","字符串","出现频率","abcd","abcd","abc","d"];//预处理页面答案，选择题给出正确选项的value值
 
+// 导航栏颜色效果
+$(function(){
+    console.log(window.location.href);
+    if(window.location.href.indexOf("index")!=-1){
+        $("ul li a:eq(0)").addClass("active");
+    }
+    if(window.location.href.indexOf("IRforCN")!=-1){
+        $("ul li a:eq(1)").addClass("active");
+    }
+    if(window.location.href.indexOf("NLP")!=-1){
+
+        $("ul li a:eq(2)").addClass("active");
+    }
+    if(window.location.href.indexOf("explanation")!=-1){
+        $("ul li a:eq(3)").addClass("active");
+    }
+});
 /**
  * login.html
  */
@@ -212,7 +229,7 @@ $(function () {
 });
 
 // 各界面答题部分
-$(".exaConfirm").click(function (){
+$("#exaConfirm").click(function (){
     var correctNum=0; //正确的题数，全部答对才可进入下一步
     var Answer=[];
     // 对应各个页面的答案

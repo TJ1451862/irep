@@ -3,28 +3,7 @@
 <head th:include="include::header"/>
 
 <body>
-<nav class="navbar navbar-light navbar-expand-md" style="background-color:rgb(47,85,151);position:relative;">
-    <div class="container-fluid"><a class="navbar-brand" href="../../index.html"
-                                    style="width:340px;background-image:url(../../img/logo.png);background-size:cover;height:40px;padding:10px 0px;"></a>
-        <button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"></button>
-        <div
-                class="collapse navbar-collapse" id="navcol-1"
-                style="/*text-align:right;*/position:absolute;right:20px;">
-            <ul class="nav navbar-nav" style="margin:0 0 0 0px;">
-                <li class="nav-item" role="presentation" style="margin:0 5px;"><a class="nav-link"
-                                                                                  href="../../index.html">首页</a></li>
-                <li class="nav-item" role="presentation" style="margin:0 5px;"><a class="nav-link active"
-                                                                                  href="../../IRforCN.html">信息检索实验</a>
-                </li>
-                <li class="nav-item" role="presentation" style="margin:0 5px;"><a class="nav-link"
-                                                                                  href="../../NLP.html">NLP实验</a></li>
-                <li class="nav-item" role="presentation" style="margin:0 5px;"><a class="nav-link"
-                                                                                  href="../../explanation.html">文档与支持</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
+<div th:include="common/top::top"/>
 <nav class="navbar navbar-light navbar-expand-md">
     <div class="container-fluid"><a href="../IRforEN/invertedindex.html" class="navbar-brand brand">中文</a>
         <button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-2"><span class="sr-only">Toggle navigation</span><span
@@ -184,11 +163,11 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <button class="btn btn-primary smallButton" type="button" id="invertedIndexConfirm">
+                            <button class="btn smallButton" type="button" id="invertedIndexConfirm">
                                 确定
                             </button>
-                            <button class="btn btn-primary smallButton " type="button" id="createIndex"
-                                    style="/*display: none;*/">
+                            <button class="btn  smallButton " type="button" id="createIndex"
+                                    style="/*display: none;*/border:none;">
                                 生成索引表
                             </button>
                         </div>
@@ -328,8 +307,8 @@
                     <label>
                         <input type="radio" name="modelType" value="lm"> 语言模型
                     </label>
-                    <button id="nextStepOfInvertedIndex" class="btn btn-primary smallButton" role="button"
-                            style="height:40px;line-height:40px;margin-left: 50px;">下一步>>>
+                    <button id="nextStepOfInvertedIndex" class="btn smallButton" role="button"
+                            style="height:40px;line-height:40px;margin-left: 50px;border:none">下一步>>>
                     </button>
                 </div>
             </div>
