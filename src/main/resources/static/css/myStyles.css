@@ -152,5 +152,19 @@ vectorSpaceModel.html
     border-bottom: 1px solid rgb(0, 0, 0);
 }
 
+.miniTable table{
+    width: 300px;
+    table-layout: fixed;
+}
+
+
+.miniTable td {
+    padding:2px;
+    vertical-align:top;
+    border-bottom:1px solid rgb(0, 0, 0);
+    font-size: 16px;
+}
+
+
 
 

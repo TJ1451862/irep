@@ -29,9 +29,9 @@ $("#login").click(function () {
         contentType: "application/x-www-form-urlencoded; charset=utf-8",
         traditional: true,
         success: function (result) {
-            if(result.code==0){
+            if (result.code == 0) {
                 alert(result.message)
-            }else if (result.code==1){
+            } else if (result.code == 1) {
                 $(location).attr("href", "/index.html");
             }
             console.log(result);
@@ -47,11 +47,11 @@ $("#login").click(function () {
  */
 
 $("#signIn").click(function () {
-    var userName=$("#userName").val();
-    var password=$("#password").val();
-    var phone=$("#phone").val();
-    var email=$("#email").val();
-    var works=$("#works").val();
+    var userName = $("#userName").val();
+    var password = $("#password").val();
+    var phone = $("#phone").val();
+    var email = $("#email").val();
+    var works = $("#works").val();
 
     $.ajax({
         type: "POST",
@@ -59,18 +59,18 @@ $("#signIn").click(function () {
         data: {
             "username": userName,
             "password": password,
-            "phone":phone,
-            "email":email,
-            "works":works
+            "phone": phone,
+            "email": email,
+            "works": works
         },
         dataType: "json",
         contentType: "application/x-www-form-urlencoded; charset=utf-8",
         traditional: true,
         success: function (result) {
             console.log(result);
-            if(result.code!=0){
+            if (result.code != 0) {
                 alert(result.message)
-            }else {
+            } else {
                 $(location).attr("href", "/login.html");
             }
         },
@@ -724,8 +724,8 @@ $("#idf").click(function () {
                     idf1 = obj;
                     select = 0;
                     $('#tbody').children().last().append(
-                        "<td class=\"smallTableForTd\" >" + item1 + "</td>\n" +
-                        "<td class=\"smallTableForTd\" >" + idf1.toFixed(4) + "</td>\n"
+                        "<td>" + item1 + "</td>\n" +
+                        "<td>" + idf1.toFixed(4) + "</td>\n"
                     );
                 }
             });//end of each
@@ -1279,12 +1279,188 @@ $("#nextStepOfVSM").click(function () {
             alert("后台错误！");
         }
     })//end of ajax
-
-
 });
 
+/**
+ * performance.html
+ */
+/**
+ * 获取标准排序
+ */
+$("#standardSorting").click(function () {
+    var queryId = $("#queryList option:selected").val();
+    $('#standard').text("");
+    $.ajax({
+        type: "POST",
+        url: "performance/standardSorting",
+        data: {"queryId": queryId},
+        dataType: "json",
+        contentType: "application/x-www-form-urlencoded; charset=utf-8",
+        traditional: true,
+        success: function (json) {
+            console.log(json);
+            $.each(json, function (index, value) {
+                $('#standard').append("<tr>\n" +
+                    "<td>" + value.docRank + "</td>\n" +
+                    "<td>" + value.docId + "</td>\n" +
+                    "<td>" + value.title + "</td>\n" +
+                    "<td>" + value.score + "</td>\n" +
+                    "</tr>\n"
+                );
+            });
 
 
+        },
+        error: function () {
+            alert("检索出错！");
+            $("#results").text("");// 清空数据
+        }
+    })//end of ajax
+});
+
+/**
+ * 获取检索器查询结果
+ * @param retrievalNum
+ */
+function getSearchResult(retrievalNum) {
+    var queryId = $("#queryList option:selected").val();
+    var id="#result"+retrievalNum;
+
+    $(id).text("");
+    $.ajax({
+        type: "POST",
+        url: "performance/searchResult",
+        data: {
+            "queryId": queryId,
+            "retrievalNum": retrievalNum
+        },
+        dataType: "json",
+        contentType: "application/x-www-form-urlencoded; charset=utf-8",
+        traditional: true,
+        success: function (json) {
+            console.log(json);
+            $.each(json, function (index, value) {
+                $(id).append("<tr>\n" +
+                    "<td>" + value.docRank + "</td>\n" +
+                    "<td>" + value.docId + "</td>\n" +
+                    "<td>" + value.title + "</td>\n" +
+                    "<td>" + value.isExisting + "</td>\n" +
+                    "</tr>\n"
+                );
+            });
+        },
+        error: function () {
+            alert("检索出错！");
+            $(id).text("");// 清空数据
+        }
+    })//end of ajax
+
+}
+
+/**
+ * 获取检索器参数
+ * @param retrievalNum
+ */
+function getModelParam(retrievalNum) {
+    var id="#modelParam"+retrievalNum;
+    $(id).text("");
+
+    $.ajax({
+        type: "POST",
+        url: "performance/modelParam",
+        data: {
+            "retrievalNum": retrievalNum
+        },
+        dataType: "json",
+        contentType: "application/x-www-form-urlencoded; charset=utf-8",
+        traditional: true,
+        success: function (json) {
+            console.log(json);
+            $.each(json, function (index, value) {
+                $(id).append("<tr>\n" +
+                    "<td>" + index + "</td>\n" +
+                    "<td>" + value + "</td>\n" +
+                    "</tr>\n"
+                );
+            });
+        },
+        error: function () {
+            alert("检索出错！");
+            $(id).text("");// 清空数据
+        }
+    })//end of ajax
+
+}
+
+/**
+ * 获取针对单个query的性能指标
+ * @param retrievalNum
+ */
+function getIndividual(retrievalNum) {
+    var queryId = $("#queryList option:selected").val();
+    var id="#individual"+retrievalNum;
+    $(id).text("");
+    $.ajax({
+        type: "POST",
+        url: "performance/individual",
+        data: {
+            "queryId":queryId,
+            "retrievalNum": retrievalNum
+        },
+        dataType: "json",
+        contentType: "application/x-www-form-urlencoded; charset=utf-8",
+        traditional: true,
+        success: function (jsonArray) {
+            console.log(jsonArray);
+            $.each(jsonArray, function (index,json) {
+                $.each(json,function (key,value) {
+                    $(id).append("<tr>\n" +
+                        "<td>" + key + "</td>\n" +
+                        "<td>" + value.toFixed(4) + "</td>\n" +
+                        "</tr>\n"
+                    );
+                });
+            });
+        },
+        error: function () {
+            alert("检索出错！");
+            $(id).text("");// 清空数据
+        }
+    })//end of ajax
+
+}
+
+function getAverage(retrievalNum) {
+    var id="#average"+retrievalNum;
+    $(id).text("");
+    $.ajax({
+        type: "POST",
+        url: "performance/average",
+        data: {
+            "retrievalNum": retrievalNum
+        },
+        dataType: "json",
+        contentType: "application/x-www-form-urlencoded; charset=utf-8",
+        traditional: true,
+        success: function (jsonArray) {
+            console.log(jsonArray);
+            $.each(jsonArray, function (index,json) {
+                $.each(json,function (key,value) {
+                    $(id).append("<tr>\n" +
+                        "<td>" + key + "</td>\n" +
+                        "<td>" + value.toFixed(4) + "</td>\n" +
+                        "</tr>\n"
+                    );
+                });
+            });
+        },
+        error: function () {
+            alert("检索出错！");
+            $("#average1").text("");// 清空数据
+        }
+    })//end of ajax
+
+}
 
 
 

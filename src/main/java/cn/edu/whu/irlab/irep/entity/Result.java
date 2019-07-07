@@ -13,6 +13,8 @@ public class Result {
 
     private String retrieverId;
 
+    private Integer score;
+
     public Integer getQueryId() {
         return queryId;
     }
@@ -59,5 +61,26 @@ public class Result {
 
     public void setRetrieverId(String retrieverId) {
         this.retrieverId = retrieverId == null ? null : retrieverId.trim();
+    }
+
+    public Integer getScore() {
+        return score;
+    }
+
+    public void setScore(Integer score) {
+        this.score = score;
+    }
+
+    @Override
+    public String toString() {
+        return "Result{" +
+                "queryId=" + queryId +
+                ", query='" + query + '\'' +
+                ", docId=" + docId +
+                ", docRank=" + docRank +
+                ", title='" + title + '\'' +
+                ", retrieverId='" + retrieverId + '\'' +
+                ", score=" + score +
+                '}';
     }
 }

@@ -50,6 +50,7 @@ public class PerformanceTest {
                 result.setDocRank(jsonObject.getIntValue("rank"));
                 result.setTitle(jsonObject.getString("title"));
                 result.setRetrieverId("1000_00");
+                result.setScore(jsonObject.getInteger("score"));
 //                System.out.println(result);
                 resultService.insertSelective(result);
             }
@@ -79,5 +80,15 @@ public class PerformanceTest {
     @Test
     public void importStandardQuery() {
         System.out.println(ReadDoc.readDoc("resources/results/standardQuery"));
+    }
+
+    @Test
+    public void initStandardListTest(){
+        Result standard = new Result();
+        standard.setQueryId(6);
+        standard.setRetrieverId("1000_00");
+        List<Result> standardList = resultService.select(standard);
+        System.out.println(standardList);
+
     }
 }
