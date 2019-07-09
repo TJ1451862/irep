@@ -8,17 +8,20 @@
         <result column="doc_rank" property="docRank" jdbcType="INTEGER"/>
         <result column="title" property="title" jdbcType="VARCHAR"/>
         <result column="retriever_id" property="retrieverId" jdbcType="VARCHAR"/>
+        <result column="score" property="score" jdbcType="INTEGER"/>
     </resultMap>
     <sql id="Base_Column_List">
-    query_id, query, doc_id, doc_rank, title, retriever_id
-  </sql>
+        query_id, query, doc_id, doc_rank, title, retriever_id,
+      score
+    </sql>
+
     <insert id="insert" parameterType="cn.edu.whu.irlab.irep.entity.Result">
     insert into result (query_id, query, doc_id, 
-      doc_rank, title, retriever_id
-      )
+      doc_rank, title, retriever_id, 
+      score)
     values (#{queryId,jdbcType=INTEGER}, #{query,jdbcType=VARCHAR}, #{docId,jdbcType=INTEGER}, 
-      #{docRank,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{retrieverId,jdbcType=VARCHAR}
-      )
+      #{docRank,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{retrieverId,jdbcType=VARCHAR}, 
+      #{score,jdbcType=INTEGER})
   </insert>
     <insert id="insertSelective" parameterType="cn.edu.whu.irlab.irep.entity.Result">
         insert into result
@@ -41,6 +44,9 @@
             <if test="retrieverId != null">
                 retriever_id,
             </if>
+            <if test="score != null">
+                score,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="queryId != null">
@@ -61,14 +67,17 @@
             <if test="retrieverId != null">
                 #{retrieverId,jdbcType=VARCHAR},
             </if>
+            <if test="score != null">
+                #{score,jdbcType=INTEGER},
+            </if>
         </trim>
     </insert>
-    <select id="select" parameterType="cn.edu.whu.irlab.irep.entity.Result">
+    <select id="select" parameterType="cn.edu.whu.irlab.irep.entity.Result" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from result
         <where>
-            <if test="queryId != null and queryId != ''">
+            <if test="queryId != null">
                 and query_id= #{queryId,jdbcType=INTEGER}
             </if>
             <if test="query != null and query != ''">
@@ -86,6 +95,10 @@
             <if test="retrieverId != null and retrieverId != ''">
                 and retriever_id= #{retrieverId,jdbcType=VARCHAR}
             </if>
+            <if test="score != null and score != ''">
+                and score= #{score,jdbcType=INTEGER}
+            </if>
         </where>
     </select>
+
 </mapper>

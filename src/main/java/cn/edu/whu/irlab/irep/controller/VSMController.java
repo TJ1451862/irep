@@ -19,11 +19,11 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -36,7 +36,7 @@ import java.util.Map;
  * @date 2018-10-30 9:58
  * @desc 向量空间模型交互层
  **/
-@RestController
+@Controller
 @RequestMapping(value = "IRforCN/Retrieval/vectorSpaceModel")
 public class VSMController {
 
@@ -207,7 +207,6 @@ public class VSMController {
     }
 
     /**
-     *
      * 向result表中插入结果数据
      * 如果数据不存在则插入，如果数据存在则不插入
      */
@@ -248,11 +247,11 @@ public class VSMController {
                 List<ResultI> resultAfterSort = vsmRetriever.getResultAfterSort();
                 for (int j = 0; j < resultAfterSort.size(); j++) {
                     Result result = new Result();
-                    result.setDocId(resultAfterSort.get(i).getDocID());
+                    result.setDocId(resultAfterSort.get(j).getDocID());
                     result.setDocRank(j);
                     result.setQuery(queryContent);
                     result.setQueryId(queryId);
-                    result.setTitle(resultAfterSort.get(i).getTitle());
+                    result.setTitle(resultAfterSort.get(j).getTitle());
                     result.setRetrieverId(retrieverId);
                     resultService.insertSelective(result);
                 }
@@ -261,30 +260,34 @@ public class VSMController {
 
         //保存检索器
         ModelMap modelMap = new ModelMap();
-        User user =(User) request.getSession().getAttribute("user");
-        if (user!=null){
+        User user = (User) request.getSession().getAttribute("user");
+        if (user != null) {
             int userId = user.getId();
             int retrieverNum = 0;
+            int state = 0;
             UserRetriever userRetriever = userRetrieverService.selectByPrimaryKey(userId);
-            if (userRetriever==null){
-                userRetriever=new UserRetriever();
+            if (userRetriever == null) {
+                userRetriever = new UserRetriever();
                 userRetriever.setUserId(userId);
+                userRetriever.setRetriever1(retrieverId);
+                state = userRetrieverService.insertSelective(userRetriever);
+            } else {
+                switch (retrieverNum) {
+                    case 1:
+                        userRetriever.setRetriever1(retrieverId);
+                        break;
+                    case 2:
+                        userRetriever.setRetriever2(retrieverId);
+                        break;
+                    case 3:
+                        userRetriever.setRetriever3(retrieverId);
+                        break;
+                    default:
+                        userRetriever.setRetriever1(retrieverId);
+                        break;
+                }
+                state=userRetrieverService.updateByPrimaryKeySelective(userRetriever);
             }
-            switch (retrieverNum) {
-                case 1:
-                    userRetriever.setRetriever1(retrieverId);
-                    break;
-                case 2:
-                    userRetriever.setRetriever2(retrieverId);
-                    break;
-                case 3:
-                    userRetriever.setRetriever3(retrieverId);
-                    break;
-                default:
-                    userRetriever.setRetriever1(retrieverId);
-                    break;
-            }
-            int state = userRetrieverService.insertSelective(userRetriever);
             if (state == 1) {
                 modelMap.put("code", 1);
                 modelMap.put("message", "保存成功");
