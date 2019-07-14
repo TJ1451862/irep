@@ -1,15 +1,25 @@
 package cn.edu.whu.irlab.irep.entity;
 
 public class InvertedIndex {
+    private Integer id;
+
     private String term;
 
     private Integer docId;
 
     private Integer tf;
 
+    private String indexType;
+
     private String locations;
 
-    private String indexType;
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getTerm() {
         return term;
@@ -35,14 +45,6 @@ public class InvertedIndex {
         this.tf = tf;
     }
 
-    public String getLocations() {
-        return locations;
-    }
-
-    public void setLocations(String locations) {
-        this.locations = locations == null ? null : locations.trim();
-    }
-
     public String getIndexType() {
         return indexType;
     }
@@ -51,14 +53,11 @@ public class InvertedIndex {
         this.indexType = indexType == null ? null : indexType.trim();
     }
 
-    @Override
-    public String toString() {
-        return "InvertedIndex{" +
-                "term='" + term + '\'' +
-                ", docId=" + docId +
-                ", tf=" + tf +
-                ", locations='" + locations + '\'' +
-                ", indexType='" + indexType + '\'' +
-                '}';
+    public String getLocations() {
+        return locations;
+    }
+
+    public void setLocations(String locations) {
+        this.locations = locations == null ? null : locations.trim();
     }
 }

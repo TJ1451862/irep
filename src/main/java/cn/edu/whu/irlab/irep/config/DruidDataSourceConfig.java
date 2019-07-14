@@ -1,6 +1,7 @@
 package cn.edu.whu.irlab.irep.config;
 
 import com.alibaba.druid.pool.DruidDataSource;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.context.annotation.Bean;
@@ -74,6 +75,8 @@ public class DruidDataSourceConfig extends DataSourceProperties {
     @Value("{spring.datasource.connectionProperties}")
     private String connectionProperties;
 
+    private Logger logger;
+
     @Bean     //声明其为Bean实例
     public DataSource dataSource() {
         DruidDataSource datasource = new DruidDataSource();
@@ -99,7 +102,7 @@ public class DruidDataSourceConfig extends DataSourceProperties {
         try {
             datasource.setFilters(filters);
         } catch (SQLException e) {
-            System.out.println("druid configuration initialization filter" + ": " + e);
+            logger.error("druid configuration initialization filter" + ": " + e);
         }
         datasource.setConnectionProperties(connectionProperties);
 

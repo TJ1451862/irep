@@ -1,6 +1,6 @@
-package cn.edu.whu.irlab.irep.service.retrievalModel.vsmmodel;
+package cn.edu.whu.irlab.irep.service.retrievalModel.vsmModel;
 
-public class ResultI implements Comparable<ResultI> {
+public class ResultI{
     private int docID;
     private String title;
     private double similarity;
@@ -42,10 +42,5 @@ public class ResultI implements Comparable<ResultI> {
                 ", title='" + title + '\'' +
                 ", similarity=" + similarity +
                 '}';
-    }
-
-    @Override
-    public int compareTo(ResultI resultI) {
-        return (int) (resultI.getSimilarity() - this.getSimilarity());
     }
 }

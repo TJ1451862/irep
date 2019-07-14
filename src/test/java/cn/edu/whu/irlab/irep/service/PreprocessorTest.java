@@ -25,7 +25,7 @@ public class PreprocessorTest {
         String analyzerName = "standard";
         ArrayList<String> arrayList = new ArrayList<>();
         arrayList = PreProcessor.preProcess(string, analyzerName, true);
-        System.out.println(arrayList);
+//        System.out.println(arrayList);
     }
 
 }

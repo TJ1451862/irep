@@ -19,7 +19,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
-        <fastjson.version>1.2.47</fastjson.version>
+        <fastjson.version>1.2.49</fastjson.version>
         <commons-lang3.version>3.4</commons-lang3.version>
         <commons-beanutils.version>1.9.3</commons-beanutils.version>
         <druid.version>1.0.29</druid.version>
@@ -64,6 +64,7 @@
             <artifactId>druid</artifactId>
             <version>${druid.version}</version>
         </dependency>
+
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
@@ -87,47 +88,6 @@
             <version>1.2.17</version>
         </dependency>
 
-        <dependency>
-            <groupId>com.huaban</groupId>
-            <artifactId>jieba-analysis</artifactId>
-            <version>1.0.2</version>
-        </dependency>
-
-        <!-- https://mvnrepository.com/artifact/org.ansj/ansj_seg -->
-        <dependency>
-            <groupId>org.ansj</groupId>
-            <artifactId>ansj_seg</artifactId>
-            <version>5.1.6</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/org.ansj/ansj_lucene7_plug -->
-        <dependency>
-            <groupId>org.ansj</groupId>
-            <artifactId>ansj_lucene7_plug</artifactId>
-            <version>5.1.5.1</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/org.nlpcn/nlp-lang -->
-        <dependency>
-            <groupId>org.nlpcn</groupId>
-            <artifactId>nlp-lang</artifactId>
-            <version>1.7.7</version>
-        </dependency>
-
-        <!--中文分词包-->
-        <!-- https://mvnrepository.com/artifact/com.hankcs/hanlp -->
-        <dependency>
-            <groupId>com.hankcs</groupId>
-            <artifactId>hanlp</artifactId>
-            <version>portable-1.6.8</version>
-        </dependency>
-
-
-        <!--阿里巴巴json解析包-->
-        <!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-            <version>1.2.49</version>
-        </dependency>
 
         <!--lucene-->
         <!-- https://mvnrepository.com/artifact/org.apache.lucene/lucene-core-->
@@ -151,13 +111,14 @@
             <version>7.5.0</version>
         </dependency>
 
-        <!--阿里巴巴json解析包-->
-        <!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
+        <!--JDOM由Java代码访问并输出XML数据。-->
+        <!-- https://mvnrepository.com/artifact/org.jdom/jdom2 -->
         <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-            <version>1.2.49</version>
+            <groupId>org.jdom</groupId>
+            <artifactId>jdom2</artifactId>
+            <version>2.0.6</version>
         </dependency>
+
 
     </dependencies>
 
@@ -185,7 +146,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>cn.edu.whu.irlab.Application</mainClass>
+                            <mainClass>cn.edu.whu.irlab.irep.IrepApplication</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

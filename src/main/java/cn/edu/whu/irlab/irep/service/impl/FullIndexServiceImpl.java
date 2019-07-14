@@ -17,8 +17,8 @@ public class FullIndexServiceImpl {
         return fullIndexMapper.insert(fullIndex);
     }
 
-    public List<FullIndex> selectFullIndexByIndexType(String indexType) {
-        return fullIndexMapper.selectFullIndexByIndexType(indexType);
+    public List<FullIndex> selectByIndexType(String indexType) {
+        return fullIndexMapper.selectByIndexType(indexType);
     }
 
 }
