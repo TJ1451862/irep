@@ -1,13 +1,23 @@
 package cn.edu.whu.irlab.irep.entity;
 
 public class FullIndex {
+    private Integer id;
+
     private String term;
 
     private Integer df;
 
+    private String indexType;
+
     private String ids;
 
-    private String indexType;
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getTerm() {
         return term;
@@ -25,19 +35,19 @@ public class FullIndex {
         this.df = df;
     }
 
-    public String getIds() {
-        return ids;
-    }
-
-    public void setIds(String ids) {
-        this.ids = ids == null ? null : ids.trim();
-    }
-
     public String getIndexType() {
         return indexType;
     }
 
     public void setIndexType(String indexType) {
         this.indexType = indexType == null ? null : indexType.trim();
+    }
+
+    public String getIds() {
+        return ids;
+    }
+
+    public void setIds(String ids) {
+        this.ids = ids == null ? null : ids.trim();
     }
 }

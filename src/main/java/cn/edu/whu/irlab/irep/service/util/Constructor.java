@@ -2,6 +2,8 @@ package cn.edu.whu.irlab.irep.service.util;
 
 import cn.edu.whu.irlab.irep.entity.Retriever;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author gcr
  * @version 1.0
@@ -11,12 +13,49 @@ import cn.edu.whu.irlab.irep.entity.Retriever;
 
 public class Constructor {
 
-    public static String indexTypeConstructor(String analyzer, boolean isRemoveStopWord) {
-        String indexType;
-        String suffixPositive = "_remove";
-        String suffixNegative = "_not_remove";
-        if (isRemoveStopWord) indexType = analyzer + suffixPositive;
-        else indexType = analyzer + suffixNegative;
+    public static String indexTypeConstructor(HttpServletRequest request) {
+
+        boolean chinese=true;
+        String analyzer=(String)request.getSession().getAttribute("analyzer");
+        boolean removeStopWord=(boolean)request.getSession().getAttribute("removeStopWord");
+
+        String indexType="";
+
+        //语言代号
+        if (chinese) {
+            indexType += '1';
+        } else {
+            indexType += '0';
+        }
+
+        //分词器代号
+        switch (analyzer) {
+            case "standard":
+                indexType += "01";
+                break;
+            case "whitespace":
+                indexType += "02";
+                break;
+            case "simple":
+                indexType += "03";
+                break;
+            case "CJK":
+                indexType += "04";
+                break;
+            case "smartChinese":
+                indexType += "05";
+                break;
+            default:
+                indexType += "00";
+        }
+
+        //去停用词代号
+        if (removeStopWord) {
+            indexType += '1';
+        } else {
+            indexType += '0';
+        }
+
         return indexType;
     }
 

@@ -13,8 +13,8 @@
         </commentGenerator>
         <!--数据库连接驱动类,URL，用户名、密码 -->
         <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
-                        connectionURL="jdbc:mysql://localhost:3306/irep?allowPublicKeyRetrieval=true&amp;useUnicode=true&amp;characterEncoding=utf8&amp;zeroDateTimeBehavior=CONVERT_TO_NULL&amp;useSSL=false&amp;serverTimezone=UTC"
-                        userId="root" password="gcr199595">
+                        connectionURL="jdbc:mysql://47.96.153.156:3306/irep?allowPublicKeyRetrieval=true&amp;useUnicode=true&amp;characterEncoding=utf8&amp;zeroDateTimeBehavior=CONVERT_TO_NULL&amp;useSSL=false&amp;serverTimezone=UTC"
+                        userId="root" password="irlab_2013">
         </jdbcConnection>
         <javaTypeResolver>
             <property name="forceBigDecimals" value="false"/>
@@ -38,10 +38,10 @@
         <!--enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />-->
         <!--<table tableName="inverted_index" domainObjectName="InvertedIndex" enableCountByExample="false" enableUpdateByExample="false"-->
         <!--enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />-->
-        <!--<table tableName="full_index" domainObjectName="FullIndex" enableCountByExample="false" enableUpdateByExample="false"-->
-        <!--enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />-->
-        <table tableName="result" domainObjectName="Result" enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
+        <table tableName="full_index" domainObjectName="FullIndex" enableCountByExample="false" enableUpdateByExample="false"
+        enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />
+        <!--<table tableName="result" domainObjectName="Result" enableCountByExample="false" enableUpdateByExample="false"-->
+               <!--enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>-->
         <!--<table tableName="retriever" domainObjectName="Retriever" enableCountByExample="false" enableUpdateByExample="false"-->
                <!--enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>-->
         <!--<table tableName="user_retriever" domainObjectName="UserRetriever" enableCountByExample="false" enableUpdateByExample="false"-->

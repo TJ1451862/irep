@@ -1,6 +1,6 @@
-package cn.edu.whu.irlab.irep.service.retrievalModel.vsmmodel;
+package cn.edu.whu.irlab.irep.service.retrievalModel.vsmModel;
 
-import cn.edu.whu.irlab.irep.entity.Doc;
+import cn.edu.whu.irlab.irep.service.entity.Doc;
 import cn.edu.whu.irlab.irep.service.util.Calculator;
 
 import java.util.ArrayList;

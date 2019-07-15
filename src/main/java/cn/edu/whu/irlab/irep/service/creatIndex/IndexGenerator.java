@@ -1,6 +1,6 @@
 package cn.edu.whu.irlab.irep.service.creatIndex;
 
-import cn.edu.whu.irlab.irep.entity.Doc;
+import cn.edu.whu.irlab.irep.service.entity.Doc;
 import cn.edu.whu.irlab.irep.entity.FullIndex;
 import cn.edu.whu.irlab.irep.entity.InvertedIndex;
 import cn.edu.whu.irlab.irep.entity.Record;
@@ -11,6 +11,7 @@ import cn.edu.whu.irlab.irep.service.util.Constructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -47,14 +48,12 @@ public class IndexGenerator {
      * 构造方法
      *
      * @param folderPath       包含待处理的文档的文件夹路径
-     * @param analyzerName     分词器名
-     * @param isRemoveStopWord 是否去停用词
      */
-    public void initIndexGenerator(String folderPath, String analyzerName, boolean isRemoveStopWord) {
+    public void initIndexGenerator(String folderPath, HttpServletRequest request) {
         this.folderPath = folderPath;
-        this.analyzerName = analyzerName;
-        this.isRemoveStopWord = isRemoveStopWord;
-        this.indexType = Constructor.indexTypeConstructor(analyzerName, isRemoveStopWord);
+        this.analyzerName = (String) request.getSession().getAttribute("analyzer");
+        this.isRemoveStopWord = (boolean) request.getSession().getAttribute("removeStopWord");
+        this.indexType = Constructor.indexTypeConstructor(request);
     }
 
     /**

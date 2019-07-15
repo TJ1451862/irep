@@ -9,6 +9,8 @@ public class Record {
 
     private String indexType;
 
+    private Integer id;
+
     public String getTerm() {
         return term;
     }
@@ -39,5 +41,13 @@ public class Record {
 
     public void setIndexType(String indexType) {
         this.indexType = indexType == null ? null : indexType.trim();
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 }

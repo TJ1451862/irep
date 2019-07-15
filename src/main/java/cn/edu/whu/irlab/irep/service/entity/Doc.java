@@ -1,9 +1,8 @@
-package cn.edu.whu.irlab.irep.entity;
+package cn.edu.whu.irlab.irep.service.entity;
 
 import cn.edu.whu.irlab.irep.service.preProcess.PreProcessor;
 import cn.edu.whu.irlab.irep.service.util.Find;
 import cn.edu.whu.irlab.irep.service.util.ReadDoc;
-import org.apache.lucene.analysis.Analyzer;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;

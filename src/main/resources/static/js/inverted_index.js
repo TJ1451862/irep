@@ -21,8 +21,7 @@ window.onload = function () {//页面加载事件
             console.log("加载成功");
         }
     });
-
-}
+};
 
 function clickTerm(e) {//获取词项内容
     //var el1 = e.target;//当前元素，可修改（能够用此方法获取到他的子元素（就是箭头点击的元素），不能获取他本身的内容）

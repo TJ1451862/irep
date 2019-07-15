@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
@@ -32,40 +33,31 @@ public class InvertedIndexController {
     public String folderPath = "resources/doc_ch";
 
     /**
-     * @param analyzerName     分词器名称
-     * @param isRemoveStopWord 是否去停用词
      * @return 全体倒排索引表
      */
     @ResponseBody
     @RequestMapping("/fullIndex")
-    public JSONArray selectFullIndexController(@RequestParam(name = "analyzerName") String analyzerName,
-                                               @RequestParam(name = "isRemoveStopWord") boolean isRemoveStopWord) {
-        String indexType = Constructor.indexTypeConstructor(analyzerName, isRemoveStopWord);
-        List<FullIndex> fullIndexList = fullIndexService.selectFullIndexByIndexType(indexType);
+    public JSONArray selectFullIndexController(HttpServletRequest request) {
+        String indexType = Constructor.indexTypeConstructor(request);
+        List<FullIndex> fullIndexList = fullIndexService.selectByIndexType(indexType);
         if (fullIndexList.size() == 0) {
-            indexGenerator.initIndexGenerator(folderPath, analyzerName, isRemoveStopWord);
+            indexGenerator.initIndexGenerator(folderPath,request);
             indexGenerator.generateIndex();
-            fullIndexList = fullIndexService.selectFullIndexByIndexType(indexType);
+            fullIndexList = fullIndexService.selectByIndexType(indexType);
         }
         JSONArray jsonArray = JSON.parseArray(JSON.toJSONString(fullIndexList));
 //        System.out.println(jsonArray);
         return jsonArray;
     }
 
-    //返回invertedIndex
-
     /**
-     * @param analyzerName     分词器名称
-     * @param isRemoveStopWord 是否去停用词
-     * @param term             词项
+     * @param term 词项
      * @return 倒排索引表
      */
     @ResponseBody
     @RequestMapping("/invertedIndex")
-    public JSONArray selectInvertedIndexController(@RequestParam(name = "analyzerName") String analyzerName,
-                                                   @RequestParam(name = "isRemoveStopWord") boolean isRemoveStopWord,
-                                                   @RequestParam(name = "term") String term) {
-        String indexType = Constructor.indexTypeConstructor(analyzerName, isRemoveStopWord);
+    public JSONArray selectInvertedIndexController(@RequestParam(name = "term") String term,HttpServletRequest request) {
+        String indexType = Constructor.indexTypeConstructor(request);
         InvertedIndex invertedIndex = new InvertedIndex();
         invertedIndex.setTerm(term);
         invertedIndex.setIndexType(indexType);
@@ -73,4 +65,6 @@ public class InvertedIndexController {
         JSONArray jsonArray = JSON.parseArray(JSON.toJSONString(invertedIndexList));
         return jsonArray;
     }
+
+    //返回invertedIndex
 }

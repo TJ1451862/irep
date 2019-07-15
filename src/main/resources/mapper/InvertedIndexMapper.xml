@@ -1,84 +1,95 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="cn.edu.whu.irlab.irep.mapper.InvertedIndexMapper">
-    <resultMap id="BaseResultMap" type="cn.edu.whu.irlab.irep.entity.InvertedIndex">
-        <result column="term" property="term" jdbcType="VARCHAR"/>
-        <result column="doc_id" property="docId" jdbcType="INTEGER"/>
-        <result column="tf" property="tf" jdbcType="INTEGER"/>
-        <result column="locations" property="locations" jdbcType="VARCHAR"/>
-        <result column="index_type" property="indexType" jdbcType="VARCHAR"/>
-    </resultMap>
-    <sql id="Base_Column_List">
-        term, doc_id, tf,locations, index_type
+<mapper namespace="cn.edu.whu.irlab.irep.mapper.InvertedIndexMapper" >
+  <resultMap id="BaseResultMap" type="cn.edu.whu.irlab.irep.entity.InvertedIndex" >
+    <result column="id" property="id" jdbcType="INTEGER" />
+    <result column="term" property="term" jdbcType="VARCHAR" />
+    <result column="doc_id" property="docId" jdbcType="INTEGER" />
+    <result column="tf" property="tf" jdbcType="INTEGER" />
+    <result column="index_type" property="indexType" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="cn.edu.whu.irlab.irep.entity.InvertedIndex" extends="BaseResultMap" >
+    <result column="locations" property="locations" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List">
+        term, doc_id, tf, index_type
     </sql>
+  <sql id="Blob_Column_List" >
+    locations
+  </sql>
 
-    <insert id="insert" parameterType="cn.edu.whu.irlab.irep.entity.InvertedIndex">
-        insert into inverted_index (term, doc_id, tf,locations, index_type)
-        values (#{term,jdbcType=VARCHAR}, #{docId,jdbcType=INTEGER}, #{tf,jdbcType=INTEGER},
-        #{locations,jdbcType=VARCHAR}, #{indexType,jdbcType=VARCHAR})
-    </insert>
-    <insert id="insertSelective" parameterType="cn.edu.whu.irlab.irep.entity.InvertedIndex">
-        insert into inverted_index
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="term != null">
-                term,
-            </if>
-            <if test="docId != null">
-                doc_id,
-            </if>
-            <if test="tf != null">
-                tf,
-            </if>
-            <if test="locations != null">
-                locations,
-            </if>
-            <if test="indexType != null">
-                index_type,
-            </if>
-        </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="term != null">
-                #{term,jdbcType=VARCHAR},
-            </if>
-            <if test="docId != null">
-                #{docId,jdbcType=INTEGER},
-            </if>
-            <if test="tf != null">
-                #{tf,jdbcType=INTEGER},
-            </if>
-            <if test="locations != null">
-                #{locations,jdbcType=VARCHAR},
-            </if>
-            <if test="indexType != null">
-                #{indexType,jdbcType=VARCHAR},
-            </if>
-        </trim>
-    </insert>
-    <select id="selectByIndexType" parameterType="String" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from inverted_index where index_type=#{indexType,jdbcType=VARCHAR}
-    </select>
-    <select id="select" parameterType="cn.edu.whu.irlab.irep.entity.InvertedIndex" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from inverted_index
-        <where>
-            <if test="term != null and term != ''">
-                and term=#{term,jdbcType=VARCHAR}
-            </if>
-            <if test="docId!=null and docId!=''">
-                and doc_id=#{docId,jdbcType=INTEGER}
-            </if>
-            <if test="tf!=null and tf!=''">
-                and tf=#{tf,jdbcType=INTEGER}
-            </if>
-            <if test="locations!=null and locations!=''">
-                and locations= #{locations,jdbcType=VARCHAR}
-            </if>
-            <if test="indexType != null and indexType != ''">
-                and index_type=#{indexType,jdbcType=VARCHAR}
-            </if>
-        </where>
-    </select>
+  <insert id="insert" parameterType="cn.edu.whu.irlab.irep.entity.InvertedIndex" >
+    insert into inverted_index (id, term, doc_id, 
+      tf, index_type, locations
+      )
+    values (#{id,jdbcType=INTEGER}, #{term,jdbcType=VARCHAR}, #{docId,jdbcType=INTEGER}, 
+      #{tf,jdbcType=INTEGER}, #{indexType,jdbcType=VARCHAR}, #{locations,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.edu.whu.irlab.irep.entity.InvertedIndex" >
+    insert into inverted_index
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="term != null" >
+        term,
+      </if>
+      <if test="docId != null" >
+        doc_id,
+      </if>
+      <if test="tf != null" >
+        tf,
+      </if>
+      <if test="indexType != null" >
+        index_type,
+      </if>
+      <if test="locations != null" >
+        locations,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="term != null" >
+        #{term,jdbcType=VARCHAR},
+      </if>
+      <if test="docId != null" >
+        #{docId,jdbcType=INTEGER},
+      </if>
+      <if test="tf != null" >
+        #{tf,jdbcType=INTEGER},
+      </if>
+      <if test="indexType != null" >
+        #{indexType,jdbcType=VARCHAR},
+      </if>
+      <if test="locations != null" >
+        #{locations,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="selectByIndexType" parameterType="String" resultMap="ResultMapWithBLOBs">
+    select * from inverted_index where index_type=#{indexType,jdbcType=VARCHAR}
+  </select>
+  <select id="select" parameterType="cn.edu.whu.irlab.irep.entity.InvertedIndex" resultMap="ResultMapWithBLOBs">
+    select * from inverted_index
+    <where>
+      <if test="term != null and term != ''">
+        and term=#{term,jdbcType=VARCHAR}
+      </if>
+      <if test="docId!=null and docId!=''">
+        and doc_id=#{docId,jdbcType=INTEGER}
+      </if>
+      <if test="tf!=null and tf!=''">
+        and tf=#{tf,jdbcType=INTEGER}
+      </if>
+      <if test="locations!=null and locations!=''">
+        and locations= #{locations,jdbcType=LONGVARCHAR}
+      </if>
+      <if test="indexType != null and indexType != ''">
+        and index_type=#{indexType,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </select>
 </mapper>

@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 
 /**
@@ -27,15 +29,18 @@ public class PreprocessorController {
      *
      * @param token            待处理字符串
      * @param analyzerName     分词器名称
-     * @param isRemoveStopWord 是否去停用词
+     * @param removeStopWord 是否去停用词
      * @return 预处理结果
      */
     @RequestMapping("/preProcess")
     public String preProcessController(@RequestParam(name = "token") String token,
                                        @RequestParam(name = "analyzerName") String analyzerName,
-                                       @RequestParam(name = "isRemoveStopWord") boolean isRemoveStopWord) {
-        ArrayList<String> termList = PreProcessor.preProcess(token, analyzerName, isRemoveStopWord);
+                                       @RequestParam(name = "isRemoveStopWord") boolean removeStopWord,
+                                       HttpServletRequest request) {
+        ArrayList<String> termList = PreProcessor.preProcess(token, analyzerName, removeStopWord);
         String string = termList.toString();
+        request.getSession().setAttribute("analyzer", analyzerName);
+        request.getSession().setAttribute("removeStopWord", removeStopWord);
         return string;
     }
 

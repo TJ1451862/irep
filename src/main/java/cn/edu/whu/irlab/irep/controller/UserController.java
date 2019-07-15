@@ -41,8 +41,8 @@ public class UserController {
     //请将userId存到session中
     @RequestMapping(value = "/login")
     @ResponseBody
-    public Map loginController(String username,String password, HttpServletRequest request) {
-        Map<String,Object> map=new HashMap<>();
+    public Map<String,String> loginController(String username,String password, HttpServletRequest request) {
+        Map<String,String> map=new HashMap<>();
         User user = userService.selectUser(username,password);
         if (user == null) {
             map.put("code", "0");

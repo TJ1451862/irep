@@ -1,54 +1,66 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="cn.edu.whu.irlab.irep.mapper.FullIndexMapper">
-    <resultMap id="BaseResultMap" type="cn.edu.whu.irlab.irep.entity.FullIndex">
-        <result column="term" property="term" jdbcType="VARCHAR"/>
-        <result column="df" property="df" jdbcType="INTEGER"/>
-        <result column="ids" property="ids" jdbcType="VARCHAR"/>
-        <result column="index_type" property="indexType" jdbcType="VARCHAR"/>
-    </resultMap>
-    <sql id="Base_Column_List">
-        term, df, ids, index_type
+<mapper namespace="cn.edu.whu.irlab.irep.mapper.FullIndexMapper" >
+  <resultMap id="BaseResultMap" type="cn.edu.whu.irlab.irep.entity.FullIndex" >
+    <result column="id" property="id" jdbcType="INTEGER" />
+    <result column="term" property="term" jdbcType="VARCHAR" />
+    <result column="df" property="df" jdbcType="INTEGER" />
+    <result column="index_type" property="indexType" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="cn.edu.whu.irlab.irep.entity.FullIndex" extends="BaseResultMap" >
+    <result column="ids" property="ids" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List">
+        term, df, index_type
     </sql>
-    <insert id="insert" parameterType="cn.edu.whu.irlab.irep.entity.FullIndex">
-        insert into full_index (term, df, ids, index_type)
-        values (#{term,jdbcType=VARCHAR}, #{df,jdbcType=INTEGER}, #{ids,jdbcType=VARCHAR},
-        #{indexType,jdbcType=VARCHAR})
-    </insert>
-    <insert id="insertSelective" parameterType="cn.edu.whu.irlab.irep.entity.FullIndex">
-        insert into full_index
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="term != null">
-                term,
-            </if>
-            <if test="df != null">
-                df,
-            </if>
-            <if test="ids != null">
-                ids,
-            </if>
-            <if test="indexType != null">
-                index_type,
-            </if>
-        </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="term != null">
-                #{term,jdbcType=VARCHAR},
-            </if>
-            <if test="df != null">
-                #{df,jdbcType=INTEGER},
-            </if>
-            <if test="ids != null">
-                #{ids,jdbcType=VARCHAR},
-            </if>
-            <if test="indexType != null">
-                #{indexType,jdbcType=VARCHAR},
-            </if>
-        </trim>
-    </insert>
-    <select id="selectFullIndexByIndexType" parameterType="String" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from full_index where index_type=#{indexType,jdbcType=VARCHAR}
-    </select>
+  <sql id="Blob_Column_List" >
+    ids
+  </sql>
+  <insert id="insert" parameterType="cn.edu.whu.irlab.irep.entity.FullIndex" >
+    insert into full_index (id, term, df, 
+      index_type, ids)
+    values (#{id,jdbcType=INTEGER}, #{term,jdbcType=VARCHAR}, #{df,jdbcType=INTEGER}, 
+      #{indexType,jdbcType=VARCHAR}, #{ids,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.edu.whu.irlab.irep.entity.FullIndex" >
+    insert into full_index
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="term != null" >
+        term,
+      </if>
+      <if test="df != null" >
+        df,
+      </if>
+      <if test="indexType != null" >
+        index_type,
+      </if>
+      <if test="ids != null" >
+        ids,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="term != null" >
+        #{term,jdbcType=VARCHAR},
+      </if>
+      <if test="df != null" >
+        #{df,jdbcType=INTEGER},
+      </if>
+      <if test="indexType != null" >
+        #{indexType,jdbcType=VARCHAR},
+      </if>
+      <if test="ids != null" >
+        #{ids,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="selectByIndexType" parameterType="String" resultMap="ResultMapWithBLOBs">
+    select * from full_index where index_type=#{indexType,jdbcType=VARCHAR}
+  </select>
+
 </mapper>

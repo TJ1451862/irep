@@ -51,7 +51,7 @@ public class PerformanceTest {
                 result.setTitle(jsonObject.getString("title"));
                 result.setRetrieverId("1000_00");
                 result.setScore(jsonObject.getInteger("score"));
-//                System.out.println(result);
+////                System.out.println(result);
                 resultService.insertSelective(result);
             }
             queryId++;
@@ -74,12 +74,12 @@ public class PerformanceTest {
             jsonObject.put("query", resultList.get(i).getQuery());
             jsonArray.add(jsonObject);
         }
-        System.out.println(jsonArray);
+//        System.out.println(jsonArray);
     }
 
     @Test
     public void importStandardQuery() {
-        System.out.println(ReadDoc.readDoc("resources/results/standardQuery"));
+//        System.out.println(ReadDoc.readDoc("resources/results/standardQuery"));
     }
 
     @Test
@@ -88,7 +88,7 @@ public class PerformanceTest {
         standard.setQueryId(6);
         standard.setRetrieverId("1000_00");
         List<Result> standardList = resultService.select(standard);
-        System.out.println(standardList);
+//        System.out.println(standardList);
 
     }
 }

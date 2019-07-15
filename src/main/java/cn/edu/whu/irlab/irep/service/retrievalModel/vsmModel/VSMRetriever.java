@@ -1,4 +1,4 @@
-package cn.edu.whu.irlab.irep.service.retrievalModel.vsmmodel;
+package cn.edu.whu.irlab.irep.service.retrievalModel.vsmModel;
 
 import cn.edu.whu.irlab.irep.entity.FullIndex;
 import cn.edu.whu.irlab.irep.entity.InvertedIndex;
@@ -11,6 +11,7 @@ import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 /**
@@ -51,33 +52,15 @@ public class VSMRetriever {
     public void initVSMRetriever(String queryContent,
                                  int formulaID,
                                  double smoothParam,
-                                 String analyzerName,
-                                 boolean isRemoveStopWord) {
-        this.indexType = Constructor.indexTypeConstructor(analyzerName, isRemoveStopWord);
+                                 HttpServletRequest request) {
+        this.indexType = Constructor.indexTypeConstructor(request);
         this.formulaID = formulaID;
         this.smoothParam = smoothParam;
-        this.analyzerName = analyzerName;
-        this.isRemoveStopWord = isRemoveStopWord;
+        this.analyzerName = (String) request.getSession().getAttribute("analyzer");
+        this.isRemoveStopWord = (boolean)request.getSession().getAttribute("removeStopWord");
         this.query = new QueryForVSM(queryContent, analyzerName, isRemoveStopWord, formulaID, smoothParam);
     }
 
-    public void initVSMRetriever(String analyzerName, boolean isRemoveStopWord) {
-        this.analyzerName = analyzerName;
-        this.isRemoveStopWord = isRemoveStopWord;
-    }
-
-    public void initVSMRetriever(String queryContent, String analyzerName, boolean isRemoveStopWord) {
-        this.analyzerName = analyzerName;
-        this.isRemoveStopWord = isRemoveStopWord;
-        this.query = new QueryForVSM(queryContent, analyzerName, isRemoveStopWord);
-    }
-
-    public void initVSMRetriever(int formulaID, double smoothParam, String analyzerName, boolean isRemoveStopWord) {
-        this.formulaID = formulaID;
-        this.smoothParam = smoothParam;
-        this.analyzerName = analyzerName;
-        this.isRemoveStopWord = isRemoveStopWord;
-    }
 
     public void search() {
         //初始化
@@ -97,7 +80,7 @@ public class VSMRetriever {
      * idf=log(N/DF)
      */
     public void setTerm_idf() {
-        List<FullIndex> fullIndexList = fullIndexService.selectFullIndexByIndexType(indexType);
+        List<FullIndex> fullIndexList = fullIndexService.selectByIndexType(indexType);
         int N = fullIndexList.size();
         double idf;
         for (int i = 0; i < fullIndexList.size(); i++) {
@@ -239,8 +222,6 @@ public class VSMRetriever {
             resultIList.add(result.get(i));
         }
         resultAfterSort = bubbleSort(resultIList);
-//        Comparator comparator = new ResultComparator();
-//        Collections.sort(resultAfterSort);
     }
 
     /**

@@ -1,4 +1,4 @@
-package cn.edu.whu.irlab.irep.service.retrievalModel.vsmmodel;
+package cn.edu.whu.irlab.irep.service.retrievalModel.vsmModel;
 
 public class VectorI {
 

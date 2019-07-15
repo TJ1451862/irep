@@ -65,6 +65,7 @@ public class PreProcessor {
      * @return 去标点结果
      */
     public static ArrayList<String> removePunctuation(String seg) {
+
         String splits = seg.replaceAll("\\pP|\\pS|\\pM|\\pN|\\pC", "");// 去除标点符号
 
         splits = splits.replaceAll(" ", " ");
@@ -93,7 +94,6 @@ public class PreProcessor {
 
     /**
      * 去停用词
-     *
      * @param termList 待处理
      * @return 处理结果
      */

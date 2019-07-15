@@ -1,7 +1,7 @@
 package cn.edu.whu.irlab.irep.service.impl;
 
-import cn.edu.whu.irlab.irep.mapper.RecordMapper;
 import cn.edu.whu.irlab.irep.entity.Record;
+import cn.edu.whu.irlab.irep.mapper.RecordMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

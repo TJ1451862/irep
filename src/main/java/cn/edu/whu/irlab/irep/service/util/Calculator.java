@@ -3,12 +3,11 @@ package cn.edu.whu.irlab.irep.service.util;
 import cn.edu.whu.irlab.irep.service.retrievalModel.vsmmodel.VectorI;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import cn.edu.whu.irlab.irep.service.util.Find;
-import cn.edu.whu.irlab.irep.service.preProcess.PreProcessor;
 
 import java.util.*;
 
 public class Calculator {
+
 
     /**
      * @param tfMap     原始tf数据
@@ -97,27 +96,6 @@ public class Calculator {
         }
         module = Math.pow(module, 0.5);
         return module;
-    }
-
-    /**
-     *计算文档LM
-     * @param tfMap 倒排索引中得到的词项在文档中出现的次数
-     * @return
-     */
-    public static Map<String,Double> calculateLM(Map<String,Double>tfMap){
-        Map<String, Double> resultForLM = new HashMap<>();
-        double tfForLM;
-        double numberOfTerms=0;
-        for(String s :
-                tfMap.keySet()){
-            numberOfTerms = tfMap.get(s)+numberOfTerms;
-        }
-        for(String s :
-                tfMap.keySet()){
-            tfForLM= tfMap.get(s)/numberOfTerms;
-            resultForLM.put(s,tfForLM);
-        }
-        return resultForLM;
     }
 
 }
