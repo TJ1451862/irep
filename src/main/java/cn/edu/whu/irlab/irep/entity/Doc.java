@@ -28,6 +28,7 @@ public class Doc {
 
     public Doc(int id) {
         this.id = id;
+        this.title=Find.findTitle(id,true);
     }
 
     //预处理文档

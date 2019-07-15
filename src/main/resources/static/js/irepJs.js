@@ -1465,6 +1465,129 @@ function getAverage(retrievalNum) {
 
 }
 
+// 语言模型
+$("#searchForLanguageModel").click(function(){
+    var analyzerName = storage.analyzerName;
+    var isRemoveStopWord = storage.isRemoveStopWord;
+    var lmResults;
+    var $results = null;
+    var modelType = $('#modelType').val();
+    //console.log(result);
+    var query = document.getElementById("chaxun").value;
+    var smoothParam = document.getElementById("canshu").value;
+    if (query.length == 0) { //第一个检索词为空不能提交
+        alert("请输入查询语句！");
+        window.location.reload();
+        // $("#results").text("");// 清空数据
+        return;
+    }
+    if (smoothParam== "") {
+        alert("请输入平滑系数！");
+        $("#results").text("");// 清空数据
+        return;
+    }
+    if (smoothParam < 0 || smoothParam > 1) {
+        alert("平滑系数的范围为0~1！");
+        $("#results").text("");// 清空数据
+        return;
+    }
+    alert("提交事件!");
+    $.ajax({
+        type: "POST",
+        url: "languageModel/lmSearch",
+        data: {
+            "smoothParam": smoothParam,
+            "query": query,
+            "analyzerName": analyzerName,
+            "isRemoveStopWord": isRemoveStopWord
+        },
+        traditional: true,
+        datatype: "json",
+        traditional: true,
+        contentType: "application/x-www-form-urlencoded; charset=utf-8",
+        success: function (result) {
+            console.log(result);
+            lmResults = result;
 
+            if (result == 0) {
+                alert("抱歉！没有满足条件的检索结果！");
+                $("#results").text("");// 清空数据
+            } else {
+                $("#results").text("");// 清空数据
+                $.each(result, function (index, obj) {
+                    var str1 = obj.content.substring(0, 90) + "......";
+                    $('#results').append("<a id='" + index + "' href='' class='ra' style='font-size: 20px;font-family=Microsoft Yahei;font-weight: bold; margin-right: 20px' data-toggle='modal' data-target='#myModal' onclick='getContent(this.id)' >" + obj.title + "</a>");
+                    $('#results').append("<br>");
+                    $('#results').append("<p>" + str1 + "</p>");
 
+                });
+                $results = $("#results").find("*");
+            }
+        },
+        error: function () {
+            alert("检索出错！");
+            $("#results").text("");// 清空数据
+        }
+    });
+    //点击标题查看结果内容
+    function getContent(id) {
+        $.each(lmResults, function (index, obj) {
+            if (index == id) {
+                $("#results").text("");
+                $("#results").append(obj.content);
+            }
+        });
+    };
+    //返回上一步
+    $("#return").click(function () {
+        $("#results").text("");
+        $("#results").append($results);
+    });
+
+    $().ready(function () {
+        $("#mainForm").validate({
+            errorPlacement: function (error, element) {
+                // Append error within linked label
+                $(element)
+                    .closest("form")
+                    .find("label[for='" + element.attr("id") + "']")
+                    .append(error);
+            },
+            errorElement: "span",
+            rules: {
+                canshu: {
+                    required: true,
+                    range: [0, 1]
+                },
+                chaxun: "required"
+            }
+        })
+    });
+
+    //动态元素<brmodel>添加的事件 查看文档的内容
+    $(function () {//这里是动态元素<brmodel>添加的事件 查看文档的内容
+        $("body").on("click", ".ra", function () {
+            //alert('这里是动态元素添加的事件');
+            var fileName = $(this).attr("id");
+            $(".ra").attr("style", "font-size:18px; color:white");
+            $(this).attr("style", "font-size:20px; color:#C0C0C0");
+            $.each(JSONresults1, function (index, obj) {
+                //console.log("到这里没有");
+                //console.log(obj[fileName]);
+                for (key in obj) {
+                    var contents = obj[fileName];
+                    if (fileName == key) {
+                        console.log(contents);
+                        //$("#contents").empty();
+                        //$("#contents").html(fileName+": <br>"+contents);
+                        $('#results').text("");// 清空数据
+                        $('#results').append("<p id='p' style='color: rgb(255, 255, 255); font-size: 18px'></p>");
+                        $("#p").append(contents);
+                    }
+                }
+            });
+        });
+    });
+
+});
 
