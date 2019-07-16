@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="cn.edu.whu.irlab.irep.mapper.RetrieverMapper" >
-  <resultMap id="BaseResultMap" type="cn.edu.whu.irlab.irep.entity.Retriever" >
+<mapper namespace="cn.edu.whu.irlab.irep.mybatis.mapper.RetrieverMapper" >
+  <resultMap id="BaseResultMap" type="cn.edu.whu.irlab.irep.mybatis.entity.Retriever" >
     <id column="retriever_id" property="retrieverId" jdbcType="VARCHAR" />
     <result column="is_chinese" property="isChinese" jdbcType="BIT" />
     <result column="analyzer" property="analyzer" jdbcType="VARCHAR" />
@@ -27,7 +27,7 @@
     delete from retriever
     where retriever_id = #{retrieverId,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="cn.edu.whu.irlab.irep.entity.Retriever" >
+  <insert id="insert" parameterType="cn.edu.whu.irlab.irep.mybatis.entity.Retriever" >
     insert into retriever (retriever_id, is_chinese, analyzer, 
       is_remove_stop_word, model, formula_id, 
       param_name1, param1, param_name2, 
@@ -37,7 +37,7 @@
       #{paramName1,jdbcType=VARCHAR}, #{param1,jdbcType=INTEGER}, #{paramName2,jdbcType=VARCHAR}, 
       #{param2,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="cn.edu.whu.irlab.irep.entity.Retriever" >
+  <insert id="insertSelective" parameterType="cn.edu.whu.irlab.irep.mybatis.entity.Retriever" >
     insert into retriever
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="retrieverId != null" >
@@ -104,7 +104,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="cn.edu.whu.irlab.irep.entity.Retriever" >
+  <update id="updateByPrimaryKeySelective" parameterType="cn.edu.whu.irlab.irep.mybatis.entity.Retriever" >
     update retriever
     <set >
       <if test="isChinese != null" >
@@ -137,7 +137,7 @@
     </set>
     where retriever_id = #{retrieverId,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="cn.edu.whu.irlab.irep.entity.Retriever" >
+  <update id="updateByPrimaryKey" parameterType="cn.edu.whu.irlab.irep.mybatis.entity.Retriever" >
     update retriever
     set is_chinese = #{isChinese,jdbcType=BIT},
       analyzer = #{analyzer,jdbcType=VARCHAR},

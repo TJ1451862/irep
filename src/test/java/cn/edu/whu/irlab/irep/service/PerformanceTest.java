@@ -1,18 +1,15 @@
 package cn.edu.whu.irlab.irep.service;
 
 import cn.edu.whu.irlab.irep.IrepApplication;
-import cn.edu.whu.irlab.irep.entity.Result;
-import cn.edu.whu.irlab.irep.service.impl.ResultServiceImpl;
+import cn.edu.whu.irlab.irep.mybatis.entity.Result;
+import cn.edu.whu.irlab.irep.mybatis.service.impl.ResultServiceImpl;
 import cn.edu.whu.irlab.irep.service.util.ReadDoc;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.core.io.Resource;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;

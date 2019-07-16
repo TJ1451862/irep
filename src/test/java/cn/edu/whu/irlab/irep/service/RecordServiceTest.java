@@ -1,8 +1,8 @@
 package cn.edu.whu.irlab.irep.service;
 
 import cn.edu.whu.irlab.irep.IrepApplication;
-import cn.edu.whu.irlab.irep.entity.Record;
-import cn.edu.whu.irlab.irep.service.impl.RecordServiceImpl;
+import cn.edu.whu.irlab.irep.mybatis.entity.Record;
+import cn.edu.whu.irlab.irep.mybatis.service.impl.RecordServiceImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

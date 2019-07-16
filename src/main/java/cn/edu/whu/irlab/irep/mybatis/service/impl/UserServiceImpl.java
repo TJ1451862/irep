@@ -1,8 +1,8 @@
-package cn.edu.whu.irlab.irep.service.impl;
+package cn.edu.whu.irlab.irep.mybatis.service.impl;
 
-import cn.edu.whu.irlab.irep.entity.User;
-import cn.edu.whu.irlab.irep.mapper.UserMapper;
-import cn.edu.whu.irlab.irep.service.UserService;
+import cn.edu.whu.irlab.irep.mybatis.entity.User;
+import cn.edu.whu.irlab.irep.mybatis.mapper.UserMapper;
+import cn.edu.whu.irlab.irep.mybatis.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -1,20 +1,19 @@
 package cn.edu.whu.irlab.irep.controller;
 
 
-import cn.edu.whu.irlab.irep.entity.Result;
-import cn.edu.whu.irlab.irep.entity.Retriever;
-import cn.edu.whu.irlab.irep.entity.User;
-import cn.edu.whu.irlab.irep.entity.UserRetriever;
-import cn.edu.whu.irlab.irep.service.impl.ResultServiceImpl;
+import cn.edu.whu.irlab.irep.mybatis.entity.Result;
+import cn.edu.whu.irlab.irep.mybatis.entity.Retriever;
+import cn.edu.whu.irlab.irep.mybatis.entity.User;
+import cn.edu.whu.irlab.irep.mybatis.entity.UserRetriever;
+import cn.edu.whu.irlab.irep.mybatis.service.impl.ResultServiceImpl;
 import cn.edu.whu.irlab.irep.service.retrievalModel.languagemodel.LMRetriever;
-import cn.edu.whu.irlab.irep.service.retrievalModel.languagemodel.QueryForLM;
 import cn.edu.whu.irlab.irep.service.retrievalModel.languagemodel.DocForLM;
 import cn.edu.whu.irlab.irep.service.retrievalModel.languagemodel.ResultForLM;
 import cn.edu.whu.irlab.irep.service.util.Constructor;
 import cn.edu.whu.irlab.irep.service.util.Find;
 import cn.edu.whu.irlab.irep.service.util.ReadDoc;
-import cn.edu.whu.irlab.irep.service.impl.RetrieverServiceImpl;
-import cn.edu.whu.irlab.irep.service.impl.UserRetrieverServiceImpl;
+import cn.edu.whu.irlab.irep.mybatis.service.impl.RetrieverServiceImpl;
+import cn.edu.whu.irlab.irep.mybatis.service.impl.UserRetrieverServiceImpl;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
@@ -29,7 +28,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 
 /**

@@ -1,4 +1,4 @@
-package cn.edu.whu.irlab.irep.entity;
+package cn.edu.whu.irlab.irep.mybatis.entity;
 
 public class UserRetriever {
     private Integer userId;

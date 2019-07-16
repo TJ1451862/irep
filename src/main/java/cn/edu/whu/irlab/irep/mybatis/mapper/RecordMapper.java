@@ -1,6 +1,6 @@
-package cn.edu.whu.irlab.irep.mapper;
+package cn.edu.whu.irlab.irep.mybatis.mapper;
 
-import cn.edu.whu.irlab.irep.entity.Record;
+import cn.edu.whu.irlab.irep.mybatis.entity.Record;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

@@ -1,22 +1,14 @@
 package cn.edu.whu.irlab.irep.service.retrievalModel.languagemodel;
 
-import cn.edu.whu.irlab.irep.entity.FullIndex;
-import cn.edu.whu.irlab.irep.entity.InvertedIndex;
-import cn.edu.whu.irlab.irep.service.impl.FullIndexServiceImpl;
-import cn.edu.whu.irlab.irep.service.impl.InvertedIndexServiceImpl;
-import cn.edu.whu.irlab.irep.service.retrievalModel.languagemodel.QueryForLM;
-import cn.edu.whu.irlab.irep.service.retrievalModel.languagemodel.DocForLM;
-import cn.edu.whu.irlab.irep.service.retrievalModel.languagemodel.ResultForLM;
-import cn.edu.whu.irlab.irep.service.util.Calculator;
-import cn.edu.whu.irlab.irep.service.util.Find;
+import cn.edu.whu.irlab.irep.mybatis.entity.FullIndex;
+import cn.edu.whu.irlab.irep.mybatis.entity.InvertedIndex;
+import cn.edu.whu.irlab.irep.mybatis.service.impl.FullIndexServiceImpl;
+import cn.edu.whu.irlab.irep.mybatis.service.impl.InvertedIndexServiceImpl;
 import cn.edu.whu.irlab.irep.service.util.Constructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Service;
-import cn.edu.whu.irlab.irep.service.preProcess.PreProcessor;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 import java.util.*;
 
 /**
@@ -208,4 +200,11 @@ public class LMRetriever {
         return resultAfterSort;
     }
 
+    public double getSmoothParam() {
+        return smoothParam;
+    }
+
+    public void setSmoothParam(double smoothParam) {
+        this.smoothParam = smoothParam;
+    }
 }

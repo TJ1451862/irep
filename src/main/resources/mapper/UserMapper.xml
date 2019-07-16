@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="cn.edu.whu.irlab.irep.mapper.UserMapper">
-    <resultMap id="BaseResultMap" type="cn.edu.whu.irlab.irep.entity.User">
+<mapper namespace="cn.edu.whu.irlab.irep.mybatis.mapper.UserMapper">
+    <resultMap id="BaseResultMap" type="cn.edu.whu.irlab.irep.mybatis.entity.User">
         <result column="id" property="id" jdbcType="INTEGER"/>
         <result column="username" property="username" jdbcType="VARCHAR"/>
         <result column="password" property="password" jdbcType="VARCHAR"/>
@@ -17,12 +17,12 @@
     <sql id="Base_Column_List">
         id,username,password,phone,email,works,create_time,u1,u2,u3,u4
     </sql>
-    <insert id="addUser" parameterType="cn.edu.whu.irlab.irep.entity.User">
+    <insert id="addUser" parameterType="cn.edu.whu.irlab.irep.mybatis.entity.User">
         insert into user (username, password, phone, email, works, create_time)
         values (#{username,jdbcType=VARCHAR}, #{password,jdbcType=INTEGER}, #{phone,jdbcType=VARCHAR},
         #{email,jdbcType=VARCHAR}, #{works,jdbcType=INTEGER}, sysdate())
     </insert>
-    <insert id="insertUser" parameterType="cn.edu.whu.irlab.irep.entity.User">
+    <insert id="insertUser" parameterType="cn.edu.whu.irlab.irep.mybatis.entity.User">
         insert into user
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="username != null">
@@ -62,13 +62,13 @@
         </trim>
     </insert>
 
-    <select id="selectAllUser" parameterType="cn.edu.whu.irlab.irep.entity.User" resultMap="BaseResultMap">
+    <select id="selectAllUser" parameterType="cn.edu.whu.irlab.irep.mybatis.entity.User" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from user
     </select>
 
-    <select id="selectUserByUsernameAndPassword" parameterType="cn.edu.whu.irlab.irep.entity.User"
+    <select id="selectUserByUsernameAndPassword" parameterType="cn.edu.whu.irlab.irep.mybatis.entity.User"
             resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
@@ -83,7 +83,7 @@
         </where>
     </select>
 
-    <select id="selectUserByPhone" parameterType="cn.edu.whu.irlab.irep.entity.User" resultMap="BaseResultMap">
+    <select id="selectUserByPhone" parameterType="cn.edu.whu.irlab.irep.mybatis.entity.User" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from user
@@ -94,7 +94,7 @@
         </where>
     </select>
 
-    <select id="selectUserByPhoneAndUsername" parameterType="cn.edu.whu.irlab.irep.entity.User" resultMap="BaseResultMap">
+    <select id="selectUserByPhoneAndUsername" parameterType="cn.edu.whu.irlab.irep.mybatis.entity.User" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from user
@@ -108,7 +108,7 @@
         </where>
     </select>
 
-    <select id="selectUserByEmail" parameterType="cn.edu.whu.irlab.irep.entity.User" resultMap="BaseResultMap">
+    <select id="selectUserByEmail" parameterType="cn.edu.whu.irlab.irep.mybatis.entity.User" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from user
@@ -119,7 +119,7 @@
         </where>
     </select>
 
-    <select id="selectUserByEmailAndUsername" parameterType="cn.edu.whu.irlab.irep.entity.User" resultMap="BaseResultMap">
+    <select id="selectUserByEmailAndUsername" parameterType="cn.edu.whu.irlab.irep.mybatis.entity.User" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from user
@@ -133,7 +133,7 @@
         </where>
     </select>
 
-    <update id="updateUserByUsername" parameterType="cn.edu.whu.irlab.irep.entity.User">
+    <update id="updateUserByUsername" parameterType="cn.edu.whu.irlab.irep.mybatis.entity.User">
         update user
         <set>
             <if test="password != null">password = #{password}</if>

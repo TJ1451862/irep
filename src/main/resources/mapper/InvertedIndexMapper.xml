@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="cn.edu.whu.irlab.irep.mapper.InvertedIndexMapper" >
-  <resultMap id="BaseResultMap" type="cn.edu.whu.irlab.irep.entity.InvertedIndex" >
+<mapper namespace="cn.edu.whu.irlab.irep.mybatis.mapper.InvertedIndexMapper" >
+  <resultMap id="BaseResultMap" type="cn.edu.whu.irlab.irep.mybatis.entity.InvertedIndex" >
     <result column="id" property="id" jdbcType="INTEGER" />
     <result column="term" property="term" jdbcType="VARCHAR" />
     <result column="doc_id" property="docId" jdbcType="INTEGER" />
     <result column="tf" property="tf" jdbcType="INTEGER" />
     <result column="index_type" property="indexType" jdbcType="VARCHAR" />
   </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="cn.edu.whu.irlab.irep.entity.InvertedIndex" extends="BaseResultMap" >
+  <resultMap id="ResultMapWithBLOBs" type="cn.edu.whu.irlab.irep.mybatis.entity.InvertedIndex" extends="BaseResultMap" >
     <result column="locations" property="locations" jdbcType="LONGVARCHAR" />
   </resultMap>
   <sql id="Base_Column_List">
@@ -18,7 +18,7 @@
     locations
   </sql>
 
-  <insert id="insert" parameterType="cn.edu.whu.irlab.irep.entity.InvertedIndex" >
+  <insert id="insert" parameterType="cn.edu.whu.irlab.irep.mybatis.entity.InvertedIndex" >
     insert into inverted_index (id, term, doc_id, 
       tf, index_type, locations
       )
@@ -26,7 +26,7 @@
       #{tf,jdbcType=INTEGER}, #{indexType,jdbcType=VARCHAR}, #{locations,jdbcType=LONGVARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="cn.edu.whu.irlab.irep.entity.InvertedIndex" >
+  <insert id="insertSelective" parameterType="cn.edu.whu.irlab.irep.mybatis.entity.InvertedIndex" >
     insert into inverted_index
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -72,7 +72,7 @@
   <select id="selectByIndexType" parameterType="String" resultMap="ResultMapWithBLOBs">
     select * from inverted_index where index_type=#{indexType,jdbcType=VARCHAR}
   </select>
-  <select id="select" parameterType="cn.edu.whu.irlab.irep.entity.InvertedIndex" resultMap="ResultMapWithBLOBs">
+  <select id="select" parameterType="cn.edu.whu.irlab.irep.mybatis.entity.InvertedIndex" resultMap="ResultMapWithBLOBs">
     select * from inverted_index
     <where>
       <if test="term != null and term != ''">

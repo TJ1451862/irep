@@ -1,13 +1,13 @@
 package cn.edu.whu.irlab.irep.controller;
 
 
-import cn.edu.whu.irlab.irep.entity.Result;
-import cn.edu.whu.irlab.irep.entity.Retriever;
-import cn.edu.whu.irlab.irep.entity.User;
-import cn.edu.whu.irlab.irep.entity.UserRetriever;
-import cn.edu.whu.irlab.irep.service.impl.ResultServiceImpl;
-import cn.edu.whu.irlab.irep.service.impl.RetrieverServiceImpl;
-import cn.edu.whu.irlab.irep.service.impl.UserRetrieverServiceImpl;
+import cn.edu.whu.irlab.irep.mybatis.entity.Result;
+import cn.edu.whu.irlab.irep.mybatis.entity.Retriever;
+import cn.edu.whu.irlab.irep.mybatis.entity.User;
+import cn.edu.whu.irlab.irep.mybatis.entity.UserRetriever;
+import cn.edu.whu.irlab.irep.mybatis.service.ResultService;
+import cn.edu.whu.irlab.irep.mybatis.service.RetrieverService;
+import cn.edu.whu.irlab.irep.mybatis.service.UserRetrieverService;
 import cn.edu.whu.irlab.irep.service.retrievalModel.vsmModel.DocForVSM;
 import cn.edu.whu.irlab.irep.service.retrievalModel.vsmModel.ResultI;
 import cn.edu.whu.irlab.irep.service.retrievalModel.vsmModel.VSMRetriever;
@@ -41,16 +41,16 @@ import java.util.Map;
 public class VSMController {
 
     @Autowired
-    public ResultServiceImpl resultService;
+    public ResultService resultService;
 
     @Autowired
     public VSMRetriever vsmRetriever;
 
     @Autowired
-    public RetrieverServiceImpl retrieverService;
+    public RetrieverService retrieverService;
 
     @Autowired
-    public UserRetrieverServiceImpl userRetrieverService;
+    public UserRetrieverService userRetrieverService;
 
     HttpServletRequest request;
 

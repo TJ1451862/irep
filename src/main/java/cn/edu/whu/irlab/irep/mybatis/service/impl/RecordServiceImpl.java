@@ -1,7 +1,8 @@
-package cn.edu.whu.irlab.irep.service.impl;
+package cn.edu.whu.irlab.irep.mybatis.service.impl;
 
-import cn.edu.whu.irlab.irep.entity.Record;
-import cn.edu.whu.irlab.irep.mapper.RecordMapper;
+import cn.edu.whu.irlab.irep.mybatis.entity.Record;
+import cn.edu.whu.irlab.irep.mybatis.mapper.RecordMapper;
+import cn.edu.whu.irlab.irep.mybatis.service.RecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +16,7 @@ import java.util.List;
  **/
 
 @Service
-public class RecordServiceImpl {
+public class RecordServiceImpl implements RecordService {
 
     /**
      * 插入一条记录
@@ -28,10 +29,12 @@ public class RecordServiceImpl {
     @Autowired
     public RecordMapper recordMapper;
 
+    @Override
     public int insert(Record record) {
         return recordMapper.insert(record);
     }
 
+    @Override
     public List<Record> selectByIndexType(String indexType) {
         return recordMapper.selectByIndexType(indexType);
     }

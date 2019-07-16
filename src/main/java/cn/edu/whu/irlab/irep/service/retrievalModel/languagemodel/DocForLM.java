@@ -22,7 +22,7 @@ public class DocForLM extends Doc {
         super(id);
     }
 
-    public Map<String,Double> setLMap(Map<String,Double>tfMap){
+    public Map<String,Double> setLMap(Map<String,Double> tfMap){
 //        this.LMap=Calculator.calculateLM(tfMap);
         return this.LMap;
     }

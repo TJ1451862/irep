@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="cn.edu.whu.irlab.irep.mapper.UserRetrieverMapper" >
-  <resultMap id="BaseResultMap" type="cn.edu.whu.irlab.irep.entity.UserRetriever" >
+<mapper namespace="cn.edu.whu.irlab.irep.mybatis.mapper.UserRetrieverMapper" >
+  <resultMap id="BaseResultMap" type="cn.edu.whu.irlab.irep.mybatis.entity.UserRetriever" >
     <id column="user_id" property="userId" jdbcType="INTEGER" />
     <result column="retriever1" property="retriever1" jdbcType="VARCHAR" />
     <result column="retriever2" property="retriever2" jdbcType="VARCHAR" />
@@ -20,13 +20,13 @@
     delete from user_retriever
     where user_id = #{userId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="cn.edu.whu.irlab.irep.entity.UserRetriever" >
+  <insert id="insert" parameterType="cn.edu.whu.irlab.irep.mybatis.entity.UserRetriever" >
     insert into user_retriever (user_id, retriever1, retriever2, 
       retriever3)
     values (#{userId,jdbcType=INTEGER}, #{retriever1,jdbcType=VARCHAR}, #{retriever2,jdbcType=VARCHAR}, 
       #{retriever3,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="cn.edu.whu.irlab.irep.entity.UserRetriever" >
+  <insert id="insertSelective" parameterType="cn.edu.whu.irlab.irep.mybatis.entity.UserRetriever" >
     insert into user_retriever
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="userId != null" >
@@ -57,7 +57,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="cn.edu.whu.irlab.irep.entity.UserRetriever" >
+  <update id="updateByPrimaryKeySelective" parameterType="cn.edu.whu.irlab.irep.mybatis.entity.UserRetriever" >
     update user_retriever
     <set >
       <if test="retriever1 != null" >
@@ -72,7 +72,7 @@
     </set>
     where user_id = #{userId,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="cn.edu.whu.irlab.irep.entity.UserRetriever" >
+  <update id="updateByPrimaryKey" parameterType="cn.edu.whu.irlab.irep.mybatis.entity.UserRetriever" >
     update user_retriever
     set retriever1 = #{retriever1,jdbcType=VARCHAR},
       retriever2 = #{retriever2,jdbcType=VARCHAR},

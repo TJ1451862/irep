@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="cn.edu.whu.irlab.irep.mapper.FullIndexMapper" >
-  <resultMap id="BaseResultMap" type="cn.edu.whu.irlab.irep.entity.FullIndex" >
+<mapper namespace="cn.edu.whu.irlab.irep.mybatis.mapper.FullIndexMapper" >
+  <resultMap id="BaseResultMap" type="cn.edu.whu.irlab.irep.mybatis.entity.FullIndex" >
     <result column="id" property="id" jdbcType="INTEGER" />
     <result column="term" property="term" jdbcType="VARCHAR" />
     <result column="df" property="df" jdbcType="INTEGER" />
     <result column="index_type" property="indexType" jdbcType="VARCHAR" />
   </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="cn.edu.whu.irlab.irep.entity.FullIndex" extends="BaseResultMap" >
+  <resultMap id="ResultMapWithBLOBs" type="cn.edu.whu.irlab.irep.mybatis.entity.FullIndex" extends="BaseResultMap" >
     <result column="ids" property="ids" jdbcType="LONGVARCHAR" />
   </resultMap>
   <sql id="Base_Column_List">
@@ -16,13 +16,13 @@
   <sql id="Blob_Column_List" >
     ids
   </sql>
-  <insert id="insert" parameterType="cn.edu.whu.irlab.irep.entity.FullIndex" >
+  <insert id="insert" parameterType="cn.edu.whu.irlab.irep.mybatis.entity.FullIndex" >
     insert into full_index (id, term, df, 
       index_type, ids)
     values (#{id,jdbcType=INTEGER}, #{term,jdbcType=VARCHAR}, #{df,jdbcType=INTEGER}, 
       #{indexType,jdbcType=VARCHAR}, #{ids,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="cn.edu.whu.irlab.irep.entity.FullIndex" >
+  <insert id="insertSelective" parameterType="cn.edu.whu.irlab.irep.mybatis.entity.FullIndex" >
     insert into full_index
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >

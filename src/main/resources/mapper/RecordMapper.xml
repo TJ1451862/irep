@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="cn.edu.whu.irlab.irep.mapper.RecordMapper" >
-  <resultMap id="BaseResultMap" type="cn.edu.whu.irlab.irep.entity.Record" >
+<mapper namespace="cn.edu.whu.irlab.irep.mybatis.mapper.RecordMapper" >
+  <resultMap id="BaseResultMap" type="cn.edu.whu.irlab.irep.mybatis.entity.Record" >
     <result column="term" property="term" jdbcType="VARCHAR" />
     <result column="doc_id" property="docId" jdbcType="INTEGER" />
     <result column="location" property="location" jdbcType="INTEGER" />
@@ -11,13 +11,13 @@
   <sql id="Base_Column_List">
         term, doc_id, location, index_type
     </sql>
-  <insert id="insert" parameterType="cn.edu.whu.irlab.irep.entity.Record" >
+  <insert id="insert" parameterType="cn.edu.whu.irlab.irep.mybatis.entity.Record" >
     insert into records (term, doc_id, location, 
       index_type, id)
     values (#{term,jdbcType=VARCHAR}, #{docId,jdbcType=INTEGER}, #{location,jdbcType=INTEGER}, 
       #{indexType,jdbcType=VARCHAR}, #{id,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="cn.edu.whu.irlab.irep.entity.Record" >
+  <insert id="insertSelective" parameterType="cn.edu.whu.irlab.irep.mybatis.entity.Record" >
     insert into records
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="term != null" >

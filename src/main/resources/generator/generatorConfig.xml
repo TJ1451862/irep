@@ -20,7 +20,7 @@
             <property name="forceBigDecimals" value="false"/>
         </javaTypeResolver>
         <!-- 生成(实体)模型的包名和位置-->
-        <javaModelGenerator targetPackage="cn.edu.whu.irlab.irep.entity" targetProject="src\main\java">
+        <javaModelGenerator targetPackage="cn.edu.whu.irlab.irep.mybatis.entity" targetProject="src\main\java">
             <property name="enableSubPackages" value="true"/>
             <property name="trimStrings" value="true"/>
         </javaModelGenerator>
@@ -29,7 +29,7 @@
             <property name="enableSubPackages" value="true"/>
         </sqlMapGenerator>
         <!-- 生成DAO接口的包名和位置-->
-        <javaClientGenerator type="XMLMAPPER" targetPackage="cn.edu.whu.irlab.irep.mapper"
+        <javaClientGenerator type="XMLMAPPER" targetPackage="cn.edu.whu.irlab.irep.mybatis.mapper"
                              targetProject="src\main\java">
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>

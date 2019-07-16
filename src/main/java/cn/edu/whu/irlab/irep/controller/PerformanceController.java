@@ -1,12 +1,12 @@
 package cn.edu.whu.irlab.irep.controller;
 
-import cn.edu.whu.irlab.irep.entity.Result;
-import cn.edu.whu.irlab.irep.entity.Retriever;
-import cn.edu.whu.irlab.irep.entity.User;
-import cn.edu.whu.irlab.irep.entity.UserRetriever;
-import cn.edu.whu.irlab.irep.service.impl.ResultServiceImpl;
-import cn.edu.whu.irlab.irep.service.impl.RetrieverServiceImpl;
-import cn.edu.whu.irlab.irep.service.impl.UserRetrieverServiceImpl;
+import cn.edu.whu.irlab.irep.mybatis.entity.Result;
+import cn.edu.whu.irlab.irep.mybatis.entity.Retriever;
+import cn.edu.whu.irlab.irep.mybatis.entity.User;
+import cn.edu.whu.irlab.irep.mybatis.entity.UserRetriever;
+import cn.edu.whu.irlab.irep.mybatis.service.ResultService;
+import cn.edu.whu.irlab.irep.mybatis.service.RetrieverService;
+import cn.edu.whu.irlab.irep.mybatis.service.UserRetrieverService;
 import cn.edu.whu.irlab.irep.service.perfomance.Evaluator;
 import cn.edu.whu.irlab.irep.service.util.ReadDoc;
 import com.alibaba.fastjson.JSON;
@@ -19,9 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 检索模型性能 控制层
@@ -31,13 +29,13 @@ import java.util.Map;
 public class PerformanceController {
 
     @Autowired
-    public ResultServiceImpl resultService;
+    public ResultService resultService;
 
     @Autowired
-    public UserRetrieverServiceImpl userRetrieverService;
+    public UserRetrieverService userRetrieverService;
 
     @Autowired
-    public RetrieverServiceImpl retrieverService;
+    public RetrieverService retrieverService;
 
     /**
      * 返回标准排序

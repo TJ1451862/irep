@@ -1,6 +1,6 @@
 package cn.edu.whu.irlab.irep.service.perfomance;
 
-import cn.edu.whu.irlab.irep.entity.Result;
+import cn.edu.whu.irlab.irep.mybatis.entity.Result;
 
 import java.util.List;
 

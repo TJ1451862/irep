@@ -1,6 +1,6 @@
-package cn.edu.whu.irlab.irep.mapper;
+package cn.edu.whu.irlab.irep.mybatis.mapper;
 
-import cn.edu.whu.irlab.irep.entity.Retriever;
+import cn.edu.whu.irlab.irep.mybatis.entity.Retriever;
 import org.springframework.stereotype.Component;
 
 @Component

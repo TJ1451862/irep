@@ -1,9 +1,9 @@
 package cn.edu.whu.irlab.irep.service.retrievalModel.vsmModel;
 
-import cn.edu.whu.irlab.irep.entity.FullIndex;
-import cn.edu.whu.irlab.irep.entity.InvertedIndex;
-import cn.edu.whu.irlab.irep.service.impl.FullIndexServiceImpl;
-import cn.edu.whu.irlab.irep.service.impl.InvertedIndexServiceImpl;
+import cn.edu.whu.irlab.irep.mybatis.entity.FullIndex;
+import cn.edu.whu.irlab.irep.mybatis.entity.InvertedIndex;
+import cn.edu.whu.irlab.irep.mybatis.service.impl.FullIndexServiceImpl;
+import cn.edu.whu.irlab.irep.mybatis.service.impl.InvertedIndexServiceImpl;
 import cn.edu.whu.irlab.irep.service.util.Calculator;
 import cn.edu.whu.irlab.irep.service.util.Find;
 import cn.edu.whu.irlab.irep.service.util.Constructor;

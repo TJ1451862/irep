@@ -1,21 +1,12 @@
-package cn.edu.whu.irlab.irep.mapper;
+package cn.edu.whu.irlab.irep.mybatis.service;
 
-import cn.edu.whu.irlab.irep.entity.UserRetriever;
-import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Component;
+import cn.edu.whu.irlab.irep.mybatis.entity.UserRetriever;
 
-@Mapper
-@Component
-public interface UserRetrieverMapper {
+public interface UserRetrieverService {
     int deleteByPrimaryKey(Integer userId);
-
     int insert(UserRetriever record);
-
     int insertSelective(UserRetriever record);
-
     UserRetriever selectByPrimaryKey(Integer userId);
-
     int updateByPrimaryKeySelective(UserRetriever record);
-
     int updateByPrimaryKey(UserRetriever record);
 }
