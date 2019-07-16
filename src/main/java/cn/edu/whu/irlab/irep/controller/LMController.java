@@ -89,8 +89,10 @@ public class LMController {
     public void isNeedSearch(@RequestParam(name = "query") String query,
                              @RequestParam(name = "smoothParam") double smoothParam,
                              HttpServletRequest request) {
-        languageRetriever.initLMRetriever(query, smoothParam, request);
-        languageRetriever.search();
+        if(languageRetriever.getResult().size()==0||languageRetriever.getSmoothParam()!=smoothParam||!languageRetriever.getQuery().getContent().equals(query)){
+            languageRetriever.initLMRetriever(query, smoothParam, request);
+            languageRetriever.search();
+        }
     }
 
 

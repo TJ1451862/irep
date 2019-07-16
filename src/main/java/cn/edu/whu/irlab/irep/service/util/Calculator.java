@@ -113,7 +113,12 @@ public class Calculator {
         }
         for(String s :
                 tfMap.keySet()){
-            tfForLM= tfMap.get(s)/numberOfTerms;
+            try{
+                tfForLM= tfMap.get(s)/numberOfTerms;
+            }catch (ArithmeticException exc){
+                tfForLM=0.0;
+            }
+//            tfForLM= tfMap.get(s)/numberOfTerms;
             resultForLM.put(s,tfForLM);
         }
         return resultForLM;
