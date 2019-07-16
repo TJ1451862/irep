@@ -10,8 +10,6 @@ import cn.edu.whu.irlab.irep.service.retrievalModel.languagemodel.LMRetriever;
 import cn.edu.whu.irlab.irep.service.retrievalModel.languagemodel.QueryForLM;
 import cn.edu.whu.irlab.irep.service.retrievalModel.languagemodel.DocForLM;
 import cn.edu.whu.irlab.irep.service.retrievalModel.languagemodel.ResultForLM;
-import cn.edu.whu.irlab.irep.service.retrievalModel.vsmmodel.DocForVSM;
-import cn.edu.whu.irlab.irep.service.retrievalModel.vsmmodel.ResultI;
 import cn.edu.whu.irlab.irep.service.util.Constructor;
 import cn.edu.whu.irlab.irep.service.util.Find;
 import cn.edu.whu.irlab.irep.service.util.ReadDoc;
@@ -41,7 +39,7 @@ import java.util.Map;
  * @desc 语言模型交互层
  **/
 @Controller
-@RequestMapping(value="IRforCN/Retrieval/languageModel")
+@RequestMapping(value = "IRforCN/Retrieval/languageModel")
 public class LMController {
 
     @Autowired
@@ -58,21 +56,19 @@ public class LMController {
 
     /**
      * 返回检索结果
-     * @param query 检索式
-     * @param smoothParam  平滑系数
-     * @param analyzerName  分词器
-     * @param isRemoveStopWord 是否去除停用词
+     *
+     * @param query            检索式
+     * @param smoothParam      平滑系数
      * @return 检索结果
      */
     @ResponseBody
     @RequestMapping("/lmSearch")
-    public JSONArray LMSearchController(@RequestParam(name="query") String query,
-                                        @RequestParam(name="smoothParam") double smoothParam,
-                                        @RequestParam(name="analyzerName") String analyzerName,
-                                        @RequestParam(name = "isRemoveStopWord") boolean isRemoveStopWord){
+    public JSONArray LMSearchController(@RequestParam(name = "query") String query,
+                                        @RequestParam(name = "smoothParam") double smoothParam,
+                                        HttpServletRequest request) {
 
-        isNeedSearch(query, smoothParam, analyzerName, isRemoveStopWord);
-        JSONArray searchResult=new JSONArray();
+        isNeedSearch(query, smoothParam, request);
+        JSONArray searchResult = new JSONArray();
         List<ResultForLM> resultList = languageRetriever.getResultAfterSort();
         for (int i = 0; i < resultList.size(); i++) {
             JSONObject jsonObject = new JSONObject();
@@ -86,52 +82,48 @@ public class LMController {
 
     /**
      * 判断是否需要检索
-     * @param query 检索式
+     *
+     * @param query       检索式
      * @param smoothParam 平滑系数
-     * @param analyzerName 分词器
-     * @param isRemoveStopWord 是否去除停用词
      */
-    public void isNeedSearch(@RequestParam(name="query") String query,
-                             @RequestParam(name="smoothParam") double smoothParam,
-                             @RequestParam(name="analyzerName") String analyzerName,
-                             @RequestParam(name = "isRemoveStopWord") boolean isRemoveStopWord){
-        languageRetriever.initLMRetriever(query, smoothParam, analyzerName, isRemoveStopWord);
+    public void isNeedSearch(@RequestParam(name = "query") String query,
+                             @RequestParam(name = "smoothParam") double smoothParam,
+                             HttpServletRequest request) {
+        languageRetriever.initLMRetriever(query, smoothParam, request);
         languageRetriever.search();
     }
 
 
     /**
      * 返回检索式的预处理结果
-     * @param query 检索式
-     * @param analyzerName 分词器
-     * @param isRemoveStopWord 是否去除停用词
+     *
+     * @param query            检索式
      * @return 检索式的预处理结果
      */
     @ResponseBody
     @RequestMapping("/queryProcess")
-    public JSONObject LMQueryProcess(@RequestParam(name="query") String query,
-                                     @RequestParam(name="smoothParam") double smoothParam,
-                                     @RequestParam(name="analyzerName") String analyzerName,
-                                     @RequestParam(name = "isRemoveStopWord") boolean isRemoveStopWord){
+    public JSONObject LMQueryProcess(@RequestParam(name = "query") String query,
+                                     @RequestParam(name = "smoothParam") double smoothParam,
+                                     HttpServletRequest request) {
         JSONObject ppq = new JSONObject();
-        isNeedSearch(query, smoothParam, analyzerName, isRemoveStopWord);
+        isNeedSearch(query, smoothParam, request);
         ppq.put("query", query);
         ppq.put("result", languageRetriever.getQuery().getPreProcessResult());
         return ppq;
     }
 
     /**
-     *为每篇文档建立LM，计算其各个词的频率
+     * 为每篇文档建立LM，计算其各个词的频率
+     *
      * @param
      * @return 给出各文档中各词词项的频率（存在tfs中)，即各文档的LM
      */
     @ResponseBody
     @RequestMapping("/lmOfDocs")
-    public List<JSONObject> getTfsOfDocsController(@RequestParam(name="query") String query,
-                                                   @RequestParam(name="smoothParam") double smoothParam,
-                                                   @RequestParam(name="analyzerName") String analyzerName,
-                                                   @RequestParam(name = "isRemoveStopWord") boolean isRemoveStopWord) {
-        isNeedSearch(query, smoothParam, analyzerName, isRemoveStopWord);
+    public List<JSONObject> getTfsOfDocsController(@RequestParam(name = "query") String query,
+                                                   @RequestParam(name = "smoothParam") double smoothParam,
+                                                   HttpServletRequest request) {
+        isNeedSearch(query, smoothParam, request);
         List<DocForLM> docForLMList = languageRetriever.getDocForLMList();
         List<JSONObject> lmsOfDocs = new ArrayList<>();
         for (int i = 0; i < docForLMList.size(); i++) {
@@ -149,22 +141,20 @@ public class LMController {
     //返回各文档的生成概率
     @ResponseBody
     @RequestMapping("/getResult")
-    public List<ResultForLM> getResult(@RequestParam(name="query") String query,
-                                       @RequestParam(name="smoothParam") double smoothParam,
-                                       @RequestParam(name="analyzerName") String analyzerName,
-                                       @RequestParam(name = "isRemoveStopWord") boolean isRemoveStopWord){
-        isNeedSearch(query, smoothParam, analyzerName, isRemoveStopWord);
+    public List<ResultForLM> getResult(@RequestParam(name = "query") String query,
+                                       @RequestParam(name = "smoothParam") double smoothParam,
+                                       HttpServletRequest request) {
+        isNeedSearch(query, smoothParam, request);
         return languageRetriever.getResult();
     }
 
     //返回降序的各文档的生成概率
     @ResponseBody
     @RequestMapping("/getResultAfterSort")
-    public List<ResultForLM> getResultAfterSort(@RequestParam(name="query") String query,
-                                       @RequestParam(name="smoothParam") double smoothParam,
-                                       @RequestParam(name="analyzerName") String analyzerName,
-                                       @RequestParam(name = "isRemoveStopWord") boolean isRemoveStopWord){
-        isNeedSearch(query, smoothParam, analyzerName, isRemoveStopWord);
+    public List<ResultForLM> getResultAfterSort(@RequestParam(name = "query") String query,
+                                                @RequestParam(name = "smoothParam") double smoothParam,
+                                                HttpServletRequest request) {
+        isNeedSearch(query, smoothParam, request);
         return languageRetriever.getResultAfterSort();
     }
 
@@ -202,9 +192,9 @@ public class LMController {
             for (int i = 0; i < queryList.size(); i++) {
                 String queryContent = queryList.getJSONObject(i).getString("query");
                 int queryId = queryList.getJSONObject(i).getIntValue("queryId");
-                languageRetriever.initLMRetriever(queryContent, smoothParam, analyzerName, isRemoveStopWord);
+                languageRetriever.initLMRetriever(queryContent, smoothParam, request);
                 languageRetriever.search();
-                List<ResultForLM> resultAfterSort =languageRetriever.getResultAfterSort();
+                List<ResultForLM> resultAfterSort = languageRetriever.getResultAfterSort();
                 for (int j = 0; j < resultAfterSort.size(); j++) {
                     Result result = new Result();
                     result.setDocId(resultAfterSort.get(j).getDocID());
@@ -246,7 +236,7 @@ public class LMController {
                         userRetriever.setRetriever1(retrieverId);
                         break;
                 }
-                state=userRetrieverService.updateByPrimaryKeySelective(userRetriever);
+                state = userRetrieverService.updateByPrimaryKeySelective(userRetriever);
             }
             if (state == 1) {
                 modelMap.put("code", 1);

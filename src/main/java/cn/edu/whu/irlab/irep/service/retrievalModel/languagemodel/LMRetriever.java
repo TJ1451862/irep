@@ -11,9 +11,11 @@ import cn.edu.whu.irlab.irep.service.util.Calculator;
 import cn.edu.whu.irlab.irep.service.util.Find;
 import cn.edu.whu.irlab.irep.service.util.Constructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Service;
 import cn.edu.whu.irlab.irep.service.preProcess.PreProcessor;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.*;
 
@@ -52,11 +54,11 @@ public class LMRetriever {
 
     Map<String,Double> idfMap=new HashMap<>(); //词典中各词项在所有文档中出现的频率
 
-    public void initLMRetriever(String query,double smoothParam,String analyzerName,boolean isRemoveStopWord){
-        this.indexType = Constructor.indexTypeConstructor(analyzerName, isRemoveStopWord);
-        this.analyzerName=analyzerName;
+    public void initLMRetriever(String query, double smoothParam,  HttpServletRequest request){
+        this.indexType = Constructor.indexTypeConstructor(request);
         this.smoothParam=smoothParam;
-        this.isRemoveStopWord=isRemoveStopWord;
+        this.analyzerName = (String) request.getSession().getAttribute("analyzer");
+        this.isRemoveStopWord = (boolean)request.getSession().getAttribute("removeStopWord");
         this.query=new QueryForLM(query, analyzerName, isRemoveStopWord);
     }
 
@@ -120,7 +122,7 @@ public class LMRetriever {
      * @return
      */
     public void  setIdfs(){
-        List<FullIndex> fullIndexList = fullIndexService.selectFullIndexByIndexType(indexType);
+        List<FullIndex> fullIndexList = fullIndexService.selectByIndexType(indexType);
         for(int i=0;i<fullIndexList.size();i++){
             idfMap.put(fullIndexList.get(i).getTerm(),fullIndexList.get(i).getDf()/totalArticles);
         }
