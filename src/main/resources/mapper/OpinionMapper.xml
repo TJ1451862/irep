@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="cn.edu.whu.irlab.irep.mapper.OpinionMapper" >
-  <resultMap id="BaseResultMap" type="cn.edu.whu.irlab.irep.entity.Opinion" >
+<mapper namespace="cn.edu.whu.irlab.irep.mybatis.mapper.OpinionMapper" >
+  <resultMap id="BaseResultMap" type="cn.edu.whu.irlab.irep.mybatis.entity.Opinion" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="o_email" property="oEmail" jdbcType="VARCHAR" />
     <result column="o_phone" property="oPhone" jdbcType="VARCHAR" />
@@ -24,7 +24,7 @@
     delete from opinion
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="cn.edu.whu.irlab.irep.entity.Opinion" >
+  <insert id="insert" parameterType="cn.edu.whu.irlab.irep.mybatis.entity.Opinion" >
     insert into opinion (id, o_email, o_phone, o_content,
       create_time, sign, call_by, 
       call_time)
@@ -32,7 +32,7 @@
       #{oContent,jdbcType=VARCHAR},#{createTime,jdbcType=TIMESTAMP}, #{sign,jdbcType=INTEGER},
       #{callBy,jdbcType=INTEGER},#{callTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="cn.edu.whu.irlab.irep.entity.Opinion" >
+  <insert id="insertSelective" parameterType="cn.edu.whu.irlab.irep.mybatis.entity.Opinion" >
     insert into opinion
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -83,7 +83,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="cn.edu.whu.irlab.irep.entity.Opinion" >
+  <update id="updateByPrimaryKeySelective" parameterType="cn.edu.whu.irlab.irep.mybatis.entity.Opinion" >
     update opinion
     <set >
       <if test="oEmail != null" >
@@ -108,7 +108,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="cn.edu.whu.irlab.irep.entity.Opinion" >
+  <update id="updateByPrimaryKey" parameterType="cn.edu.whu.irlab.irep.mybatis.entity.Opinion" >
     update opinion
     set o_email = #{oEmail,jdbcType=VARCHAR},
       o_phone = #{oPhone,jdbcType=VARCHAR},

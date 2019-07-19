@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="cn.edu.whu.irlab.irep.mapper.CommentMapper" >
-  <resultMap id="BaseResultMap" type="cn.edu.whu.irlab.irep.entity.Comment" >
+<mapper namespace="cn.edu.whu.irlab.irep.mybatis.mapper.CommentMapper" >
+  <resultMap id="BaseResultMap" type="cn.edu.whu.irlab.irep.mybatis.entity.Comment" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="c_username" property="cUsername" jdbcType="VARCHAR" />
     <result column="c_content" property="cContent" jdbcType="VARCHAR" />
@@ -24,7 +24,7 @@
     delete from comment
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="cn.edu.whu.irlab.irep.entity.Comment" >
+  <insert id="insert" parameterType="cn.edu.whu.irlab.irep.mybatis.entity.Comment" >
     insert into comment (id, c_username, c_content, 
       c_create_time, c_support, c1, 
       c2, c3)
@@ -32,7 +32,7 @@
       #{cCreateTime,jdbcType=TIMESTAMP}, #{cSupport,jdbcType=INTEGER}, #{c1,jdbcType=VARCHAR}, 
       #{c2,jdbcType=VARCHAR}, #{c3,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="cn.edu.whu.irlab.irep.entity.Comment" >
+  <insert id="insertSelective" parameterType="cn.edu.whu.irlab.irep.mybatis.entity.Comment" >
     insert into comment
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -83,7 +83,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="cn.edu.whu.irlab.irep.entity.Comment" >
+  <update id="updateByPrimaryKeySelective" parameterType="cn.edu.whu.irlab.irep.mybatis.entity.Comment" >
     update comment
     <set >
       <if test="cUsername != null" >
@@ -110,7 +110,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="cn.edu.whu.irlab.irep.entity.Comment" >
+  <update id="updateByPrimaryKey" parameterType="cn.edu.whu.irlab.irep.mybatis.entity.Comment" >
     update comment
     set c_username = #{cUsername,jdbcType=VARCHAR},
       c_content = #{cContent,jdbcType=VARCHAR},
