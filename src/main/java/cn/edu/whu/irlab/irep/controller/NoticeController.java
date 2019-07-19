@@ -1,8 +1,7 @@
 package cn.edu.whu.irlab.irep.controller;
 
-import cn.edu.whu.irlab.irep.entity.Notice;
-import cn.edu.whu.irlab.irep.entity.User;
-import cn.edu.whu.irlab.irep.service.NoticeService;
+import cn.edu.whu.irlab.irep.mybatis.entity.*;
+import cn.edu.whu.irlab.irep.mybatis.service.NoticeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

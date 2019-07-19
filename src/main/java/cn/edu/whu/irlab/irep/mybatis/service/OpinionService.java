@@ -1,6 +1,7 @@
-package cn.edu.whu.irlab.irep.service;
+package cn.edu.whu.irlab.irep.mybatis.service;
 
-import cn.edu.whu.irlab.irep.entity.Opinion;
+
+import cn.edu.whu.irlab.irep.mybatis.entity.Opinion;
 
 import java.util.List;
 

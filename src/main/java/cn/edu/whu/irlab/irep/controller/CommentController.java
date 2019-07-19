@@ -1,8 +1,8 @@
 package cn.edu.whu.irlab.irep.controller;
 
-import cn.edu.whu.irlab.irep.entity.*;
-import cn.edu.whu.irlab.irep.service.AnswerService;
-import cn.edu.whu.irlab.irep.service.CommentService;
+import cn.edu.whu.irlab.irep.mybatis.entity.*;
+import cn.edu.whu.irlab.irep.mybatis.service.AnswerService;
+import cn.edu.whu.irlab.irep.mybatis.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

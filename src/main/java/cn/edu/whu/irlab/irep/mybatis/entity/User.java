@@ -1,39 +1,58 @@
 package cn.edu.whu.irlab.irep.mybatis.entity;
 
+import lombok.Data;
+
 import java.util.Date;
 
-/**
- * @author fangrf
- * @version 1.0
- * @date 2019-06-25 10:59
- * @desc 用户表
- **/
+@Data
 public class User {
-    //主键
-    private int id;
+    private Integer id;
+
     //用户名
     private String username;
+
     //密码
     private String password;
-    //手机号码
+
+    //盐值
+    private String salt;
+
+    //学号或者工号
+    private String jobNumber;
+
+    //手机号
     private String phone;
+
     //邮箱
     private String email;
-    //学校、工作单位
-    private String works;
-    //注册时间
+
+    //工作单位
+    private String workspace;
+
+    //用户类别1校内用户，2校外用户，3是后台管理员
+    private Integer category;
+
+    //创建时间
     private Date createTime;
+
+    //登录时间
+    private Date loginTime;
+
+    //登出时间
+    private Date outTime;
+
     //备用字段
     private String u1;
-    private String u2;
-    private String u3;
-    private String u4;
 
-    public int getId() {
+    private String u2;
+
+    private String u3;
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -42,7 +61,7 @@ public class User {
     }
 
     public void setUsername(String username) {
-        this.username = username;
+        this.username = username == null ? null : username.trim();
     }
 
     public String getPassword() {
@@ -50,7 +69,23 @@ public class User {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.password = password == null ? null : password.trim();
+    }
+
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt == null ? null : salt.trim();
+    }
+
+    public String getJobNumber() {
+        return jobNumber;
+    }
+
+    public void setJobNumber(String jobNumber) {
+        this.jobNumber = jobNumber == null ? null : jobNumber.trim();
     }
 
     public String getPhone() {
@@ -58,7 +93,7 @@ public class User {
     }
 
     public void setPhone(String phone) {
-        this.phone = phone;
+        this.phone = phone == null ? null : phone.trim();
     }
 
     public String getEmail() {
@@ -66,15 +101,23 @@ public class User {
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        this.email = email == null ? null : email.trim();
     }
 
-    public String getWorks() {
-        return works;
+    public String getWorkspace() {
+        return workspace;
     }
 
-    public void setWorks(String works) {
-        this.works = works;
+    public void setWorkspace(String workspace) {
+        this.workspace = workspace == null ? null : workspace.trim();
+    }
+
+    public Integer getCategory() {
+        return category;
+    }
+
+    public void setCategory(Integer category) {
+        this.category = category;
     }
 
     public Date getCreateTime() {
@@ -85,12 +128,28 @@ public class User {
         this.createTime = createTime;
     }
 
+    public Date getLoginTime() {
+        return loginTime;
+    }
+
+    public void setLoginTime(Date loginTime) {
+        this.loginTime = loginTime;
+    }
+
+    public Date getOutTime() {
+        return outTime;
+    }
+
+    public void setOutTime(Date outTime) {
+        this.outTime = outTime;
+    }
+
     public String getU1() {
         return u1;
     }
 
     public void setU1(String u1) {
-        this.u1 = u1;
+        this.u1 = u1 == null ? null : u1.trim();
     }
 
     public String getU2() {
@@ -98,7 +157,7 @@ public class User {
     }
 
     public void setU2(String u2) {
-        this.u2 = u2;
+        this.u2 = u2 == null ? null : u2.trim();
     }
 
     public String getU3() {
@@ -106,31 +165,7 @@ public class User {
     }
 
     public void setU3(String u3) {
-        this.u3 = u3;
+        this.u3 = u3 == null ? null : u3.trim();
     }
 
-    public String getU4() {
-        return u4;
-    }
-
-    public void setU4(String u4) {
-        this.u4 = u4;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", phone='" + phone + '\'' +
-                ", email='" + email + '\'' +
-                ", works='" + works + '\'' +
-                ", createTime=" + createTime +
-                ", u1='" + u1 + '\'' +
-                ", u2='" + u2 + '\'' +
-                ", u3='" + u3 + '\'' +
-                ", u4='" + u4 + '\'' +
-                '}';
-    }
 }

@@ -1,8 +1,8 @@
-package cn.edu.whu.irlab.irep.service.impl;
+package cn.edu.whu.irlab.irep.mybatis.service.impl;
 
-import cn.edu.whu.irlab.irep.entity.Opinion;
-import cn.edu.whu.irlab.irep.mapper.OpinionMapper;
-import cn.edu.whu.irlab.irep.service.OpinionService;
+import cn.edu.whu.irlab.irep.mybatis.entity.Opinion;
+import cn.edu.whu.irlab.irep.mybatis.mapper.OpinionMapper;
+import cn.edu.whu.irlab.irep.mybatis.service.OpinionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,7 +27,7 @@ public class OpinionServiceImpl implements OpinionService {
         return opinionMapper.insertSelective(opinion);
     }
 
-    @Override
+
     public int updateOpinoinService(Opinion opinion) {
         return opinionMapper.updateByPrimaryKeySelective(opinion);
     }

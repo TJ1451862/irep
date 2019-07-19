@@ -1,5 +1,6 @@
 package cn.edu.whu.irlab.irep.mybatis.mapper;
 
+
 import cn.edu.whu.irlab.irep.mybatis.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -15,13 +16,8 @@ import java.util.List;
 @Mapper
 @Component
 public interface UserMapper {
-    int addUser(User user);
-
-    int insertUser(User user);
 
     List<User> selectAllUser();
-
-    User selectUserByUsernameAndPassword(@Param("username") String username, @Param("password") String password);
 
     User selectUserByPhone(User user);
 
@@ -32,4 +28,16 @@ public interface UserMapper {
     User selectUserByEmailAndUsername(User user);
 
     int updateUserByUsername(User user);
+
+    int insertSelective(User user);
+
+    User selectUserByUsername(@Param("username") String username);
+
+    int updateLoginTimeByUsername(User user);
+
+    int updateOutTimeByUsername(Integer id);
+
+    int updateByPrimaryKeySelective(User user);
+
+    int deleteByPrimaryKey(Integer id);
 }

@@ -9,6 +9,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import static cn.edu.whu.irlab.irep.service.util.MD5Util.createSaltValue;
+import static cn.edu.whu.irlab.irep.service.util.MD5Util.getFinalPwd;
+import static cn.edu.whu.irlab.irep.service.util.MD5Util.md5EncodePwd;
+
 /**
  * @author fangrf
  * @version 1.0
@@ -25,7 +29,16 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int insertUserService(User user) {
-        return userMapper.insertUser(user);
+        String userPwd = user.getPassword();
+        String salt = createSaltValue();
+        //System.out.println("盐值>>"+salt);
+        String md5encodePwd = md5EncodePwd(userPwd);
+        //System.out.println("md5>>"+md5encodePwd);
+        String finalPwd = getFinalPwd(salt,md5encodePwd);
+        //System.out.println("最终密码>>"+finalPwd);
+        user.setPassword(finalPwd);
+        user.setSalt(salt);
+        return userMapper.insertSelective(user);
     }
 
     @Override
@@ -34,32 +47,65 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User selectUser(String username,String password) {
-        return userMapper.selectUserByUsernameAndPassword(username,password);
+    public User selectUserService(String username) {
+        return userMapper.selectUserByUsername(username);
     }
 
     @Override
-    public User selectUserByPhone(User user) {
+    public User selectUserByPhoneService(User user) {
         return userMapper.selectUserByPhone(user);
     }
 
     @Override
-    public User selectUserByPhoneAndUsername(User user) {
+    public User selectUserByPhoneAndUsernameService(User user) {
         return userMapper.selectUserByPhoneAndUsername(user);
     }
 
     @Override
-    public User selectUserByEmail(User user) {
+    public User selectUserByEmailService(User user) {
         return userMapper.selectUserByEmail(user);
     }
 
     @Override
-    public User selectUserByEmailAndUsername(User user) {
+    public User selectUserByEmailAndUsernameService(User user) {
         return userMapper.selectUserByEmailAndUsername(user);
     }
 
     @Override
-    public int updateUserByUsername(User user) {
+    public int updateUserByUsernameService(User user) {
+        String userPwd = user.getPassword();
+        String salt = createSaltValue();
+        String md5encodePwd = md5EncodePwd(userPwd);
+        String finalPwd = getFinalPwd(salt,md5encodePwd);
+        user.setPassword(finalPwd);
+        user.setSalt(salt);
         return userMapper.updateUserByUsername(user);
     }
+
+    @Override
+    public int updateLoginTimeByUsernameService(User user) {
+        return userMapper.updateLoginTimeByUsername(user);
+    }
+
+    @Override
+    public int updateOutTimeByUsernameService(int id) {
+        return userMapper.updateOutTimeByUsername(id);
+    }
+
+    @Override
+    public int updateUserByIdService(User user) {
+        String userPwd = user.getPassword();
+        String salt = createSaltValue();
+        String md5encodePwd = md5EncodePwd(userPwd);
+        String finalPwd = getFinalPwd(salt,md5encodePwd);
+        user.setPassword(finalPwd);
+        user.setSalt(salt);
+        return userMapper.updateByPrimaryKeySelective(user);
+    }
+
+    @Override
+    public int deleteUserByIdService(int id) {
+        return userMapper.deleteByPrimaryKey(id);
+    }
+
 }
