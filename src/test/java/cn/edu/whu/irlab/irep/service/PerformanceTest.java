@@ -1,8 +1,8 @@
 package cn.edu.whu.irlab.irep.service;
 
 import cn.edu.whu.irlab.irep.IrepApplication;
-import cn.edu.whu.irlab.irep.mybatis.entity.Result;
-import cn.edu.whu.irlab.irep.mybatis.service.impl.ResultServiceImpl;
+import cn.edu.whu.irlab.irep.base.entity.Result;
+import cn.edu.whu.irlab.irep.base.dao.impl.ResultServiceImpl;
 import cn.edu.whu.irlab.irep.service.util.ReadDoc;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;

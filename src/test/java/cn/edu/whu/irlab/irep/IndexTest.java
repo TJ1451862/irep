@@ -1,12 +1,12 @@
 package cn.edu.whu.irlab.irep;
 
 import cn.edu.whu.irlab.irep.service.entity.Doc;
-import cn.edu.whu.irlab.irep.mybatis.entity.FullIndex;
-import cn.edu.whu.irlab.irep.mybatis.entity.InvertedIndex;
-import cn.edu.whu.irlab.irep.mybatis.entity.Record;
-import cn.edu.whu.irlab.irep.mybatis.service.impl.FullIndexServiceImpl;
-import cn.edu.whu.irlab.irep.mybatis.service.impl.InvertedIndexServiceImpl;
-import cn.edu.whu.irlab.irep.mybatis.service.impl.RecordServiceImpl;
+import cn.edu.whu.irlab.irep.base.entity.FullIndex;
+import cn.edu.whu.irlab.irep.base.entity.InvertedIndex;
+import cn.edu.whu.irlab.irep.base.entity.Record;
+import cn.edu.whu.irlab.irep.base.dao.impl.FullIndexServiceImpl;
+import cn.edu.whu.irlab.irep.base.dao.impl.InvertedIndexServiceImpl;
+import cn.edu.whu.irlab.irep.base.dao.impl.RecordServiceImpl;
 import cn.edu.whu.irlab.irep.service.util.Constructor;
 import org.junit.Test;
 import org.junit.runner.RunWith;

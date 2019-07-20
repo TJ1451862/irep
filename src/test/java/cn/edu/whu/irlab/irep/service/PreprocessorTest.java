@@ -1,13 +1,9 @@
 package cn.edu.whu.irlab.irep.service;
 
 import cn.edu.whu.irlab.irep.IrepApplication;
-import cn.edu.whu.irlab.irep.service.preProcess.PreProcessor;
-import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.analysis.cn.smart.SmartChineseAnalyzer;
-import org.apache.lucene.analysis.standard.StandardAnalyzer;
+import cn.edu.whu.irlab.irep.service.experiment.preProcess.PreProcessor;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 

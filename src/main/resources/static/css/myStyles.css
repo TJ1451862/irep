@@ -8,45 +8,88 @@ common
     padding: 0;
     margin: 0;
     color: rgb(0, 0, 0);
-    font-family: 微软雅黑;
+    font-family: "" Microsoft Yahei "";
     float: none;
     font-weight: bold;
+}
+
+.adjustParam {
+    height: 40px;
+    font-weight: bold;
+    text-align: center;
+    float: right;
+    font-family: "Microsoft Yahei";
+    font-weight: bold;
+}
+
+.adjustParam .style {
+    display: block;
+    height: 30px;
+    position: relative;
+    top: 5px;
+}
+
+.adjustParam .jian {
+    float: left;
+    border-radius: 0;
+    height: 30px;
+    width: 30px;
+    background-color: #71AB65;
+    padding: 0;
+    color: #ffffff;
+}
+
+.adjustParam .jia {
+    border-radius: 0;
+    height: 30px;
+    background-color: #71AB65;
+    padding: 0;
+    width: 30px;
+    display: inline-block;
+    top: 0;
+    float: left;
+    color: #ffffff;
+}
+
+.adjustParam input {
+    width: 40px;
+    height: 30px;
+    float: left;
+    text-align: center;
 }
 
 /**
 signIn.html
  */
 .signIn {
-    display:flex;
-    margin:0 auto 20px auto;
-    width:350px;
+    display: flex;
+    margin: 0 auto 20px auto;
+    width: 350px;
 }
 
 .signIn .ic {
-    border:1px solid #cdcfd1;
-    width:44px;
-    height:44px;
-    float:left;
-    border-radius:2px 0 0 2px;
+    border: 1px solid #cdcfd1;
+    width: 44px;
+    height: 44px;
+    float: left;
+    border-radius: 2px 0 0 2px;
 }
 
 .signIn .ic .icon {
-    font-size:30px;
-    line-height:40px;
-    color:#4472c4;
+    font-size: 30px;
+    line-height: 40px;
+    color: #4472c4;
 }
 
 .signIn .input {
-    height:44px;
-    width:295px;
-    float:left;
-    padding:0 10px;
-    border:1px solid #cdcfd1;
-    border-left:none;
-    border-radius:0 2px 2px 0;
+    height: 44px;
+    width: 295px;
+    float: left;
+    padding: 0 10px;
+    border: 1px solid #cdcfd1;
+    border-left: none;
+    border-radius: 0 2px 2px 0;
 }
-
-
 
 /**
 preProcessing.html
@@ -87,7 +130,7 @@ invertedIndex.html
     width: 100%;
 }
 
-#TF label p {
+.selectFormula label p {
     background: #71AB65;
     color: #ffffff;
     font-size: 18px;
@@ -100,11 +143,6 @@ invertedIndex.html
     align-items: center;
 }
 
-#TF input {
-    height: 18px;
-    width: 18px;
-}
-
 .form-check {
     padding-left: 0;
 }
@@ -114,7 +152,7 @@ vectorSpaceModel.html
  */
 .ra {
     font-size: 20px;
-    font-family: Microsoft Yahei;
+    font-family: "Microsoft Yahei";
     font-weight: bold;
     margin-right: 20px
 }
@@ -129,7 +167,7 @@ vectorSpaceModel.html
 
 .smallTable {
     text-align: center;
-    font-family: Microsoft Yahei;
+    font-family: "Microsoft Yahei";
     overflow-x: hidden;
 }
 
@@ -152,16 +190,15 @@ vectorSpaceModel.html
     border-bottom: 1px solid rgb(0, 0, 0);
 }
 
-.miniTable table{
+.miniTable table {
     width: 300px;
     table-layout: fixed;
 }
 
-
 .miniTable td {
-    padding:2px;
-    vertical-align:top;
-    border-bottom:1px solid rgb(0, 0, 0);
+    padding: 2px;
+    vertical-align: top;
+    border-bottom: 1px solid rgb(0, 0, 0);
     font-size: 16px;
 }
 

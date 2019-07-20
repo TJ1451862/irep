@@ -179,7 +179,7 @@
                     </execution>
                 </executions>
             </plugin>
-            <!-- mybatis generator 自动生成代码插件 -->
+            <!-- base generator 自动生成代码插件 -->
             <plugin>
                 <groupId>org.mybatis.generator</groupId>
                 <artifactId>mybatis-generator-maven-plugin</artifactId>

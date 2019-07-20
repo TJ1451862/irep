@@ -1,62 +1,104 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="cn.edu.whu.irlab.irep.mybatis.mapper.RecordMapper" >
-  <resultMap id="BaseResultMap" type="cn.edu.whu.irlab.irep.mybatis.entity.Record" >
-    <result column="term" property="term" jdbcType="VARCHAR" />
-    <result column="doc_id" property="docId" jdbcType="INTEGER" />
-    <result column="location" property="location" jdbcType="INTEGER" />
-    <result column="index_type" property="indexType" jdbcType="VARCHAR" />
-    <result column="id" property="id" jdbcType="INTEGER" />
-  </resultMap>
-  <sql id="Base_Column_List">
+<mapper namespace="cn.edu.whu.irlab.irep.base.mapper.RecordMapper">
+    <resultMap id="BaseResultMap" type="cn.edu.whu.irlab.irep.base.entity.Record">
+        <result column="term" property="term" jdbcType="VARCHAR"/>
+        <result column="doc_id" property="docId" jdbcType="INTEGER"/>
+        <result column="location" property="location" jdbcType="INTEGER"/>
+        <result column="index_type" property="indexType" jdbcType="VARCHAR"/>
+        <result column="id" property="id" jdbcType="INTEGER"/>
+    </resultMap>
+    <sql id="Base_Column_List">
         term, doc_id, location, index_type
     </sql>
-  <insert id="insert" parameterType="cn.edu.whu.irlab.irep.mybatis.entity.Record" >
+    <insert id="insert" parameterType="cn.edu.whu.irlab.irep.base.entity.Record">
     insert into records (term, doc_id, location, 
       index_type, id)
     values (#{term,jdbcType=VARCHAR}, #{docId,jdbcType=INTEGER}, #{location,jdbcType=INTEGER}, 
       #{indexType,jdbcType=VARCHAR}, #{id,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="cn.edu.whu.irlab.irep.mybatis.entity.Record" >
-    insert into records
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="term != null" >
-        term,
-      </if>
-      <if test="docId != null" >
-        doc_id,
-      </if>
-      <if test="location != null" >
-        location,
-      </if>
-      <if test="indexType != null" >
-        index_type,
-      </if>
-      <if test="id != null" >
-        id,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="term != null" >
-        #{term,jdbcType=VARCHAR},
-      </if>
-      <if test="docId != null" >
-        #{docId,jdbcType=INTEGER},
-      </if>
-      <if test="location != null" >
-        #{location,jdbcType=INTEGER},
-      </if>
-      <if test="indexType != null" >
-        #{indexType,jdbcType=VARCHAR},
-      </if>
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
-      </if>
-    </trim>
-  </insert>
-  <select id="selectByIndexType" parameterType="String" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List"/>
-    from records where index_type=#{indexType,jdbcType=VARCHAR}
-  </select>
+    <insert id="insertSelective" parameterType="cn.edu.whu.irlab.irep.base.entity.Record">
+        insert into records
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="term != null">
+                term,
+            </if>
+            <if test="docId != null">
+                doc_id,
+            </if>
+            <if test="location != null">
+                location,
+            </if>
+            <if test="indexType != null">
+                index_type,
+            </if>
+            <if test="id != null">
+                id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="term != null">
+                #{term,jdbcType=VARCHAR},
+            </if>
+            <if test="docId != null">
+                #{docId,jdbcType=INTEGER},
+            </if>
+            <if test="location != null">
+                #{location,jdbcType=INTEGER},
+            </if>
+            <if test="indexType != null">
+                #{indexType,jdbcType=VARCHAR},
+            </if>
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <select id="selectByIndexType" parameterType="String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from records where index_type=#{indexType,jdbcType=VARCHAR}
+    </select>
+    <!--查询符合条件的记录-->
+    <select id="select" parameterType="cn.edu.whu.irlab.irep.base.entity.Record" resultMap="BaseResultMap">
+        select * from records
+        <where>
+            <if test="id != null and id!=''">
+                and id=#{id,jdbcType=INTEGER}
+            </if>
+            <if test="term != null and term!=''">
+                and term=#{term,jdbcType=VARCHAR}
+            </if>
+            <if test="docId != null and docId!=''">
+                and doc_id=#{docId,jdbcType=INTEGER}
+            </if>
+            <if test="location != null and location!=''">
+                and location=#{location,jdbcType=INTEGER}
+            </if>
+            <if test="indexType != null and indexType!=''">
+                and index_type=#{indexType,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+    <!--查询符合条件的记录数量-->
+    <select id="selectLength" parameterType="cn.edu.whu.irlab.irep.base.entity.Record" resultType="INTEGER" >
+        select count(*) from records
+        <where>
+            <if test="id != null and id!=''">
+                and id=#{id,jdbcType=INTEGER}
+            </if>
+            <if test="term != null and term!=''">
+                and term=#{term,jdbcType=VARCHAR}
+            </if>
+            <if test="docId != null and docId!=''">
+                and doc_id=#{docId,jdbcType=INTEGER}
+            </if>
+            <if test="location != null and location!=''">
+                and location=#{location,jdbcType=INTEGER}
+            </if>
+            <if test="indexType != null and indexType!=''">
+                and index_type=#{indexType,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
 </mapper>

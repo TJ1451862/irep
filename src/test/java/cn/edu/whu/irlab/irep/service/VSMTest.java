@@ -1,9 +1,9 @@
 package cn.edu.whu.irlab.irep.service;
 
 import cn.edu.whu.irlab.irep.IrepApplication;
-import cn.edu.whu.irlab.irep.service.retrievalModel.vsmModel.DocForVSM;
-import cn.edu.whu.irlab.irep.service.retrievalModel.vsmModel.ResultI;
-import cn.edu.whu.irlab.irep.service.retrievalModel.vsmModel.VSMRetriever;
+import cn.edu.whu.irlab.irep.service.vo.ResultVo;
+import cn.edu.whu.irlab.irep.service.experiment.retrieval.vsmModel.DocForVSM;
+import cn.edu.whu.irlab.irep.service.experiment.retrieval.vsmModel.VSMRetriever;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -384,9 +384,9 @@ public class VSMTest {
         vsmRetriever.search();
         List<DocForVSM> docForVSMList = vsmRetriever.getDocForVSMList();
 
-        List<ResultI> resultIList = vsmRetriever.getResultAfterSort();
-        for (int i = 0; i < resultIList.size(); i++) {
-//            System.out.println(resultIList.get(i));
+        List<ResultVo> resultVoList = vsmRetriever.getResultAfterSort();
+        for (int i = 0; i < resultVoList.size(); i++) {
+//            System.out.println(resultVoList.get(i));
         }
 
 

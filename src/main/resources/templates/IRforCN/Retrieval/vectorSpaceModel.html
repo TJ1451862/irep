@@ -52,14 +52,14 @@
                             </div>
                             <input id="inputForVSM" type="text" class="form-control"/>
                             <div class="input-group-append">
-                                <button id="searchForVSM" class="btn btn-primary" type="button"
+                                <button id="search" class="btn btn-primary" type="button"
                                         style="background-color:#71AB65;font-size:16px;border:none">检索
                                 </button>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div id="TF" class="row" style="padding: 0 10px">
+                <div id="TF" class="row selectFormula" style="padding: 0 10px">
                     <div class="col" style="margin-top: 20px;border:2px solid #cccccc; background-color:#ffffff;">
                         <div class="row">
                             <div class="col-md-12">
@@ -206,20 +206,14 @@
                                 <div style="margin-left: 10px;display: inline-block">
                                     <span class="title"
                                           style="font-size:15px;font-family:Microsoft Yahei">调整平滑系数a：</span>
-                                    <div class="align-self-center"
-                                         style="height:40px;font-weight:bold;text-align:center;float:right;font-family:Microsoft Yahei;font-weight:bold;">
-                                        <div style="display:block;height:30px;position:relative;top:5px;">
-                                            <button class="btn " type="button" id="jian"
-                                                    onclick="num_jian(this,0.01,0.10)"
-                                                    style="float:left;border-radius: 0;height:30px;width:30px;background-color:#71AB65;padding:0px;color:#ffffff">
-                                                -
+                                    <div class="align-self-center adjustParam">
+                                        <div class="style">
+                                            <button class="btn jian" type="button"
+                                                    onclick="num_jian(this,0.01,0.10)">-
                                             </button>
-                                            <input type="text" value="0.5" id="smoothParam" name="input_num"
-                                                   style="width:40px;height:30px;float:left;text-align:center;"/>
-                                            <button class="btn" type="button" id="jia"
-                                                    onclick="num_jia(this,0.9,0.10)"
-                                                    style="border-radius: 0;height:30px;background-color:#71AB65;padding:0px;width:30px;display:inline-block;top:0px;float:left;color:#ffffff">
-                                                +
+                                            <input type="text" value="0.5" id="smoothParam" name="input_num"/>
+                                            <button class="btn jia" type="button"
+                                                    onclick="num_jia(this,0.9,0.10)">+
                                             </button>
                                         </div>
                                     </div>
@@ -471,7 +465,7 @@
                                         type="button">求相似度
                                 </button>
                                 <img src="../../img/箭头右.png" height="20px"/>
-                                <button id="similarityAfterSort" class="btn btn-primary bigButton" type="button">
+                                <button id="descendOrderSimilarity" class="btn btn-primary bigButton" type="button">
                                     按相似度降序排序
                                 </button>
                             </div>

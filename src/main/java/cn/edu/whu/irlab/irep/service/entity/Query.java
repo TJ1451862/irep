@@ -1,7 +1,6 @@
 package cn.edu.whu.irlab.irep.service.entity;
 
-import cn.edu.whu.irlab.irep.service.preProcess.PreProcessor;
-import org.springframework.beans.factory.annotation.Autowired;
+import cn.edu.whu.irlab.irep.service.experiment.preProcess.PreProcessor;
 
 import java.util.ArrayList;
 

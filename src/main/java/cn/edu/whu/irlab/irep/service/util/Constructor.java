@@ -1,6 +1,6 @@
 package cn.edu.whu.irlab.irep.service.util;
 
-import cn.edu.whu.irlab.irep.mybatis.entity.Retriever;
+import cn.edu.whu.irlab.irep.base.entity.Retriever;
 
 import javax.servlet.http.HttpServletRequest;
 

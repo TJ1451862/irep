@@ -24,6 +24,143 @@
         <p class="text-center" style="font-family:微软雅黑;color:rgb(255,255,255);">©copyright 2019 武汉大学信息检索与知识挖掘研究所 </p>
     </footer>
 </div>
+<!--b25公式-->
+<math th:fragment="b25formula">
+    <mi> Sim </mi>
+    <mfenced>
+        <mrow>
+            <msub>
+                <mrow>
+                    <mi> D </mi>
+                </mrow>
+                <mrow>
+                    <mi> j </mi>
+                </mrow>
+            </msub>
+            <mo> , </mo>
+            <mi> q </mi>
+        </mrow>
+    </mfenced>
+    <mo> = </mo>
+    <munder>
+        <mrow>
+            <mo> &#x2211; <!-- n-ary summation --> </mo>
+        </mrow>
+        <mrow>
+            <msub>
+                <mrow>
+                    <mi> t </mi>
+                </mrow>
+                <mrow>
+                    <mi> i </mi>
+                </mrow>
+            </msub>
+            <mo> &#x2208; <!-- element of --> </mo>
+            <mi> q </mi>
+        </mrow>
+    </munder>
+    <mfrac>
+        <mrow>
+            <mfenced>
+                <mrow>
+                    <mi> k </mi>
+                    <mo> + </mo>
+                    <mn> 1 </mn>
+                </mrow>
+            </mfenced>
+            <msub>
+                <mrow>
+                    <mi> f </mi>
+                </mrow>
+                <mrow>
+                    <mi> i </mi>
+                    <mo> , </mo>
+                    <mi> j </mi>
+                </mrow>
+            </msub>
+        </mrow>
+        <mrow>
+            <mi> k </mi>
+            <mfenced open="[" close="]">
+                <mrow>
+                    <mfenced>
+                        <mrow>
+                            <mn> 1 </mn>
+                            <mo> - </mo>
+                            <mi> b </mi>
+                        </mrow>
+                    </mfenced>
+                    <mo> + </mo>
+                    <mi> b </mi>
+                        <mrow>
+                            <mfrac>
+                                <mrow>
+                                    <mi> len </mi>
+                                    <mfenced>
+                                        <mrow>
+                                            <msub>
+                                                <mrow>
+                                                    <mi> D </mi>
+                                                </mrow>
+                                                <mrow>
+                                                    <mi> i </mi>
+                                                </mrow>
+                                            </msub>
+                                        </mrow>
+                                    </mfenced>
+                                </mrow>
+                                <mrow>
+                                    <mi> avg_length </mi>
+                                </mrow>
+                            </mfrac>
+                        </mrow>
+                </mrow>
+            </mfenced>
+            <mo> + </mo>
+            <msub>
+                <mrow>
+                    <mi> f </mi>
+                </mrow>
+                <mrow>
+                    <mi> i </mi>
+                    <mo> , </mo>
+                    <mi> j </mi>
+                </mrow>
+            </msub>
+        </mrow>
+    </mfrac>
+    <mo>&#215</mo>
+    <mi> log </mi>
+    <mfrac>
+        <mrow>
+            <mi> N </mi>
+            <mo> - </mo>
+            <msub>
+                <mrow>
+                    <mi> n </mi>
+                </mrow>
+                <mrow>
+                    <mi> j </mi>
+                </mrow>
+            </msub>
+            <mo> + </mo>
+            <mn> 0.5 </mn>
+        </mrow>
+        <mrow>
+            <msub>
+                <mrow>
+                    <mi> n </mi>
+                </mrow>
+                <mrow>
+                    <mi> j </mi>
+                </mrow>
+            </msub>
+            <mo> + </mo>
+            <mn> 0.5 </mn>
+        </mrow>
+    </mfrac>
+</math>
+
 </body>
 
 </html>

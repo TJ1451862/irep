@@ -319,7 +319,23 @@
 
 <div th:include="include::script"/>
 <script type="text/javascript" src="/js/vue.min.js"></script>
-
+<script type="text/javascript">
+    $(document).ready(function () {
+        $.ajax({
+            type: "POST",
+            url: "invertedIndex/loadIndex",
+            dataType: "text",
+            contentType: "application/x-www-form-urlencoded; charset=utf-8",
+            traditional: true,
+            success: function (result) {
+                console.log(result);
+            },
+            error: function () {
+                alert("索引加载失败！");
+            }
+        })
+    })
+</script>
 </body>
 
 </html>

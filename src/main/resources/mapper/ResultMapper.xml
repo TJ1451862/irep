@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="cn.edu.whu.irlab.irep.mybatis.mapper.ResultMapper">
-    <resultMap id="BaseResultMap" type="cn.edu.whu.irlab.irep.mybatis.entity.Result">
+<mapper namespace="cn.edu.whu.irlab.irep.base.mapper.ResultMapper">
+    <resultMap id="BaseResultMap" type="cn.edu.whu.irlab.irep.base.entity.Result">
         <result column="query_id" property="queryId" jdbcType="INTEGER"/>
         <result column="query" property="query" jdbcType="VARCHAR"/>
         <result column="doc_id" property="docId" jdbcType="INTEGER"/>
@@ -15,7 +15,7 @@
       score
     </sql>
 
-    <insert id="insert" parameterType="cn.edu.whu.irlab.irep.mybatis.entity.Result">
+    <insert id="insert" parameterType="cn.edu.whu.irlab.irep.base.entity.Result">
     insert into result (query_id, query, doc_id, 
       doc_rank, title, retriever_id, 
       score)
@@ -23,7 +23,7 @@
       #{docRank,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{retrieverId,jdbcType=VARCHAR}, 
       #{score,jdbcType=INTEGER})
   </insert>
-    <insert id="insertSelective" parameterType="cn.edu.whu.irlab.irep.mybatis.entity.Result">
+    <insert id="insertSelective" parameterType="cn.edu.whu.irlab.irep.base.entity.Result">
         insert into result
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="queryId != null">
@@ -72,7 +72,7 @@
             </if>
         </trim>
     </insert>
-    <select id="select" parameterType="cn.edu.whu.irlab.irep.mybatis.entity.Result" resultMap="BaseResultMap">
+    <select id="select" parameterType="cn.edu.whu.irlab.irep.base.entity.Result" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from result

@@ -1,17 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.w3.org/1999/xhtml">
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IR&amp;NLP</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" th:href="@{../../css/styles.min.css}">
-    <link rel="stylesheet" type="text/css" th:href="@{../../css/styles.css}">
-    <script src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-</head>
-
+<head th:include="include::header"/>
 <body>
 <div th:include="common/top::top"/>
 <nav class="navbar navbar-light navbar-expand-md">
@@ -52,47 +42,94 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6" style="padding:0 55px 0 30px;">
+                <!--检索框-->
                 <div class="row">
                     <div class="col">
-                        <div class="row">
-                            <div class="col">
-                                <div class="input-group" style="height: 38px;font-family:Microsoft Yahei;">
-                                    <div class="input-group-prepend"><span class="input-group-text"
-                                                                           style="font-size:16px;">请输入查询语句</span></div>
-                                    <input id="inputForPM" type="text" class="form-control"/>
-                                    <div class="input-group-append">
-                                        <button id="searchForVSM" class="btn btn-primary" type="button"
-                                                style="background-color:#71AB65;font-size:16px;">检索
-                                        </button>
-                                    </div>
-                                </div>
-
+                        <div class="input-group" style="height: 38px;font-family:Microsoft Yahei;">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" style="font-size:16px;">请输入查询语句</span>
+                            </div>
+                            <input id="inputOfPBM" type="text" class="form-control"/>
+                            <div class="input-group-append">
+                                <button id="search" class="btn btn-primary" type="button"
+                                        style="background-color:#71AB65;font-size:16px;border:none">检索
+                                </button>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div id="first" class="row" style="margin:40px 0 0 0;display:block">
-                    <div class="col">
+                <!--参数选择-->
+                <div id="" class="row selectFormula" style="padding: 0 10px">
+                    <div class="col" style="margin-top: 20px;border:2px solid #cccccc; background-color:#ffffff;">
                         <div class="row">
-                            <ul class="nav nav-tabs col"
-                                style="-ms-flex:0 0 500px;flex:0 0 500px;max-width:40px;padding:0;display:inline-block;">
-                                <li class="nav-item nav-tabs-vertical"><a role="tab" data-toggle="tab" href="#tab-4"
-                                                                          class="nav-link active"
-                                                                          style="border-top-left-radius:.25rem;border-top-right-radius:0;border-bottom-left-radius:.25rem;padding:16px 8px;">简<br/>介</a>
-                                </li>
-                                <li class="nav-item nav-tabs-vertical"
-                                    style="margin:0 -1px 0 0;"><a role="tab" data-toggle="tab" href="#tab-5"
-                                                                  class="nav-link"
-                                                                  style="border-top-left-radius:.25rem;border-top-right-radius:0;border-bottom-left-radius:.25rem;padding:16px 8px;">流<br/>程</a>
-                                </li>
-                                <li class="nav-item nav-tabs-vertical"
-                                    style="margin:0 -1px 0 0;"><a role="tab" data-toggle="tab" href="#tab-6"
-                                                                  class="nav-link"
-                                                                  style="border-top-left-radius:.25rem;border-top-right-radius:0;border-bottom-left-radius:.25rem;padding:16px 8px;">优<br/>劣</a>
-                                </li>
+                            <div class="col-md-12">
+                                <h4 class="title"> BM25模型</h4>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12" style="text-align: center">
+                                <div class="form-check">
+                                    <label>
+                                        <p style="width: 500px;height: 80px">
+                                            <math th:include="include::b25formula"></math>
+                                        </p>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div style="margin-left: 10px;display: inline-block">
+                                    <span class="title"
+                                          style="font-size:15px;font-family:Microsoft Yahei">调整参数k：</span>
+                                    <div class="align-self-center adjustParam">
+                                        <div class="style">
+                                            <button class="btn jian" type="button"
+                                                    onclick="num_jian(this,0.01,0.10)">-
+                                            </button>
+                                            <input type="text" value="0.5" id="paramK" name="input_num"/>
+                                            <button class="btn jia" type="button"
+                                                    onclick="num_jia(this,0.9,0.10)">+
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div style="margin-left: 10px;display: inline-block">
+                                    <span class="title"
+                                          style="font-size:15px;font-family:Microsoft Yahei">调整参数b：</span>
+                                    <div class="align-self-center adjustParam">
+                                        <div class="style">
+                                            <button class="btn jian" type="button"
+                                                    onclick="num_jian(this,0.01,0.10)">-
+                                            </button>
+                                            <input type="text" value="0.5" id="paramB" name="input_num"
+                                                   style=""/>
+                                            <button class="btn jia" type="button"
+                                                    onclick="num_jia(this,0.9,0.10)">+
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--简介-->
+                <div id="first" class="row" style="margin-top: 20px;display:block">
+                    <div class="col">
+                        <div style="margin-top: 10px">
+                            <ul class="nav nav-tabs">
+                                <li class="nav-item">
+                                    <a role="tab" data-toggle="tab" href="#tab-1" class="nav-link active">简介</a></li>
+                                <li class="nav-item">
+                                    <a role="tab" data-toggle="tab" href="#tab-2" class="nav-link">流程</a></li>
+                                <li class="nav-item">
+                                    <a role="tab" data-toggle="tab" href="#tab-3" class="nav-link">优劣</a></li>
                             </ul>
-                            <div class="tab-content col" style="height:470px;">
-                                <div role="tabpanel" class="tab-pane active" id="tab-4">
+                            <div class="tab-content suojin" style="height:235px;">
+                                <div role="tabpanel" class="tab-pane active" id="tab-1">
                                     <p>
                                         概率检索模型是当前信息检索领域效果最好的模型之一，它基于对已有反馈结果的分析，根据贝叶斯原理为当前查询排序。概率检索模型的基本原理与朴素贝叶斯分类是一样的。<br>
                                         <br>
@@ -204,7 +241,7 @@
 
                                     </p>
                                 </div>
-                                <div role="tabpanel" class="tab-pane" id="tab-5">
+                                <div role="tabpanel" class="tab-pane" id="tab-2">
                                     <p>
                                         1.求索引项<br>
                                         2.求系数Bij<br>
@@ -212,7 +249,7 @@
                                         4.按相似度降序排序<br>
                                     </p>
                                 </div>
-                                <div role="tabpanel" class="tab-pane" id="tab-6">
+                                <div role="tabpanel" class="tab-pane" id="tab-3">
                                     <p>
                                         <strong>优点</strong><br>
                                         文档可以按照他们相关概率递减的顺序来计算秩（rank）。<br>
@@ -226,7 +263,8 @@
                         </div>
                     </div>
                 </div>
-                <div id="second" class="row" style="display: none">
+                <!--查看检索结果（已停用）-->
+                <div class="row" style="display: none">
                     <div class="col">
                         <div class="row" style="margin:0;">
                             <div class="col" style="padding:0;">
@@ -244,10 +282,8 @@
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <div class="col-md-6" style="padding:0 10px 0 55px;">
-                <div class="row">
+                <!--查看检索流程-->
+                <div id="second" class="row" style="display: none;margin-top: 100px">
                     <div class="col">
                         <h3 style="/*float:right;*/font-size:20px;padding:0;margin:0;color:rgb(0,0,0);font-family:微软雅黑;font-weight:bold;height:25px;">
                             查看检索流程</h3>
@@ -256,13 +292,16 @@
                             <img src="../../img/箭头右.png" height="20px"/>
                             <button id="calculateBij" class="btn btn-primary bigButton" type="button">求系数Bij</button>
                             <img src="../../img/箭头右.png" height="20px"/>
-                            <button id="similarities" class="btn btn-primary bigButton" type="button">计算相似度</button>
+                            <button id="similarity" class="btn btn-primary bigButton" type="button">计算相似度</button>
                             <img src="../../img/箭头右.png" height="20px"/>
-                            <button id="sortSimilarity" class="btn btn-primary bigButton" type="button">按相似度降序排序
+                            <button id="descendOrderSimilarity" class="btn btn-primary bigButton" type="button">按相似度降序排序
                             </button>
                         </div>
                     </div>
                 </div>
+            </div>
+
+            <div class="col-md-6" style="padding:0 10px 0 55px;">
                 <div class="row">
                     <div class="col">
                         <div class="row" style="margin:0;">
@@ -270,9 +309,9 @@
                                 <div style="float:none;margin:auto;">
                                     <h3 class="text-center"
                                         style="/*float:right;*/height:40px;line-height:40px;font-size:20px;padding:0;margin:10px;color:rgb(0,0,0);font-family:微软雅黑;font-weight:bold;">
-                                        中间结果</h3>
+                                        检索结果</h3>
                                 </div>
-                                <div id="results" class="suojin text" style="height:395px;margin:0;"></div>
+                                <div id="results" class="suojin text" style="height:490px;margin:0;"></div>
                             </div>
                             <div class="col" style="-ms-flex:0 0 10%;flex:0 0 10%;max-width:10%;padding:0;">
                                 <button class="btn btn-primary" type="button"
@@ -290,235 +329,6 @@
     </div>
 </div>
 <div th:include="include::foot"/>
-
 <div th:include="include::script"/>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
 </body>
-<script type="text/javascript">
-    var json = null;
-    var $searchResults = null;
-
-    $(function () {
-
-        $("#introduce").click(function () {
-            $("#first").show();
-            $("#second").hide();
-        });//显示介绍界面
-
-        $("#return").click(function () {
-            $("#searchResults").text("");
-            $("#searchResults").append($searchResults);
-        });//返回上一步
-
-
-        $("#searchForVSM").click(function () {
-            $("#first").hide();
-            $("#second").show();
-            var query = $("#inputForPM").val();
-            $("#searchResults").text("");
-            $.ajax({
-                type: "POST",
-                url: "probabilityModel/search",
-                dataType: "json",
-                data: {"query": query},
-                contentType: "application/x-www-form-urlencoded; charset=utf-8",
-                traditional: true,
-                success: function (result) {
-                    console.log(result);
-                    json = result;
-                    $.each(result, function (index, obj) {
-                        var str1 = obj.content.substring(0, 90) + "......";
-                        $('#searchResults').append("<a id='" + index + "' href='' class='ra' style='font-size: 20px;font-family=Microsoft Yahei;font-weight: bold; margin-right: 20px' data-toggle='modal' data-target='#myModal' onclick='getContent(this.id)' >" + obj.title + "</a>");
-                        $('#searchResults').append("<br>");
-                        $('#searchResults').append("<p>" + str1 + "</p>");
-
-                    });
-                    $searchResults = $("#searchResults").find("*");
-                },
-                error: function () {
-                    alert("检索出错！");
-                    $("#searchResults").text("");// 清空数据
-                }
-            })
-        });//检索功能
-
-        $("#PPQ").click(function () {
-            var query = $("#inputForPM").val();
-            $("#results").text("");
-            $.ajax({
-                type: "POST",
-                url: "probabilityModel/PPQ",
-                dataType: "json",
-                data: {"query": query},
-                contentType: "application/x-www-form-urlencoded; charset=utf-8",
-                traditional: true,
-                success: function (result) {
-                    console.log(result);
-                    $("#results").append(
-                        "查询语句内容：" + query + "<br>" +
-                        "索引项：" + result.itemsForSearch + "<br>"
-                    )
-                },
-                error: function () {
-                    alert("检索出错！");
-                    $("#searchResults").text("");// 清空数据
-                }
-            })//end of ajax
-        })//求索引项功能
-
-        $("#calculateBij").click(function () {
-            var query = $("#inputForPM").val();
-            $("#results").text("");
-            $.ajax({
-                type: "POST",
-                url: "probabilityModel/bij",
-                data: {"query": query},
-                dataType: "json",
-                contentType: "application/x-www-form-urlencoded; charset=utf-8",
-                traditional: true,
-                success: function (bijs) {
-                    console.log(bijs);
-                    $("#results").append(
-                        "<div class=\"table-responsive\" style=\"text-align:center;font-family:Microsoft Yahei;\">\n" +
-                        "    <table class=\"table\">\n" +
-                        "        <thead style=\"color:#000000;\">\n" +
-                        "            <tr style='border-bottom:3px solid rgb(0,0,0)'>\n" +
-                        "                <th>词项</th>\n" +
-                        "                <th>文档ID</th>\n" +
-                        "                <th>Bij值</th>\n" +
-                        "            </tr>\n" +
-                        "        </thead>\n" +
-                        "        <tbody id='tbody'></tbody>\n" +
-                        "    </table>\n" +
-                        "</div>");
-
-                    $.each(bijs, function (index, obj) {
-                        console.log(obj);
-                        $('#tbody').append("<tr>\n" +
-                            "<td class=\"smallTableForTd\" >" + obj.term + "</td>\n" +
-                            "<td class=\"smallTableForTd\" >" + obj.ID + "</td>\n" +
-                            "<td class=\"smallTableForTd\" >" + obj.bij + "</td>\n" +
-                            "</tr>\n"
-                        );
-                    });//end of each
-                },
-                error: function () {
-                    alert("检索出错！");
-                    $("#results").text("");// 清空数据
-                }
-            })//end of ajax
-        })//求Bij功能
-
-        $("#similarities").click(function () {
-            var query = $("#inputForPM").val();
-            $("#results").text("");
-            $.ajax({
-                type: "POST",
-                url: "probabilityModel/similarity",
-                data: {"query": query},
-                dataType: "json",
-                contentType: "application/x-www-form-urlencoded; charset=utf-8",
-                traditional: true,
-                success: function (similarity) {
-                    console.log(similarity);
-                    $("#results").append(
-                        "<div class=\"table-responsive\" style=\"text-align:center;font-family:Microsoft Yahei;\">\n" +
-                        "    <table class=\"table\">\n" +
-                        "        <thead style=\"color:#000000;\">\n" +
-                        "            <tr style='border-bottom:3px solid rgb(0,0,0)'>\n" +
-                        "                <th style='width:60px'>文档ID</th>\n" +
-                        "                <th>文档名</th>\n" +
-                        "                <th>相似度</th>\n" +
-                        "            </tr>\n" +
-                        "        </thead>\n" +
-                        "        <tbody id='tbody'></tbody>\n" +
-                        "    </table>\n" +
-                        "</div>");
-
-                    $.each(similarity, function (index, obj) {
-                        console.log(obj);
-                        $('#tbody').append("<tr>\n" +
-                            "<td class=\"smallTableForTd\" >" + obj.web_id + "</td>\n" +
-                            "<td class=\"smallTableForTd\" >" + obj.title + "</td>\n" +
-                            "<td class=\"smallTableForTd\" >" + obj.similarity + "</td>\n" +
-                            "</tr>\n"
-                        );
-                    });//end of each
-                },
-                error: function () {
-                    alert("检索出错！");
-                    $("#results").text("");// 清空数据
-                }
-            })//end of ajax
-
-
-        })//求相似度
-
-        $("#sortSimilarity").click(function () {
-            var query = $("#inputForPM").val();
-            $("#results").text("");
-            $.ajax({
-                type: "POST",
-                url: "probabilityModel/sortSimilarity",
-                data: {"query": query},
-                dataType: "json",
-                contentType: "application/x-www-form-urlencoded; charset=utf-8",
-                traditional: true,
-                success: function (similarity) {
-                    console.log(similarity);
-                    $("#results").append(
-                        "<div class=\"table-responsive\" style=\"text-align:center;font-family:Microsoft Yahei;\">\n" +
-                        "    <table class=\"table\">\n" +
-                        "        <thead style=\"color:#000000;\">\n" +
-                        "            <tr style='border-bottom:3px solid rgb(0,0,0)'>\n" +
-                        "                <th style='width:60px'>文档ID</th>\n" +
-                        "                <th>文档名</th>\n" +
-                        "                <th>相似度</th>\n" +
-                        "            </tr>\n" +
-                        "        </thead>\n" +
-                        "        <tbody id='tbody'></tbody>\n" +
-                        "    </table>\n" +
-                        "</div>");
-
-                    $.each(similarity, function (index, obj) {
-                        console.log(obj);
-                        $('#tbody').append("<tr>\n" +
-                            "<td class=\"smallTableForTd\" >" + obj.web_id + "</td>\n" +
-                            "<td class=\"smallTableForTd\" >" + obj.title + "</td>\n" +
-                            "<td class=\"smallTableForTd\" >" + obj.similarity + "</td>\n" +
-                            "</tr>\n"
-                        );
-                    });//end of each
-                },
-                error: function () {
-                    alert("检索出错！");
-                    $("#results").text("");// 清空数据
-                }
-            })//end of ajax
-
-
-        })//按相似度降序排序
-
-        function getContent(id) {
-            $.each(json, function (index, obj) {
-                if (index == id) {
-                    $("#searchResults").text("");
-                    $("#searchResults").append(obj.content);
-                }
-            });
-        };
-    })
-
-    function getContent(id) {
-        $.each(json, function (index, obj) {
-            if (index == id) {
-                $("#searchResults").text("");
-                $("#searchResults").append(obj.content);
-            }
-        });
-    };
-
-</script>
 </html>

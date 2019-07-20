@@ -20,7 +20,7 @@
             <property name="forceBigDecimals" value="false"/>
         </javaTypeResolver>
         <!-- 生成(实体)模型的包名和位置-->
-        <javaModelGenerator targetPackage="cn.edu.whu.irlab.irep.mybatis.entity" targetProject="src\main\java">
+        <javaModelGenerator targetPackage="cn.edu.whu.irlab.irep.base.entity" targetProject="src\main\java">
             <property name="enableSubPackages" value="true"/>
             <property name="trimStrings" value="true"/>
         </javaModelGenerator>
@@ -29,7 +29,7 @@
             <property name="enableSubPackages" value="true"/>
         </sqlMapGenerator>
         <!-- 生成DAO接口的包名和位置-->
-        <javaClientGenerator type="XMLMAPPER" targetPackage="cn.edu.whu.irlab.irep.mybatis.mapper"
+        <javaClientGenerator type="XMLMAPPER" targetPackage="cn.edu.whu.irlab.irep.base.mapper"
                              targetProject="src\main\java">
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
@@ -38,14 +38,16 @@
         <!--enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />-->
         <!--<table tableName="inverted_index" domainObjectName="InvertedIndex" enableCountByExample="false" enableUpdateByExample="false"-->
         <!--enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />-->
-        <table tableName="full_index" domainObjectName="FullIndex" enableCountByExample="false" enableUpdateByExample="false"
-        enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />
+        <!--<table tableName="full_index" domainObjectName="FullIndex" enableCountByExample="false" enableUpdateByExample="false"-->
+               <!--enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />-->
         <!--<table tableName="result" domainObjectName="Result" enableCountByExample="false" enableUpdateByExample="false"-->
                <!--enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>-->
-        <!--<table tableName="retriever" domainObjectName="Retriever" enableCountByExample="false" enableUpdateByExample="false"-->
+        <!--<table tableName="retriever" domainObjectName="RetrieverService" enableCountByExample="false" enableUpdateByExample="false"-->
                <!--enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>-->
         <!--<table tableName="user_retriever" domainObjectName="UserRetriever" enableCountByExample="false" enableUpdateByExample="false"-->
                <!--enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>-->
+        <table tableName="document" domainObjectName="Document" enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />
 
     </context>
 </generatorConfiguration>
