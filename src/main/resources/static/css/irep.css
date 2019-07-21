@@ -207,3 +207,39 @@ footer {
     display: inline-block;
     vertical-align: middle;
 }
+
+.signIn {
+    height: 930px;
+    background-color: #f5f5fa;
+}
+
+.signIn .signInBox {
+    position: relative;
+    left: 210px;
+    top: 60px;
+    font-size: 20px;
+    font-family: "Microsoft Yahei";
+    color: #333333;
+}
+
+.signInBox .label {
+    margin-right: 20px;
+    display: inline-block;
+    width: 100px;
+}
+
+.signInBox label {
+    margin: 0 20px 0 0;
+}
+
+.signInBox .input {
+    width: 320px;
+    height: 46px;
+    display: inline-block;
+    border-radius: 0;
+    margin-right: 10px;
+}
+
+.signInBox .aCol{
+    margin-top: 20px;
+}

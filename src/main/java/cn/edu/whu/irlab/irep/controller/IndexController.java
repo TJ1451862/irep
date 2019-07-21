@@ -21,9 +21,9 @@ public class IndexController {
         return "login";
     }
 
-    @RequestMapping("/login1.html")
+    @RequestMapping("/signIn1.html")
     public String login1Controller() {
-        return "login";
+        return "signIn";
     }
 
     @RequestMapping("/login.html")

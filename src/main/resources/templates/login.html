@@ -1,13 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="UTF-8">
-    <title>login</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/irep.css}">
-    <link rel="stylesheet" type="text/css" th:href="@{/fonts/font-awesome.min.css}"/>
-    <link rel="stylesheet" type="text/css" th:href="@{/fonts/ionicons.min.css}"/>
-</head>
+<head th:include="common::header"></head>
 <body>
 <!--导航栏位置-->
 <div style="height: 80px;width: 100%">
@@ -58,7 +51,7 @@
                     </button>
                 </div>
                 <div class="col-md-6">
-                    <a href="#" class="btn btn-default button signInButton" role="button">
+                    <a th:href="@{signIn.html}" class="btn btn-default button signInButton" role="button">
                         注册
                     </a>
                 </div>
@@ -169,17 +162,7 @@
                 style="color: #1e88e5;">Chrome，FireFox</span>浏览器打开</p>
     </div>
 </div>
-<div>
-    <footer class="text-center">
-        <p class="text-center" style="font:16px 'Microsoft Yahei';color:#333333;position: relative;top:25px;">
-            版权所有：武汉大学信息检索与知识挖掘研究所 </p>
-    </footer>
-</div>
-<div>
-    <script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
-    <script type="text/javascript" th:src="@{/js/bootstrap.bundle.min.js}"></script>
-    <script type="text/javascript" th:src="@{/js/irepJs.js}"></script>
-</div>
+<div th:include="common::footer"/>
 </body>
-
+<div th:include="common::script"/>
 </html>

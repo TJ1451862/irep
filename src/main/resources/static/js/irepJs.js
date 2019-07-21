@@ -66,7 +66,7 @@ $("#login").click(function () {
                     window.location.href = "index.html";
                     break;
                 case "3":
-                    window.location.href="#";
+                    window.location.href = "#";
                 default:
                     alert(result.message);
                     break;
@@ -83,31 +83,58 @@ $("#login").click(function () {
  */
 
 $("#signIn").click(function () {
+
+    //初始化
+    $("#userNameError").hide();
+    $("#phoneError").hide();
+    $("#emailError").hide();
+
+
+    var category = $("input[name='category']:checked").val();
+    var jobNumber = $("#jobNumber").val();
     var userName = $("#userName").val();
     var password = $("#password").val();
     var phone = $("#phone").val();
     var email = $("#email").val();
-    var works = $("#works").val();
+    var workSpace = $("#workSpace").val();
 
     $.ajax({
         type: "POST",
         url: "user/signIn",
         data: {
+            "category": category,
+            "jobNumber": jobNumber,
             "username": userName,
             "password": password,
             "phone": phone,
             "email": email,
-            "works": works
+            "workSpace": workSpace
         },
         dataType: "json",
         contentType: "application/x-www-form-urlencoded; charset=utf-8",
         traditional: true,
         success: function (result) {
             console.log(result);
-            if (result.code != 0) {
-                alert(result.message)
-            } else {
-                $(location).attr("href", "/login.html");
+            switch (result.code) {
+                case 0:
+                    alert(result.message);
+                    $(location).attr("href", "login.html");
+                    break;
+                case 1:
+                    $("#phoneError").show();
+                    break;
+                case 2:
+                    $("#emailError").show();
+                    break;
+                case 3:
+                    $("#userNameError").show();
+                    break;
+                case 4:
+                    alert(result.message);
+                    break;
+                default:
+                    break;
+
             }
         },
         error: function (result) {
