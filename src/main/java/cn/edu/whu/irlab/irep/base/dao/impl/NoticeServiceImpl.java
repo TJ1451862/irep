@@ -1,8 +1,8 @@
-package cn.edu.whu.irlab.irep.mybatis.service.impl;
+package cn.edu.whu.irlab.irep.base.dao.impl;
 
-import cn.edu.whu.irlab.irep.mybatis.entity.Notice;
-import cn.edu.whu.irlab.irep.mybatis.mapper.NoticeMapper;
-import cn.edu.whu.irlab.irep.mybatis.service.NoticeService;
+import cn.edu.whu.irlab.irep.base.entity.Notice;
+import cn.edu.whu.irlab.irep.base.mapper.NoticeMapper;
+import cn.edu.whu.irlab.irep.base.dao.NoticeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

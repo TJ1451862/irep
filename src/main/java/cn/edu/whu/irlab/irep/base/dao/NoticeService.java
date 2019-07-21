@@ -1,8 +1,8 @@
-package cn.edu.whu.irlab.irep.mybatis.service;
+package cn.edu.whu.irlab.irep.base.dao;
 
 
 
-import cn.edu.whu.irlab.irep.mybatis.entity.Notice;
+import cn.edu.whu.irlab.irep.base.entity.Notice;
 
 import java.util.List;
 

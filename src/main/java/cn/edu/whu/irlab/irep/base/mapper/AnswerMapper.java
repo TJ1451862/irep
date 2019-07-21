@@ -1,6 +1,6 @@
-package cn.edu.whu.irlab.irep.mybatis.mapper;
+package cn.edu.whu.irlab.irep.base.mapper;
 
-import cn.edu.whu.irlab.irep.mybatis.entity.Answer;
+import cn.edu.whu.irlab.irep.base.entity.Answer;
 
 import java.util.List;
 

@@ -1,50 +1,185 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.w3.org/1999/xhtml">
-
-<head th:include="include::header"/>
-
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>login</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/irep.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/fonts/font-awesome.min.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/fonts/ionicons.min.css}"/>
+</head>
 <body>
-<div class="navbar navbar-expand-md" style="background-color:rgb(47,86,39);height:56px;position:relative;">
-    <a class="navbar-brand"
-       style="width:340px;background-image:url(../img/logo.png);background-size:cover;height:40px;padding:10px 0px;margin:0 0 0 15px;"></a>
-    <h4 style="color:rgb(255,255,255);font-family:Microsoft Yahei;margin:0 10px;font-weight:bold;">|</h4>
-    <h4 style="color:rgb(255,255,255);font-family:Microsoft Yahei;margin:0;font-weight:bold;">登录</h4>
+<!--导航栏位置-->
+<div style="height: 80px;width: 100%">
+    <img class="logo" th:src="@{img/logo.png}">
 </div>
-<div style="margin:60px;">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6 align-self-center my-auto" style="text-align:center;">
-                <h1 style="font-family:Microsoft Yahei;font-weight:bold;color: rgb(36,59,43);font-size: 40px">IR&amp;NLP虚拟实验教学系统</h1>
-                <img src="../img/computer.png" width="500px" style="margin:auto;padding:auto;"></div>
-            <div class="col-md-6">
-                <div style="max-width:320px;width:90%;margin:0 auto;background-color:#ffffff;padding:40px;border-radius:4px;color:#505e6c;box-shadow:1px 1px 5px rgba(0,0,0,0.1);">
-                    <h2 class="sr-only">Login Form</h2>
-                    <div class="illustration"
-                         style="text-align:center;padding:0 0 20px;font-size:100px;color:rgb(244,71,107);">
-                        <i class="icon ion-ios-navigate" style="color:#71AB65;"></i>
+<!--登录-->
+<div class="row login">
+    <!--视频-->
+    <div class="col-md-6">
+        <img class="video" th:src="@{img/video.png}">
+    </div>
+    <!--登录框-->
+    <div class="col-md-6">
+        <div class="loginBox">
+            <label class="title">用户登录</label>
+            <!--用户名-->
+            <div class="input-group">
+                <span class="icon text-center" id="basic-addon1">
+                    <img th:src="@{img/username.png}"/>
+                </span>
+                <input id="userName" type="text" class="form-control" placeholder="用户名/学号/手机号"
+                       aria-describedby="basic-addon1">
+            </div>
+            <!--密码-->
+            <div class="input-group">
+                <span class="icon text-center" id="basic-addon2">
+                    <img th:src="@{img/password.png}"/>
+                </span>
+                <input id="password" type="password" class="form-control" placeholder="用户名/学号/手机号"
+                       aria-describedby="basic-addon1">
+            </div>
+            <!--记住用户名与忘记密码-->
+            <div class="row text">
+                <div class="col-md-6">
+                    <label>
+                        <input type="checkbox" name="" value=""> 记住用户名
+                    </label>
+                </div>
+                <div class="col-md-6">
+                    <a href="#" style="position: absolute;right: 15px;">忘记密码?</a>
+                </div>
+            </div>
+            <!--登陆和注册按钮-->
+            <div class="row" style="margin-bottom: 22px">
+                <div class="col-md-6">
+                    <button id="login" class="btn btn-default button loginButton">
+                        登录
+                    </button>
+                </div>
+                <div class="col-md-6">
+                    <a href="#" class="btn btn-default button signInButton" role="button">
+                        注册
+                    </a>
+                </div>
+            </div>
+            <!--实验空间登录按钮-->
+            <div class="row" style="margin-bottom: 22px">
+                <div class="col-md-12">
+                    <button class="btn btn-default plateFormLogin">
+                        实验空间账号登录
+                    </button>
+                </div>
+            </div>
+            <!--免注册在线体验-->
+            <div class="text-center">
+                <a class="experience" href="#">免注册在线体验</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!--通知-->
+<div class="row informationBox">
+    <!--通知公告-->
+    <div class="col-md-6">
+        <div class="notice">
+            <div class="row" style="margin-bottom: 10px;">
+                <div class="col-md-10">
+                    <label class="title">通知公告</label>
+                    <label class="subTitle">announcement</label>
+                </div>
+                <div class="col-md-2">
+                    <a class="subTitle" href="">查看更多
+                        <img th:src="@{img/angle_right.png}" style="position: relative;top:-2px;">
+                    </a>
+                </div>
+            </div>
+            <div style="border-bottom: black dashed 1px;width: 100%"></div>
+            <!--第一条公告-->
+            <div class="row" style="padding-top: 20px">
+                <div class="col-md-10">
+                    <p class="content">
+                        教育部高等教育司关于开展2019年国家精品在线开发课程认定工作的通知 （教高司函【2019】33号）
+                    </p>
+                </div>
+                <div class="col-md-2">
+                    <div class="text-right" style="margin-top: 2px">
+                        <p class="date">07-12</p>
+                        <p class="year">2019</p>
                     </div>
-                    <div class="form-group">
-                        <input id="userName" class="form-control" type="text" name="userName" placeholder="登录名">
-                    </div>
-                    <div class="form-group">
-                        <input id="password" class="form-control" type="password" name="password" placeholder="密码">
-                    </div>
-                    <div class="form-group">
-                        <button id="login" class="btn btn-primary btn-block" type="submit"
-                                style="font-family:Microsoft Yahei;background-color:#71AB65;border:none">登 &nbsp;录
-                        </button>
-                    </div>
-                    <div style="text-align:center;">
-                        <a href="signIn.html" class="forgot" style="color:#000000;margin:0 12.5% 0 0;">注册用户</a>
-                        <a href="#" class="forgot" style="color:#000000;margin:0 0 0 12.5%;">忘记密码?</a>
+                </div>
+            </div>
+            <!--第二条公告-->
+            <div class="row" style="padding-top: 20px">
+                <div class="col-md-10">
+                    <p class="content">
+                        教育部高等教育司关于开展2019年国家精品在线开发课程认定工作的通知 （教高司函【2019】33号）
+                    </p>
+                </div>
+                <div class="col-md-2">
+                    <div class="text-right" style="margin-top: 2px">
+                        <p class="date">07-12</p>
+                        <p class="year">2019</p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <!--系统情况-->
+    <div class="col-md-6">
+        <div class="state">
+            <div>
+                <div class="num text-center">
+                    <span>1</span>
+                </div>
+                <div class="num text-center">
+                    <span>1</span>
+                </div>
+                <div class="num text-center">
+                    <span>1</span>
+                </div>
+                <div class="num text-center">
+                    <span>1</span>
+                </div>
+                <div class="num text-center">
+                    <span>1</span>
+                </div>
+                <div class="num text-center">
+                    <span>1</span>
+                </div>
+            </div>
+            <div class="tips">
+                <div>
+                    <p>您是第<span>111111</span>位使用该系统的用户</p>
+                </div>
+                <div>
+                    <p>当前在线人数<span>20</span>人，排队<span>1</span>人</p>
+                </div>
+                <div>
+                    <p>实验中有任何问题，请联系武汉大学郭老师解决<br/>联系电话：18101930560</p>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<div th:include="include::foot"/>
-<div th:include="include::script"/>
+<!--浏览器须知-->
+<div class="row">
+    <div class="col-md-12 text-center">
+        <p style="font:16px 'Microsoft Yahei';color: #666666;">为保证实验效果，建议使用<span
+                style="color: #1e88e5;">Chrome，FireFox</span>浏览器打开</p>
+    </div>
+</div>
+<div>
+    <footer class="text-center">
+        <p class="text-center" style="font:16px 'Microsoft Yahei';color:#333333;position: relative;top:25px;">
+            版权所有：武汉大学信息检索与知识挖掘研究所 </p>
+    </footer>
+</div>
+<div>
+    <script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/bootstrap.bundle.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/irepJs.js}"></script>
+</div>
 </body>
 
 </html>

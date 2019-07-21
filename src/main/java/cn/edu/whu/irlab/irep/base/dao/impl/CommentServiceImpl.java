@@ -1,8 +1,8 @@
-package cn.edu.whu.irlab.irep.mybatis.service.impl;
+package cn.edu.whu.irlab.irep.base.dao.impl;
 
-import cn.edu.whu.irlab.irep.mybatis.entity.Comment;
-import cn.edu.whu.irlab.irep.mybatis.mapper.CommentMapper;
-import cn.edu.whu.irlab.irep.mybatis.service.CommentService;
+import cn.edu.whu.irlab.irep.base.entity.Comment;
+import cn.edu.whu.irlab.irep.base.mapper.CommentMapper;
+import cn.edu.whu.irlab.irep.base.dao.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

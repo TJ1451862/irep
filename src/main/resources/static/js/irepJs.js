@@ -61,15 +61,19 @@ $("#login").click(function () {
         traditional: true,
         success: function (result) {
             console.log(result);
-            if (result.code == 0) {
-                alert(result.message)
-            } else if (result.code == 1) {
-                window.location.href = "index.html";
-                // $(location).attr("href", "/index.html");
+            switch (result.code) {
+                case "1":
+                    window.location.href = "index.html";
+                    break;
+                case "3":
+                    window.location.href="#";
+                default:
+                    alert(result.message);
+                    break;
             }
         },
         error: function (result) {
-            alert("检索出错！");
+            alert("后台出错！");
         }
     });
 });
@@ -646,13 +650,13 @@ $("#search").click(function () {
     $("#first").hide();
     $("#second").show();
 
-    var pageName=getHtmlDocName();
+    var pageName = getHtmlDocName();
 
     $("#results").text("");
 
     $.ajax({
         type: "POST",
-        url: pageName+"/search",
+        url: pageName + "/search",
         dataType: "json",
         data: constructParam(pageName),
         contentType: "application/x-www-form-urlencoded; charset=utf-8",
@@ -681,10 +685,10 @@ $("#search").click(function () {
  */
 $("#similarity").click(function () {
     $("#results").text("");//清空数据
-    var pageName=getHtmlDocName();
+    var pageName = getHtmlDocName();
     $.ajax({
         type: "POST",
-        url: pageName+"/similarity",
+        url: pageName + "/similarity",
         data: constructParam(pageName),
         dataType: "json",
         contentType: "application/x-www-form-urlencoded; charset=utf-8",
@@ -732,11 +736,11 @@ $("#descendOrderSimilarity").click(function () {
 
     $("#results").text("");//清空数据
 
-    var pageName=getHtmlDocName();
+    var pageName = getHtmlDocName();
 
     $.ajax({
         type: "POST",
-        url: pageName+"/descendOrderSimilarity",
+        url: pageName + "/descendOrderSimilarity",
         data: constructParam(pageName),
         dataType: "json",
         contentType: "application/x-www-form-urlencoded; charset=utf-8",
@@ -1129,7 +1133,6 @@ $("#docIdInVSM").change(function () {
 });
 
 
-
 /**
  * 获取文档内容
  * @param id
@@ -1231,6 +1234,7 @@ function append(docIdInVSM) {
         })//end of each
     }
 }
+
 /**
  * 显示介绍页面
  */
@@ -1270,19 +1274,20 @@ $("#nextStepOfVSM").click(function () {
         }
     })//end of ajax
 });
+
 /**
  * probabilityModel.html
  *
  * 检索功能
  */
-function constructParam(pageName){
+function constructParam(pageName) {
     var param;
     switch (pageName) {
         case "probabilityModel":
             var query = $("#inputOfPBM").val();
             var paramK = $("#paramK").val();
             var paramB = $("#paramB").val();
-            param={
+            param = {
                 "query": query,
                 "k": paramK,
                 "b": paramB
@@ -1294,7 +1299,7 @@ function constructParam(pageName){
             var smoothParam = $("#smoothParam").val();
             var analyzerName = storage.analyzerName;
             var isRemoveStopWord = storage.isRemoveStopWord;
-            param={
+            param = {
                 "query": query,
                 "formulaId": formulaID,
                 "smoothParam": smoothParam,

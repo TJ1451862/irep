@@ -21,6 +21,11 @@ public class IndexController {
         return "login";
     }
 
+    @RequestMapping("/login1.html")
+    public String login1Controller() {
+        return "login";
+    }
+
     @RequestMapping("/login.html")
     public String loginController() {
         return "login";

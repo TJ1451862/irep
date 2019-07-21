@@ -1,4 +1,4 @@
-package cn.edu.whu.irlab.irep.mybatis.entity;
+package cn.edu.whu.irlab.irep.base.entity;
 
 import lombok.Data;
 

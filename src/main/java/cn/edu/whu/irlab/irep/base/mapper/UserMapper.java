@@ -1,7 +1,7 @@
-package cn.edu.whu.irlab.irep.mybatis.mapper;
+package cn.edu.whu.irlab.irep.base.mapper;
 
 
-import cn.edu.whu.irlab.irep.mybatis.entity.User;
+import cn.edu.whu.irlab.irep.base.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;

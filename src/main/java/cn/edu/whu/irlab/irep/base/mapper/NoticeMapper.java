@@ -1,7 +1,7 @@
-package cn.edu.whu.irlab.irep.mybatis.mapper;
+package cn.edu.whu.irlab.irep.base.mapper;
 
 
-import cn.edu.whu.irlab.irep.mybatis.entity.Notice;
+import cn.edu.whu.irlab.irep.base.entity.Notice;
 
 import java.util.List;
 

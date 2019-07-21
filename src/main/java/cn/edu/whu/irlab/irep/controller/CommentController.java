@@ -1,8 +1,8 @@
 package cn.edu.whu.irlab.irep.controller;
 
-import cn.edu.whu.irlab.irep.mybatis.entity.*;
-import cn.edu.whu.irlab.irep.mybatis.service.AnswerService;
-import cn.edu.whu.irlab.irep.mybatis.service.CommentService;
+import cn.edu.whu.irlab.irep.base.entity.*;
+import cn.edu.whu.irlab.irep.base.dao.AnswerService;
+import cn.edu.whu.irlab.irep.base.dao.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -173,10 +173,10 @@ public class CommentController {
         for (Comment comment:list) {
             CommentVo commentVo = new CommentVo();
             commentVo.setId(comment.getId());
-            commentVo.setCUsername(comment.getcUsername());
-            commentVo.setCContent(comment.getcContent());
-            commentVo.setCSupport(comment.getcSupport());
-            commentVo.setCCreateTime(comment.getcCreateTime());
+            commentVo.setcUsername(comment.getcUsername());
+            commentVo.setcContent(comment.getcContent());
+            commentVo.setcSupport(comment.getcSupport());
+            commentVo.setcCreateTime(comment.getcCreateTime());
             commentVo.setC1(comment.getC1());
             commentVo.setC2(comment.getC2());
             commentVo.setC3(comment.getC3());

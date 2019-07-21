@@ -1,7 +1,7 @@
 package cn.edu.whu.irlab.irep.controller;
 
-import cn.edu.whu.irlab.irep.mybatis.entity.*;
-import cn.edu.whu.irlab.irep.mybatis.service.UserService;
+import cn.edu.whu.irlab.irep.base.entity.*;
+import cn.edu.whu.irlab.irep.base.dao.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -37,8 +37,8 @@ public class UserController {
      * code为3，则用windows.localhref()跳转到管理员主页面
      * code为0，则在登录页面弹出输入用户名错误的提示信息
      * code为2，则在登录页面弹出输入密码输入错误的提示信息
-     * @param username
-     * @param password
+     * @param username 用户名
+     * @param password 密码
      * @param request
      * @return
      */
