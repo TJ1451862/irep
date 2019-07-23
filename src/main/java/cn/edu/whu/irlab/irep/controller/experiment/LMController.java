@@ -84,9 +84,9 @@ public class LMController {
      * @param query       检索式
      * @param smoothParam 平滑系数
      */
-    public void isNeedSearch(@RequestParam(name = "query") String query,
-                             @RequestParam(name = "smoothParam") double smoothParam,
-                             HttpServletRequest request) {
+    private void isNeedSearch(@RequestParam(name = "query") String query,
+                              @RequestParam(name = "smoothParam") double smoothParam,
+                              HttpServletRequest request) {
         if(languageRetriever.getResult().size()==0||languageRetriever.getSmoothParam()!=smoothParam||!languageRetriever.getQuery().getContent().equals(query)){
             languageRetriever.initLMRetriever(query, smoothParam, request);
             languageRetriever.search();

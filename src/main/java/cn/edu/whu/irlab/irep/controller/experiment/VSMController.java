@@ -24,6 +24,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -36,7 +37,7 @@ import java.util.Map;
  * @date 2018-10-30 9:58
  * @desc 向量空间模型交互层
  **/
-@Controller
+@RestController
 @RequestMapping(value = "IRforCN/Retrieval/vectorSpaceModel")
 public class VSMController {
 
@@ -62,7 +63,6 @@ public class VSMController {
      * @param smoothParam  平滑系数
      * @return 检索结果
      */
-    @ResponseBody
     @RequestMapping("/search")
     public JSONArray vsmSearchController(@RequestParam(name = "query") String queryContent,
                                          @RequestParam(name = "formulaId") int formulaId,
@@ -80,7 +80,6 @@ public class VSMController {
         return searchResult;
     }
 
-    @ResponseBody
     @RequestMapping("/idf")
     public Map<String, Double> getIdfController(@RequestParam(name = "query") String queryContent,
                                                 @RequestParam(name = "formulaId") int formulaId,
@@ -92,7 +91,6 @@ public class VSMController {
         return vsmRetriever.getTerm_idf();
     }
 
-    @ResponseBody
     @RequestMapping("/ppq")
     public JSONObject ppqController(@RequestParam(name = "query") String queryContent,
                                     @RequestParam(name = "formulaId") int formulaId,
@@ -105,7 +103,6 @@ public class VSMController {
         return ppq;
     }
 
-    @ResponseBody
     @RequestMapping("/tfOfQuery")
     public Map<String, Double> getQueryTfController(@RequestParam(name = "query") String queryContent,
                                                     @RequestParam(name = "formulaId") int formulaId,
@@ -115,7 +112,6 @@ public class VSMController {
         return vsmRetriever.getQuery().getTfMap();
     }
 
-    @ResponseBody
     @RequestMapping("/vectorOfQuery")
     public List<JSONObject> getQueryVectorController(@RequestParam(name = "query") String queryContent,
                                                      @RequestParam(name = "formulaId") int formulaId,
@@ -131,7 +127,6 @@ public class VSMController {
         return vectorOfQuery;
     }
 
-    @ResponseBody
     @RequestMapping("/tfsOfDocs")
     public List<JSONObject> getTfsOfDocsController(@RequestParam(name = "query") String queryContent,
                                                    @RequestParam(name = "formulaId") int formulaId,
@@ -152,7 +147,6 @@ public class VSMController {
         return tfsOfDocs;
     }
 
-    @ResponseBody
     @RequestMapping("vectorsOfDocs")
     public List<JSONObject> getVectorsOfDocsController(@RequestParam(name = "query") String queryContent,
                                                        @RequestParam(name = "formulaId") int formulaId,
@@ -178,7 +172,6 @@ public class VSMController {
         return vectorsForDocs;
     }
 
-    @ResponseBody
     @RequestMapping("/similarity")
     public List<ResultVo> getSimilarityController(@RequestParam(name = "query") String queryContent,
                                                   @RequestParam(name = "formulaId") int formulaId,
@@ -189,7 +182,6 @@ public class VSMController {
 
     }
 
-    @ResponseBody
     @RequestMapping("/descendOrderSimilarity")
     public List<ResultVo> getSimilarityAfterSortController(@RequestParam(name = "query") String queryContent,
                                                            @RequestParam(name = "formulaId") int formulaId,
@@ -206,7 +198,6 @@ public class VSMController {
      * 如果数据不存在则插入，如果数据存在则不插入
      */
     @RequestMapping("/insertResult")
-    @ResponseBody
     public ModelMap insertResultController(@RequestParam(name = "formulaId") int formulaId,
                                            @RequestParam(name = "smoothParam") double smoothParam,
                                            @RequestParam(name = "analyzerName") String analyzerName,
@@ -302,10 +293,10 @@ public class VSMController {
      * @param formulaId        TF计算公式ID
      * @param smoothParam      平滑系数
      */
-    public void isNeedSearch(@RequestParam(name = "query") String queryContent,
-                             @RequestParam(name = "formulaId") int formulaId,
-                             @RequestParam(name = "smoothParam") double smoothParam,
-                             HttpServletRequest request) {
+    private void isNeedSearch(@RequestParam(name = "query") String queryContent,
+                              @RequestParam(name = "formulaId") int formulaId,
+                              @RequestParam(name = "smoothParam") double smoothParam,
+                              HttpServletRequest request) {
         if (vsmRetriever.getResult().size() == 0 ||
                 !vsmRetriever.getQuery().getContent().equals(queryContent) ||
                 vsmRetriever.getFormulaID() != formulaId ||
