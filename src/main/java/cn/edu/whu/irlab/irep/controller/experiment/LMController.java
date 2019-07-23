@@ -68,7 +68,7 @@ public class LMController {
         isNeedSearch(query, smoothParam, request);
         JSONArray searchResult = new JSONArray();
         List<ResultForLM> resultList = languageRetriever.getResultAfterSort();
-        for (int i = 0; i < resultList.size(); i++) {
+        for (int i = 0; i <resultList.size(); i++) {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("title", resultList.get(i).getTitle());
             jsonObject.put("content", Find.findDoc(resultList.get(i).getDocID(), true));

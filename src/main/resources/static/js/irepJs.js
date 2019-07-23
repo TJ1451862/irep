@@ -10,7 +10,7 @@ var preAnswer = ["去停用词", "分词", "字符串", "出现频率", "abcd", 
 
 // 导航栏颜色效果
 $(function () {
-    console.log(window.location.href);
+    // console.log(window.location.href);
     if (window.location.href.indexOf("index") != -1) {
         $("ul li a:eq(0)").addClass("active");
     }
@@ -1623,7 +1623,7 @@ $("#searchForLanguageModel").click(function () {
     if (query.length == 0) { //第一个检索词为空不能提交
         alert("请输入查询语句！");
         window.location.reload();
-        // $("#results").text("");// 清空数据
+        $("#results").text("");// 清空数据
         return;
     }
     if (smoothParam == "") {
@@ -1636,10 +1636,10 @@ $("#searchForLanguageModel").click(function () {
         $("#results").text("");// 清空数据
         return;
     }
-    alert("提交事件!");
+    // alert("提交事件!");
     $.ajax({
-        type: "POST",
-        url: "languageModel/lmSearch",
+        type: "GET",
+        url: "languageModel//lmSearch",
         data: {
             "smoothParam": smoothParam,
             "query": query,
@@ -1684,7 +1684,7 @@ $("#searchForLanguageModel").click(function () {
             }
         });
     };
-    //返回上一步
+    返回上一步
     $("#return").click(function () {
         $("#results").text("");
         $("#results").append($results);
@@ -1708,31 +1708,6 @@ $("#searchForLanguageModel").click(function () {
                 chaxun: "required"
             }
         })
-    });
-
-    //动态元素<brmodel>添加的事件 查看文档的内容
-    $(function () {//这里是动态元素<brmodel>添加的事件 查看文档的内容
-        $("body").on("click", ".ra", function () {
-            //alert('这里是动态元素添加的事件');
-            var fileName = $(this).attr("id");
-            $(".ra").attr("style", "font-size:18px; color:white");
-            $(this).attr("style", "font-size:20px; color:#C0C0C0");
-            $.each(JSONresults1, function (index, obj) {
-                //console.log("到这里没有");
-                //console.log(obj[fileName]);
-                for (key in obj) {
-                    var contents = obj[fileName];
-                    if (fileName == key) {
-                        console.log(contents);
-                        //$("#contents").empty();
-                        //$("#contents").html(fileName+": <br>"+contents);
-                        $('#results').text("");// 清空数据
-                        $('#results').append("<p id='p' style='color: rgb(255, 255, 255); font-size: 18px'></p>");
-                        $("#p").append(contents);
-                    }
-                }
-            });
-        });
     });
 
 });
