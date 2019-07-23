@@ -48,7 +48,7 @@ public class InvertedIndexController {
      * @param term 词项
      * @return 倒排索引表
      */
-    @RequestMapping("/invertedIndex")
+    @PostMapping("/invertedIndex")
     public JSONArray selectInvertedIndexController(@RequestParam(name = "term") String term) {
         List<InvertedIndex> invertedIndexList = indexService.selectInvertedIndex(term);
         JSONArray jsonArray = JSON.parseArray(JSON.toJSONString(invertedIndexList));
