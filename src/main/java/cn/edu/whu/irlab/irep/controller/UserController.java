@@ -3,10 +3,7 @@ package cn.edu.whu.irlab.irep.controller;
 import cn.edu.whu.irlab.irep.base.entity.*;
 import cn.edu.whu.irlab.irep.base.dao.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -21,7 +18,7 @@ import static cn.edu.whu.irlab.irep.service.util.MD5Util.verifyPwd;
  * @date 2019-06-25 11:33
  * @desc 用户登录注册的交互层
  **/
-@Controller
+@RestController
 @RequestMapping(value = "/user")
 public class UserController {
 
@@ -44,8 +41,9 @@ public class UserController {
      */
     //请将userId存到session中
     @RequestMapping(value = "/login")
-    @ResponseBody
-    public Map<String,String> loginController(String username,String password, HttpServletRequest request) {
+    public Map<String,String> loginController(@RequestParam(value = "username") String username,
+                                              @RequestParam(value = "password") String password,
+                                              HttpServletRequest request) {
         Map<String,String> map=new HashMap<>();
         User user = userService.selectUserService(username);
         if (user == null) {
@@ -75,11 +73,19 @@ public class UserController {
      * @return
      */
     @RequestMapping(value = "/out")
-    public String outController(HttpServletRequest request) {
+    public Map<String,String> outController(HttpServletRequest request) {
+        Map<String,String> map=new HashMap<>();
         User user = (User)request.getSession().getAttribute("user");
         int i = userService.updateOutTimeByUsernameService(user.getId());
-        request.getSession().invalidate();
-        return "login";
+        if(i == 1){
+            request.getSession().invalidate();
+            map.put("code", "1");
+            map.put("message", "用户退出成功");
+        }else{
+            map.put("code", "1");
+            map.put("message", "用户退出成功");
+        }
+        return map;
     }
 
     /**
@@ -90,8 +96,7 @@ public class UserController {
      * @return
      */
     @RequestMapping(value = "/signIn")
-    @ResponseBody
-    public Map signController(User user) {
+    public Map<String,Object> signController(@RequestBody User user) {
         Map<String,Object> map=new HashMap<>();
         if (userService.selectUserByPhoneService(user) != null) {
             map.put("code", 1);
@@ -116,28 +121,26 @@ public class UserController {
     /**
      * 参数说明：User对象里面必须有用户名，新的密码，手机号和邮箱
      * @param user
-     * @param modelMap
      * @return
      */
     @RequestMapping(value = "/updatePassword")
-    public String updatePasswordController(User user,ModelMap modelMap){
+    public Map<String,Object> updatePasswordController(@RequestBody User user){
+        Map<String,Object> map=new HashMap<>();
         //通过手机号和用户名查询是否该用户注册过，通过邮箱和用户名查询是否注册过，二者任选一个成功就可以修改密码
         if(userService.selectUserByPhoneAndUsernameService(user) != null || userService.selectUserByEmailAndUsernameService(user) != null){
             int i = userService.updateUserByUsernameService(user);
             if(i != 1){
-                modelMap.put("message","修改失败，请联系网站管理员。");
-                modelMap.put("code",1);
+                map.put("message","修改失败，请联系网站管理员。");
+                map.put("code",1);
+            }else{
+                map.put("code",0);
+                map.put("message","修改成功。");
             }
-            modelMap.put("code",0);
-            modelMap.put("message","修改成功。");
-            //修改后跳转的页面
-            return "a";
         }else{
-            modelMap.put("message","请输入正确的手机号或者邮箱。");
-            modelMap.put("code",1);
-            //用户名和邮箱全输入错误跳转的页面
-            return "b";
+            map.put("message","请输入正确的手机号或者邮箱。");
+            map.put("code",2);
         }
+        return map;
     }
 
     /**
@@ -148,8 +151,7 @@ public class UserController {
      * @return
      */
     @RequestMapping(value = "/updateInfo")
-    @ResponseBody
-    public Map<String,Object> updateUserController(User user){
+    public Map<String,Object> updateUserController(@RequestBody User user){
         Map<String,Object> map = new HashMap<>();
         int i = userService.updateUserByIdService(user);
         if(i == 1){
@@ -170,8 +172,7 @@ public class UserController {
      * @return
      */
     @RequestMapping(value = "/deleteInfo")
-    @ResponseBody
-    public Map<String,Object> deleteUserController(User user){
+    public Map<String,Object> deleteUserController(@RequestBody User user){
         Map<String,Object> map = new HashMap<>();
         int i = userService.deleteUserByIdService(user.getId());
         /**
@@ -193,7 +194,6 @@ public class UserController {
      * @return
      */
     @RequestMapping(value = "/query")
-    @ResponseBody
     public Map<String,Object> queryUserController(){
         Map<String,Object> map = new HashMap<>();
         List<User> list = userService.selectAllUserService();

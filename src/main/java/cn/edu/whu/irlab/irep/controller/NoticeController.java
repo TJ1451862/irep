@@ -3,9 +3,9 @@ package cn.edu.whu.irlab.irep.controller;
 import cn.edu.whu.irlab.irep.base.entity.*;
 import cn.edu.whu.irlab.irep.base.dao.NoticeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -18,7 +18,7 @@ import java.util.Map;
  * @date 2019-07-18 10:33
  * @desc 公告管理
  **/
-@Controller
+@RestController
 @RequestMapping(value = "/notice")
 public class NoticeController {
 
@@ -30,7 +30,6 @@ public class NoticeController {
      * @return
      */
     @RequestMapping(value = "/query")
-    @ResponseBody
     public Map<String,Object> selectNoticeController(){
         Map<String,Object> map = new HashMap<>();
         List<Notice> list = noticeService.selectAllNoticeService();
@@ -46,8 +45,7 @@ public class NoticeController {
      * @return
      */
     @RequestMapping(value = "/add")
-    @ResponseBody
-    public Map<String,Object> addNoticeController(Notice notice, HttpServletRequest httpServletRequest){
+    public Map<String,Object> addNoticeController(@RequestBody Notice notice, HttpServletRequest httpServletRequest){
         Map<String,Object> map = new HashMap<>();
         User user = (User)httpServletRequest.getSession().getAttribute("user");
         notice.setAuthor(user.getUsername());
@@ -70,8 +68,7 @@ public class NoticeController {
      * @return
      */
     @RequestMapping(value = "/update")
-    @ResponseBody
-    public Map<String,Object> updateNoticeController(Notice notice, HttpServletRequest httpServletRequest){
+    public Map<String,Object> updateNoticeController(@RequestBody Notice notice, HttpServletRequest httpServletRequest){
         Map<String,Object> map = new HashMap<>();
         User user = (User)httpServletRequest.getSession().getAttribute("user");
         notice.setAuthor(user.getUsername());
@@ -92,8 +89,7 @@ public class NoticeController {
      * @return
      */
     @RequestMapping(value = "/delete")
-    @ResponseBody
-    public Map<String,Object> deleteNoticeController(Notice notice){
+    public Map<String,Object> deleteNoticeController(@RequestBody Notice notice){
         Map<String,Object> map = new HashMap<>();
         int i = noticeService.deleteNoticeService(notice.getId());
         if(i == 1){
