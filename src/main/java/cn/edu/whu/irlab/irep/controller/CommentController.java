@@ -4,10 +4,7 @@ import cn.edu.whu.irlab.irep.base.entity.*;
 import cn.edu.whu.irlab.irep.base.dao.AnswerService;
 import cn.edu.whu.irlab.irep.base.dao.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -21,7 +18,7 @@ import java.util.Map;
  * @date 2019-07-18 16:56
  * @desc 评论业务交互接口
  **/
-@Controller
+@RestController
 @RequestMapping(value = "/comment")
 public class CommentController {
 
@@ -40,8 +37,7 @@ public class CommentController {
      * @return
      */
     @RequestMapping(value = "/add")
-    @ResponseBody
-    public Map<String,Object> addCommentController(Comment comment, HttpServletRequest httpServletRequest){
+    public Map<String,Object> addCommentController(@RequestBody Comment comment, HttpServletRequest httpServletRequest){
         Map<String,Object> map = new HashMap<>();
         User user = (User)httpServletRequest.getSession().getAttribute("user");
         comment.setcUsername(user.getUsername());
@@ -64,7 +60,6 @@ public class CommentController {
      * @return
      */
     @RequestMapping(value = "/support")
-    @ResponseBody
     public Map<String,Object> updateCommentController(@RequestParam(value = "id") Integer id) {
         Map<String, Object> map = new HashMap<>();
         int support = 0;
@@ -96,7 +91,6 @@ public class CommentController {
      * @return
      */
     @RequestMapping(value = "/delete")
-    @ResponseBody
     public Map<String,Object> deleteCommentController(@RequestParam(value = "id") Integer id){
         Map<String, Object> map = new HashMap<>();
         try {
@@ -125,7 +119,6 @@ public class CommentController {
      * @return
      */
     @RequestMapping(value = "/answer")
-    @ResponseBody
     public Map<String,Object> answerCommentController(@RequestParam(value = "id") Integer id,@RequestParam(value = "aContent") String aContent,HttpServletRequest httpServletRequest){
         Map<String,Object> map = new HashMap<>();
         User user = (User)httpServletRequest.getSession().getAttribute("user");
@@ -151,7 +144,6 @@ public class CommentController {
      * @return
      */
     @RequestMapping(value = "/query")
-    @ResponseBody
     public Map<String,Object> queryCommentController(){
         Map<String,Object> map = new HashMap<>();
         List<Comment> list = commentService.selectAllCommentService();
@@ -165,7 +157,6 @@ public class CommentController {
      * @return
      */
     @RequestMapping(value = "/queryAll")
-    @ResponseBody
     public Map<String,Object> queryAllCommentController(){
         Map<String,Object> map = new HashMap<>();
         List<CommentVo> voList = new ArrayList<>();

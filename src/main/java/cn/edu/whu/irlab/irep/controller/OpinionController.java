@@ -3,9 +3,10 @@ package cn.edu.whu.irlab.irep.controller;
 import cn.edu.whu.irlab.irep.base.entity.*;
 import cn.edu.whu.irlab.irep.base.dao.OpinionService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -18,7 +19,7 @@ import java.util.Map;
  * @date 2019-07-18 10:34
  * @desc 留言处理业务类
  **/
-@Controller
+@RestController
 @RequestMapping(value = "/opinion")
 public class OpinionController {
 
@@ -32,8 +33,7 @@ public class OpinionController {
      * @return
      */
     @RequestMapping(value = "/add")
-    @ResponseBody
-    public Map<String,Object> addOpinionController(Opinion opinion){
+    public Map<String,Object> addOpinionController(@RequestBody Opinion opinion){
         Map<String,Object> map = new HashMap<>();
         opinion.setSign(1);
         int i= opinionService.insertOpinionService(opinion);
@@ -57,8 +57,7 @@ public class OpinionController {
      * @return
      */
     @RequestMapping(value = "/update")
-    @ResponseBody
-    public Map<String,Object> updateOpinionController(Opinion opinion, HttpServletRequest httpServletRequest){
+    public Map<String,Object> updateOpinionController(@RequestBody Opinion opinion, HttpServletRequest httpServletRequest){
         Map<String,Object> map = new HashMap<>();
         User user = (User)httpServletRequest.getSession().getAttribute("user");
         opinion.setCallBy(user.getId());
@@ -79,7 +78,6 @@ public class OpinionController {
      * @return
      */
     @RequestMapping(value = "/query")
-    @ResponseBody
     public Map<String,Object> selectOpinionController(){
         Map<String,Object> map = new HashMap<>();
         List<Opinion> list = opinionService.selectAllOpinionService();
