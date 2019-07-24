@@ -2,6 +2,9 @@ package cn.edu.whu.irlab.irep.controller;
 
 import cn.edu.whu.irlab.irep.base.entity.*;
 import cn.edu.whu.irlab.irep.base.dao.UserService;
+import cn.edu.whu.irlab.irep.service.enums.ResponseEnum;
+import cn.edu.whu.irlab.irep.service.util.ResponseVoUtil;
+import cn.edu.whu.irlab.irep.service.vo.ResponseVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,14 +29,8 @@ public class UserController {
     private UserService userService;
 
     /**
-     * 此处的逻辑，前端ajax传入登录的用户名和密码
-     * 此处获取用户名和密码，查询数据库，如果查询到了就将用户信息存到session中
-     * 并且返回code为1,3 代表登录成功，否则返回code为0,2，代表登录失败
-     * 获取返回的code的值，对登录成功进行判断
-     * code为1，则用windows.localhref()跳转到用户主页面
-     * code为3，则用windows.localhref()跳转到管理员主页面
-     * code为0，则在登录页面弹出输入用户名错误的提示信息
-     * code为2，则在登录页面弹出输入密码输入错误的提示信息
+     * 对用户进行校验，成功后判断用户的标识，根据标识来判断是管理员还是用户登录
+     * 最后返回给前端响应的代码
      * @param username 用户名
      * @param password 密码
      * @param request
@@ -41,30 +38,24 @@ public class UserController {
      */
     //请将userId存到session中
     @RequestMapping(value = "/login")
-    public Map<String,String> loginController(@RequestParam(value = "username") String username,
-                                              @RequestParam(value = "password") String password,
-                                              HttpServletRequest request) {
-        Map<String,String> map=new HashMap<>();
+    public ResponseVo loginController(@RequestParam(value = "username") String username,
+                                      @RequestParam(value = "password") String password,
+                                      HttpServletRequest request) {
         User user = userService.selectUserService(username);
         if (user == null) {
-            map.put("code", "0");
-            map.put("message", "用户名输入错误！");
+            return ResponseVoUtil.error(ResponseEnum.USERNAME_ERROR);
         } else if(verifyPwd(password,user.getPassword())){
             //用户信息存入该用户的session 中
             request.getSession().setAttribute("user",user);
             userService.updateLoginTimeByUsernameService(user);
-            //如果是管理员登录，那么前端接收到的code会是3
+            //管理员登录
             if(user.getCategory() == 3){
-                map.put("code", "3");
-                map.put("message", "管理员登录成功");
+                return ResponseVoUtil.success(ResponseEnum.ADMIN_LOGIN_SUCCESS);
             }
-            map.put("code", "1");
-            map.put("message", "用户登录成功");
+            return ResponseVoUtil.success(ResponseEnum.USER_LOGIN_SUCCESS);
         }else{
-            map.put("code", "2");
-            map.put("message", "密码输入错误！");
+            return ResponseVoUtil.error(ResponseEnum.PASSWORD_ERROR);
         }
-        return map;
     }
 
     /**
@@ -73,19 +64,15 @@ public class UserController {
      * @return
      */
     @RequestMapping(value = "/out")
-    public Map<String,String> outController(HttpServletRequest request) {
-        Map<String,String> map=new HashMap<>();
+    public ResponseVo outController(HttpServletRequest request) {
         User user = (User)request.getSession().getAttribute("user");
         int i = userService.updateOutTimeByUsernameService(user.getId());
         if(i == 1){
             request.getSession().invalidate();
-            map.put("code", "1");
-            map.put("message", "用户退出成功");
+            return ResponseVoUtil.success();
         }else{
-            map.put("code", "1");
-            map.put("message", "用户退出成功");
+            return ResponseVoUtil.error(ResponseEnum.UNKNOW_ERROR);
         }
-        return map;
     }
 
     /**
@@ -96,27 +83,19 @@ public class UserController {
      * @return
      */
     @RequestMapping(value = "/signIn")
-    public Map<String,Object> signController(@RequestBody User user) {
-        Map<String,Object> map=new HashMap<>();
+    public ResponseVo signController(@RequestBody User user) {
         if (userService.selectUserByPhoneService(user) != null) {
-            map.put("code", 1);
-            map.put("message", "当前手机号已经被注册过了");
+            return ResponseVoUtil.error(ResponseEnum.PHONE_SIGN_ERROR);
         } else if (userService.selectUserByEmailService(user) != null) {
-            map.put("code", 2);
-            map.put("message", "当前邮箱已经被注册过了");
+            return ResponseVoUtil.error(ResponseEnum.EMAIL_SIGN_ERROR);
         } else if (userService.selectUserService(user.getUsername()) != null) {
-            map.put("code", 3);
-            map.put("message", "当前用户名已经被注册过了");
+            return ResponseVoUtil.error(ResponseEnum.USERNAME_SIGN_ERROR);
         } else if (userService.insertUserService(user) != 1) {
-            map.put("code", 4);
-            map.put("message", "注册失败，请联系系统管理员");
+            return ResponseVoUtil.error(ResponseEnum.UNKNOW_ERROR);
         } else {
-            map.put("code", 0);
-            map.put("message", "注册成功");
+            return ResponseVoUtil.success();
         }
-        return map;
     }
-
 
     /**
      * 参数说明：User对象里面必须有用户名，新的密码，手机号和邮箱
@@ -124,23 +103,18 @@ public class UserController {
      * @return
      */
     @RequestMapping(value = "/updatePassword")
-    public Map<String,Object> updatePasswordController(@RequestBody User user){
-        Map<String,Object> map=new HashMap<>();
+    public ResponseVo updatePasswordController(@RequestBody User user){
         //通过手机号和用户名查询是否该用户注册过，通过邮箱和用户名查询是否注册过，二者任选一个成功就可以修改密码
         if(userService.selectUserByPhoneAndUsernameService(user) != null || userService.selectUserByEmailAndUsernameService(user) != null){
             int i = userService.updateUserByUsernameService(user);
             if(i != 1){
-                map.put("message","修改失败，请联系网站管理员。");
-                map.put("code",1);
+                return ResponseVoUtil.error(ResponseEnum.UNKNOW_ERROR);
             }else{
-                map.put("code",0);
-                map.put("message","修改成功。");
+                return ResponseVoUtil.success();
             }
         }else{
-            map.put("message","请输入正确的手机号或者邮箱。");
-            map.put("code",2);
+            return ResponseVoUtil.error(ResponseEnum.PHONE_EMAIL_ERROR);
         }
-        return map;
     }
 
     /**
@@ -151,17 +125,12 @@ public class UserController {
      * @return
      */
     @RequestMapping(value = "/updateInfo")
-    public Map<String,Object> updateUserController(@RequestBody User user){
-        Map<String,Object> map = new HashMap<>();
+    public ResponseVo updateUserController(@RequestBody User user){
         int i = userService.updateUserByIdService(user);
         if(i == 1){
-            map.put("code", 0);
-            map.put("message", "修改成功");
-        }else{
-            map.put("code", 1);
-            map.put("message", "修改失败");
+            return ResponseVoUtil.success();
         }
-        return map;
+        return ResponseVoUtil.error(ResponseEnum.UNKNOW_ERROR);
     }
 
     /**
@@ -172,21 +141,16 @@ public class UserController {
      * @return
      */
     @RequestMapping(value = "/deleteInfo")
-    public Map<String,Object> deleteUserController(@RequestBody User user){
-        Map<String,Object> map = new HashMap<>();
+    public ResponseVo deleteUserController(@RequestBody User user){
         int i = userService.deleteUserByIdService(user.getId());
         /**
          * 此处根据业务需要，可能需要删除用户的行为信息
          */
         //
         if(i == 1){
-            map.put("code", 0);
-            map.put("message", "删除成功");
-        }else{
-            map.put("code", 1);
-            map.put("message", "删除失败");
+            return ResponseVoUtil.success();
         }
-        return map;
+        return ResponseVoUtil.error(ResponseEnum.UNKNOW_ERROR);
     }
 
     /**
@@ -194,11 +158,7 @@ public class UserController {
      * @return
      */
     @RequestMapping(value = "/query")
-    public Map<String,Object> queryUserController(){
-        Map<String,Object> map = new HashMap<>();
-        List<User> list = userService.selectAllUserService();
-        map.put("total",list.size());
-        map.put("row",list);
-        return map;
+    public ResponseVo<List<User>> queryUserController(){
+        return ResponseVoUtil.success(userService.selectAllUserService());
     }
 }
