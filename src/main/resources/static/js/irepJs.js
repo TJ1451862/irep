@@ -102,12 +102,12 @@ $("#signIn").click(function () {
         type: "POST",
         url: "user/signIn",
         data: {
-            "category": category,
+            "category":  category,
             "jobNumber": jobNumber,
-            "username": userName,
-            "password": password,
-            "phone": phone,
-            "email": email,
+            "username":  userName,
+            "password":  password,
+            "phone":     phone,
+            "email":     email,
             "workSpace": workSpace
         },
         dataType: "json",

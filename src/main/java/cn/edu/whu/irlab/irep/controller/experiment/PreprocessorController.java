@@ -2,12 +2,16 @@ package cn.edu.whu.irlab.irep.controller.experiment;
 
 import cn.edu.whu.irlab.irep.service.experiment.preProcess.PreProcessor;
 import cn.edu.whu.irlab.irep.service.util.Find;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author gcr
@@ -28,16 +32,16 @@ public class PreprocessorController {
      * @param removeStopWord 是否去停用词
      * @return 预处理结果
      */
-    @RequestMapping("/preProcess")
-    public String preProcessController(@RequestParam(name = "token") String token,
-                                       @RequestParam(name = "analyzerName") String analyzerName,
-                                       @RequestParam(name = "isRemoveStopWord") boolean removeStopWord,
-                                       HttpServletRequest request) {
-        ArrayList<String> termList = PreProcessor.preProcess(token, analyzerName, removeStopWord);
-        String string = termList.toString();
+    @PostMapping("/preProcess")
+    public List<String> preProcessController(@RequestParam(name = "token") String token,
+                                             @RequestParam(name = "analyzerName") String analyzerName,
+                                             @RequestParam(name = "isRemoveStopWord") boolean removeStopWord,
+                                             HttpServletRequest request) {
+        List<String> termList = PreProcessor.preProcess(token, analyzerName, removeStopWord);
         request.getSession().setAttribute("analyzer", analyzerName);
         request.getSession().setAttribute("removeStopWord", removeStopWord);
-        return string;
+
+        return termList;
     }
 
     /**
@@ -46,9 +50,12 @@ public class PreprocessorController {
      * @param docId 文章id
      * @return
      */
-    @RequestMapping("/getDoc")
-    public String selectDoc(@RequestParam(name = "docId") int docId) {
-        return Find.findDoc(docId, true);
+    @PostMapping("/getDoc")
+    public Map<String,String> selectDoc(@RequestParam(name = "docId") int docId) {
+        Map<String,String> map=new HashMap<>();
+        map.put("docId",String.valueOf(docId));
+        map.put("content",Find.findDoc(docId, true));
+        return map;
     }
 
 

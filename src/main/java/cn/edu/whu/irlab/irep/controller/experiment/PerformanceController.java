@@ -14,9 +14,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -24,7 +22,7 @@ import java.util.List;
 /**
  * 检索模型性能 控制层
  */
-@Controller
+@RestController
 @RequestMapping("IRforCN/performance")
 public class PerformanceController {
 
@@ -43,8 +41,7 @@ public class PerformanceController {
      * @param queryId 标注查询Id
      * @return 标准排序
      */
-    @RequestMapping("/standardSorting")
-    @ResponseBody
+    @PostMapping("/standardSorting")
     public JSONArray standardSortingController(@RequestParam("queryId") int queryId) {
         JSONArray standardArray = new JSONArray();
         List<Result> standardList = initStandardList(queryId);
@@ -62,8 +59,7 @@ public class PerformanceController {
      * @param request
      * @return 检索器参数
      */
-    @RequestMapping("/modelParam")
-    @ResponseBody
+    @PostMapping("/modelParam")
     public JSONObject modelParamController(@RequestParam("retrievalNum") int retrieverNum, HttpServletRequest request) {
         JSONObject modelParam = new JSONObject();
         User user = (User) request.getSession().getAttribute("user");
@@ -134,8 +130,7 @@ public class PerformanceController {
      * @param request
      * @return 检索结果
      */
-    @RequestMapping("/searchResult")
-    @ResponseBody
+    @PostMapping("/searchResult")
     public JSONArray searchResultController(@RequestParam("queryId") int queryId, @RequestParam("retrievalNum") int retrieverNum, HttpServletRequest request) {
         JSONArray jsonArray = new JSONArray();
         List<Result> standardList = initStandardList(queryId);
@@ -165,8 +160,7 @@ public class PerformanceController {
      * @param request
      * @return 针对单个query的性能指标
      */
-    @RequestMapping("/individual")
-    @ResponseBody
+    @PostMapping("/individual")
     public JSONArray individualPerformanceController(@RequestParam("queryId") int queryId, @RequestParam("retrievalNum") int retrieverNum, HttpServletRequest request) {
         JSONArray performance = new JSONArray();
         EvaluateServiceImpl evaluateServiceImpl = new EvaluateServiceImpl();
@@ -231,8 +225,7 @@ public class PerformanceController {
         return performance;
     }
 
-    @RequestMapping("/average")
-    @ResponseBody
+    @PostMapping("/average")
     public JSONArray averageController(@RequestParam("retrievalNum") int retrieverNum, HttpServletRequest request) {
         EvaluateServiceImpl evaluateServiceImpl = new EvaluateServiceImpl();
         JSONArray averagePerformance = new JSONArray();

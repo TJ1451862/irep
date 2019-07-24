@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -19,7 +20,7 @@ import java.util.List;
  * @date 2019-07-19 23:47
  * @desc 概率检索模型 交互层
  **/
-@Controller
+@RestController
 @RequestMapping("IRforCN/Retrieval/probabilityModel")
 public class ProbabilityRetrieverController {
 
@@ -36,7 +37,6 @@ public class ProbabilityRetrieverController {
      * @return 检索结果
      */
     @RequestMapping("/search")
-    @ResponseBody
     public List<SearchResultVo> searchController(@RequestParam("query") String query,
                                                  @RequestParam("k") double k,
                                                  @RequestParam("b") double b,
@@ -55,7 +55,6 @@ public class ProbabilityRetrieverController {
      * @return bij计算结果
      */
     @RequestMapping("/bij")
-    @ResponseBody
     public List<BijVo> calculateBijController(@RequestParam("query") String query,
                                               @RequestParam("k") double k,
                                               @RequestParam("b") double b,
@@ -64,7 +63,6 @@ public class ProbabilityRetrieverController {
         return probabilityRetrievalService.calculateBijs();
     }
 
-    @ResponseBody
     @RequestMapping("/ppq")
     public JSONObject ppqController(@RequestParam("query") String query,
                                     @RequestParam("k") double k,
@@ -87,7 +85,6 @@ public class ProbabilityRetrieverController {
      * @return 相似度计算结果
      */
     @RequestMapping("/similarity")
-    @ResponseBody
     public List<ResultVo> calculateSimilaritiesController(@RequestParam("query") String query,
                                                           @RequestParam("k") double k,
                                                           @RequestParam("b") double b,
@@ -106,7 +103,6 @@ public class ProbabilityRetrieverController {
      * @return 排序后的相似度结果
      */
     @RequestMapping("/descendOrderSimilarity")
-    @ResponseBody
     public List<ResultVo> descendOrderSimilaritiesController(@RequestParam("query") String query,
                                                              @RequestParam("k") double k,
                                                              @RequestParam("b") double b,
