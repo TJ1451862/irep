@@ -2,6 +2,9 @@ package cn.edu.whu.irlab.irep.controller;
 
 import cn.edu.whu.irlab.irep.base.entity.*;
 import cn.edu.whu.irlab.irep.base.dao.NoticeService;
+import cn.edu.whu.irlab.irep.service.enums.ResponseEnum;
+import cn.edu.whu.irlab.irep.service.util.ResponseVoUtil;
+import cn.edu.whu.irlab.irep.service.vo.ResponseVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,12 +33,8 @@ public class NoticeController {
      * @return
      */
     @RequestMapping(value = "/query")
-    public Map<String,Object> selectNoticeController(){
-        Map<String,Object> map = new HashMap<>();
-        List<Notice> list = noticeService.selectAllNoticeService();
-        map.put("total",list.size());
-        map.put("row",list);
-        return map;
+    public ResponseVo<List<Notice>> selectNoticeController(){
+        return ResponseVoUtil.success(noticeService.selectAllNoticeService());
     }
 
     /**
@@ -45,19 +44,15 @@ public class NoticeController {
      * @return
      */
     @RequestMapping(value = "/add")
-    public Map<String,Object> addNoticeController(@RequestBody Notice notice, HttpServletRequest httpServletRequest){
+    public ResponseVo addNoticeController(@RequestBody Notice notice, HttpServletRequest httpServletRequest){
         Map<String,Object> map = new HashMap<>();
         User user = (User)httpServletRequest.getSession().getAttribute("user");
         notice.setAuthor(user.getUsername());
         int i = noticeService.insertNoticeService(notice);
         if(i == 1){
-            map.put("code",0);
-            map.put("message","添加公告成功");
-        }else{
-            map.put("code",1);
-            map.put("message","添加公告出错，请联系管理员");
+            return ResponseVoUtil.success();
         }
-        return map;
+        return ResponseVoUtil.error(ResponseEnum.UNKNOW_ERROR);
     }
 
     /**
@@ -68,19 +63,14 @@ public class NoticeController {
      * @return
      */
     @RequestMapping(value = "/update")
-    public Map<String,Object> updateNoticeController(@RequestBody Notice notice, HttpServletRequest httpServletRequest){
-        Map<String,Object> map = new HashMap<>();
+    public ResponseVo updateNoticeController(@RequestBody Notice notice, HttpServletRequest httpServletRequest){
         User user = (User)httpServletRequest.getSession().getAttribute("user");
         notice.setAuthor(user.getUsername());
         int i = noticeService.updateNoticeService(notice);
         if(i == 1){
-            map.put("code",0);
-            map.put("message","修改公告成功");
-        }else{
-            map.put("code",1);
-            map.put("message","修改公告出错，请联系管理员");
+            return ResponseVoUtil.success();
         }
-        return map;
+        return ResponseVoUtil.error(ResponseEnum.UNKNOW_ERROR);
     }
 
     /**
@@ -89,16 +79,11 @@ public class NoticeController {
      * @return
      */
     @RequestMapping(value = "/delete")
-    public Map<String,Object> deleteNoticeController(@RequestBody Notice notice){
-        Map<String,Object> map = new HashMap<>();
+    public ResponseVo deleteNoticeController(@RequestBody Notice notice){
         int i = noticeService.deleteNoticeService(notice.getId());
         if(i == 1){
-            map.put("code",0);
-            map.put("message","删除公告成功");
-        }else{
-            map.put("code",1);
-            map.put("message","删除公告出错，请联系管理员");
+            return ResponseVoUtil.success();
         }
-        return map;
+        return ResponseVoUtil.error(ResponseEnum.UNKNOW_ERROR);
     }
 }

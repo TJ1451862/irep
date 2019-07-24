@@ -2,16 +2,16 @@ package cn.edu.whu.irlab.irep.controller;
 
 import cn.edu.whu.irlab.irep.base.entity.*;
 import cn.edu.whu.irlab.irep.base.dao.OpinionService;
+import cn.edu.whu.irlab.irep.service.enums.ResponseEnum;
+import cn.edu.whu.irlab.irep.service.util.ResponseVoUtil;
+import cn.edu.whu.irlab.irep.service.vo.ResponseVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author fangrf
@@ -33,18 +33,13 @@ public class OpinionController {
      * @return
      */
     @RequestMapping(value = "/add")
-    public Map<String,Object> addOpinionController(@RequestBody Opinion opinion){
-        Map<String,Object> map = new HashMap<>();
+    public ResponseVo addOpinionController(@RequestBody Opinion opinion){
         opinion.setSign(1);
         int i= opinionService.insertOpinionService(opinion);
         if(i == 1){
-            map.put("code",0);
-            map.put("message","添加留言成功");
-        }else{
-            map.put("code",1);
-            map.put("message","添加留言出错，请联系管理员");
+            return ResponseVoUtil.success();
         }
-        return map;
+        return ResponseVoUtil.error(ResponseEnum.UNKNOW_ERROR);
     }
 
     /**
@@ -57,20 +52,15 @@ public class OpinionController {
      * @return
      */
     @RequestMapping(value = "/update")
-    public Map<String,Object> updateOpinionController(@RequestBody Opinion opinion, HttpServletRequest httpServletRequest){
-        Map<String,Object> map = new HashMap<>();
+    public ResponseVo updateOpinionController(@RequestBody Opinion opinion, HttpServletRequest httpServletRequest){
         User user = (User)httpServletRequest.getSession().getAttribute("user");
         opinion.setCallBy(user.getId());
         opinion.setSign(2);
         int i = opinionService.updateOpinoinService(opinion);
         if(i == 1){
-            map.put("code",0);
-            map.put("message","处理留言成功");
-        }else{
-            map.put("code",1);
-            map.put("message","处理留言出错，请联系管理员");
+            return ResponseVoUtil.success();
         }
-        return map;
+        return ResponseVoUtil.error(ResponseEnum.UNKNOW_ERROR);
     }
 
     /**
@@ -78,11 +68,7 @@ public class OpinionController {
      * @return
      */
     @RequestMapping(value = "/query")
-    public Map<String,Object> selectOpinionController(){
-        Map<String,Object> map = new HashMap<>();
-        List<Opinion> list = opinionService.selectAllOpinionService();
-        map.put("total",list.size());
-        map.put("row",list);
-        return map;
+    public ResponseVo<List<Opinion>> selectOpinionController(){
+        return ResponseVoUtil.success(opinionService.selectAllOpinionService());
     }
 }

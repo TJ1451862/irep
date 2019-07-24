@@ -3,6 +3,10 @@ package cn.edu.whu.irlab.irep.controller;
 import cn.edu.whu.irlab.irep.base.entity.*;
 import cn.edu.whu.irlab.irep.base.dao.AnswerService;
 import cn.edu.whu.irlab.irep.base.dao.CommentService;
+import cn.edu.whu.irlab.irep.service.enums.ResponseEnum;
+import cn.edu.whu.irlab.irep.service.util.ResponseVoUtil;
+import cn.edu.whu.irlab.irep.service.vo.CommentVo;
+import cn.edu.whu.irlab.irep.service.vo.ResponseVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,21 +41,14 @@ public class CommentController {
      * @return
      */
     @RequestMapping(value = "/add")
-    public Map<String,Object> addCommentController(@RequestBody Comment comment, HttpServletRequest httpServletRequest){
-        Map<String,Object> map = new HashMap<>();
+    public ResponseVo addCommentController(@RequestBody Comment comment, HttpServletRequest httpServletRequest){
         User user = (User)httpServletRequest.getSession().getAttribute("user");
         comment.setcUsername(user.getUsername());
-        try {
-            commentService.insertCommentService(comment);
-        }catch (Exception e){
-            e.printStackTrace();
-            map.put("code",1);
-            map.put("message","发表评论出错，请联系管理员");
-            return map;
+        int i = commentService.insertCommentService(comment);
+        if(i == 1){
+            return ResponseVoUtil.success();
         }
-        map.put("code",0);
-        map.put("message","发表评论成功");
-        return map;
+        return ResponseVoUtil.error(ResponseEnum.UNKNOW_ERROR);
     }
 
     /**
@@ -60,8 +57,7 @@ public class CommentController {
      * @return
      */
     @RequestMapping(value = "/support")
-    public Map<String,Object> updateCommentController(@RequestParam(value = "id") Integer id) {
-        Map<String, Object> map = new HashMap<>();
+    public ResponseVo updateCommentController(@RequestParam(value = "id") Integer id) {
         int support = 0;
         try{
             support = commentService.selectCommentByIdService(id).getcSupport();
@@ -72,17 +68,11 @@ public class CommentController {
         Comment comment = new Comment();
         comment.setId(id);
         comment.setcSupport(support + 1);
-        try {
-            commentService.updateCommentService(comment);
-        }catch (Exception e){
-            e.printStackTrace();
-            map.put("code",1);
-            map.put("message","点赞失败，请联系管理员");
-            return map;
+        int i = commentService.updateCommentService(comment);
+        if(i == 1){
+            return ResponseVoUtil.success();
         }
-        map.put("code",0);
-        map.put("message","点赞成功");
-        return map;
+        return ResponseVoUtil.error(ResponseEnum.UNKNOW_ERROR);
     }
 
     /**
@@ -91,22 +81,15 @@ public class CommentController {
      * @return
      */
     @RequestMapping(value = "/delete")
-    public Map<String,Object> deleteCommentController(@RequestParam(value = "id") Integer id){
-        Map<String, Object> map = new HashMap<>();
-        try {
-            //先删除回复
-            answerService.deleteAnswerByCIdService(id);
-            //在删除评论
-            commentService.deleteCommentService(id);
-        }catch (Exception e){
-            e.printStackTrace();
-            map.put("code",1);
-            map.put("message","删除评论失败，请联系管理员");
-            return map;
+    public ResponseVo deleteCommentController(@RequestParam(value = "id") Integer id){
+        //先删除回复
+        answerService.deleteAnswerByCIdService(id);
+        //在删除评论
+        int j = commentService.deleteCommentService(id);
+        if(j == 1){
+            return ResponseVoUtil.success();
         }
-        map.put("code",0);
-        map.put("message","删除评论成功");
-        return map;
+        return ResponseVoUtil.error(ResponseEnum.UNKNOW_ERROR);
     }
 
     /**
@@ -119,24 +102,17 @@ public class CommentController {
      * @return
      */
     @RequestMapping(value = "/answer")
-    public Map<String,Object> answerCommentController(@RequestParam(value = "id") Integer id,@RequestParam(value = "aContent") String aContent,HttpServletRequest httpServletRequest){
-        Map<String,Object> map = new HashMap<>();
+    public ResponseVo answerCommentController(@RequestParam(value = "id") Integer id,@RequestParam(value = "aContent") String aContent,HttpServletRequest httpServletRequest){
         User user = (User)httpServletRequest.getSession().getAttribute("user");
         Answer answer = new Answer();
         answer.setaContent(aContent);
         answer.setaUsername(user.getUsername());
         answer.setcId(id);
-        try {
-            answerService.insertAnswerService(answer);
-        }catch (Exception e){
-            e.printStackTrace();
-            map.put("code",1);
-            map.put("message","回复评论失败，请联系管理员");
-            return map;
+        int i = answerService.insertAnswerService(answer);
+        if(i == 1){
+            return ResponseVoUtil.success();
         }
-        map.put("code",0);
-        map.put("message","回复评论成功");
-        return map;
+        return ResponseVoUtil.error(ResponseEnum.UNKNOW_ERROR);
     }
 
     /**
@@ -144,12 +120,8 @@ public class CommentController {
      * @return
      */
     @RequestMapping(value = "/query")
-    public Map<String,Object> queryCommentController(){
-        Map<String,Object> map = new HashMap<>();
-        List<Comment> list = commentService.selectAllCommentService();
-        map.put("total",list.size());
-        map.put("row",list);
-        return map;
+    public ResponseVo<List<Comment>> queryCommentController(){
+        return ResponseVoUtil.success(commentService.selectAllCommentService());
     }
 
     /**
@@ -157,8 +129,7 @@ public class CommentController {
      * @return
      */
     @RequestMapping(value = "/queryAll")
-    public Map<String,Object> queryAllCommentController(){
-        Map<String,Object> map = new HashMap<>();
+    public ResponseVo<List<CommentVo>> queryAllCommentController(){
         List<CommentVo> voList = new ArrayList<>();
         List<Comment> list = commentService.selectAllCommentService();
         for (Comment comment:list) {
@@ -174,8 +145,6 @@ public class CommentController {
             commentVo.setAnswerList(answerService.selectAnswerByCIdService(comment.getId()));
             voList.add(commentVo);
         }
-        map.put("total",voList.size());
-        map.put("row",voList);
-        return map;
+        return ResponseVoUtil.success(voList);
     }
 }
