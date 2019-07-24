@@ -14,7 +14,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @RestController
@@ -30,18 +32,27 @@ public class InvertedIndexController {
      * @return "索引加载完成"
      */
     @PostMapping("/loadIndex")
-    public String loadIndexController(HttpServletRequest request){
-        return indexService.loadIndex(request);
+    public Map<String,String> loadIndexController(HttpServletRequest request){
+        Map<String,String> state=new HashMap<>();
+        int code=indexService.loadIndex(request);
+        state.put("code",String.valueOf(code));
+        if (code==1){
+            state.put("message","索引加载完成！");
+        }else {
+            state.put("message","索引加载失败");
+        }
+        return state;
     }
 
     /**
      * @return 全体倒排索引表
      */
     @PostMapping("/fullIndex")
-    public JSONArray selectFullIndexController() {
-        List<FullIndex> fullIndexList = indexService.selectFullIndex();
-        JSONArray jsonArray = JSON.parseArray(JSON.toJSONString(fullIndexList));
-        return jsonArray;
+    public List<FullIndex> selectFullIndexController() {
+        return indexService.selectFullIndex();
+//        List<FullIndex> fullIndexList = indexService.selectFullIndex();
+//        JSONArray jsonArray = JSON.parseArray(JSON.toJSONString(fullIndexList));
+//        return jsonArray;
     }
 
     /**
@@ -49,9 +60,7 @@ public class InvertedIndexController {
      * @return 倒排索引表
      */
     @PostMapping("/invertedIndex")
-    public JSONArray selectInvertedIndexController(@RequestParam(name = "term") String term) {
-        List<InvertedIndex> invertedIndexList = indexService.selectInvertedIndex(term);
-        JSONArray jsonArray = JSON.parseArray(JSON.toJSONString(invertedIndexList));
-        return jsonArray;
+    public List<InvertedIndex> selectInvertedIndexController(@RequestParam(name = "term") String term) {
+        return indexService.selectInvertedIndex(term);
     }
 }

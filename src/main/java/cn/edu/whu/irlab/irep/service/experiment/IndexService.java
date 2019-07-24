@@ -2,6 +2,7 @@ package cn.edu.whu.irlab.irep.service.experiment;
 
 import cn.edu.whu.irlab.irep.base.entity.FullIndex;
 import cn.edu.whu.irlab.irep.base.entity.InvertedIndex;
+import cn.edu.whu.irlab.irep.service.vo.TfVo;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.List;
  **/
 public interface IndexService {
     //加载索引
-    String loadIndex(HttpServletRequest request);
+    int loadIndex(HttpServletRequest request);
 
     //查询全体倒排索引表
     List<FullIndex> selectFullIndex();
@@ -29,4 +30,6 @@ public interface IndexService {
 
     //查询文档长度
     int selectDocLength(int docId);
+
+    List<TfVo> selectDocTf(int docId);
 }

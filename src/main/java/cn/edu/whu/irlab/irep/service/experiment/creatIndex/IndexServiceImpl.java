@@ -3,19 +3,18 @@ package cn.edu.whu.irlab.irep.service.experiment.creatIndex;
 import cn.edu.whu.irlab.irep.base.dao.FullIndexService;
 import cn.edu.whu.irlab.irep.base.dao.InvertedIndexService;
 import cn.edu.whu.irlab.irep.base.dao.RecordService;
-import cn.edu.whu.irlab.irep.base.dao.impl.InvertedIndexServiceImpl;
 import cn.edu.whu.irlab.irep.base.entity.FullIndex;
 import cn.edu.whu.irlab.irep.base.entity.InvertedIndex;
 import cn.edu.whu.irlab.irep.base.entity.Record;
 import cn.edu.whu.irlab.irep.service.experiment.IndexService;
 import cn.edu.whu.irlab.irep.service.util.Constructor;
 import cn.edu.whu.irlab.irep.service.vo.IndexVo;
+import cn.edu.whu.irlab.irep.service.vo.TfVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -41,7 +40,7 @@ public class IndexServiceImpl implements IndexService {
 
     private final static String folderPath = "resources/doc_ch";
 
-    public String loadIndex(HttpServletRequest request) {
+    public int loadIndex(HttpServletRequest request) {
 
         String indexType = Constructor.indexTypeConstructor(request);
         List<FullIndex> fullIndexList = fullIndexService.selectByIndexType(indexType);
@@ -57,8 +56,7 @@ public class IndexServiceImpl implements IndexService {
         IndexVo.setInvertedIndexList(invertedIndexList);
         IndexVo.setRecordList(recordList);
 
-        System.out.println("索引加载完成");
-        return "索引加载完成";
+        return 1;
     }
 
     public List<FullIndex> selectFullIndex() {
@@ -116,5 +114,19 @@ public class IndexServiceImpl implements IndexService {
             }
         }
         return result.size();
+    }
+
+    @Override
+    public List<TfVo> selectDocTf(int docId) {
+        List<InvertedIndex> all = IndexVo.getInvertedIndexList();
+        List<TfVo> tfVoList=new ArrayList<>();
+        for (InvertedIndex i :
+                all) {
+            if (i.getDocId()==docId){
+                TfVo tfVo=new TfVo(i.getDocId(),i.getTerm(),i.getTf());
+                tfVoList.add(tfVo);
+            }
+        }
+        return tfVoList;
     }
 }

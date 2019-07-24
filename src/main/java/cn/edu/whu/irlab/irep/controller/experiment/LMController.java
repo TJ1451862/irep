@@ -21,9 +21,7 @@ import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -36,7 +34,7 @@ import java.util.List;
  * @date 2010-07-13 15:32
  * @desc 语言模型交互层
  **/
-@Controller
+@RestController
 @RequestMapping(value = "IRforCN/Retrieval/languageModel")
 public class LMController {
 
@@ -59,8 +57,7 @@ public class LMController {
      * @param smoothParam      平滑系数
      * @return 检索结果
      */
-    @ResponseBody
-    @RequestMapping("/lmSearch")
+    @PostMapping("/lmSearch")
     public JSONArray LMSearchController(@RequestParam(name = "query") String query,
                                         @RequestParam(name = "smoothParam") double smoothParam,
                                         HttpServletRequest request) {
@@ -100,7 +97,7 @@ public class LMController {
      * @param query            检索式
      * @return 检索式的预处理结果
      */
-    @ResponseBody
+    @PostMapping
     @RequestMapping("/queryProcess")
     public JSONObject LMQueryProcess(@RequestParam(name = "query") String query,
                                      @RequestParam(name = "smoothParam") double smoothParam,
@@ -118,7 +115,6 @@ public class LMController {
      * @param
      * @return 给出各文档中各词词项的频率（存在tfs中)，即各文档的LM
      */
-    @ResponseBody
     @RequestMapping("/lmOfDocs")
     public List<JSONObject> getTfsOfDocsController(@RequestParam(name = "query") String query,
                                                    @RequestParam(name = "smoothParam") double smoothParam,
@@ -139,8 +135,7 @@ public class LMController {
     }
 
     //返回各文档的生成概率
-    @ResponseBody
-    @RequestMapping("/getResult")
+    @PostMapping("/getResult")
     public List<ResultForLM> getResult(@RequestParam(name = "query") String query,
                                        @RequestParam(name = "smoothParam") double smoothParam,
                                        HttpServletRequest request) {
@@ -149,8 +144,7 @@ public class LMController {
     }
 
     //返回降序的各文档的生成概率
-    @ResponseBody
-    @RequestMapping("/getResultAfterSort")
+    @PostMapping("/getResultAfterSort")
     public List<ResultForLM> getResultAfterSort(@RequestParam(name = "query") String query,
                                                 @RequestParam(name = "smoothParam") double smoothParam,
                                                 HttpServletRequest request) {
@@ -162,8 +156,7 @@ public class LMController {
      * 向result表中插入结果数据
      * 如果数据不存在则插入，如果数据存在则不插入
      */
-    @RequestMapping("/insertResult")
-    @ResponseBody
+    @PostMapping("/insertResult")
     public ModelMap insertResultController(@RequestParam(name = "smoothParam") double smoothParam,
                                            @RequestParam(name = "analyzerName") String analyzerName,
                                            @RequestParam(name = "isRemoveStopWord") boolean isRemoveStopWord,

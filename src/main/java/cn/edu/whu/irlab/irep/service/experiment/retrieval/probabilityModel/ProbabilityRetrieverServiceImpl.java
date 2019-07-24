@@ -28,8 +28,6 @@ import java.util.List;
 public class ProbabilityRetrieverServiceImpl implements ProbabilityRetrievalService {
     //查询
     private Query query;
-    //文档
-    private List<Doc> docList;
     //文档数
     private final static int N = 166;
     //参数K取正值大于0
@@ -38,8 +36,6 @@ public class ProbabilityRetrieverServiceImpl implements ProbabilityRetrievalServ
     private double b;
     //平均文档长度
     private double avg_length;
-    //索引类型
-    private String indexType;
     //分词器名称
     private String analyzerName;
     //是否去停用词

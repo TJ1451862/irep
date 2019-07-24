@@ -7,10 +7,7 @@ import cn.edu.whu.irlab.irep.service.vo.SearchResultVo;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -36,7 +33,7 @@ public class ProbabilityRetrieverController {
      * @param request HttpServletRequest
      * @return 检索结果
      */
-    @RequestMapping("/search")
+    @PostMapping("/search")
     public List<SearchResultVo> searchController(@RequestParam("query") String query,
                                                  @RequestParam("k") double k,
                                                  @RequestParam("b") double b,
@@ -54,7 +51,7 @@ public class ProbabilityRetrieverController {
      * @param request HttpServletRequest
      * @return bij计算结果
      */
-    @RequestMapping("/bij")
+    @PostMapping("/bij")
     public List<BijVo> calculateBijController(@RequestParam("query") String query,
                                               @RequestParam("k") double k,
                                               @RequestParam("b") double b,
@@ -63,7 +60,7 @@ public class ProbabilityRetrieverController {
         return probabilityRetrievalService.calculateBijs();
     }
 
-    @RequestMapping("/ppq")
+    @PostMapping("/ppq")
     public JSONObject ppqController(@RequestParam("query") String query,
                                     @RequestParam("k") double k,
                                     @RequestParam("b") double b,
@@ -84,7 +81,7 @@ public class ProbabilityRetrieverController {
      * @param request HttpServletRequest
      * @return 相似度计算结果
      */
-    @RequestMapping("/similarity")
+    @PostMapping("/similarity")
     public List<ResultVo> calculateSimilaritiesController(@RequestParam("query") String query,
                                                           @RequestParam("k") double k,
                                                           @RequestParam("b") double b,
@@ -102,7 +99,7 @@ public class ProbabilityRetrieverController {
      * @param request HttpServletRequest
      * @return 排序后的相似度结果
      */
-    @RequestMapping("/descendOrderSimilarity")
+    @PostMapping("/descendOrderSimilarity")
     public List<ResultVo> descendOrderSimilaritiesController(@RequestParam("query") String query,
                                                              @RequestParam("k") double k,
                                                              @RequestParam("b") double b,

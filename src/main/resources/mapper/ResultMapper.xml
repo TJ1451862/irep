@@ -11,8 +11,7 @@
         <result column="score" property="score" jdbcType="INTEGER"/>
     </resultMap>
     <sql id="Base_Column_List">
-        query_id, query, doc_id, doc_rank, title, retriever_id,
-      score
+        query_id, query, doc_id, doc_rank, title, retriever_id, score
     </sql>
 
     <insert id="insert" parameterType="cn.edu.whu.irlab.irep.base.entity.Result">

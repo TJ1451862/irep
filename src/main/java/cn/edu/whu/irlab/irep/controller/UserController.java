@@ -95,8 +95,8 @@ public class UserController {
      * @param user
      * @return
      */
-    @RequestMapping(value = "/signIn")
-    public Map<String,Object> signController(@RequestBody User user) {
+    @PostMapping(value = "/signIn")
+    public Map<String,Object> signController(User user) {
         Map<String,Object> map=new HashMap<>();
         if (userService.selectUserByPhoneService(user) != null) {
             map.put("code", 1);

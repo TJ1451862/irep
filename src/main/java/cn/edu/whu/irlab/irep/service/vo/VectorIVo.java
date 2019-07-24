@@ -1,6 +1,6 @@
-package cn.edu.whu.irlab.irep.service.experiment.retrieval.vsmModel;
+package cn.edu.whu.irlab.irep.service.vo;
 
-public class VectorI {
+public class VectorIVo {
 
     private String term;
 
@@ -8,9 +8,21 @@ public class VectorI {
 
     private double value;
 
-    public VectorI(String term, int num, double value) {
+    public VectorIVo(String term, int num, double value) {
         this.term = term;
         this.num = num;
+        this.value = value;
+    }
+
+    public void setTerm(String term) {
+        this.term = term;
+    }
+
+    public void setNum(int num) {
+        this.num = num;
+    }
+
+    public void setValue(double value) {
         this.value = value;
     }
 
@@ -28,7 +40,7 @@ public class VectorI {
 
     @Override
     public String toString() {
-        return "VectorI{" +
+        return "VectorIVo{" +
                 "term:'" + term + '\'' +
                 ", num:" + num +
                 ", value:" + value +

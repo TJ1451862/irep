@@ -3,14 +3,19 @@ package cn.edu.whu.irlab.irep.base.entity;
 public class Document {
     private Integer id;
 
+    //文档名
     private String docName;
 
+    //文档链接
     private String url;
 
+    //文档标题
     private String title;
 
+    //文档路径
     private String filepath;
 
+    //文档Id
     private Integer docId;
 
     public Integer getId() {
