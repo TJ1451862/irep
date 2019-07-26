@@ -11,9 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author fangrf
@@ -45,7 +43,6 @@ public class NoticeController {
      */
     @RequestMapping(value = "/add")
     public ResponseVo addNoticeController(@RequestBody Notice notice, HttpServletRequest httpServletRequest){
-        Map<String,Object> map = new HashMap<>();
         User user = (User)httpServletRequest.getSession().getAttribute("user");
         notice.setAuthor(user.getUsername());
         int i = noticeService.insertNoticeService(notice);
