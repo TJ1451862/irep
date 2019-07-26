@@ -46,4 +46,12 @@ public class ResponseVoUtil {
         responseVo.setMsg(responseEnum.getMsg());
         return responseVo;
     }
+
+    public static ResponseVo success(ResponseEnum responseEnum,Object object){
+        ResponseVo responseVo = new ResponseVo();
+        responseVo.setCode(responseEnum.getCode());
+        responseVo.setMsg(responseEnum.getMsg());
+        responseVo.setData(object);
+        return responseVo;
+    }
 }
