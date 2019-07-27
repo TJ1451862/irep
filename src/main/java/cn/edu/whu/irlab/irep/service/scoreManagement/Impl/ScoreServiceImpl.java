@@ -34,6 +34,9 @@ public class ScoreServiceImpl implements ScoreService {
     @Autowired
     private UserAnalyticalScoreService userAnalyticalScoreService;
 
+    @Autowired
+    private UserOperationRecordService userOperationRecordService;
+
     @Override
     public int updateChoiceAndCompletionScore(AnswerVo answer, HttpServletRequest request) {
 
@@ -61,7 +64,7 @@ public class ScoreServiceImpl implements ScoreService {
         int completion3Score = answer.getCompletion3().equals(completionQuestion3.getAnswer()) ? completionQuestion3.getScore() : 0;
         int completion4Score = answer.getCompletion4().equals(completionQuestion4.getAnswer()) ? completionQuestion4.getScore() : 0;
 
-        UserExperimentScore userExperimentScore = getUserExperimentScore(experimentId,request);
+        UserExperimentScore userExperimentScore = getUserExperimentScore(experimentId, request);
 
         userExperimentScore.setChoice1Score(choice1Score);
         userExperimentScore.setChoice2Score(choice2Score);
@@ -86,14 +89,14 @@ public class ScoreServiceImpl implements ScoreService {
         int num = 0;
 
         for (int i = 1; i < ranking.size(); i++) {
-            if (i == ranking.get(i-1).intValue()) {
+            if (i == ranking.get(i - 1).intValue()) {
                 num++;
             }
         }
 
         int score = standardScore * num / ranking.size();
 
-        UserExperimentScore userExperimentScore=getUserExperimentScore(experimentId,request);
+        UserExperimentScore userExperimentScore = getUserExperimentScore(experimentId, request);
         userExperimentScore.setRankingScore(score);
 
         return userExperimentScoreService.updateByUserIdAndExperimentId(userExperimentScore);
@@ -112,16 +115,22 @@ public class ScoreServiceImpl implements ScoreService {
         User user = (User) request.getSession().getAttribute("user");
         userAnalyticalScore.setTeacherId(user.getId());
 
-        UserExperimentScore userExperimentScore=new UserExperimentScore();
+        UserExperimentScore userExperimentScore = new UserExperimentScore();
         userExperimentScore.setUserId(userAnalyticalScore.getUserId());
         userExperimentScore.setExperimentId(userAnalyticalScore.getExperimentId());
-        userExperimentScore.setAnalyticalScore(userAnalyticalScore.getScore()*100);
+        userExperimentScore.setAnalyticalScore(userAnalyticalScore.getScore() * 100);
 
         userExperimentScoreService.updateByUserIdAndExperimentId(userExperimentScore);
 
         return userAnalyticalScoreService.updateComment(userAnalyticalScore);
     }
 
+    @Override
+    public int createOperationRecord(UserOperationRecord userOperationRecord, HttpServletRequest request) {
+        User user = (User) request.getSession().getAttribute("user");
+        userOperationRecord.setUserId(user.getId());
+        return userOperationRecordService.createRecord(userOperationRecord);
+    }
 
     private UserExperimentScore getUserExperimentScore(int experimentId, HttpServletRequest request) {
         User user = (User) request.getSession().getAttribute("user");

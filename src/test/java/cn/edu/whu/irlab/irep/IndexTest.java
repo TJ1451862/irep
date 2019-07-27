@@ -1,6 +1,6 @@
 package cn.edu.whu.irlab.irep;
 
-import cn.edu.whu.irlab.irep.service.entity.Doc;
+import cn.edu.whu.irlab.irep.service.vo.Doc;
 import cn.edu.whu.irlab.irep.base.entity.FullIndex;
 import cn.edu.whu.irlab.irep.base.entity.InvertedIndex;
 import cn.edu.whu.irlab.irep.base.entity.Record;

@@ -1,6 +1,7 @@
 package cn.edu.whu.irlab.irep.service.scoreManagement;
 
 import cn.edu.whu.irlab.irep.base.entity.UserAnalyticalScoreWithBLOBs;
+import cn.edu.whu.irlab.irep.base.entity.UserOperationRecord;
 import cn.edu.whu.irlab.irep.service.vo.AnswerVo;
 import cn.edu.whu.irlab.irep.service.vo.RankingResultVo;
 
@@ -24,4 +25,7 @@ public interface ScoreService {
 
     //为分析题写评语和打分
     int updateAnalyticalComment(UserAnalyticalScoreWithBLOBs userAnalyticalScore, HttpServletRequest request);
+
+    //记录一条操作
+    int createOperationRecord(UserOperationRecord userOperationRecord,HttpServletRequest request);
 }
