@@ -1,6 +1,6 @@
 package cn.edu.whu.irlab.irep.service.experiment.retrieval.languagemodel;
 
-import cn.edu.whu.irlab.irep.service.entity.Doc;
+import cn.edu.whu.irlab.irep.service.vo.Doc;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -16,11 +16,12 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class ExceptinHandle {
 
     @ExceptionHandler(value = Exception.class)
-    public ResponseVo handle(Exception e){
-       if(e instanceof MyException){
-          MyException myException = (MyException) e;
-          return ResponseVoUtil.error(myException.getCode(),myException.getMessage());
-       }
-       return ResponseVoUtil.error(-1,"未知错误");
+    public ResponseVo handle(Exception e) {
+        if (e instanceof MyException) {
+            MyException myException = (MyException) e;
+            return ResponseVoUtil.error(myException.getCode(), myException.getMessage());
+        }
+        e.printStackTrace();
+        return ResponseVoUtil.error(-1, "未知错误");
     }
 }

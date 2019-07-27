@@ -1,8 +1,6 @@
 package cn.edu.whu.irlab.irep.service.experiment.retrieval.probabilityModel;
 
 import cn.edu.whu.irlab.irep.base.dao.DocumentService;
-import cn.edu.whu.irlab.irep.base.dao.FullIndexService;
-import cn.edu.whu.irlab.irep.base.dao.RecordService;
 import cn.edu.whu.irlab.irep.base.entity.Document;
 import cn.edu.whu.irlab.irep.base.entity.Record;
 import cn.edu.whu.irlab.irep.service.experiment.IndexService;
@@ -12,10 +10,7 @@ import cn.edu.whu.irlab.irep.service.util.Find;
 import cn.edu.whu.irlab.irep.service.vo.BijVo;
 import cn.edu.whu.irlab.irep.service.vo.IndexVo;
 import cn.edu.whu.irlab.irep.service.vo.ResultVo;
-import cn.edu.whu.irlab.irep.base.dao.InvertedIndexService;
-import cn.edu.whu.irlab.irep.service.entity.Doc;
-import cn.edu.whu.irlab.irep.service.entity.Query;
-import cn.edu.whu.irlab.irep.service.util.Constructor;
+import cn.edu.whu.irlab.irep.service.vo.Query;
 import cn.edu.whu.irlab.irep.service.vo.SearchResultVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

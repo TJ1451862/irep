@@ -45,7 +45,7 @@ public class UserExperimentScoreServiceImpl implements UserExperimentScoreServic
         return userExperimentScoreMapper.select(userExperimentScore);
     }
 
-    public UserExperimentScore selectByUserIdAndExperimentId(int userId, int experimentId) {
+    private UserExperimentScore selectByUserIdAndExperimentId(int userId, int experimentId) {
         UserExperimentScore userExperimentScore = new UserExperimentScore();
         userExperimentScore.setUserId(userId);
         userExperimentScore.setExperimentId(experimentId);

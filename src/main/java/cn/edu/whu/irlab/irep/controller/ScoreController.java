@@ -1,9 +1,11 @@
 package cn.edu.whu.irlab.irep.controller;
 
+import cn.edu.whu.irlab.irep.base.entity.UserAnalyticalScoreWithBLOBs;
 import cn.edu.whu.irlab.irep.service.enums.ResponseEnum;
 import cn.edu.whu.irlab.irep.service.scoreManagement.ScoreService;
 import cn.edu.whu.irlab.irep.service.util.ResponseVoUtil;
 import cn.edu.whu.irlab.irep.service.vo.AnswerVo;
+import cn.edu.whu.irlab.irep.service.vo.RankingResultVo;
 import cn.edu.whu.irlab.irep.service.vo.ResponseVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,4 +36,36 @@ public class ScoreController {
             return ResponseVoUtil.error(ResponseEnum.UNKNOW_ERROR);
         }
     }
+
+    @PostMapping("/updateRankingScore")
+    public ResponseVo updateRankingScoreController(@RequestBody RankingResultVo rankingResultVo, HttpServletRequest request){
+        int state=scoreService.updateRankingScore(rankingResultVo,request);
+        if (state==1){
+            return ResponseVoUtil.success();
+        }else {
+            return ResponseVoUtil.error(ResponseEnum.UNKNOW_ERROR);
+        }
+    }
+
+    @PostMapping("/updateAnalyticalContent")
+    public ResponseVo updateAnalyticalContentController(@RequestBody UserAnalyticalScoreWithBLOBs userAnalyticalScoreWithBLOBs, HttpServletRequest request){
+        int state=scoreService.updateAnalyticalContent(userAnalyticalScoreWithBLOBs,request);
+        if (state==1){
+            return ResponseVoUtil.success();
+        }else {
+            return ResponseVoUtil.error(ResponseEnum.UNKNOW_ERROR);
+        }
+    }
+
+    @PostMapping("/updateAnalyticalComment")
+    public ResponseVo updateAnalyticalCommentController(@RequestBody UserAnalyticalScoreWithBLOBs userAnalyticalScoreWithBLOBs, HttpServletRequest request){
+        int state=scoreService.updateAnalyticalComment(userAnalyticalScoreWithBLOBs,request);
+        if (state==1){
+            return ResponseVoUtil.success();
+        }else {
+            return ResponseVoUtil.error(ResponseEnum.UNKNOW_ERROR);
+        }
+    }
+
+
 }

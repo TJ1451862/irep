@@ -1,5 +1,5 @@
 package cn.edu.whu.irlab.irep.service.experiment.retrieval.languagemodel;
-import cn.edu.whu.irlab.irep.service.entity.Query;
+import cn.edu.whu.irlab.irep.service.vo.Query;
 
 public class QueryForLM extends Query {
     /**

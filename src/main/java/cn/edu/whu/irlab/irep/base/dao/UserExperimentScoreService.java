@@ -13,6 +13,7 @@ public interface UserExperimentScoreService {
 
     int insertSelective(UserExperimentScore userExperimentScore);
 
+    //根据用户Id和实验Id更新
     int updateByUserIdAndExperimentId(UserExperimentScore userExperimentScore);
 
 }

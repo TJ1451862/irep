@@ -26,6 +26,7 @@ public class ExceptionHandle {
           return ResponseVoUtil.error(myException.getCode(),myException.getMessage());
        }
        logger.error("【系统异常】{}", e);
+        e.printStackTrace();
        return ResponseVoUtil.error(-1,"未知错误");
     }
 }
