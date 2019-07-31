@@ -21,6 +21,7 @@ public class ExceptinHandle {
           MyException myException = (MyException) e;
           return ResponseVoUtil.error(myException.getCode(),myException.getMessage());
        }
+       e.printStackTrace();
        return ResponseVoUtil.error(-1,"未知错误");
     }
 }

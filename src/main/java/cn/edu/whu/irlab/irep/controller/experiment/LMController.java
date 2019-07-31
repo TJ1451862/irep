@@ -124,13 +124,13 @@ public class LMController {
         List<JSONObject> lmsOfDocs = new ArrayList<>();
         for (int i = 0; i < docForLMList.size(); i++) {
             JSONObject jsonObject = new JSONObject();
-            JSONObject lmsJson;
-            jsonObject.put("title", Find.findTitle(docForLMList.get(i).getId(), true));
-            jsonObject.put("docId", docForLMList.get(i).getId());
-            lmsJson = JSON.parseObject(JSON.toJSONString(docForLMList.get(i).getLMap()));
-            jsonObject.put("lms", lmsJson);
-            lmsOfDocs.add(jsonObject);
-        }
+        JSONObject lmsJson;
+        jsonObject.put("title", Find.findTitle(docForLMList.get(i).getId(), true));
+        jsonObject.put("docId", docForLMList.get(i).getId());
+        lmsJson = JSON.parseObject(JSON.toJSONString(docForLMList.get(i).getLMap()));
+        jsonObject.put("lms", lmsJson);
+        lmsOfDocs.add(jsonObject);
+    }
         return lmsOfDocs;
     }
 
