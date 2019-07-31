@@ -1,8 +1,6 @@
 package cn.edu.whu.irlab.irep.service.experiment.perfomance;
 
-import cn.edu.whu.irlab.irep.base.entity.Retriever;
-
-import javax.servlet.http.HttpServletRequest;
+import cn.edu.whu.irlab.irep.base.entity.experiment.Retriever;
 
 /**
  * @author gcr19

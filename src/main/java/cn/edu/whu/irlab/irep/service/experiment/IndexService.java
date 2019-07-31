@@ -1,7 +1,7 @@
 package cn.edu.whu.irlab.irep.service.experiment;
 
-import cn.edu.whu.irlab.irep.base.entity.FullIndex;
-import cn.edu.whu.irlab.irep.base.entity.InvertedIndex;
+import cn.edu.whu.irlab.irep.base.entity.experiment.FullIndex;
+import cn.edu.whu.irlab.irep.base.entity.experiment.InvertedIndex;
 import cn.edu.whu.irlab.irep.service.vo.TfVo;
 
 import javax.servlet.http.HttpServletRequest;

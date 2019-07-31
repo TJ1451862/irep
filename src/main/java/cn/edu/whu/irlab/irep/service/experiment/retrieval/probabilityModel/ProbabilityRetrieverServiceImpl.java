@@ -1,9 +1,11 @@
 package cn.edu.whu.irlab.irep.service.experiment.retrieval.probabilityModel;
 
-import cn.edu.whu.irlab.irep.base.dao.DocumentService;
-import cn.edu.whu.irlab.irep.base.entity.Document;
-import cn.edu.whu.irlab.irep.base.entity.Record;
-import cn.edu.whu.irlab.irep.base.entity.Result;
+import cn.edu.whu.irlab.irep.base.dao.experiment.DocumentService;
+import cn.edu.whu.irlab.irep.base.entity.experiment.Document;
+import cn.edu.whu.irlab.irep.base.entity.experiment.Record;
+import cn.edu.whu.irlab.irep.base.entity.experiment.Result;
+import cn.edu.whu.irlab.irep.base.entity.system.User;
+import cn.edu.whu.irlab.irep.base.entity.system.UserRetrieverScore;
 import cn.edu.whu.irlab.irep.service.experiment.IndexService;
 import cn.edu.whu.irlab.irep.service.experiment.retrieval.ProbabilityRetrievalService;
 import cn.edu.whu.irlab.irep.service.experiment.retrieval.RetrievalService;
@@ -11,7 +13,6 @@ import cn.edu.whu.irlab.irep.service.util.Find;
 import cn.edu.whu.irlab.irep.service.vo.BijVo;
 import cn.edu.whu.irlab.irep.service.vo.IndexVo;
 import cn.edu.whu.irlab.irep.service.vo.ResultVo;
-import cn.edu.whu.irlab.irep.service.vo.Query;
 import cn.edu.whu.irlab.irep.service.vo.SearchResultVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -90,6 +91,15 @@ public class ProbabilityRetrieverServiceImpl extends RetrievalService implements
     @Override
     public Map<String, List<Result>> testRetriever() {
         return null;
+    }
+
+    @Override
+    public int quit() {
+        UserRetrieverScore userRetrieverScore=new UserRetrieverScore();
+        User user=(User) session.getAttribute("user");
+        userRetrieverScore.setUserId(user.getId());
+        userRetrieverScore.setProbabilityRetriever(retriever.getRetrieverId());
+        return userRetrieverScoreService.updateByUserId(userRetrieverScore);
     }
 
     private ResultVo calculateSimilarity(int docId) {

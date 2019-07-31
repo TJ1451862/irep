@@ -1,7 +1,7 @@
 package cn.edu.whu.irlab.irep.service.scoreManagement;
 
-import cn.edu.whu.irlab.irep.base.entity.UserAnalyticalScoreWithBLOBs;
-import cn.edu.whu.irlab.irep.base.entity.UserOperationRecord;
+import cn.edu.whu.irlab.irep.base.entity.system.UserAnalyticalScoreWithBLOBs;
+import cn.edu.whu.irlab.irep.base.entity.system.UserOperationRecord;
 import cn.edu.whu.irlab.irep.service.vo.AnswerVo;
 import cn.edu.whu.irlab.irep.service.vo.RankingResultVo;
 

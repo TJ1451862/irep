@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.edu.whu.irlab.irep.base.mapper.experiment.DocumentMapper">
+    <resultMap id="BaseResultMap" type="cn.edu.whu.irlab.irep.base.entity.experiment.Document">
+        <result column="id" property="id" jdbcType="INTEGER"/>
+        <result column="doc_name" property="docName" jdbcType="VARCHAR"/>
+        <result column="url" property="url" jdbcType="VARCHAR"/>
+        <result column="title" property="title" jdbcType="VARCHAR"/>
+        <result column="filepath" property="filepath" jdbcType="VARCHAR"/>
+        <result column="doc_id" property="docId" jdbcType="INTEGER"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id,doc_name,url,title,doc_id,filepath
+  </sql>
+    <insert id="insert" parameterType="cn.edu.whu.irlab.irep.base.entity.experiment.Document">
+    insert into document (id, doc_name, url, 
+      title, filepath, doc_id
+      )
+    values (#{id,jdbcType=INTEGER}, #{docName,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, 
+      #{title,jdbcType=VARCHAR}, #{filepath,jdbcType=VARCHAR}, #{docId,jdbcType=INTEGER}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="cn.edu.whu.irlab.irep.base.entity.experiment.Document">
+        insert into document
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="docName != null">
+                doc_name,
+            </if>
+            <if test="url != null">
+                url,
+            </if>
+            <if test="title != null">
+                title,
+            </if>
+            <if test="filepath != null">
+                filepath,
+            </if>
+            <if test="docId != null">
+                doc_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="docName != null">
+                #{docName,jdbcType=VARCHAR},
+            </if>
+            <if test="url != null">
+                #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="title != null">
+                #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="filepath != null">
+                #{filepath,jdbcType=VARCHAR},
+            </if>
+            <if test="docId != null">
+                #{docId,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <select id="selectByDocId" parameterType="INTEGER" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from document where doc_id=#{docId,jdbcType=INTEGER}
+    </select>
+    <select id="selectByDocName" parameterType="String" resultMap="BaseResultMap">
+    select * from document where doc_name=#{docName,jdbcType=VARCHAR}
+  </select>
+</mapper>

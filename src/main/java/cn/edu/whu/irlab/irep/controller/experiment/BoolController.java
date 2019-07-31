@@ -1,13 +1,13 @@
 package cn.edu.whu.irlab.irep.controller.experiment;
 
 
-import cn.edu.whu.irlab.irep.base.dao.impl.ResultServiceImpl;
-import cn.edu.whu.irlab.irep.base.dao.impl.RetrieverServiceImpl;
-import cn.edu.whu.irlab.irep.base.dao.impl.UserRetrieverServiceImpl;
-import cn.edu.whu.irlab.irep.base.entity.Result;
-import cn.edu.whu.irlab.irep.base.entity.Retriever;
-import cn.edu.whu.irlab.irep.base.entity.User;
-import cn.edu.whu.irlab.irep.base.entity.UserRetriever;
+import cn.edu.whu.irlab.irep.base.dao.experiment.impl.ResultServiceImpl;
+import cn.edu.whu.irlab.irep.base.dao.experiment.impl.RetrieverServiceImpl;
+import cn.edu.whu.irlab.irep.base.dao.system.impl.UserRetrieverServiceImpl;
+import cn.edu.whu.irlab.irep.base.entity.experiment.Result;
+import cn.edu.whu.irlab.irep.base.entity.experiment.Retriever;
+import cn.edu.whu.irlab.irep.base.entity.system.User;
+import cn.edu.whu.irlab.irep.base.entity.system.UserRetriever;
 import cn.edu.whu.irlab.irep.service.experiment.retrieval.boolmodel.BoolRetriever;
 import cn.edu.whu.irlab.irep.service.experiment.retrieval.boolmodel.ResultForBool;
 import cn.edu.whu.irlab.irep.service.experiment.retrieval.boolmodel.TermsForBool;
@@ -183,7 +183,6 @@ public class BoolController {
                     Result result = new Result();
                     result.setDocId(resultAfterSort.get(j).getDocID());
                     result.setDocRank(j);
-                    result.setQuery(queryContent);
                     result.setQueryId(queryId);
                     result.setTitle(resultAfterSort.get(j).getTitle());
                     result.setRetrieverId(retrieverId);

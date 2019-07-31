@@ -1,6 +1,5 @@
 package cn.edu.whu.irlab.irep.service.experimentReport.Impl;
 
-import cn.edu.whu.irlab.irep.base.dao.ExperimentService;
 import cn.edu.whu.irlab.irep.service.experimentReport.ExperimentReportService;
 
 /**

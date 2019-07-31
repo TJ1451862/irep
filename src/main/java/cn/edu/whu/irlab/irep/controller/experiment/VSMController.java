@@ -1,17 +1,15 @@
 package cn.edu.whu.irlab.irep.controller.experiment;
 
 
+import cn.edu.whu.irlab.irep.service.enums.ResponseEnum;
 import cn.edu.whu.irlab.irep.service.experiment.retrieval.VsmRetrievalService;
-import cn.edu.whu.irlab.irep.service.vo.IdfVo;
-import cn.edu.whu.irlab.irep.service.vo.ResultVo;
-import cn.edu.whu.irlab.irep.base.entity.Result;
-import cn.edu.whu.irlab.irep.base.dao.ResultService;
-import cn.edu.whu.irlab.irep.base.dao.RetrieverService;
-import cn.edu.whu.irlab.irep.base.dao.UserRetrieverService;
-import cn.edu.whu.irlab.irep.service.vo.VectorIVo;
+import cn.edu.whu.irlab.irep.service.util.ResponseVoUtil;
+import cn.edu.whu.irlab.irep.service.vo.*;
+import cn.edu.whu.irlab.irep.base.entity.experiment.Result;
+import cn.edu.whu.irlab.irep.base.dao.experiment.ResultService;
+import cn.edu.whu.irlab.irep.base.dao.experiment.RetrieverService;
+import cn.edu.whu.irlab.irep.base.dao.system.UserRetrieverService;
 import cn.edu.whu.irlab.irep.service.util.Find;
-import cn.edu.whu.irlab.irep.service.vo.SearchResultVo;
-import cn.edu.whu.irlab.irep.service.vo.TfVo;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -156,11 +154,16 @@ public class VSMController {
     }
 
     @PostMapping("/quit")
-    public void quitController(@RequestParam(name = "query") String queryContent,
-                               @RequestParam(name = "formulaId") int formulaId,
-                               @RequestParam(name = "smoothParam") Double smoothParam,
-                               HttpServletRequest request){
+    public ResponseVo quitController(@RequestParam(name = "query") String queryContent,
+                                     @RequestParam(name = "formulaId") int formulaId,
+                                     @RequestParam(name = "smoothParam") Double smoothParam,
+                                     HttpServletRequest request){
         vsmRetriever.initVSMRetriever(queryContent, formulaId, smoothParam, request);
-        vsmRetriever.testRetriever();
+        int state=vsmRetriever.quit();
+        if (state == 1) {
+            return ResponseVoUtil.success();
+        } else {
+            return ResponseVoUtil.error(ResponseEnum.UNKNOW_ERROR);
+        }
     }
 }

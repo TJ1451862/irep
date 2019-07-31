@@ -1,12 +1,12 @@
 package cn.edu.whu.irlab.irep;
 
 import cn.edu.whu.irlab.irep.service.vo.Doc;
-import cn.edu.whu.irlab.irep.base.entity.FullIndex;
-import cn.edu.whu.irlab.irep.base.entity.InvertedIndex;
-import cn.edu.whu.irlab.irep.base.entity.Record;
-import cn.edu.whu.irlab.irep.base.dao.impl.FullIndexServiceImpl;
-import cn.edu.whu.irlab.irep.base.dao.impl.InvertedIndexServiceImpl;
-import cn.edu.whu.irlab.irep.base.dao.impl.RecordServiceImpl;
+import cn.edu.whu.irlab.irep.base.entity.experiment.FullIndex;
+import cn.edu.whu.irlab.irep.base.entity.experiment.InvertedIndex;
+import cn.edu.whu.irlab.irep.base.entity.experiment.Record;
+import cn.edu.whu.irlab.irep.base.dao.experiment.impl.FullIndexServiceImpl;
+import cn.edu.whu.irlab.irep.base.dao.experiment.impl.InvertedIndexServiceImpl;
+import cn.edu.whu.irlab.irep.base.dao.experiment.impl.RecordServiceImpl;
 import cn.edu.whu.irlab.irep.service.util.Constructor;
 import org.junit.Test;
 import org.junit.runner.RunWith;

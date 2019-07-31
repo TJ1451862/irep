@@ -25,7 +25,7 @@
         <typeAlias alias="LinkedHashMap" type="java.util.LinkedHashMap"/>
         <typeAlias alias="ArrayList" type="java.util.ArrayList"/>
         <typeAlias alias="LinkedList" type="java.util.LinkedList"/>
-        <typeAlias type="cn.edu.whu.irlab.irep.base.entity.Record" alias="Record"/>
+        <typeAlias type="cn.edu.whu.irlab.irep.base.entity.experiment.Record" alias="Record"/>
         <package name="cn.edu.whu.irlab.irep.base.entity"/>
     </typeAliases>
 

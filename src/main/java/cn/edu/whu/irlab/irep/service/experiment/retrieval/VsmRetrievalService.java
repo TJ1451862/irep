@@ -1,21 +1,17 @@
 package cn.edu.whu.irlab.irep.service.experiment.retrieval;
 
-import cn.edu.whu.irlab.irep.base.entity.Result;
-import cn.edu.whu.irlab.irep.base.entity.StandardQuery;
-import cn.edu.whu.irlab.irep.service.vo.Query;
 import cn.edu.whu.irlab.irep.service.vo.VectorIVo;
 import cn.edu.whu.irlab.irep.service.vo.IdfVo;
 import cn.edu.whu.irlab.irep.service.vo.TfVo;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author gcr
  * 向量空间模型检索接口
  */
-public interface VsmRetrievalService extends RetrieverModelService {
+public interface VsmRetrievalService extends RetrieverService {
 
     /**
      * 初始化向量空间检索器

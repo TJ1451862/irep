@@ -1,7 +1,7 @@
 package cn.edu.whu.irlab.irep.service.scoreManagement.Impl;
 
-import cn.edu.whu.irlab.irep.base.dao.*;
-import cn.edu.whu.irlab.irep.base.entity.*;
+import cn.edu.whu.irlab.irep.base.dao.system.*;
+import cn.edu.whu.irlab.irep.base.entity.system.*;
 import cn.edu.whu.irlab.irep.service.scoreManagement.ScoreService;
 import cn.edu.whu.irlab.irep.service.vo.AnswerVo;
 import cn.edu.whu.irlab.irep.service.vo.RankingResultVo;

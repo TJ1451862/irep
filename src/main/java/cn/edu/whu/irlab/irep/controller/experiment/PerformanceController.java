@@ -1,10 +1,14 @@
 package cn.edu.whu.irlab.irep.controller.experiment;
 
-import cn.edu.whu.irlab.irep.base.dao.DocumentService;
-import cn.edu.whu.irlab.irep.base.entity.*;
-import cn.edu.whu.irlab.irep.base.dao.ResultService;
-import cn.edu.whu.irlab.irep.base.dao.RetrieverService;
-import cn.edu.whu.irlab.irep.base.dao.UserRetrieverService;
+import cn.edu.whu.irlab.irep.base.dao.experiment.DocumentService;
+import cn.edu.whu.irlab.irep.base.dao.experiment.ResultService;
+import cn.edu.whu.irlab.irep.base.dao.experiment.RetrieverService;
+import cn.edu.whu.irlab.irep.base.dao.system.UserRetrieverService;
+import cn.edu.whu.irlab.irep.base.entity.experiment.Document;
+import cn.edu.whu.irlab.irep.base.entity.experiment.Result;
+import cn.edu.whu.irlab.irep.base.entity.experiment.Retriever;
+import cn.edu.whu.irlab.irep.base.entity.system.User;
+import cn.edu.whu.irlab.irep.base.entity.system.UserRetriever;
 import cn.edu.whu.irlab.irep.service.experiment.perfomance.Impl.Evaluator;
 import cn.edu.whu.irlab.irep.service.experiment.retrieval.ProbabilityRetrievalService;
 import cn.edu.whu.irlab.irep.service.experiment.retrieval.VsmRetrievalService;

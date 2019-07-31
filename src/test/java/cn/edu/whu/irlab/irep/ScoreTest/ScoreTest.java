@@ -1,10 +1,10 @@
 package cn.edu.whu.irlab.irep.ScoreTest;
 
-import cn.edu.whu.irlab.irep.base.dao.ChoiceQuestionService;
-import cn.edu.whu.irlab.irep.base.dao.CompletionQuestionService;
-import cn.edu.whu.irlab.irep.base.dao.ExperimentService;
-import cn.edu.whu.irlab.irep.base.entity.ChoiceQuestion;
-import cn.edu.whu.irlab.irep.base.entity.CompletionQuestion;
+import cn.edu.whu.irlab.irep.base.dao.system.ChoiceQuestionService;
+import cn.edu.whu.irlab.irep.base.dao.system.CompletionQuestionService;
+import cn.edu.whu.irlab.irep.base.dao.system.ExperimentService;
+import cn.edu.whu.irlab.irep.base.entity.system.ChoiceQuestion;
+import cn.edu.whu.irlab.irep.base.entity.system.CompletionQuestion;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 

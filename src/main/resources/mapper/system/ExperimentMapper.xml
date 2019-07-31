@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.edu.whu.irlab.irep.base.mapper.system.ExperimentMapper">
+    <resultMap id="BaseResultMap" type="cn.edu.whu.irlab.irep.base.entity.system.Experiment">
+        <result column="id" property="id" jdbcType="INTEGER"/>
+        <result column="experiment_name" property="experimentName" jdbcType="VARCHAR"/>
+        <result column="choice1_id" property="choice1Id" jdbcType="INTEGER"/>
+        <result column="choice2_id" property="choice2Id" jdbcType="INTEGER"/>
+        <result column="choice3_id" property="choice3Id" jdbcType="INTEGER"/>
+        <result column="choice4_id" property="choice4Id" jdbcType="INTEGER"/>
+        <result column="completion1_id" property="completion1Id" jdbcType="INTEGER"/>
+        <result column="completion2_id" property="completion2Id" jdbcType="INTEGER"/>
+        <result column="completion3_id" property="completion3Id" jdbcType="INTEGER"/>
+        <result column="completion4_id" property="completion4Id" jdbcType="INTEGER"/>
+        <result column="ranking_score" property="rankingScore" jdbcType="INTEGER"/>
+        <result column="analytical_score" property="analyticalScore" jdbcType="INTEGER"/>
+        <result column="operation_num" property="operationNum" jdbcType="INTEGER"/>
+        <result column="operation_score" property="operationScore" jdbcType="INTEGER"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, experiment_name, choice1_id,choice2_id, choice3_id, choice4_id,
+      completion1_id, completion2_id, completion3_id, completion4_id, ranking_score, analytical_score,
+      opertation_num,operation_score
+    </sql>
+
+    <insert id="insert" parameterType="cn.edu.whu.irlab.irep.base.entity.system.Experiment">
+    insert into experiment (
+    <include refid="Base_Column_List"/>
+    )
+    values (#{id,jdbcType=INTEGER}, #{experimentName,jdbcType=VARCHAR}, #{choice1Id,jdbcType=INTEGER}, 
+      #{choice2Id,jdbcType=INTEGER}, #{choice3Id,jdbcType=INTEGER}, #{choice4Id,jdbcType=INTEGER}, 
+      #{completion1Id,jdbcType=INTEGER}, #{completion2Id,jdbcType=INTEGER}, #{completion3Id,jdbcType=INTEGER}, 
+      #{completion4Id,jdbcType=INTEGER}, #{rankingScore,jdbcType=INTEGER}, #{analyticalScore,jdbcType=INTEGER},
+      #{operationNum,jdbcType=INTEGER},#{operationScore,jdbcType=INTEGER})
+  </insert>
+    <insert id="insertSelective" parameterType="cn.edu.whu.irlab.irep.base.entity.system.Experiment">
+        insert into experiment
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="experimentName != null">
+                experiment_name,
+            </if>
+            <if test="choice1Id != null">
+                choice1_id,
+            </if>
+            <if test="choice2Id != null">
+                choice2_id,
+            </if>
+            <if test="choice3Id != null">
+                choice3_id,
+            </if>
+            <if test="choice4Id != null">
+                choice4_id,
+            </if>
+            <if test="completion1Id != null">
+                completion1_id,
+            </if>
+            <if test="completion2Id != null">
+                completion2_id,
+            </if>
+            <if test="completion3Id != null">
+                completion3_id,
+            </if>
+            <if test="completion4Id != null">
+                completion4_id,
+            </if>
+            <if test="rankingScore != null">
+                ranking_score,
+            </if>
+            <if test="analyticalScore != null">
+                analytical_score,
+            </if>
+            <if test="operationNum != null">
+                opertation_num,
+            </if>
+            <if test="operationScore != null">
+                opertation_score,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="experimentName != null">
+                #{experimentName,jdbcType=VARCHAR},
+            </if>
+            <if test="choice1Id != null">
+                #{choice1Id,jdbcType=INTEGER},
+            </if>
+            <if test="choice2Id != null">
+                #{choice2Id,jdbcType=INTEGER},
+            </if>
+            <if test="choice3Id != null">
+                #{choice3Id,jdbcType=INTEGER},
+            </if>
+            <if test="choice4Id != null">
+                #{choice4Id,jdbcType=INTEGER},
+            </if>
+            <if test="completion1Id != null">
+                #{completion1Id,jdbcType=INTEGER},
+            </if>
+            <if test="completion2Id != null">
+                #{completion2Id,jdbcType=INTEGER},
+            </if>
+            <if test="completion3Id != null">
+                #{completion3Id,jdbcType=INTEGER},
+            </if>
+            <if test="completion4Id != null">
+                #{completion4Id,jdbcType=INTEGER},
+            </if>
+            <if test="rankingScore != null">
+                #{rankingScore,jdbcType=INTEGER},
+            </if>
+            <if test="analyticalScore != null">
+                #{analyticalScore,jdbcType=INTEGER},
+            </if>
+            <if test="operationNum != null">
+                #{operationNum,jdbcType=INTEGER},
+            </if>
+            <if test="operationScore != null">
+                #{operationScore,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <select id="selectById" resultMap="BaseResultMap">
+    select * from experiment where id=#{id,jdbcType=INTEGER}
+  </select>
+    <update id="updateById" parameterType="cn.edu.whu.irlab.irep.base.entity.system.Experiment">
+        update experiment
+        <set>
+            <if test="experimentName != null">
+                experiment_name=#{experimentName,jdbcType=VARCHAR},
+            </if>
+            <if test="choice1Id != null">
+                choice1_id=#{choice1Id,jdbcType=INTEGER},
+            </if>
+            <if test="choice2Id != null">
+                choice2_id=#{choice2Id,jdbcType=INTEGER},
+            </if>
+            <if test="choice3Id != null">
+                choice3_id=#{choice3Id,jdbcType=INTEGER},
+            </if>
+            <if test="choice4Id != null">
+                choice4_id=#{choice4Id,jdbcType=INTEGER},
+            </if>
+            <if test="completion1Id != null">
+                completion1_id=#{completion1Id,jdbcType=INTEGER},
+            </if>
+            <if test="completion2Id != null">
+                completion2_id=#{completion2Id,jdbcType=INTEGER},
+            </if>
+            <if test="completion3Id != null">
+                completion3_id=#{completion3Id,jdbcType=INTEGER},
+            </if>
+            <if test="completion4Id != null">
+                completion4_id=#{completion4Id,jdbcType=INTEGER},
+            </if>
+            <if test="rankingScore != null">
+                ranking_score=#{rankingScore,jdbcType=INTEGER},
+            </if>
+            <if test="analyticalScore != null">
+                analytical_score=#{analyticalScore,jdbcType=INTEGER},
+            </if>
+            <if test="operationNum != null">
+                opertation_num=#{operationNum,jdbcType=INTEGER},
+            </if>
+            <if test="operationScore != null">
+                opertation_Score=#{operationScore,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id=#{id,jdbcType=INTEGER}
+    </update>
+</mapper>

@@ -1,25 +1,24 @@
 package cn.edu.whu.irlab.irep.controller.experiment;
 
 
-import cn.edu.whu.irlab.irep.base.entity.Result;
-import cn.edu.whu.irlab.irep.base.entity.Retriever;
-import cn.edu.whu.irlab.irep.base.entity.User;
-import cn.edu.whu.irlab.irep.base.entity.UserRetriever;
-import cn.edu.whu.irlab.irep.base.dao.impl.ResultServiceImpl;
+import cn.edu.whu.irlab.irep.base.entity.experiment.Result;
+import cn.edu.whu.irlab.irep.base.entity.experiment.Retriever;
+import cn.edu.whu.irlab.irep.base.entity.system.User;
+import cn.edu.whu.irlab.irep.base.entity.system.UserRetriever;
+import cn.edu.whu.irlab.irep.base.dao.experiment.impl.ResultServiceImpl;
 import cn.edu.whu.irlab.irep.service.experiment.retrieval.languagemodel.LMRetriever;
 import cn.edu.whu.irlab.irep.service.experiment.retrieval.languagemodel.DocForLM;
 import cn.edu.whu.irlab.irep.service.experiment.retrieval.languagemodel.ResultForLM;
 import cn.edu.whu.irlab.irep.service.util.Constructor;
 import cn.edu.whu.irlab.irep.service.util.Find;
 import cn.edu.whu.irlab.irep.service.util.ReadDoc;
-import cn.edu.whu.irlab.irep.base.dao.impl.RetrieverServiceImpl;
-import cn.edu.whu.irlab.irep.base.dao.impl.UserRetrieverServiceImpl;
+import cn.edu.whu.irlab.irep.base.dao.experiment.impl.RetrieverServiceImpl;
+import cn.edu.whu.irlab.irep.base.dao.system.impl.UserRetrieverServiceImpl;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 

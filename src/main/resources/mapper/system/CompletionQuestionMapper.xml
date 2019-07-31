@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.edu.whu.irlab.irep.base.mapper.system.CompletionQuestionMapper" >
+  <resultMap id="BaseResultMap" type="cn.edu.whu.irlab.irep.base.entity.system.CompletionQuestion" >
+    <result column="id" property="id" jdbcType="INTEGER" />
+    <result column="experiment_id" property="experimentId" jdbcType="INTEGER" />
+    <result column="question_title" property="questionTitle" jdbcType="VARCHAR" />
+    <result column="answer" property="answer" jdbcType="VARCHAR" />
+    <result column="score" property="score" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="cn.edu.whu.irlab.irep.base.entity.system.CompletionQuestion" extends="BaseResultMap" >
+    <result column="explaination" property="explaination" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Blob_Column_List" >
+    id, experiment_id, question_title, answer, score, explaination
+  </sql>
+  <insert id="insert" parameterType="cn.edu.whu.irlab.irep.base.entity.system.CompletionQuestion" >
+    insert into completion_question (id, experiment_id, question_title, 
+      answer, score, explaination
+      )
+    values (#{id,jdbcType=INTEGER}, #{experimentId,jdbcType=INTEGER}, #{questionTitle,jdbcType=VARCHAR}, 
+      #{answer,jdbcType=VARCHAR}, #{score,jdbcType=INTEGER}, #{explaination,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.edu.whu.irlab.irep.base.entity.system.CompletionQuestion" >
+    insert into completion_question
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="experimentId != null" >
+        experiment_id,
+      </if>
+      <if test="questionTitle != null" >
+        question_title,
+      </if>
+      <if test="answer != null" >
+        answer,
+      </if>
+      <if test="score != null" >
+        score,
+      </if>
+      <if test="explaination != null" >
+        explaination,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="experimentId != null" >
+        #{experimentId,jdbcType=INTEGER},
+      </if>
+      <if test="questionTitle != null" >
+        #{questionTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="answer != null" >
+        #{answer,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null" >
+        #{score,jdbcType=INTEGER},
+      </if>
+      <if test="explaination != null" >
+        #{explaination,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="selectAnswerAndScoreById" parameterType="INTEGER" resultMap="BaseResultMap">
+    select id, experiment_id, answer, score from completion_question where id=#{id,jdbcType=INTEGER}
+  </select>
+</mapper>

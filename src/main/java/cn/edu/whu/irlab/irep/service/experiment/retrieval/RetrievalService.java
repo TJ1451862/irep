@@ -1,10 +1,13 @@
 package cn.edu.whu.irlab.irep.service.experiment.retrieval;
 
-import cn.edu.whu.irlab.irep.base.dao.ResultService;
-import cn.edu.whu.irlab.irep.base.dao.StandardQueryService;
-import cn.edu.whu.irlab.irep.base.entity.Result;
-import cn.edu.whu.irlab.irep.base.entity.Retriever;
-import cn.edu.whu.irlab.irep.base.entity.StandardQuery;
+import cn.edu.whu.irlab.irep.base.dao.experiment.ResultService;
+import cn.edu.whu.irlab.irep.base.dao.experiment.StandardQueryService;
+import cn.edu.whu.irlab.irep.base.dao.system.UserRetrieverScoreService;
+import cn.edu.whu.irlab.irep.base.dao.system.impl.UserRetrieverScoreServiceImpl;
+import cn.edu.whu.irlab.irep.base.entity.experiment.Result;
+import cn.edu.whu.irlab.irep.base.entity.experiment.Retriever;
+import cn.edu.whu.irlab.irep.base.entity.experiment.StandardQuery;
+import cn.edu.whu.irlab.irep.base.entity.system.UserRetrieverScore;
 import cn.edu.whu.irlab.irep.service.experiment.perfomance.EvaluateService;
 import cn.edu.whu.irlab.irep.service.util.BubbleSort;
 import cn.edu.whu.irlab.irep.service.vo.Query;
@@ -24,7 +27,7 @@ import java.util.Map;
  * @date 2019-07-31 13:23
  * @desc 检索服务
  **/
-public abstract class RetrievalService implements RetrieverModelService {
+public abstract class RetrievalService implements RetrieverService {
 
     protected Retriever retriever;
 
@@ -45,6 +48,10 @@ public abstract class RetrievalService implements RetrieverModelService {
 
     @Autowired
     private ResultService resultService;
+
+    @Autowired
+    protected UserRetrieverScoreService userRetrieverScoreService;
+
 
     @Override
     public abstract List<SearchResultVo> search();
@@ -118,8 +125,6 @@ public abstract class RetrievalService implements RetrieverModelService {
         }
         resultService.insertForEach(forSave);
     }
-
-    //public abstract void quit();
 
     public Query getQuery() {
         return query;

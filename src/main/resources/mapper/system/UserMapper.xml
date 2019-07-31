@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.edu.whu.irlab.irep.base.mapper.system.UserMapper" >
+  <resultMap id="BaseResultMap" type="cn.edu.whu.irlab.irep.base.entity.system.User" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="salt" property="salt" jdbcType="VARCHAR" />
+    <result column="job_number" property="jobNumber" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="workspace" property="workspace" jdbcType="VARCHAR" />
+    <result column="category" property="category" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="login_time" property="loginTime" jdbcType="TIMESTAMP" />
+    <result column="out_time" property="outTime" jdbcType="TIMESTAMP" />
+    <result column="u1" property="u1" jdbcType="VARCHAR" />
+    <result column="u2" property="u2" jdbcType="VARCHAR" />
+    <result column="u3" property="u3" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, username, password, salt, job_number, phone, email, workspace, category, create_time,
+    login_time, out_time, u1, u2, u3
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from user
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from user
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.edu.whu.irlab.irep.base.entity.system.User" >
+    Updated upstream
+    insert into user (id, username, password,
+      salt, job_number, phone,
+      email, workspace, category,
+      create_time, login_time, out_time,
+      u1, u2, u3)
+    values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
+      #{salt,jdbcType=VARCHAR}, #{jobNumber,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR},
+      #{email,jdbcType=VARCHAR}, #{workspace,jdbcType=VARCHAR}, #{category,jdbcType=INTEGER},
+      #{createTime,jdbcType=TIMESTAMP}, #{loginTime,jdbcType=TIMESTAMP}, #{outTime,jdbcType=TIMESTAMP},
+      #{u1,jdbcType=VARCHAR}, #{u2,jdbcType=VARCHAR}, #{u3,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.edu.whu.irlab.irep.base.entity.system.User" >
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="salt != null" >
+        salt,
+      </if>
+      <if test="jobNumber != null" >
+        job_number,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="workspace != null" >
+        workspace,
+      </if>
+      <if test="category != null" >
+        category,
+      </if>
+        create_time,
+      <if test="loginTime != null" >
+        login_time,
+      </if>
+      <if test="outTime != null" >
+        out_time,
+      </if>
+      <if test="u1 != null" >
+        u1,
+      </if>
+      <if test="u2 != null" >
+        u2,
+      </if>
+      <if test="u3 != null" >
+        u3,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="salt != null" >
+        #{salt,jdbcType=VARCHAR},
+      </if>
+      <if test="jobNumber != null" >
+        #{jobNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="workspace != null" >
+        #{workspace,jdbcType=VARCHAR},
+      </if>
+      <if test="category != null" >
+        #{category,jdbcType=INTEGER},
+      </if>
+        now(),
+      <if test="loginTime != null" >
+        #{loginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="outTime != null" >
+        #{outTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="u1 != null" >
+        #{u1,jdbcType=VARCHAR},
+      </if>
+      <if test="u2 != null" >
+        #{u2,jdbcType=VARCHAR},
+      </if>
+      <if test="u3 != null" >
+        #{u3,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.edu.whu.irlab.irep.base.entity.system.User" >
+    update user
+    <set >
+      <if test="username != null" >
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="salt != null" >
+        salt = #{salt,jdbcType=VARCHAR},
+      </if>
+      <if test="jobNumber != null" >
+        job_number = #{jobNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="workspace != null" >
+        workspace = #{workspace,jdbcType=VARCHAR},
+      </if>
+      <if test="category != null" >
+        category = #{category,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="loginTime != null" >
+        login_time = #{loginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="outTime != null" >
+        out_time = #{outTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="u1 != null" >
+        u1 = #{u1,jdbcType=VARCHAR},
+      </if>
+      <if test="u2 != null" >
+        u2 = #{u2,jdbcType=VARCHAR},
+      </if>
+      <if test="u3 != null" >
+        u3 = #{u3,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.edu.whu.irlab.irep.base.entity.system.User" >
+    update user
+    set username = #{username,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      salt = #{salt,jdbcType=VARCHAR},
+      job_number = #{jobNumber,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      workspace = #{workspace,jdbcType=VARCHAR},
+      category = #{category,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      login_time = #{loginTime,jdbcType=TIMESTAMP},
+      out_time = #{outTime,jdbcType=TIMESTAMP},
+      u1 = #{u1,jdbcType=VARCHAR},
+      u2 = #{u2,jdbcType=VARCHAR},
+      u3 = #{u3,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectAllUser" resultMap="BaseResultMap">
+    select
+      <include refid="Base_Column_List" />
+    from user
+  </select>
+
+  <select id="selectUserByUsername" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+      <include refid="Base_Column_List" />
+    from user where username = #{username}
+  </select>
+
+  <select id="selectUserByPhone" parameterType="cn.edu.whu.irlab.irep.base.entity.system.User" resultMap="BaseResultMap">
+    select
+      <include refid="Base_Column_List" />
+    from user where phone = #{phone}
+  </select>
+
+  <select id="selectUserByPhoneAndUsername" parameterType="cn.edu.whu.irlab.irep.base.entity.system.User" resultMap="BaseResultMap">
+    select
+      <include refid="Base_Column_List" />
+    from user where phone = #{phone} and username = #{username}
+  </select>
+
+  <select id="selectUserByEmail" parameterType="cn.edu.whu.irlab.irep.base.entity.system.User" resultMap="BaseResultMap">
+    select
+      <include refid="Base_Column_List" />
+    from user where email = #{email}
+  </select>
+
+  <select id="selectUserByEmailAndUsername" parameterType="cn.edu.whu.irlab.irep.base.entity.system.User" resultMap="BaseResultMap">
+    select
+      <include refid="Base_Column_List" />
+    from user where email = #{email} and username = #{username}
+  </select>
+
+  <update id="updateUserByUsername" parameterType="cn.edu.whu.irlab.irep.base.entity.system.User" >
+    update user
+    <set >
+      <if test="username != null" >
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="salt != null" >
+        salt = #{salt,jdbcType=VARCHAR},
+      </if>
+      <if test="jobNumber != null" >
+        job_number = #{jobNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="workspace != null" >
+        workspace = #{workspace,jdbcType=VARCHAR},
+      </if>
+      <if test="category != null" >
+        category = #{category,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="loginTime != null" >
+        login_time = #{loginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="outTime != null" >
+        out_time = #{outTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="u1 != null" >
+        u1 = #{u1,jdbcType=VARCHAR},
+      </if>
+      <if test="u2 != null" >
+        u2 = #{u2,jdbcType=VARCHAR},
+      </if>
+      <if test="u3 != null" >
+        u3 = #{u3,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where username = #{username,jdbcType=VARCHAR}
+  </update>
+
+  <update id="updateLoginTimeByUsername" parameterType="cn.edu.whu.irlab.irep.base.entity.system.User" >
+    update user set login_time = sysdate()
+    where username = #{username,jdbcType=VARCHAR}
+  </update>
+
+  <update id="updateOutTimeByUsername" parameterType="java.lang.Integer" >
+    update user set out_time = sysdate()
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+</mapper>

@@ -1,10 +1,13 @@
 package cn.edu.whu.irlab.irep.service.experiment.retrieval.vsmModel;
 
-import cn.edu.whu.irlab.irep.base.dao.DocumentService;
-import cn.edu.whu.irlab.irep.base.entity.*;
+import cn.edu.whu.irlab.irep.base.dao.experiment.DocumentService;
+import cn.edu.whu.irlab.irep.base.entity.experiment.Document;
+import cn.edu.whu.irlab.irep.base.entity.experiment.FullIndex;
+import cn.edu.whu.irlab.irep.base.entity.experiment.Retriever;
+import cn.edu.whu.irlab.irep.base.entity.system.User;
+import cn.edu.whu.irlab.irep.base.entity.system.UserRetrieverScore;
 import cn.edu.whu.irlab.irep.service.experiment.retrieval.RetrievalService;
 import cn.edu.whu.irlab.irep.service.experiment.retrieval.VsmRetrievalService;
-import cn.edu.whu.irlab.irep.service.vo.Query;
 import cn.edu.whu.irlab.irep.service.experiment.IndexService;
 import cn.edu.whu.irlab.irep.service.vo.*;
 import cn.edu.whu.irlab.irep.service.util.Calculator;
@@ -146,6 +149,15 @@ public class VSMRetriever extends RetrievalService implements VsmRetrievalServic
             vector.add(vectorIVo);
         }
         return vector;
+    }
+
+    @Override
+    public int quit() {
+        UserRetrieverScore userRetrieverScore=new UserRetrieverScore();
+        User user=(User) session.getAttribute("user");
+        userRetrieverScore.setUserId(user.getId());
+        userRetrieverScore.setVsmRetriever(retriever.getRetrieverId());
+        return userRetrieverScoreService.updateByUserId(userRetrieverScore);
     }
 
     /*

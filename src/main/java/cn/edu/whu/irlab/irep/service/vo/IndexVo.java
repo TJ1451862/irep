@@ -1,8 +1,8 @@
 package cn.edu.whu.irlab.irep.service.vo;
 
-import cn.edu.whu.irlab.irep.base.entity.FullIndex;
-import cn.edu.whu.irlab.irep.base.entity.InvertedIndex;
-import cn.edu.whu.irlab.irep.base.entity.Record;
+import cn.edu.whu.irlab.irep.base.entity.experiment.FullIndex;
+import cn.edu.whu.irlab.irep.base.entity.experiment.InvertedIndex;
+import cn.edu.whu.irlab.irep.base.entity.experiment.Record;
 
 import java.util.List;
 

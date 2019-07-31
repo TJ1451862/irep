@@ -1,10 +1,10 @@
 package cn.edu.whu.irlab.irep.service;
 
 import cn.edu.whu.irlab.irep.IrepApplication;
-import cn.edu.whu.irlab.irep.base.dao.StandardQueryService;
-import cn.edu.whu.irlab.irep.base.entity.Result;
-import cn.edu.whu.irlab.irep.base.dao.impl.ResultServiceImpl;
-import cn.edu.whu.irlab.irep.base.entity.StandardQuery;
+import cn.edu.whu.irlab.irep.base.dao.experiment.StandardQueryService;
+import cn.edu.whu.irlab.irep.base.entity.experiment.Result;
+import cn.edu.whu.irlab.irep.base.dao.experiment.impl.ResultServiceImpl;
+import cn.edu.whu.irlab.irep.base.entity.experiment.StandardQuery;
 import cn.edu.whu.irlab.irep.service.util.ReadDoc;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;

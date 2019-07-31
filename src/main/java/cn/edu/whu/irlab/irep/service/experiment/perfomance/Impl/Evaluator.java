@@ -1,6 +1,6 @@
 package cn.edu.whu.irlab.irep.service.experiment.perfomance.Impl;
 
-import cn.edu.whu.irlab.irep.base.entity.Result;
+import cn.edu.whu.irlab.irep.base.entity.experiment.Result;
 
 import java.util.List;
 

@@ -1,11 +1,11 @@
 package cn.edu.whu.irlab.irep.service.experiment.creatIndex;
 
-import cn.edu.whu.irlab.irep.base.dao.FullIndexService;
-import cn.edu.whu.irlab.irep.base.dao.InvertedIndexService;
-import cn.edu.whu.irlab.irep.base.dao.RecordService;
-import cn.edu.whu.irlab.irep.base.entity.FullIndex;
-import cn.edu.whu.irlab.irep.base.entity.InvertedIndex;
-import cn.edu.whu.irlab.irep.base.entity.Record;
+import cn.edu.whu.irlab.irep.base.dao.experiment.FullIndexService;
+import cn.edu.whu.irlab.irep.base.dao.experiment.InvertedIndexService;
+import cn.edu.whu.irlab.irep.base.dao.experiment.RecordService;
+import cn.edu.whu.irlab.irep.base.entity.experiment.FullIndex;
+import cn.edu.whu.irlab.irep.base.entity.experiment.InvertedIndex;
+import cn.edu.whu.irlab.irep.base.entity.experiment.Record;
 import cn.edu.whu.irlab.irep.service.experiment.IndexService;
 import cn.edu.whu.irlab.irep.service.util.Constructor;
 import cn.edu.whu.irlab.irep.service.vo.IndexVo;

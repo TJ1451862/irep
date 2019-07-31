@@ -1,6 +1,6 @@
 package cn.edu.whu.irlab.irep.service.vo;
 
-import cn.edu.whu.irlab.irep.base.entity.Answer;
+import cn.edu.whu.irlab.irep.base.entity.system.Answer;
 import lombok.Data;
 
 import java.util.Date;
