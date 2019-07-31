@@ -1,10 +1,7 @@
 package cn.edu.whu.irlab.irep.service.experiment.retrieval.boolmodel;
 
 import cn.edu.whu.irlab.irep.base.entity.Result;
-import cn.edu.whu.irlab.irep.service.entity.Doc;
 
-import java.util.HashMap;
-import java.util.Map;
 
 
 public class ResultForBool extends Result {

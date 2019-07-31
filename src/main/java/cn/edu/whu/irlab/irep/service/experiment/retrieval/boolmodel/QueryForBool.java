@@ -1,6 +1,6 @@
 package cn.edu.whu.irlab.irep.service.experiment.retrieval.boolmodel;
 
-import cn.edu.whu.irlab.irep.service.entity.Query;
+import cn.edu.whu.irlab.irep.service.vo.Query;
 
 
 
