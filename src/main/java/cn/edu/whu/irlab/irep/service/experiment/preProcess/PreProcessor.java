@@ -37,7 +37,7 @@ public class PreProcessor {
     }
 
     //分词
-    public static String outputAnalyzer(String token, String analyzerName) {
+    private static String outputAnalyzer(String token, String analyzerName) {
         Analyzer analyzer = analyzerSelector(analyzerName);
         StringBuilder stringBuilder = new StringBuilder();
         StringReader reader = new StringReader(token);
@@ -63,7 +63,7 @@ public class PreProcessor {
      * @param seg 待处理字符串
      * @return 去标点结果
      */
-    public static ArrayList<String> removePunctuation(String seg) {
+    private static ArrayList<String> removePunctuation(String seg) {
 
         String splits = seg.replaceAll("\\pP|\\pS|\\pM|\\pN|\\pC", "");// 去除标点符号
 
@@ -96,7 +96,7 @@ public class PreProcessor {
      * @param termList 待处理
      * @return 处理结果
      */
-    public static ArrayList<String> removeStopWords(ArrayList<String> termList) {
+    private static ArrayList<String> removeStopWords(ArrayList<String> termList) {
         ArrayList<String> terms = termList;
         String dataDir = null;
         try {
@@ -123,7 +123,7 @@ public class PreProcessor {
      *                     CJK 二分法分词器
      *                     smartChinese 中文智能分词器
      */
-    public static Analyzer analyzerSelector(String analyzerName) {
+    private static Analyzer analyzerSelector(String analyzerName) {
         Analyzer analyzer = null;
         switch (analyzerName) {
             case "standard":

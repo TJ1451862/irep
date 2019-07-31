@@ -1,5 +1,7 @@
 package cn.edu.whu.irlab.irep.base.entity;
 
+import cn.edu.whu.irlab.irep.service.util.Constructor;
+
 public class Retriever {
     private String retrieverId;
 
@@ -20,6 +22,30 @@ public class Retriever {
     private String paramName2;
 
     private Integer param2;
+
+    public Retriever() {
+    }
+
+    public Retriever(Boolean isChinese, String analyzer, Boolean isRemoveStopWord, String model, Integer formulaId) {
+        this.isChinese = isChinese;
+        this.analyzer = analyzer;
+        this.isRemoveStopWord = isRemoveStopWord;
+        this.model = model;
+        this.formulaId = formulaId;
+    }
+
+    public Retriever(Boolean isChinese, String analyzer, Boolean isRemoveStopWord, String model, Integer formulaId, String paramName1, Integer param1, String paramName2, Integer param2) {
+        this.isChinese = isChinese;
+        this.analyzer = analyzer;
+        this.isRemoveStopWord = isRemoveStopWord;
+        this.model = model;
+        this.formulaId = formulaId;
+        this.paramName1 = paramName1;
+        this.param1 = param1;
+        this.paramName2 = paramName2;
+        this.param2 = param2;
+        this.retrieverId= Constructor.retrieverIdConstructor(this);
+    }
 
     public String getRetrieverId() {
         return retrieverId;

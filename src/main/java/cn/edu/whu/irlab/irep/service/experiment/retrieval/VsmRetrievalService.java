@@ -1,19 +1,21 @@
 package cn.edu.whu.irlab.irep.service.experiment.retrieval;
 
+import cn.edu.whu.irlab.irep.base.entity.Result;
+import cn.edu.whu.irlab.irep.base.entity.StandardQuery;
 import cn.edu.whu.irlab.irep.service.vo.Query;
 import cn.edu.whu.irlab.irep.service.vo.VectorIVo;
 import cn.edu.whu.irlab.irep.service.vo.IdfVo;
-import cn.edu.whu.irlab.irep.service.vo.ResultVo;
 import cn.edu.whu.irlab.irep.service.vo.TfVo;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author gcr
  * 向量空间模型检索接口
  */
-public interface VsmRetrievalService extends RetrieverService {
+public interface VsmRetrievalService extends RetrieverModelService {
 
     /**
      * 初始化向量空间检索器
@@ -22,7 +24,7 @@ public interface VsmRetrievalService extends RetrieverService {
      * @param smoothParam 平滑系数
      * @param request HttpServletRequest
      */
-    void initVSMRetriever(String queryContent, int formulaID, double smoothParam, HttpServletRequest request);
+    void initVSMRetriever(String queryContent, int formulaID, Double smoothParam, HttpServletRequest request);
 
     /**
      *计算idf
@@ -56,22 +58,8 @@ public interface VsmRetrievalService extends RetrieverService {
      */
     List<VectorIVo> calculateVectorOfDoc(int docId);
 
-    /**
-     * 计算相似度
-     * @return 相似度
-     */
-    List<ResultVo> calculateSimilarity();
 
-    /**
-     * 按相似度降序排序
-     * @return 降序排序后的相似度
-     */
-    List<ResultVo> descendOrderSimilarity();
 
-    /**
-     * 返回查询对象
-     * @return 查询对象
-     */
-    Query getQuery();
+
 }
 

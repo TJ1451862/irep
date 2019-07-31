@@ -24,4 +24,18 @@ public class ResultServiceImpl implements ResultService {
         return resultMapper.select(result);
     }
 
+    @Override
+    public List<Result> selectByRetrieverId(String retrieverId) {
+        Result result=new Result();
+        result.setRetrieverId(retrieverId);
+        return resultMapper.select(result);
+    }
+
+    @Override
+    public List<Result> selectByQueryIdAndRetrieverId(int queryId,String retrieverId) {
+        Result result=new Result();
+        result.setRetrieverId(retrieverId);
+        result.setQueryId(queryId);
+        return resultMapper.select(result);
+    }
 }

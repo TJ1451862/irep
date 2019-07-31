@@ -6,7 +6,6 @@ import cn.edu.whu.irlab.irep.service.vo.ResultVo;
 import cn.edu.whu.irlab.irep.service.vo.SearchResultVo;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -87,7 +86,7 @@ public class ProbabilityRetrieverController {
                                                           @RequestParam("b") double b,
                                                           HttpServletRequest request) {
         probabilityRetrievalService.initRetriever(query, k, b, request);
-        return probabilityRetrievalService.calculateSimilarities();
+        return probabilityRetrievalService.calculateSimilarity();
     }
 
     /**
@@ -105,8 +104,6 @@ public class ProbabilityRetrieverController {
                                                              @RequestParam("b") double b,
                                                              HttpServletRequest request) {
         probabilityRetrievalService.initRetriever(query, k, b, request);
-        return probabilityRetrievalService.descendOrderSimilarities();
+        return probabilityRetrievalService.descendOrderSimilarity();
     }
-
-
 }

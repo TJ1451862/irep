@@ -67,4 +67,31 @@
       </if>
     </trim>
   </insert>
+  <select id="select" parameterType="cn.edu.whu.irlab.irep.base.entity.UserRetrieverScore" resultMap="BaseResultMap">
+    select * from user_retriever_score
+    <where>
+      <if test="userId != null" >
+        and user_id=#{userId,jdbcType=INTEGER}
+      </if>
+      <if test="vsmRetriever != null" >
+        and vsm_retriever= #{vsmRetriever,jdbcType=VARCHAR}
+      </if>
+      <if test="probabilityRetriever != null" >
+        and probability_retriever #{probabilityRetriever,jdbcType=VARCHAR}
+      </if>
+      <if test="lanugaeRetriever != null" >
+        and lanugae_retriever= #{lanugaeRetriever,jdbcType=VARCHAR}
+      </if>
+      <if test="vsmScore != null" >
+        and vsm_score=#{vsmScore,jdbcType=INTEGER}
+      </if>
+      <if test="probabilityScore != null" >
+        and probability_score=#{probabilityScore,jdbcType=INTEGER}
+      </if>
+      <if test="lanugaeScore != null" >
+        and lanugae_score=#{lanugaeScore,jdbcType=INTEGER}
+      </if>
+    </where>
+  </select>
+
 </mapper>

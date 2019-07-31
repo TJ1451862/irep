@@ -1,10 +1,10 @@
-package cn.edu.whu.irlab.irep.service.experiment.perfomance;
+package cn.edu.whu.irlab.irep.service.experiment.perfomance.Impl;
 
 import cn.edu.whu.irlab.irep.base.entity.Result;
 
 import java.util.List;
 
-public class EvaluateServiceImpl {
+public class Evaluator {
 
     /**
      * 计算查准率

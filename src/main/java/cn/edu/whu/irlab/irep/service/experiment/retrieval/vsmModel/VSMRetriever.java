@@ -1,13 +1,12 @@
 package cn.edu.whu.irlab.irep.service.experiment.retrieval.vsmModel;
 
 import cn.edu.whu.irlab.irep.base.dao.DocumentService;
-import cn.edu.whu.irlab.irep.base.entity.Document;
+import cn.edu.whu.irlab.irep.base.entity.*;
+import cn.edu.whu.irlab.irep.service.experiment.retrieval.RetrievalService;
+import cn.edu.whu.irlab.irep.service.experiment.retrieval.VsmRetrievalService;
 import cn.edu.whu.irlab.irep.service.vo.Query;
 import cn.edu.whu.irlab.irep.service.experiment.IndexService;
-import cn.edu.whu.irlab.irep.service.experiment.retrieval.VsmRetrievalService;
-import cn.edu.whu.irlab.irep.service.util.BubbleSort;
 import cn.edu.whu.irlab.irep.service.vo.*;
-import cn.edu.whu.irlab.irep.base.entity.FullIndex;
 import cn.edu.whu.irlab.irep.service.util.Calculator;
 import cn.edu.whu.irlab.irep.service.util.Find;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +22,7 @@ import java.util.*;
  * @desc 向量空间模型检索器
  */
 @Service
-public class VSMRetriever implements VsmRetrievalService {
+public class VSMRetriever extends RetrievalService implements VsmRetrievalService {
 
     @Autowired
     private IndexService indexService;
@@ -38,21 +37,19 @@ public class VSMRetriever implements VsmRetrievalService {
     //idf值
     private List<IdfVo> idfVoList;
 
-    //查询语句
-    private Query query;
-
     @Override
     public void initVSMRetriever(String queryContent,
                                  int formulaID,
-                                 double smoothParam,
+                                 Double smoothParam,
                                  HttpServletRequest request) {
         this.formulaID = formulaID;
         this.smoothParam = smoothParam;
-        //分词器名称
-        String analyzerName = (String) request.getSession().getAttribute("analyzer");
-        //是否去停用词
-        boolean isRemoveStopWord = (boolean) request.getSession().getAttribute("removeStopWord");
-        this.query = new Query(queryContent, analyzerName, isRemoveStopWord);
+        super.initRetriever(queryContent,request);
+        if(formulaID==3&&smoothParam!=null){
+            super.retriever = new Retriever(true, analyzerName, isRemoveStopWord, "vsm", formulaID, "平滑系数", (int) (smoothParam * 100), "", null);
+        }else {
+            super.retriever = new Retriever(true, analyzerName, isRemoveStopWord, "vsm", formulaID);
+        }
 
         setIdfVoList(calculateIdf());
     }
@@ -63,8 +60,8 @@ public class VSMRetriever implements VsmRetrievalService {
         List<SearchResultVo> searchResultVos = new ArrayList<>();
         for (ResultVo r :
                 resultVos) {
-            Document document = documentService.selectByDocId(r.getDocID());
-            SearchResultVo searchResult = new SearchResultVo(document.getDocId(), document.getTitle(), document.getUrl(), Find.findDoc(r.getDocID(), true));
+            Document document = documentService.selectByDocId(r.getDocId());
+            SearchResultVo searchResult = new SearchResultVo(document.getDocId(), document.getTitle(), document.getUrl(), Find.findDoc(r.getDocId(), true));
             searchResultVos.add(searchResult);
         }
         return searchResultVos;
@@ -134,11 +131,6 @@ public class VSMRetriever implements VsmRetrievalService {
         return results;
     }
 
-    @Override
-    public List<ResultVo> descendOrderSimilarity() {
-        return BubbleSort.bubbleSort(calculateSimilarity());
-    }
-
     private List<VectorIVo> calculateVector(List<TfVo> tfVoList) {
         List<VectorIVo> vector = new ArrayList<>();
         for (TfVo tf :
@@ -166,15 +158,6 @@ public class VSMRetriever implements VsmRetrievalService {
 
     public void setIdfVoList(List<IdfVo> idfVoList) {
         this.idfVoList = idfVoList;
-    }
-
-    @Override
-    public Query getQuery() {
-        return query;
-    }
-
-    public void setQuery(Query query) {
-        this.query = query;
     }
 
     public int getFormulaID() {

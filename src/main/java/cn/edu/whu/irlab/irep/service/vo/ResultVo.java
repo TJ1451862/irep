@@ -1,22 +1,22 @@
 package cn.edu.whu.irlab.irep.service.vo;
 
 public class ResultVo {
-    private int docID;
+    private int docId;
     private String title;
     private double similarity;
 
-    public ResultVo(int docID, String title, double similarity) {
-        this.docID = docID;
+    public ResultVo(int docId, String title, double similarity) {
+        this.docId = docId;
         this.title = title;
         this.similarity = similarity;
     }
 
-    public int getDocID() {
-        return docID;
+    public int getDocId() {
+        return docId;
     }
 
-    public void setDocID(int docID) {
-        this.docID = docID;
+    public void setDocId(int docId) {
+        this.docId = docId;
     }
 
     public String getTitle() {
@@ -38,7 +38,7 @@ public class ResultVo {
     @Override
     public String toString() {
         return "ResultVo{" +
-                "docID=" + docID +
+                "docId=" + docId +
                 ", title='" + title + '\'' +
                 ", similarity=" + similarity +
                 '}';

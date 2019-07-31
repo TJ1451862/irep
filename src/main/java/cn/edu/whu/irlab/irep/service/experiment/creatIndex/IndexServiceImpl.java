@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,36 +38,42 @@ public class IndexServiceImpl implements IndexService {
     @Autowired
     private IndexGenerator indexGenerator;
 
+    private HttpSession session;
+
 
     private final static String folderPath = "resources/doc_ch";
 
     public int loadIndex(HttpServletRequest request) {
 
+        this.session=request.getSession();
         String indexType = Constructor.indexTypeConstructor(request);
+        //检查数据库是否存在该类索引，不存在则创建索引
         List<FullIndex> fullIndexList = fullIndexService.selectByIndexType(indexType);
         if (fullIndexList.size() == 0) {
             indexGenerator.initIndexGenerator(folderPath, request);
             indexGenerator.generateIndex();
             fullIndexList = fullIndexService.selectByIndexType(indexType);
         }
+
+        //此处可能存在冲突
         List<InvertedIndex> invertedIndexList = invertedIndexService.selectByIndexType(indexType);
         List<Record> recordList = recordService.selectByIndexType(indexType);
 
-        IndexVo.setFullIndexList(fullIndexList);
-        IndexVo.setInvertedIndexList(invertedIndexList);
-        IndexVo.setRecordList(recordList);
+        IndexVo indexVo=new IndexVo(recordList,invertedIndexList,fullIndexList);
+        session.setAttribute("indexVo",indexVo);
 
         return 1;
     }
 
     public List<FullIndex> selectFullIndex() {
-
-        List<FullIndex> fullIndexList = IndexVo.getFullIndexList();
+        IndexVo indexVo=(IndexVo)session.getAttribute("indexVo");
+        List<FullIndex> fullIndexList = indexVo.getFullIndexList();
         return fullIndexList;
     }
 
     public List<InvertedIndex> selectInvertedIndex(String term) {
-        List<InvertedIndex> all = IndexVo.getInvertedIndexList();
+        IndexVo indexVo=(IndexVo)session.getAttribute("indexVo");
+        List<InvertedIndex> all = indexVo.getInvertedIndexList();
         List<InvertedIndex> result = new ArrayList<>();
         for (int i = 0; i < all.size(); i++) {
             InvertedIndex index = all.get(i);
@@ -79,7 +86,8 @@ public class IndexServiceImpl implements IndexService {
 
     @Override
     public int selectDf(String term) {
-        List<FullIndex> all = IndexVo.getFullIndexList();
+        IndexVo indexVo=(IndexVo)session.getAttribute("indexVo");
+        List<FullIndex> all = indexVo.getFullIndexList();
         int df = 0;
         for (FullIndex i :
                 all) {
@@ -92,7 +100,8 @@ public class IndexServiceImpl implements IndexService {
 
     @Override
     public int selectTf(String term, int docId) {
-        List<InvertedIndex> all = IndexVo.getInvertedIndexList();
+        IndexVo indexVo=(IndexVo)session.getAttribute("indexVo");
+        List<InvertedIndex> all = indexVo.getInvertedIndexList();
         int tf = 0;
         for (InvertedIndex i :
                 all) {
@@ -105,7 +114,8 @@ public class IndexServiceImpl implements IndexService {
 
     @Override
     public int selectDocLength(int docId) {
-        List<Record> all = IndexVo.getRecordList();
+        IndexVo indexVo=(IndexVo)session.getAttribute("indexVo");
+        List<Record> all = indexVo.getRecordList();
         List<Record> result = new ArrayList<>();
         for (Record i :
                 all) {
@@ -118,7 +128,8 @@ public class IndexServiceImpl implements IndexService {
 
     @Override
     public List<TfVo> selectDocTf(int docId) {
-        List<InvertedIndex> all = IndexVo.getInvertedIndexList();
+        IndexVo indexVo=(IndexVo)session.getAttribute("indexVo");
+        List<InvertedIndex> all = indexVo.getInvertedIndexList();
         List<TfVo> tfVoList=new ArrayList<>();
         for (InvertedIndex i :
                 all) {

@@ -1,23 +1,23 @@
 package cn.edu.whu.irlab.irep.controller.experiment;
 
-import cn.edu.whu.irlab.irep.base.entity.Result;
-import cn.edu.whu.irlab.irep.base.entity.Retriever;
-import cn.edu.whu.irlab.irep.base.entity.User;
-import cn.edu.whu.irlab.irep.base.entity.UserRetriever;
+import cn.edu.whu.irlab.irep.base.dao.DocumentService;
+import cn.edu.whu.irlab.irep.base.entity.*;
 import cn.edu.whu.irlab.irep.base.dao.ResultService;
 import cn.edu.whu.irlab.irep.base.dao.RetrieverService;
 import cn.edu.whu.irlab.irep.base.dao.UserRetrieverService;
-import cn.edu.whu.irlab.irep.service.experiment.perfomance.EvaluateServiceImpl;
+import cn.edu.whu.irlab.irep.service.experiment.perfomance.Impl.Evaluator;
+import cn.edu.whu.irlab.irep.service.experiment.retrieval.ProbabilityRetrievalService;
+import cn.edu.whu.irlab.irep.service.experiment.retrieval.VsmRetrievalService;
 import cn.edu.whu.irlab.irep.service.util.ReadDoc;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 检索模型性能 控制层
@@ -27,6 +27,13 @@ import java.util.List;
 public class PerformanceController {
 
     @Autowired
+    public VsmRetrievalService vsmRetriever;
+
+    @Autowired
+    private ProbabilityRetrievalService probabilityRetrievalService;
+
+
+    @Autowired
     public ResultService resultService;
 
     @Autowired
@@ -34,6 +41,26 @@ public class PerformanceController {
 
     @Autowired
     public RetrieverService retrieverService;
+
+    @Autowired
+    public DocumentService documentService;
+
+
+    @PostMapping("testRetriever")
+    public Map<String, List<Result>> testRetriever(@RequestParam("query") String query, @RequestParam("modelName") String modelName) {
+        switch (modelName) {
+            case "boolMode":
+                return null;
+            case "vectorSpaceModel":
+                return vsmRetriever.testRetriever();
+            case "probabilityModel":
+                return probabilityRetrievalService.testRetriever();
+            case "languageModel":
+                return null;
+            default:
+                return null;
+        }
+    }
 
     /**
      * 返回标准排序
@@ -138,9 +165,10 @@ public class PerformanceController {
         for (int i = 0; i < resultList.size(); i++) {
             JSONObject jsonResult = new JSONObject();
             Result result = resultList.get(i);
+            Document doc = documentService.selectByDocId(i);
             jsonResult.put("docRank", result.getDocRank());
             jsonResult.put("docId", result.getDocId());
-            jsonResult.put("title", result.getTitle());
+            jsonResult.put("title", doc.getTitle());
             jsonResult.put("isExisting", "");
             for (int j = 0; j < standardList.size(); j++) {
                 Result standardResult = standardList.get(j);
@@ -155,7 +183,8 @@ public class PerformanceController {
 
     /**
      * 返回针对单个query的性能指标
-     * @param queryId 查询Id
+     *
+     * @param queryId      查询Id
      * @param retrieverNum 检索器序号
      * @param request
      * @return 针对单个query的性能指标
@@ -163,7 +192,7 @@ public class PerformanceController {
     @PostMapping("/individual")
     public JSONArray individualPerformanceController(@RequestParam("queryId") int queryId, @RequestParam("retrievalNum") int retrieverNum, HttpServletRequest request) {
         JSONArray performance = new JSONArray();
-        EvaluateServiceImpl evaluateServiceImpl = new EvaluateServiceImpl();
+        Evaluator evaluator = new Evaluator();
 
         List<Result> standardList = initStandardList(queryId);
         List<Result> resultList = initResultList(queryId, retrieverNum, request);
@@ -186,23 +215,23 @@ public class PerformanceController {
         JSONObject ap = new JSONObject();
         JSONObject f1 = new JSONObject();
 
-        precision.put("precision", evaluateServiceImpl.calculatePrecision(standardList, resultList, null));
-        p_5.put("p@5", evaluateServiceImpl.calculatePrecision(standardList, resultList, 5));
-        p_10.put("p@10", evaluateServiceImpl.calculatePrecision(standardList, resultList, 10));
-        p_20.put("p@20", evaluateServiceImpl.calculatePrecision(standardList, resultList, 20));
+        precision.put("precision", evaluator.calculatePrecision(standardList, resultList, null));
+        p_5.put("p@5", evaluator.calculatePrecision(standardList, resultList, 5));
+        p_10.put("p@10", evaluator.calculatePrecision(standardList, resultList, 10));
+        p_20.put("p@20", evaluator.calculatePrecision(standardList, resultList, 20));
 
-        recall.put("recall", evaluateServiceImpl.calculateRecall(standardList, resultList, null));
-        r_5.put("r@5", evaluateServiceImpl.calculateRecall(standardList, resultList, 5));
-        r_10.put("r@10", evaluateServiceImpl.calculateRecall(standardList, resultList, 10));
-        r_20.put("r@20", evaluateServiceImpl.calculateRecall(standardList, resultList, 20));
+        recall.put("recall", evaluator.calculateRecall(standardList, resultList, null));
+        r_5.put("r@5", evaluator.calculateRecall(standardList, resultList, 5));
+        r_10.put("r@10", evaluator.calculateRecall(standardList, resultList, 10));
+        r_20.put("r@20", evaluator.calculateRecall(standardList, resultList, 20));
 
-        ndcg.put("ndcg", evaluateServiceImpl.calculateNDCG(standardList, resultList, null));
-        ndcg_5.put("ndcg@5", evaluateServiceImpl.calculateNDCG(standardList, resultList, 5));
-        ndcg_10.put("ndcg@10", evaluateServiceImpl.calculateNDCG(standardList, resultList, 10));
-        ndcg_20.put("ndcg@20", evaluateServiceImpl.calculateNDCG(standardList, resultList, 20));
+        ndcg.put("ndcg", evaluator.calculateNDCG(standardList, resultList, null));
+        ndcg_5.put("ndcg@5", evaluator.calculateNDCG(standardList, resultList, 5));
+        ndcg_10.put("ndcg@10", evaluator.calculateNDCG(standardList, resultList, 10));
+        ndcg_20.put("ndcg@20", evaluator.calculateNDCG(standardList, resultList, 20));
 
-        ap.put("ap", evaluateServiceImpl.calculateAP(standardList, resultList));
-        f1.put("F1", evaluateServiceImpl.calculateF1(standardList, resultList));
+        ap.put("ap", evaluator.calculateAP(standardList, resultList));
+        f1.put("F1", evaluator.calculateF1(standardList, resultList));
 
         performance.add(precision);
         performance.add(p_5);
@@ -227,7 +256,7 @@ public class PerformanceController {
 
     @PostMapping("/average")
     public JSONArray averageController(@RequestParam("retrievalNum") int retrieverNum, HttpServletRequest request) {
-        EvaluateServiceImpl evaluateServiceImpl = new EvaluateServiceImpl();
+        Evaluator evaluator = new Evaluator();
         JSONArray averagePerformance = new JSONArray();
         String standardQueryDir = "resources/results/standardQuery.json";
         JSONArray standardQueryArray = JSONArray.parseArray(ReadDoc.readDoc(standardQueryDir));
@@ -265,23 +294,23 @@ public class PerformanceController {
             List<Result> standardList = initStandardList(queryId);
             List<Result> resultList = initResultList(queryId, retrieverNum, request);
 
-            p += evaluateServiceImpl.calculatePrecision(standardList, resultList, null);
-            p5 += evaluateServiceImpl.calculatePrecision(standardList, resultList, 5);
-            p10 += evaluateServiceImpl.calculatePrecision(standardList, resultList, 10);
-            p20 += evaluateServiceImpl.calculatePrecision(standardList, resultList, 20);
+            p += evaluator.calculatePrecision(standardList, resultList, null);
+            p5 += evaluator.calculatePrecision(standardList, resultList, 5);
+            p10 += evaluator.calculatePrecision(standardList, resultList, 10);
+            p20 += evaluator.calculatePrecision(standardList, resultList, 20);
 
-            r += evaluateServiceImpl.calculateRecall(standardList, resultList, null);
-            r5 += evaluateServiceImpl.calculateRecall(standardList, resultList, 5);
-            r10 += evaluateServiceImpl.calculateRecall(standardList, resultList, 10);
-            r20 += evaluateServiceImpl.calculateRecall(standardList, resultList, 20);
+            r += evaluator.calculateRecall(standardList, resultList, null);
+            r5 += evaluator.calculateRecall(standardList, resultList, 5);
+            r10 += evaluator.calculateRecall(standardList, resultList, 10);
+            r20 += evaluator.calculateRecall(standardList, resultList, 20);
 
-            n += evaluateServiceImpl.calculateNDCG(standardList, resultList, null);
-            n5 += evaluateServiceImpl.calculateNDCG(standardList, resultList, 5);
-            n10 += evaluateServiceImpl.calculateNDCG(standardList, resultList, 10);
-            n20 += evaluateServiceImpl.calculateNDCG(standardList, resultList, 20);
+            n += evaluator.calculateNDCG(standardList, resultList, null);
+            n5 += evaluator.calculateNDCG(standardList, resultList, 5);
+            n10 += evaluator.calculateNDCG(standardList, resultList, 10);
+            n20 += evaluator.calculateNDCG(standardList, resultList, 20);
 
-            apDoule += evaluateServiceImpl.calculateAP(standardList, resultList);
-            f1Double += evaluateServiceImpl.calculateF1(standardList, resultList);
+            apDoule += evaluator.calculateAP(standardList, resultList);
+            f1Double += evaluator.calculateF1(standardList, resultList);
         }
 
         precision.put("precision", average(p, size));
@@ -289,18 +318,18 @@ public class PerformanceController {
         p_10.put("p@10", average(p10, size));
         p_5.put("p@20", average(p20, size));
 
-        recall.put("recall",average(r,size));
-        r_5.put("r@5",average(r5,size));
-        r_10.put("r@10",average(r10,size));
-        r_20.put("r@20",average(r20,size));
+        recall.put("recall", average(r, size));
+        r_5.put("r@5", average(r5, size));
+        r_10.put("r@10", average(r10, size));
+        r_20.put("r@20", average(r20, size));
 
-        ndcg.put("ndcg",average(n,size));
-        ndcg_5.put("ndcg@5",average(n5,size));
-        ndcg_10.put("ndcg@10",average(n10,size));
-        ndcg_20.put("ndcg@20",average(n20,size));
+        ndcg.put("ndcg", average(n, size));
+        ndcg_5.put("ndcg@5", average(n5, size));
+        ndcg_10.put("ndcg@10", average(n10, size));
+        ndcg_20.put("ndcg@20", average(n20, size));
 
-        map.put("MAP",average(apDoule,size));
-        f1.put("F1",average(f1Double,size));
+        map.put("MAP", average(apDoule, size));
+        f1.put("F1", average(f1Double, size));
 
         averagePerformance.add(precision);
         averagePerformance.add(p_5);

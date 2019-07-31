@@ -13,33 +13,39 @@ import java.util.List;
  **/
 public class IndexVo {
 
-    private static List<Record> recordList;
+    private List<Record> recordList;
 
-    private static List<InvertedIndex> invertedIndexList;
+    private List<InvertedIndex> invertedIndexList;
 
-    private static List<FullIndex> fullIndexList;
+    private List<FullIndex> fullIndexList;
 
-    public static List<Record> getRecordList() {
+    public IndexVo(List<Record> recordList, List<InvertedIndex> invertedIndexList, List<FullIndex> fullIndexList) {
+        this.recordList = recordList;
+        this.invertedIndexList = invertedIndexList;
+        this.fullIndexList = fullIndexList;
+    }
+
+    public List<Record> getRecordList() {
         return recordList;
     }
 
-    public static void setRecordList(List<Record> recordList) {
-        IndexVo.recordList = recordList;
+    public void setRecordList(List<Record> recordList) {
+        this.recordList = recordList;
     }
 
-    public static List<InvertedIndex> getInvertedIndexList() {
+    public List<InvertedIndex> getInvertedIndexList() {
         return invertedIndexList;
     }
 
-    public static void setInvertedIndexList(List<InvertedIndex> invertedIndexList) {
-        IndexVo.invertedIndexList = invertedIndexList;
+    public void setInvertedIndexList(List<InvertedIndex> invertedIndexList) {
+        this.invertedIndexList = invertedIndexList;
     }
 
-    public static List<FullIndex> getFullIndexList() {
+    public List<FullIndex> getFullIndexList() {
         return fullIndexList;
     }
 
-    public static void setFullIndexList(List<FullIndex> fullIndexList) {
-        IndexVo.fullIndexList = fullIndexList;
+    public void setFullIndexList(List<FullIndex> fullIndexList) {
+        this.fullIndexList = fullIndexList;
     }
 }

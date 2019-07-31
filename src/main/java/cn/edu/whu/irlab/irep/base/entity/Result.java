@@ -1,19 +1,29 @@
 package cn.edu.whu.irlab.irep.base.entity;
 
 public class Result {
-    private Integer queryId;
 
-    private String query;
+    private Integer queryId;
 
     private Integer docId;
 
     private Integer docRank;
 
-    private String title;
-
     private String retrieverId;
 
     private Integer score;
+
+    private Boolean isExisting;
+
+    public Result() {
+    }
+
+    public Result(Integer queryId, Integer docId, Integer docRank, String retrieverId, Boolean isExisting) {
+        this.queryId = queryId;
+        this.docId = docId;
+        this.docRank = docRank;
+        this.retrieverId = retrieverId;
+        this.isExisting = isExisting;
+    }
 
     public Integer getQueryId() {
         return queryId;
@@ -21,14 +31,6 @@ public class Result {
 
     public void setQueryId(Integer queryId) {
         this.queryId = queryId;
-    }
-
-    public String getQuery() {
-        return query;
-    }
-
-    public void setQuery(String query) {
-        this.query = query == null ? null : query.trim();
     }
 
     public Integer getDocId() {
@@ -47,14 +49,6 @@ public class Result {
         this.docRank = docRank;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title == null ? null : title.trim();
-    }
-
     public String getRetrieverId() {
         return retrieverId;
     }
@@ -71,16 +65,11 @@ public class Result {
         this.score = score;
     }
 
-    @Override
-    public String toString() {
-        return "Result{" +
-                "queryId=" + queryId +
-                ", query='" + query + '\'' +
-                ", docId=" + docId +
-                ", docRank=" + docRank +
-                ", title='" + title + '\'' +
-                ", retrieverId='" + retrieverId + '\'' +
-                ", score=" + score +
-                '}';
+    public Boolean getIsExisting() {
+        return isExisting;
+    }
+
+    public void setIsExisting(Boolean isExisting) {
+        this.isExisting = isExisting;
     }
 }

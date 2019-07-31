@@ -9,9 +9,11 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>cn.edu.whu.irlab</groupId>
+
     <artifactId>irep</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>irep</name>
+
     <description>Demo project for Spring Boot</description>
 
     <properties>
@@ -25,7 +27,11 @@
         <druid.version>1.0.29</druid.version>
     </properties>
 
+
+
+
     <dependencies>
+        <!--spring start-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jdbc</artifactId>
@@ -44,20 +50,21 @@
             <version>2.0.1</version>
         </dependency>
         <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <scope>5.3</scope>
-        </dependency>
-        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-
         <!-- 添加JDBC依赖 -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jdbc</artifactId>
+            <groupId>org.springframework.boot</groupId>
+        </dependency>
+        <!--spring end-->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.15</version>
+            <!--<scope>5.3</scope>-->
         </dependency>
         <dependency>
             <groupId>com.alibaba</groupId>
@@ -76,6 +83,12 @@
             <version>${commons-lang3.version}</version>
         </dependency>
         <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.4</version>
+        </dependency>
+
+        <dependency>
             <groupId>commons-beanutils</groupId>
             <artifactId>commons-beanutils</artifactId>
             <version>${commons-beanutils.version}</version>
@@ -87,7 +100,6 @@
             <artifactId>log4j</artifactId>
             <version>1.2.17</version>
         </dependency>
-
 
         <!--lucene-->
         <!-- https://mvnrepository.com/artifact/org.apache.lucene/lucene-core-->

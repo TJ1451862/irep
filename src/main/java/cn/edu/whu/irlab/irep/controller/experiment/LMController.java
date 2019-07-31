@@ -192,9 +192,7 @@ public class LMController {
                     Result result = new Result();
                     result.setDocId(resultAfterSort.get(j).getDocID());
                     result.setDocRank(j);
-                    result.setQuery(queryContent);
                     result.setQueryId(queryId);
-                    result.setTitle(resultAfterSort.get(j).getTitle());
                     result.setRetrieverId(retrieverId);
                     resultService.insertSelective(result);
                 }

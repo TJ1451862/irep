@@ -3,9 +3,10 @@ package cn.edu.whu.irlab.irep.service.experiment.retrieval.probabilityModel;
 import cn.edu.whu.irlab.irep.base.dao.DocumentService;
 import cn.edu.whu.irlab.irep.base.entity.Document;
 import cn.edu.whu.irlab.irep.base.entity.Record;
+import cn.edu.whu.irlab.irep.base.entity.Result;
 import cn.edu.whu.irlab.irep.service.experiment.IndexService;
 import cn.edu.whu.irlab.irep.service.experiment.retrieval.ProbabilityRetrievalService;
-import cn.edu.whu.irlab.irep.service.util.BubbleSort;
+import cn.edu.whu.irlab.irep.service.experiment.retrieval.RetrievalService;
 import cn.edu.whu.irlab.irep.service.util.Find;
 import cn.edu.whu.irlab.irep.service.vo.BijVo;
 import cn.edu.whu.irlab.irep.service.vo.IndexVo;
@@ -18,11 +19,11 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
-public class ProbabilityRetrieverServiceImpl implements ProbabilityRetrievalService {
-    //查询
-    private Query query;
+public class ProbabilityRetrieverServiceImpl extends RetrievalService implements ProbabilityRetrievalService {
+
     //文档数
     private final static int N = 166;
     //参数K取正值大于0
@@ -31,10 +32,6 @@ public class ProbabilityRetrieverServiceImpl implements ProbabilityRetrievalServ
     private double b;
     //平均文档长度
     private double avg_length;
-    //分词器名称
-    private String analyzerName;
-    //是否去停用词
-    private boolean removeStopWord;
 
     @Autowired
     private DocumentService documentService;
@@ -43,22 +40,19 @@ public class ProbabilityRetrieverServiceImpl implements ProbabilityRetrievalServ
     private IndexService indexService;
 
     public void initRetriever(String queryContent, double k, double b, HttpServletRequest request) {
-        this.analyzerName = (String) request.getSession().getAttribute("analyzer");
-        this.removeStopWord = (boolean) request.getSession().getAttribute("removeStopWord");
+        super.initRetriever(queryContent,request);
         this.k = k;
         this.b = b;
-//        this.indexType = Constructor.indexTypeConstructor(request);
-        this.query = new Query(queryContent, analyzerName, removeStopWord);
         setAvg_length();
     }
 
     @Override
     public List<SearchResultVo> search() {
 
-        List<ResultVo> resultVos = descendOrderSimilarities();
+        List<ResultVo> resultVos = descendOrderSimilarity();
         List<SearchResultVo> searchResultVos = new ArrayList<>();
         for (int i = 0; i < resultVos.size(); i++) {
-            int docId = resultVos.get(i).getDocID();
+            int docId = resultVos.get(i).getDocId();
             Document document = documentService.selectByDocId(docId);
             String content = Find.findDoc(docId, true);
             SearchResultVo searchResultVo = new SearchResultVo(docId, document.getTitle(), document.getUrl(), content);
@@ -67,11 +61,8 @@ public class ProbabilityRetrieverServiceImpl implements ProbabilityRetrievalServ
         return searchResultVos;
     }
 
-    public List<ResultVo> descendOrderSimilarities() {
-        return BubbleSort.bubbleSort(calculateSimilarities());
-    }
-
-    public List<ResultVo> calculateSimilarities() {
+    @Override
+    public List<ResultVo> calculateSimilarity() {
         List<ResultVo> resultVos = new ArrayList<>();
         for (int i = 0; i < N; i++) {
             ResultVo resultVo = calculateSimilarity(i);
@@ -84,7 +75,7 @@ public class ProbabilityRetrieverServiceImpl implements ProbabilityRetrievalServ
 
     public List<BijVo> calculateBijs() {
         List<BijVo> bijVos = new ArrayList<>();
-        List<String> termList = query.getPreProcessResult();
+        List<String> termList = super.query.getPreProcessResult();
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < termList.size(); j++) {
                 BijVo bijVo = calculateBij(termList.get(j), i);
@@ -96,8 +87,13 @@ public class ProbabilityRetrieverServiceImpl implements ProbabilityRetrievalServ
         return bijVos;
     }
 
+    @Override
+    public Map<String, List<Result>> testRetriever() {
+        return null;
+    }
+
     private ResultVo calculateSimilarity(int docId) {
-        List<String> termList = query.getPreProcessResult();
+        List<String> termList = super.query.getPreProcessResult();
         double similarity = 0;
         for (int i = 0; i < termList.size(); i++) {
             String term = termList.get(i);
@@ -124,16 +120,9 @@ public class ProbabilityRetrieverServiceImpl implements ProbabilityRetrievalServ
     }
 
     private void setAvg_length() {
-        List<Record> records = IndexVo.getRecordList();
+        IndexVo indexVo=(IndexVo)session.getAttribute("indexVo");
+        List<Record> records = indexVo.getRecordList();
         this.avg_length = (double) records.size() / N;
-    }
-
-    public Query getQuery() {
-        return query;
-    }
-
-    public void setQuery(Query query) {
-        this.query = query;
     }
 
     public double getK() {

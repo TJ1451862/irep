@@ -1,8 +1,10 @@
 package cn.edu.whu.irlab.irep.service;
 
 import cn.edu.whu.irlab.irep.IrepApplication;
+import cn.edu.whu.irlab.irep.base.dao.StandardQueryService;
 import cn.edu.whu.irlab.irep.base.entity.Result;
 import cn.edu.whu.irlab.irep.base.dao.impl.ResultServiceImpl;
+import cn.edu.whu.irlab.irep.base.entity.StandardQuery;
 import cn.edu.whu.irlab.irep.service.util.ReadDoc;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -24,6 +26,9 @@ public class PerformanceTest {
     @Autowired
     public ResultServiceImpl resultService;
 
+    @Autowired
+    private StandardQueryService standardQueryService;
+
 
     @Test
     public void insertStandard() {
@@ -34,24 +39,29 @@ public class PerformanceTest {
 
         standardObject = JSONObject.parseObject(ReadDoc.readDoc(standardDir));//读标准排序
 
-        int queryId = 0;
+        List<StandardQuery> standardQueries=standardQueryService.selectAll();
+
         for (String s :
                 standardObject.keySet()) {
+            int queryId=0;
+            for (StandardQuery sq:
+                 standardQueries) {
+                if(s.equals(sq.getQueryContent())){
+                    queryId=sq.getId();
+                }
+            }
             JSONArray jsonArray = standardObject.getJSONArray(s);
             for (int i = 0; i < jsonArray.size(); i++) {
                 Result result = new Result();
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 result.setDocId(jsonObject.getIntValue("web_id"));
-                result.setQuery(s);
                 result.setQueryId(queryId);
                 result.setDocRank(jsonObject.getIntValue("rank"));
-                result.setTitle(jsonObject.getString("title"));
                 result.setRetrieverId("1000_00");
                 result.setScore(jsonObject.getInteger("score"));
 ////                System.out.println(result);
                 resultService.insertSelective(result);
             }
-            queryId++;
         }
     }
 
@@ -60,15 +70,12 @@ public class PerformanceTest {
      */
     @Test
     public void getStandardQuery() {
-        Result result = new Result();
-        result.setRetrieverId("1000_00");
-        result.setDocRank(1);
-        List<Result> resultList = resultService.select(result);
+        List<StandardQuery> queries=standardQueryService.selectAll();
         JSONArray jsonArray = new JSONArray();
-        for (int i = 0; i < resultList.size(); i++) {
+        for (int i = 0; i < queries.size(); i++) {
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("queryId", resultList.get(i).getQueryId());
-            jsonObject.put("query", resultList.get(i).getQuery());
+            jsonObject.put("queryId", queries.get(i).getId());
+            jsonObject.put("query", queries.get(i).getQueryContent());
             jsonArray.add(jsonObject);
         }
 //        System.out.println(jsonArray);
