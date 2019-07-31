@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.edu.whu.irlab.irep.base.mapper.UserRetrieverScoreMapper" >
+  <resultMap id="BaseResultMap" type="cn.edu.whu.irlab.irep.base.entity.UserRetrieverScore" >
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="vsm_retriever" property="vsmRetriever" jdbcType="VARCHAR" />
+    <result column="probability_retriever" property="probabilityRetriever" jdbcType="VARCHAR" />
+    <result column="lanugae_retriever" property="lanugaeRetriever" jdbcType="VARCHAR" />
+    <result column="vsm_score" property="vsmScore" jdbcType="INTEGER" />
+    <result column="probability_score" property="probabilityScore" jdbcType="INTEGER" />
+    <result column="lanugae_score" property="lanugaeScore" jdbcType="INTEGER" />
+  </resultMap>
+  <insert id="insert" parameterType="cn.edu.whu.irlab.irep.base.entity.UserRetrieverScore" >
+    insert into user_retriever_score (user_id, vsm_retriever, probability_retriever, 
+      lanugae_retriever, vsm_score, probability_score, 
+      lanugae_score)
+    values (#{userId,jdbcType=INTEGER}, #{vsmRetriever,jdbcType=VARCHAR}, #{probabilityRetriever,jdbcType=VARCHAR}, 
+      #{lanugaeRetriever,jdbcType=VARCHAR}, #{vsmScore,jdbcType=INTEGER}, #{probabilityScore,jdbcType=INTEGER}, 
+      #{lanugaeScore,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.edu.whu.irlab.irep.base.entity.UserRetrieverScore" >
+    insert into user_retriever_score
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="vsmRetriever != null" >
+        vsm_retriever,
+      </if>
+      <if test="probabilityRetriever != null" >
+        probability_retriever,
+      </if>
+      <if test="lanugaeRetriever != null" >
+        lanugae_retriever,
+      </if>
+      <if test="vsmScore != null" >
+        vsm_score,
+      </if>
+      <if test="probabilityScore != null" >
+        probability_score,
+      </if>
+      <if test="lanugaeScore != null" >
+        lanugae_score,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="vsmRetriever != null" >
+        #{vsmRetriever,jdbcType=VARCHAR},
+      </if>
+      <if test="probabilityRetriever != null" >
+        #{probabilityRetriever,jdbcType=VARCHAR},
+      </if>
+      <if test="lanugaeRetriever != null" >
+        #{lanugaeRetriever,jdbcType=VARCHAR},
+      </if>
+      <if test="vsmScore != null" >
+        #{vsmScore,jdbcType=INTEGER},
+      </if>
+      <if test="probabilityScore != null" >
+        #{probabilityScore,jdbcType=INTEGER},
+      </if>
+      <if test="lanugaeScore != null" >
+        #{lanugaeScore,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+</mapper>

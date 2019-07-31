@@ -1,6 +1,6 @@
 package cn.edu.whu.irlab.irep.service.experiment.retrieval;
 
-import cn.edu.whu.irlab.irep.service.entity.Query;
+import cn.edu.whu.irlab.irep.service.vo.Query;
 import cn.edu.whu.irlab.irep.service.vo.VectorIVo;
 import cn.edu.whu.irlab.irep.service.vo.IdfVo;
 import cn.edu.whu.irlab.irep.service.vo.ResultVo;

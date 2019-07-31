@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.edu.whu.irlab.irep.base.mapper.ChoiceQuestionMapper">
+    <resultMap id="BaseResultMap" type="cn.edu.whu.irlab.irep.base.entity.ChoiceQuestion">
+        <result column="id" property="id" jdbcType="INTEGER"/>
+        <result column="experiment_id" property="experimentId" jdbcType="INTEGER"/>
+        <result column="question_title" property="questionTitle" jdbcType="VARCHAR"/>
+        <result column="option_a" property="optionA" jdbcType="VARCHAR"/>
+        <result column="option_b" property="optionB" jdbcType="VARCHAR"/>
+        <result column="option_c" property="optionC" jdbcType="VARCHAR"/>
+        <result column="option_d" property="optionD" jdbcType="VARCHAR"/>
+        <result column="answer" property="answer" jdbcType="CHAR"/>
+        <result column="score" property="score" jdbcType="INTEGER"/>
+    </resultMap>
+    <resultMap id="ResultMapWithBLOBs" type="cn.edu.whu.irlab.irep.base.entity.ChoiceQuestion" extends="BaseResultMap">
+        <result column="explaination" property="explaination" jdbcType="LONGVARCHAR"/>
+    </resultMap>
+    <sql id="Blob_Column_List">
+    explaination
+  </sql>
+    <insert id="insert" parameterType="cn.edu.whu.irlab.irep.base.entity.ChoiceQuestion">
+    insert into choice_question (id, experiment_id, question_title, 
+      option_a, option_b, option_c, 
+      option_d, answer, score, 
+      explaination)
+    values (#{id,jdbcType=INTEGER}, #{experimentId,jdbcType=INTEGER}, #{questionTitle,jdbcType=VARCHAR}, 
+      #{optionA,jdbcType=VARCHAR}, #{optionB,jdbcType=VARCHAR}, #{optionC,jdbcType=VARCHAR}, 
+      #{optionD,jdbcType=VARCHAR}, #{answer,jdbcType=CHAR}, #{score,jdbcType=INTEGER}, 
+      #{explaination,jdbcType=LONGVARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="cn.edu.whu.irlab.irep.base.entity.ChoiceQuestion">
+        insert into choice_question
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="experimentId != null">
+                experiment_id,
+            </if>
+            <if test="questionTitle != null">
+                question_title,
+            </if>
+            <if test="optionA != null">
+                option_a,
+            </if>
+            <if test="optionB != null">
+                option_b,
+            </if>
+            <if test="optionC != null">
+                option_c,
+            </if>
+            <if test="optionD != null">
+                option_d,
+            </if>
+            <if test="answer != null">
+                answer,
+            </if>
+            <if test="score != null">
+                score,
+            </if>
+            <if test="explaination != null">
+                explaination,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="experimentId != null">
+                #{experimentId,jdbcType=INTEGER},
+            </if>
+            <if test="questionTitle != null">
+                #{questionTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="optionA != null">
+                #{optionA,jdbcType=VARCHAR},
+            </if>
+            <if test="optionB != null">
+                #{optionB,jdbcType=VARCHAR},
+            </if>
+            <if test="optionC != null">
+                #{optionC,jdbcType=VARCHAR},
+            </if>
+            <if test="optionD != null">
+                #{optionD,jdbcType=VARCHAR},
+            </if>
+            <if test="answer != null">
+                #{answer,jdbcType=CHAR},
+            </if>
+            <if test="score != null">
+                #{score,jdbcType=INTEGER},
+            </if>
+            <if test="explaination != null">
+                #{explaination,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <select id="selectScoreById" resultType="INTEGER">
+      select score from choice_question where id=#{id,jdbcType=INTEGER}
+    </select>
+    <select id="selectAllExperimentIdAndScore" resultMap="BaseResultMap">
+        select id,experiment_id,score from choice_question
+    </select>
+    <select id="selectAnswerAndScoreById" parameterType="INTEGER" resultMap="BaseResultMap">
+        select id, experiment_id, answer, score from choice_question where id=#{id,jdbcType=INTEGER}
+    </select>
+
+</mapper>

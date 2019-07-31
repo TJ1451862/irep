@@ -28,28 +28,24 @@ public class UserController {
     /**
      * 对用户进行校验，成功后判断用户的标识，根据标识来判断是管理员还是用户登录
      * 最后返回给前端响应的代码
-     * @param username 用户名
-     * @param password 密码
      * @param request
      * @return
      */
     //请将userId存到session中
     @RequestMapping(value = "/login")
-    public ResponseVo loginController(@RequestParam(value = "username") String username,
-                                      @RequestParam(value = "password") String password,
-                                      HttpServletRequest request) {
-        User user = userService.selectUserService(username);
-        if (user == null) {
+    public ResponseVo loginController(@RequestBody User user, HttpServletRequest request) {
+        User user1 = userService.selectUserService(user.getUsername());
+        if (user1 == null) {
             return ResponseVoUtil.error(ResponseEnum.USERNAME_ERROR);
-        } else if(verifyPwd(password,user.getPassword())){
+        } else if(verifyPwd(user.getPassword(),user1.getPassword())){
             //用户信息存入该用户的session 中
-            request.getSession().setAttribute("user",user);
-            userService.updateLoginTimeByUsernameService(user);
+            request.getSession().setAttribute("user",user1);
+            userService.updateLoginTimeByUsernameService(user1);
             //管理员登录
-            if(user.getCategory() == 3){
-                return ResponseVoUtil.success(ResponseEnum.ADMIN_LOGIN_SUCCESS);
+            if(user1.getCategory() == 3){
+                return ResponseVoUtil.success(ResponseEnum.ADMIN_LOGIN_SUCCESS,user1);
             }
-            return ResponseVoUtil.success(ResponseEnum.USER_LOGIN_SUCCESS);
+            return ResponseVoUtil.success(ResponseEnum.USER_LOGIN_SUCCESS,user1);
         }else{
             return ResponseVoUtil.error(ResponseEnum.PASSWORD_ERROR);
         }

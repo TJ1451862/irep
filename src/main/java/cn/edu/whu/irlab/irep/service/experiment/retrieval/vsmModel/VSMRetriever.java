@@ -2,7 +2,7 @@ package cn.edu.whu.irlab.irep.service.experiment.retrieval.vsmModel;
 
 import cn.edu.whu.irlab.irep.base.dao.DocumentService;
 import cn.edu.whu.irlab.irep.base.entity.Document;
-import cn.edu.whu.irlab.irep.service.entity.Query;
+import cn.edu.whu.irlab.irep.service.vo.Query;
 import cn.edu.whu.irlab.irep.service.experiment.IndexService;
 import cn.edu.whu.irlab.irep.service.experiment.retrieval.VsmRetrievalService;
 import cn.edu.whu.irlab.irep.service.util.BubbleSort;
