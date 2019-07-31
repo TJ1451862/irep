@@ -32,6 +32,7 @@ public class Retriever {
         this.isRemoveStopWord = isRemoveStopWord;
         this.model = model;
         this.formulaId = formulaId;
+        this.retrieverId= Constructor.retrieverIdConstructor(this);
     }
 
     public Retriever(Boolean isChinese, String analyzer, Boolean isRemoveStopWord, String model, Integer formulaId, String paramName1, Integer param1, String paramName2, Integer param2) {

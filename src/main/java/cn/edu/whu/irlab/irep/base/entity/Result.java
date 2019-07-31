@@ -14,15 +14,18 @@ public class Result {
 
     private Boolean isExisting;
 
+    private String title;
+
     public Result() {
     }
 
-    public Result(Integer queryId, Integer docId, Integer docRank, String retrieverId, Boolean isExisting) {
+    public Result(Integer queryId, Integer docId, String title,Integer docRank, String retrieverId, Boolean isExisting) {
         this.queryId = queryId;
         this.docId = docId;
         this.docRank = docRank;
         this.retrieverId = retrieverId;
         this.isExisting = isExisting;
+        this.title=title;
     }
 
     public Integer getQueryId() {
@@ -71,5 +74,13 @@ public class Result {
 
     public void setIsExisting(Boolean isExisting) {
         this.isExisting = isExisting;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

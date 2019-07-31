@@ -59,12 +59,12 @@ public abstract class RetrievalService implements RetrieverModelService {
 
     protected void initRetriever(String queryContent,
                                  HttpServletRequest request){
-        //分词器名称
-        this.analyzerName = (String) request.getSession().getAttribute("analyzer");
-        //是否去停用词
-        this.isRemoveStopWord = (boolean) request.getSession().getAttribute("removeStopWord");
-        this.query = new Query(queryContent, analyzerName, isRemoveStopWord);
         this.session=request.getSession();
+        //分词器名称
+        this.analyzerName = (String) session.getAttribute("analyzer");
+        //是否去停用词
+        this.isRemoveStopWord = (boolean) session.getAttribute("removeStopWord");
+        this.query = new Query(queryContent, analyzerName, isRemoveStopWord);
     }
 
     @Override
@@ -78,13 +78,15 @@ public abstract class RetrievalService implements RetrieverModelService {
         List<Result> standardResult = resultService.selectByQueryIdAndRetrieverId(standardQuery.getId(), "1000_00");
         Map<String, List<Result>> testResultMap = new HashedMap();
         testResultMap.put("testResults", testResults);
-        testResultMap.put("standardResult", standardResult);
+        testResultMap.put("standardResults", standardResult);
         return testResultMap;
     }
 
     private void saveTestResult() {
         List<StandardQuery> standardQueries = standardQueryService.selectAll();
         List<Result> standardResult = resultService.selectByRetrieverId("1000_00");
+
+        List<Result> forSave=new ArrayList<>();
 
         for (StandardQuery sq :
                 standardQueries) {
@@ -110,10 +112,11 @@ public abstract class RetrievalService implements RetrieverModelService {
                         existing = true;
                     }
                 }
-                Result result = new Result(sq.getId(), sr.getDocId(), rank, retriever.getRetrieverId(), existing);
-                resultService.insertSelective(result);
+                Result result = new Result(sq.getId(), sr.getDocId(),sr.getTitle(), rank, retriever.getRetrieverId(), existing);
+                forSave.add(result);
             }
         }
+        resultService.insertForEach(forSave);
     }
 
     //public abstract void quit();

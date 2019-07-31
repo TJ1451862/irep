@@ -8,6 +8,8 @@ public interface ResultService {
 
     int insertSelective(Result result);
 
+    int insertForEach(List<Result> results);
+
     List<Result> select(Result result);
 
     /**

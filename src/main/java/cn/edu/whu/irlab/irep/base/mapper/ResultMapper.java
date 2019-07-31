@@ -12,4 +12,6 @@ public interface ResultMapper {
     int insertSelective(Result record);
 
     List<Result> select(Result result);
+
+    int insertForEach(List<Result> results);
 }

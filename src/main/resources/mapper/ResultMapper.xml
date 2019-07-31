@@ -8,13 +8,14 @@
         <result column="retriever_id" property="retrieverId" jdbcType="VARCHAR"/>
         <result column="score" property="score" jdbcType="INTEGER"/>
         <result column="is_existing" property="isExisting" jdbcType="BIT"/>
+        <result column="title" property="title" jdbcType="VARCHAR"/>
     </resultMap>
     <insert id="insert" parameterType="cn.edu.whu.irlab.irep.base.entity.Result">
     insert into result (query_id, doc_id, doc_rank, 
-      retriever_id, score, is_existing
+      retriever_id, score, is_existing,title
       )
     values (#{queryId,jdbcType=INTEGER}, #{docId,jdbcType=INTEGER}, #{docRank,jdbcType=INTEGER}, 
-      #{retrieverId,jdbcType=VARCHAR}, #{score,jdbcType=INTEGER}, #{isExisting,jdbcType=BIT}
+      #{retrieverId,jdbcType=VARCHAR}, #{score,jdbcType=INTEGER}, #{isExisting,jdbcType=BIT},#{title,jdbcType=VARCHAR}
       )
   </insert>
     <insert id="insertSelective" parameterType="cn.edu.whu.irlab.irep.base.entity.Result">
@@ -38,6 +39,9 @@
             <if test="isExisting != null">
                 is_existing,
             </if>
+            <if test="title != null">
+                title,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="queryId != null">
@@ -57,6 +61,9 @@
             </if>
             <if test="isExisting != null">
                 #{isExisting,jdbcType=BIT},
+            </if>
+            <if test="title != null">
+                #{title,jdbcType=BIT},
             </if>
         </trim>
     </insert>
@@ -81,6 +88,22 @@
             <if test="isExisting != null">
                 and is_existing= #{isExisting,jdbcType=BIT},
             </if>
+            <if test="title != null">
+                and title= #{isExisting,jdbcType=BIT},
+            </if>
         </where>
     </select>
+
+    <insert id="insertForEach" parameterType="java.util.List" useGeneratedKeys="false">
+        insert into result
+        (query_id, doc_id, doc_rank, retriever_id, score, is_existing,title)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.queryId,jdbcType=INTEGER}, #{item.docId,jdbcType=INTEGER}, #{item.docRank,jdbcType=INTEGER},
+            #{item.retrieverId,jdbcType=VARCHAR}, #{item.score,jdbcType=INTEGER},
+            #{item.isExisting,jdbcType=BIT},#{item.title,jdbcType=VARCHAR}
+            )
+        </foreach>
+
+    </insert>
 </mapper>

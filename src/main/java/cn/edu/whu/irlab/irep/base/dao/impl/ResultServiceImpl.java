@@ -20,6 +20,11 @@ public class ResultServiceImpl implements ResultService {
     }
 
     @Override
+    public int insertForEach(List<Result> results){
+        return resultMapper.insertForEach(results);
+    }
+
+    @Override
     public List<Result> select(Result result) {
         return resultMapper.select(result);
     }
