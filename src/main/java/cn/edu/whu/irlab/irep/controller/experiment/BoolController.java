@@ -1,45 +1,47 @@
 package cn.edu.whu.irlab.irep.controller.experiment;
 
 
+import cn.edu.whu.irlab.irep.base.dao.impl.ResultServiceImpl;
+import cn.edu.whu.irlab.irep.base.dao.impl.RetrieverServiceImpl;
+import cn.edu.whu.irlab.irep.base.dao.impl.UserRetrieverServiceImpl;
 import cn.edu.whu.irlab.irep.base.entity.Result;
 import cn.edu.whu.irlab.irep.base.entity.Retriever;
 import cn.edu.whu.irlab.irep.base.entity.User;
 import cn.edu.whu.irlab.irep.base.entity.UserRetriever;
-import cn.edu.whu.irlab.irep.base.dao.impl.ResultServiceImpl;
-import cn.edu.whu.irlab.irep.service.experiment.retrieval.languagemodel.LMRetriever;
-import cn.edu.whu.irlab.irep.service.experiment.retrieval.languagemodel.DocForLM;
-import cn.edu.whu.irlab.irep.service.experiment.retrieval.languagemodel.ResultForLM;
+import cn.edu.whu.irlab.irep.service.experiment.retrieval.boolmodel.BoolRetriever;
+import cn.edu.whu.irlab.irep.service.experiment.retrieval.boolmodel.ResultForBool;
+import cn.edu.whu.irlab.irep.service.experiment.retrieval.boolmodel.TermsForBool;
 import cn.edu.whu.irlab.irep.service.util.Constructor;
 import cn.edu.whu.irlab.irep.service.util.Find;
 import cn.edu.whu.irlab.irep.service.util.ReadDoc;
-import cn.edu.whu.irlab.irep.base.dao.impl.RetrieverServiceImpl;
-import cn.edu.whu.irlab.irep.base.dao.impl.UserRetrieverServiceImpl;
 
-import com.alibaba.fastjson.JSON;
+
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
- * @author Jane
+ * @author chr
  * @version 1.0
- * @date 2010-07-13 15:32
- * @desc 语言模型交互层
+ * @date 2019-07-26 17:08
+ * @desc 布尔模型交互层
  **/
+
 @RestController
-@RequestMapping(value = "IRforCN/Retrieval/languageModel")
-public class LMController {
+@RequestMapping(value = "IRforCN/Retrieval/boolModel")
+public class BoolController {
 
     @Autowired
-    public LMRetriever languageRetriever;
+    public BoolRetriever boolRetriever;
 
     @Autowired
     public RetrieverServiceImpl retrieverService;
@@ -50,21 +52,23 @@ public class LMController {
     @Autowired
     public ResultServiceImpl resultService;
 
+
     /**
      * 返回检索结果
      *
-     * @param query            检索式
-     * @param smoothParam      平滑系数
+     * @param termarray            检索式
+     * @param operatorarray        操作符
      * @return 检索结果
      */
-    @PostMapping("/lmSearch")
-    public JSONArray LMSearchController(@RequestParam(name = "query") String query,
-                                        @RequestParam(name = "smoothParam") double smoothParam,
+    @PostMapping("/blSearch")
+    public JSONArray BoolSearchController(@RequestParam(name = "termarray") String[] termarray,
+                                          @RequestParam(name = "operatorarray") String[] operatorarray,
                                         HttpServletRequest request) {
 
-        isNeedSearch(query, smoothParam, request);
+        boolRetriever.initBoolRetriever(termarray,operatorarray,request);
+        boolRetriever.search();
         JSONArray searchResult = new JSONArray();
-        List<ResultForLM> resultList = languageRetriever.getResultAfterSort();
+        List<ResultForBool> resultList = boolRetriever.getDocResult();
         for (int i = 0; i < resultList.size(); i++) {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("title", resultList.get(i).getTitle());
@@ -74,91 +78,81 @@ public class LMController {
         return searchResult;
     }
 
-
-    /**
-     * 判断是否需要检索
-     *
-     * @param query       检索式
-     * @param smoothParam 平滑系数
-     */
-    private void isNeedSearch(@RequestParam(name = "query") String query,
-                              @RequestParam(name = "smoothParam") double smoothParam,
-                              HttpServletRequest request) {
-        if(languageRetriever.getResult().size()==0||languageRetriever.getSmoothParam()!=smoothParam||!languageRetriever.getQuery().getContent().equals(query)){
-            languageRetriever.initLMRetriever(query, smoothParam, request);
-            languageRetriever.search();
-        }
-    }
-
-
     /**
      * 返回检索式的预处理结果
      *
-     * @param query            检索式
+     * @param termarray            检索式
+     * @param operatorarray        操作符
      * @return 检索式的预处理结果
      */
     @PostMapping
     @RequestMapping("/queryProcess")
-    public JSONObject LMQueryProcess(@RequestParam(name = "query") String query,
-                                     @RequestParam(name = "smoothParam") double smoothParam,
-                                     HttpServletRequest request) {
+    public JSONObject BoolQueryProcess(@RequestParam(name = "termarray") String[] termarray,
+                                       @RequestParam(name = "operatorarray") String[] operatorarray,
+                                       HttpServletRequest request) {
+        boolRetriever.initBoolRetriever(termarray,operatorarray,request);
+        boolRetriever.search();
         JSONObject ppq = new JSONObject();
-        isNeedSearch(query, smoothParam, request);
-        ppq.put("query", query);
-        ppq.put("result", languageRetriever.getQuery().getPreProcessResult());
+        ppq.put("easyquery", boolRetriever.geteasyquary());
+        ppq.put("result",boolRetriever.getFinalquery() );
         return ppq;
     }
 
     /**
-     * 为每篇文档建立LM，计算其各个词的频率
+     * 返回各词对应的布尔向量
      *
-     * @param
-     * @return 给出各文档中各词词项的频率（存在tfs中)，即各文档的LM
+     * @param termarray            检索式
+     * @param operatorarray        操作符
+     * @return 检索式的预处理结果
      */
-    @RequestMapping("/lmOfDocs")
-    public List<JSONObject> getTfsOfDocsController(@RequestParam(name = "query") String query,
-                                                   @RequestParam(name = "smoothParam") double smoothParam,
-                                                   HttpServletRequest request) {
-        isNeedSearch(query, smoothParam, request);
-        List<DocForLM> docForLMList = languageRetriever.getDocForLMList();
-        List<JSONObject> lmsOfDocs = new ArrayList<>();
-        for (int i = 0; i < docForLMList.size(); i++) {
-            JSONObject jsonObject = new JSONObject();
-        JSONObject lmsJson;
-        jsonObject.put("title", Find.findTitle(docForLMList.get(i).getId(), true));
-        jsonObject.put("docId", docForLMList.get(i).getId());
-        lmsJson = JSON.parseObject(JSON.toJSONString(docForLMList.get(i).getLMap()));
-        jsonObject.put("lms", lmsJson);
-        lmsOfDocs.add(jsonObject);
-    }
-        return lmsOfDocs;
-    }
-
-    //返回各文档的生成概率
-    @PostMapping("/getResult")
-    public List<ResultForLM> getResult(@RequestParam(name = "query") String query,
-                                       @RequestParam(name = "smoothParam") double smoothParam,
+    @PostMapping
+    @RequestMapping("/boolvector")
+    public List<JSONObject> BoolVector(@RequestParam(name = "termarray") String[] termarray,
+                                       @RequestParam(name = "operatorarray") String[] operatorarray,
                                        HttpServletRequest request) {
-        isNeedSearch(query, smoothParam, request);
-        return languageRetriever.getResult();
+        boolRetriever.initBoolRetriever(termarray,operatorarray,request);
+        boolRetriever.search();
+
+        List<TermsForBool> terms_ids =boolRetriever.getterm_id();
+        List<JSONObject> boolVectors = new ArrayList<>();
+        for(int i=0;i<terms_ids.size();i++){
+            JSONObject ppq = new JSONObject();
+            ppq.put("term", terms_ids.get(i).getTerm());
+            ppq.put("vector",terms_ids.get(i).getTerm_id() );
+            boolVectors.add(ppq);
+        }
+        return boolVectors;
     }
 
-    //返回降序的各文档的生成概率
-    @PostMapping("/getResultAfterSort")
-    public List<ResultForLM> getResultAfterSort(@RequestParam(name = "query") String query,
-                                                @RequestParam(name = "smoothParam") double smoothParam,
-                                                HttpServletRequest request) {
-        isNeedSearch(query, smoothParam, request);
-        return languageRetriever.getResultAfterSort();
+    /**
+     * 返回计算完毕的布尔向量
+     *
+     * @param termarray            检索式
+     * @param operatorarray        操作符
+     * @return 检索式的预处理结果
+     */
+    @PostMapping
+    @RequestMapping("/boolcalculate")
+    public JSONObject BoolCalculate(@RequestParam(name = "termarray") String[] termarray,
+                                    @RequestParam(name = "operatorarray") String[] operatorarray,
+                                    HttpServletRequest request) {
+        boolRetriever.initBoolRetriever(termarray,operatorarray,request);
+        boolRetriever.search();
+        JSONObject ppq = new JSONObject();
+        ppq.put("quary", boolRetriever.getFinalquery());
+        ppq.put("calculateresult",boolRetriever.getIdResult());
+        return ppq;
     }
+
 
     /**
      * 向result表中插入结果数据
      * 如果数据不存在则插入，如果数据存在则不插入
      */
     @PostMapping("/insertResult")
-    public ModelMap insertResultController(@RequestParam(name = "smoothParam") double smoothParam,
-                                           @RequestParam(name = "analyzerName") String analyzerName,
+    public ModelMap insertResultController(@RequestParam(name = "termarray") String[] termarray,
+                                           @RequestParam(name = "operatorarray") String[] operatorarray,
+                                            @RequestParam(name = "analyzerName") String analyzerName,
                                            @RequestParam(name = "isRemoveStopWord") boolean isRemoveStopWord,
                                            HttpServletRequest request) {
 
@@ -169,9 +163,6 @@ public class LMController {
         retriever.setIsChinese(true);
         retriever.setAnalyzer(analyzerName);
         retriever.setIsRemoveStopWord(isRemoveStopWord);
-        retriever.setModel("lm");
-        retriever.setParamName1("平滑系数");
-        retriever.setParam1((int) (smoothParam * 100));
         String retrieverId = Constructor.retrieverIdConstructor(retriever);
         retriever.setRetrieverId(retrieverId);
 
@@ -185,14 +176,16 @@ public class LMController {
             for (int i = 0; i < queryList.size(); i++) {
                 String queryContent = queryList.getJSONObject(i).getString("query");
                 int queryId = queryList.getJSONObject(i).getIntValue("queryId");
-                languageRetriever.initLMRetriever(queryContent, smoothParam, request);
-                languageRetriever.search();
-                List<ResultForLM> resultAfterSort = languageRetriever.getResultAfterSort();
+                boolRetriever.initBoolRetriever(termarray, operatorarray, request);
+                boolRetriever.search();
+                List<ResultForBool> resultAfterSort = boolRetriever.getDocResult();
                 for (int j = 0; j < resultAfterSort.size(); j++) {
                     Result result = new Result();
                     result.setDocId(resultAfterSort.get(j).getDocID());
                     result.setDocRank(j);
+                    result.setQuery(queryContent);
                     result.setQueryId(queryId);
+                    result.setTitle(resultAfterSort.get(j).getTitle());
                     result.setRetrieverId(retrieverId);
                     resultService.insertSelective(result);
                 }
@@ -241,4 +234,8 @@ public class LMController {
         return modelMap;
     }
 
+
+
 }
+
+
