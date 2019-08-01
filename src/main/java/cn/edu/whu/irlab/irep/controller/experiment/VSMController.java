@@ -136,7 +136,7 @@ public class VSMController {
     }
 
     @PostMapping("/descendOrderSimilarity")
-    public List<ResultVo> getSimilarityAfterSortController(@RequestParam(name = "query") String queryContent,
+    public List<ResultVo> descendOrderSimilarityController(@RequestParam(name = "query") String queryContent,
                                                            @RequestParam(name = "formulaId") int formulaId,
                                                            @RequestParam(name = "smoothParam") Double smoothParam,
                                                            HttpServletRequest request) {

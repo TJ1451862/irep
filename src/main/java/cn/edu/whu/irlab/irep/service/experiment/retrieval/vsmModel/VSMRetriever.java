@@ -58,19 +58,6 @@ public class VSMRetriever extends RetrievalService implements VsmRetrievalServic
     }
 
     @Override
-    public List<SearchResultVo> search() {
-        List<ResultVo> resultVos = descendOrderSimilarity();
-        List<SearchResultVo> searchResultVos = new ArrayList<>();
-        for (ResultVo r :
-                resultVos) {
-            Document document = documentService.selectByDocId(r.getDocId());
-            SearchResultVo searchResult = new SearchResultVo(document.getDocId(), document.getTitle(), document.getUrl(), Find.findDoc(r.getDocId(), true));
-            searchResultVos.add(searchResult);
-        }
-        return searchResultVos;
-    }
-
-    @Override
     public List<IdfVo> calculateIdf() {
         List<FullIndex> fullIndexList = indexService.selectFullIndex();
         List<IdfVo> idfVoList = new ArrayList<>();

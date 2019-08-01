@@ -1,15 +1,18 @@
 package cn.edu.whu.irlab.irep.service.experiment.retrieval;
 
+import cn.edu.whu.irlab.irep.base.dao.experiment.DocumentService;
 import cn.edu.whu.irlab.irep.base.dao.experiment.ResultService;
 import cn.edu.whu.irlab.irep.base.dao.experiment.StandardQueryService;
 import cn.edu.whu.irlab.irep.base.dao.system.UserRetrieverScoreService;
 import cn.edu.whu.irlab.irep.base.dao.system.impl.UserRetrieverScoreServiceImpl;
+import cn.edu.whu.irlab.irep.base.entity.experiment.Document;
 import cn.edu.whu.irlab.irep.base.entity.experiment.Result;
 import cn.edu.whu.irlab.irep.base.entity.experiment.Retriever;
 import cn.edu.whu.irlab.irep.base.entity.experiment.StandardQuery;
 import cn.edu.whu.irlab.irep.base.entity.system.UserRetrieverScore;
 import cn.edu.whu.irlab.irep.service.experiment.perfomance.EvaluateService;
 import cn.edu.whu.irlab.irep.service.util.BubbleSort;
+import cn.edu.whu.irlab.irep.service.util.Find;
 import cn.edu.whu.irlab.irep.service.vo.Query;
 import cn.edu.whu.irlab.irep.service.vo.ResultVo;
 import cn.edu.whu.irlab.irep.service.vo.SearchResultVo;
@@ -50,11 +53,24 @@ public abstract class RetrievalService implements RetrieverService {
     private ResultService resultService;
 
     @Autowired
+    private DocumentService documentService;
+
+    @Autowired
     protected UserRetrieverScoreService userRetrieverScoreService;
 
-
     @Override
-    public abstract List<SearchResultVo> search();
+    public List<SearchResultVo> search(){
+        List<ResultVo> resultVos = descendOrderSimilarity();
+        List<SearchResultVo> searchResultVos = new ArrayList<>();
+        for (int i = 0; i < resultVos.size(); i++) {
+            int docId = resultVos.get(i).getDocId();
+            Document document = documentService.selectByDocId(docId);
+            String content = Find.findDoc(docId, true);
+            SearchResultVo searchResultVo = new SearchResultVo(docId, document.getTitle(), document.getUrl(), content);
+            searchResultVos.add(searchResultVo);
+        }
+        return searchResultVos;
+    };
 
     @Override
     public abstract List<ResultVo> calculateSimilarity();
@@ -126,6 +142,7 @@ public abstract class RetrievalService implements RetrieverService {
         resultService.insertForEach(forSave);
     }
 
+    @Override
     public Query getQuery() {
         return query;
     }

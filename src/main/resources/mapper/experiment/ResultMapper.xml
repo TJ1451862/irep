@@ -93,7 +93,6 @@
             </if>
         </where>
     </select>
-
     <insert id="insertForEach" parameterType="java.util.List" useGeneratedKeys="false">
         insert into result
         (query_id, doc_id, doc_rank, retriever_id, score, is_existing,title)

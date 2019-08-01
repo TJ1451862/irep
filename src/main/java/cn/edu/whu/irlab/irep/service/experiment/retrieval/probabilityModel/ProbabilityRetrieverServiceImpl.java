@@ -48,21 +48,6 @@ public class ProbabilityRetrieverServiceImpl extends RetrievalService implements
     }
 
     @Override
-    public List<SearchResultVo> search() {
-
-        List<ResultVo> resultVos = descendOrderSimilarity();
-        List<SearchResultVo> searchResultVos = new ArrayList<>();
-        for (int i = 0; i < resultVos.size(); i++) {
-            int docId = resultVos.get(i).getDocId();
-            Document document = documentService.selectByDocId(docId);
-            String content = Find.findDoc(docId, true);
-            SearchResultVo searchResultVo = new SearchResultVo(docId, document.getTitle(), document.getUrl(), content);
-            searchResultVos.add(searchResultVo);
-        }
-        return searchResultVos;
-    }
-
-    @Override
     public List<ResultVo> calculateSimilarity() {
         List<ResultVo> resultVos = new ArrayList<>();
         for (int i = 0; i < N; i++) {
