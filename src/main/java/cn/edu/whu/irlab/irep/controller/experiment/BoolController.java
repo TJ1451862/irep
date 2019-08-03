@@ -4,34 +4,21 @@ package cn.edu.whu.irlab.irep.controller.experiment;
 import cn.edu.whu.irlab.irep.base.dao.experiment.impl.ResultServiceImpl;
 import cn.edu.whu.irlab.irep.base.dao.experiment.impl.RetrieverServiceImpl;
 import cn.edu.whu.irlab.irep.base.dao.system.impl.UserRetrieverServiceImpl;
-import cn.edu.whu.irlab.irep.base.entity.experiment.Result;
-import cn.edu.whu.irlab.irep.base.entity.experiment.Retriever;
-import cn.edu.whu.irlab.irep.base.entity.system.User;
-import cn.edu.whu.irlab.irep.base.entity.system.UserRetriever;
 import cn.edu.whu.irlab.irep.service.experiment.retrieval.BoolRetrieverService;
-import cn.edu.whu.irlab.irep.service.experiment.retrieval.boolmodel.BoolRetrieverServiceImpl;
-import cn.edu.whu.irlab.irep.service.experiment.retrieval.boolmodel.ResultForBool;
-import cn.edu.whu.irlab.irep.service.experiment.retrieval.boolmodel.TermsForBool;
-import cn.edu.whu.irlab.irep.service.util.Constructor;
-import cn.edu.whu.irlab.irep.service.util.Find;
-import cn.edu.whu.irlab.irep.service.util.ReadDoc;
 
 
 import cn.edu.whu.irlab.irep.service.vo.BoolStepVo;
 import cn.edu.whu.irlab.irep.service.vo.BoolVectorVo;
 import cn.edu.whu.irlab.irep.service.vo.ResultVo;
 import cn.edu.whu.irlab.irep.service.vo.SearchResultVo;
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 

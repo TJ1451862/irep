@@ -1,7 +1,7 @@
 package cn.edu.whu.irlab.irep.service;
 
 import cn.edu.whu.irlab.irep.IrepApplication;
-import cn.edu.whu.irlab.irep.service.experiment.preProcess.PreProcessor;
+import cn.edu.whu.irlab.irep.service.experiment.preProcess.Impl.PreProcessorServiceImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -20,7 +20,7 @@ public class PreprocessorTest {
         String string = "中华人民共和国简称中国，是一个有13亿人口的国家。";
         String analyzerName = "standard";
         ArrayList<String> arrayList = new ArrayList<>();
-        arrayList = PreProcessor.preProcess(string, analyzerName, true);
+        arrayList = PreProcessorServiceImpl.preProcess(string, analyzerName, true);
 //        System.out.println(arrayList);
     }
 

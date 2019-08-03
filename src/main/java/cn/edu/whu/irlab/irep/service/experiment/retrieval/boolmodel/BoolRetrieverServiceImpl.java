@@ -3,17 +3,14 @@ package cn.edu.whu.irlab.irep.service.experiment.retrieval.boolmodel;
 
 import cn.edu.whu.irlab.irep.base.entity.experiment.InvertedIndex;
 import cn.edu.whu.irlab.irep.service.experiment.IndexService;
-import cn.edu.whu.irlab.irep.service.experiment.creatIndex.IndexServiceImpl;
-import cn.edu.whu.irlab.irep.service.experiment.preProcess.PreProcessor;
+import cn.edu.whu.irlab.irep.service.experiment.preProcess.Impl.PreProcessorServiceImpl;
 import cn.edu.whu.irlab.irep.service.experiment.retrieval.BoolRetrieverService;
 import cn.edu.whu.irlab.irep.service.experiment.retrieval.RetrievalService;
-import cn.edu.whu.irlab.irep.service.experiment.retrieval.RetrieverService;
 import cn.edu.whu.irlab.irep.service.util.Constructor;
 import cn.edu.whu.irlab.irep.service.util.Find;
 import cn.edu.whu.irlab.irep.service.vo.BoolStepVo;
 import cn.edu.whu.irlab.irep.service.vo.BoolVectorVo;
 import cn.edu.whu.irlab.irep.service.vo.ResultVo;
-import cn.edu.whu.irlab.irep.service.vo.SearchResultVo;
 import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -68,7 +65,7 @@ public class BoolRetrieverServiceImpl extends RetrievalService implements BoolRe
                     output.add(s);
                     break;
                 default:
-                    List<String> temp = PreProcessor.preProcess(s, analyzerName, isRemoveStopWord);
+                    List<String> temp = PreProcessorServiceImpl.preProcess(s, analyzerName, isRemoveStopWord);
                     for (String s1 :
                             temp) {
                         output.add(s1);

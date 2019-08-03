@@ -21,4 +21,5 @@ public interface InvertedIndexService {
     //查询tf值
     Integer selectTf(String term, int docId, String indexType);
 
+    List<InvertedIndex> selectByDocIdAndIndexType(int docId, String indexType);
 }

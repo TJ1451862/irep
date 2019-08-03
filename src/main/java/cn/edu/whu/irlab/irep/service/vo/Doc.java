@@ -1,6 +1,6 @@
 package cn.edu.whu.irlab.irep.service.vo;
 
-import cn.edu.whu.irlab.irep.service.experiment.preProcess.PreProcessor;
+import cn.edu.whu.irlab.irep.service.experiment.preProcess.Impl.PreProcessorServiceImpl;
 import cn.edu.whu.irlab.irep.service.util.Find;
 import cn.edu.whu.irlab.irep.service.util.ReadDoc;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class Doc {
 
     @Autowired
-    public PreProcessor preProcessor;
+    public PreProcessorServiceImpl preProcessorServiceImpl;
 
     private int id;
     private String filePath;
@@ -32,7 +32,7 @@ public class Doc {
 
     //预处理文档
     public ArrayList<String> preProcess(String analyzerName, boolean isRemoveStopWord) {
-        return preProcessor.preProcess(content, analyzerName, isRemoveStopWord);
+        return preProcessorServiceImpl.preProcess(content, analyzerName, isRemoveStopWord);
     }
 
     public void setId(int id) {

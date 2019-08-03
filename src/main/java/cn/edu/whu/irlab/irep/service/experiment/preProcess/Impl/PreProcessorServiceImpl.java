@@ -1,6 +1,15 @@
-package cn.edu.whu.irlab.irep.service.experiment.preProcess;
+package cn.edu.whu.irlab.irep.service.experiment.preProcess.Impl;
 
 
+import cn.edu.whu.irlab.irep.base.dao.experiment.InvertedIndexService;
+import cn.edu.whu.irlab.irep.base.dao.experiment.RecordService;
+import cn.edu.whu.irlab.irep.base.dao.experiment.impl.InvertedIndexServiceImpl;
+import cn.edu.whu.irlab.irep.base.dao.experiment.impl.RecordServiceImpl;
+import cn.edu.whu.irlab.irep.base.entity.experiment.InvertedIndex;
+import cn.edu.whu.irlab.irep.base.entity.experiment.Record;
+import cn.edu.whu.irlab.irep.service.experiment.preProcess.PreProcessorService;
+import cn.edu.whu.irlab.irep.service.util.Constructor;
+import cn.edu.whu.irlab.irep.service.vo.TfVo2;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.cjk.CJKAnalyzer;
@@ -9,9 +18,12 @@ import org.apache.lucene.analysis.core.SimpleAnalyzer;
 import org.apache.lucene.analysis.core.WhitespaceAnalyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author gcr
@@ -19,8 +31,12 @@ import java.util.ArrayList;
  * @date 2019-06-13 18:54
  * @desc 中文预处理器
  **/
-public class PreProcessor {
+@Service
+public class PreProcessorServiceImpl implements PreProcessorService {
 
+
+    @Autowired
+    private InvertedIndexService invertedIndexService;
 
     public static ArrayList<String> preProcess(String token, String analyzerName, boolean isRemoveStopWord) {
         ArrayList<String> result = new ArrayList<>();
@@ -34,6 +50,19 @@ public class PreProcessor {
             result = removePunctuation(terms);
         }
         return result;
+    }
+
+    @Override
+    public List<TfVo2> createTermCloud(int docId, String analyzerName, boolean isRemoveStopWord) {
+        List<TfVo2> termCloud = new ArrayList<>();
+        String indexType = Constructor.indexTypeConstructor(analyzerName, isRemoveStopWord, true);
+        List<InvertedIndex> invertedIndices = invertedIndexService.selectByDocIdAndIndexType(docId, indexType);
+        for (InvertedIndex i :
+                invertedIndices) {
+            TfVo2 tfVo2 = new TfVo2(i.getTerm(), i.getTf());
+            termCloud.add(tfVo2);
+        }
+        return termCloud;
     }
 
     //分词
@@ -93,6 +122,7 @@ public class PreProcessor {
 
     /**
      * 去停用词
+     *
      * @param termList 待处理
      * @return 处理结果
      */

@@ -53,4 +53,12 @@ public class InvertedIndexServiceImpl implements InvertedIndexService {
         index.setTerm(term);
         return invertedIndexMapper.selectTf(index);
     }
+
+    @Override
+    public List<InvertedIndex> selectByDocIdAndIndexType(int docId,String indexType){
+        InvertedIndex invertedIndex=new InvertedIndex();
+        invertedIndex.setDocId(docId);
+        invertedIndex.setIndexType(indexType);
+        return select(invertedIndex);
+    }
 }

@@ -13,13 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 
 public class Constructor {
 
-    public static String indexTypeConstructor(HttpServletRequest request) {
-
-        boolean chinese=true;
-        String analyzer=(String)request.getSession().getAttribute("analyzer");
-        boolean removeStopWord=(boolean)request.getSession().getAttribute("removeStopWord");
-
-        String indexType="";
+    public static String indexTypeConstructor(String analyzer, boolean removeStopWord, boolean chinese) {
+        String indexType = "";
 
         //语言代号
         if (chinese) {
@@ -57,6 +52,15 @@ public class Constructor {
         }
 
         return indexType;
+    }
+
+    public static String indexTypeConstructor(HttpServletRequest request) {
+
+        boolean chinese = true;
+        String analyzer = (String) request.getSession().getAttribute("analyzer");
+        boolean removeStopWord = (boolean) request.getSession().getAttribute("removeStopWord");
+
+        return indexTypeConstructor(analyzer,removeStopWord,chinese);
     }
 
     public static String retrieverIdConstructor(Retriever retriever) {

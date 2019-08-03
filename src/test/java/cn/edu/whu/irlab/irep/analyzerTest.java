@@ -1,6 +1,6 @@
 package cn.edu.whu.irlab.irep;
 
-import cn.edu.whu.irlab.irep.service.experiment.preProcess.PreProcessor;
+import cn.edu.whu.irlab.irep.service.experiment.preProcess.Impl.PreProcessorServiceImpl;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -11,7 +11,7 @@ import java.io.IOException;
 public class analyzerTest {
 
     @Autowired
-    public PreProcessor preProcessor;
+    public PreProcessorServiceImpl preProcessorServiceImpl;
 
     @Test
     public void standerAnalyzer() throws IOException {

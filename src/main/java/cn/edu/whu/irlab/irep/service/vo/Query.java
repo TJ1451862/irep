@@ -1,7 +1,6 @@
 package cn.edu.whu.irlab.irep.service.vo;
 
-import cn.edu.whu.irlab.irep.service.experiment.preProcess.PreProcessor;
-import cn.edu.whu.irlab.irep.service.vo.TfVo;
+import cn.edu.whu.irlab.irep.service.experiment.preProcess.Impl.PreProcessorServiceImpl;
 import org.apache.commons.collections.map.HashedMap;
 
 import java.util.ArrayList;
@@ -54,7 +53,7 @@ public class Query {
     }
 
     private void preProcessQuery(String analyzerName, boolean isRemoveStopWord) {
-        this.preProcessResult = PreProcessor.preProcess(content, analyzerName, isRemoveStopWord);
+        this.preProcessResult = PreProcessorServiceImpl.preProcess(content, analyzerName, isRemoveStopWord);
     }
 
     private void initTf() {
