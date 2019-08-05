@@ -150,7 +150,9 @@ public class BoolRetrieverServiceImpl extends RetrievalService implements BoolRe
             }
 
         }
-        directCalc(optStack,itemStack,false);
+        if(!optStack.empty()){
+            directCalc(optStack,itemStack,false);
+        }
         setResultSet(boolStepVoList.get(boolStepVoList.size()-1).getResultSet());
 
         return boolStepVoList;

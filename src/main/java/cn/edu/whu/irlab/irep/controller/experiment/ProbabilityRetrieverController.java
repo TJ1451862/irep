@@ -1,7 +1,10 @@
 package cn.edu.whu.irlab.irep.controller.experiment;
 
+import cn.edu.whu.irlab.irep.service.enums.ResponseEnum;
 import cn.edu.whu.irlab.irep.service.experiment.retrieval.ProbabilityRetrievalService;
+import cn.edu.whu.irlab.irep.service.util.ResponseVoUtil;
 import cn.edu.whu.irlab.irep.service.vo.BijVo;
+import cn.edu.whu.irlab.irep.service.vo.ResponseVo;
 import cn.edu.whu.irlab.irep.service.vo.ResultVo;
 import cn.edu.whu.irlab.irep.service.vo.SearchResultVo;
 import com.alibaba.fastjson.JSONObject;
@@ -105,5 +108,19 @@ public class ProbabilityRetrieverController {
                                                              HttpServletRequest request) {
         probabilityRetrievalService.initRetriever(query, k, b, request);
         return probabilityRetrievalService.descendOrderSimilarity();
+    }
+
+    @PostMapping("/quit")
+    public ResponseVo quitController(@RequestParam("query") String query,
+                                     @RequestParam("k") double k,
+                                     @RequestParam("b") double b,
+                                     HttpServletRequest request){
+        probabilityRetrievalService.initRetriever(query, k, b, request);
+        int state= probabilityRetrievalService.quit();
+        if (state == 1) {
+            return ResponseVoUtil.success();
+        } else {
+            return ResponseVoUtil.error(ResponseEnum.UNKNOW_ERROR);
+        }
     }
 }

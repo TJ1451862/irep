@@ -6,10 +6,7 @@ import cn.edu.whu.irlab.irep.service.util.Find;
 import cn.edu.whu.irlab.irep.service.vo.TfVo2;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -32,17 +29,15 @@ public class PreprocessorController {
 
     /**
      * 中文预处理控制层
-     *
-     * @param token            待处理字符串
-     * @param analyzerName     分词器名称
-     * @param removeStopWord 是否去停用词
      * @return 预处理结果
      */
     @PostMapping("/preProcess")
-    public List<String> preProcessController(@RequestParam(name = "token") String token,
-                                             @RequestParam(name = "analyzerName") String analyzerName,
-                                             @RequestParam(name = "isRemoveStopWord") boolean removeStopWord,
+    public List<String> preProcessController(@RequestBody JSONObject object,
                                              HttpServletRequest request) {
+        String token=object.getString("token");
+        String analyzerName=object.getString("analyzerName");
+        boolean removeStopWord=object.getBoolean("isRemoveStopWord");
+
         List<String> termList = PreProcessorServiceImpl.preProcess(token, analyzerName, removeStopWord);
         request.getSession().setAttribute("analyzer", analyzerName);
         request.getSession().setAttribute("removeStopWord", removeStopWord);

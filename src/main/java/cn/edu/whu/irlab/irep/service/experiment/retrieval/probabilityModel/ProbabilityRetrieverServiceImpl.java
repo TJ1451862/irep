@@ -52,9 +52,9 @@ public class ProbabilityRetrieverServiceImpl extends RetrievalService implements
         List<ResultVo> resultVos = new ArrayList<>();
         for (int i = 0; i < N; i++) {
             ResultVo resultVo = calculateSimilarity(i);
-            if (resultVo.getSimilarity() > 0) {
-                resultVos.add(resultVo);
-            }
+            resultVos.add(resultVo);
+//            if (resultVo.getSimilarity() > 0) {
+//            }
         }
         return resultVos;
     }
