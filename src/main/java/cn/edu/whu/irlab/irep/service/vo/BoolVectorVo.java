@@ -14,6 +14,9 @@ public class BoolVectorVo {
 
     private Set<Integer> docIds;
 
+    public BoolVectorVo() {
+    }
+
     public BoolVectorVo(String term, Set<Integer> docIds) {
         this.term = term;
         this.docIds = docIds;
