@@ -20,8 +20,7 @@
 
   <insert id="insert" parameterType="cn.edu.whu.irlab.irep.base.entity.experiment.InvertedIndex" >
     insert into inverted_index (id, term, doc_id, 
-      tf, index_type, locations
-      )
+      tf, index_type, locations)
     values (#{id,jdbcType=INTEGER}, #{term,jdbcType=VARCHAR}, #{docId,jdbcType=INTEGER}, 
       #{tf,jdbcType=INTEGER}, #{indexType,jdbcType=VARCHAR}, #{locations,jdbcType=LONGVARCHAR}
       )
@@ -75,19 +74,19 @@
   <select id="select" parameterType="cn.edu.whu.irlab.irep.base.entity.experiment.InvertedIndex" resultMap="ResultMapWithBLOBs">
     select * from inverted_index
     <where>
-      <if test="term != null and term != ''">
+      <if test="term != null">
         and term=#{term,jdbcType=VARCHAR}
       </if>
-      <if test="docId!=null and docId!=''">
+      <if test="docId!=null">
         and doc_id=#{docId,jdbcType=INTEGER}
       </if>
-      <if test="tf!=null and tf!=''">
+      <if test="tf!=null">
         and tf=#{tf,jdbcType=INTEGER}
       </if>
-      <if test="locations!=null and locations!=''">
+      <if test="locations!=null">
         and locations= #{locations,jdbcType=LONGVARCHAR}
       </if>
-      <if test="indexType != null and indexType != ''">
+      <if test="indexType != null">
         and index_type=#{indexType,jdbcType=VARCHAR}
       </if>
     </where>
