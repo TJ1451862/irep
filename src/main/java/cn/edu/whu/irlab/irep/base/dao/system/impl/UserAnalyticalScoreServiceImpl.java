@@ -34,7 +34,7 @@ public class UserAnalyticalScoreServiceImpl implements UserAnalyticalScoreServic
         int userId=record.getUserId();
         UserAnalyticalScoreWithBLOBs temp=selectByUserIdAndExperimentId(userId,experimentId);
         if(temp!=null){
-            state=userAnalyticalScoreMapper.updateSelective(record);
+            state=userAnalyticalScoreMapper.updateByUserIdAndExperimentId(record);
         }else {
             state=userAnalyticalScoreMapper.insertSelective(record);
         }
@@ -43,7 +43,7 @@ public class UserAnalyticalScoreServiceImpl implements UserAnalyticalScoreServic
 
     @Override
     public int updateComment(UserAnalyticalScoreWithBLOBs record) {
-        return userAnalyticalScoreMapper.updateSelective(record);
+        return userAnalyticalScoreMapper.updateByUserIdAndExperimentId(record);
     }
 
     public UserAnalyticalScoreWithBLOBs selectByUserIdAndExperimentId(int userId, int experimentId){

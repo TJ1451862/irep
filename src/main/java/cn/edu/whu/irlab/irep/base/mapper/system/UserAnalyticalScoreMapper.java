@@ -9,7 +9,7 @@ public interface UserAnalyticalScoreMapper {
 
     int insertSelective(UserAnalyticalScoreWithBLOBs record);
 
-    int updateSelective(UserAnalyticalScoreWithBLOBs record);
+    int updateByUserIdAndExperimentId(UserAnalyticalScoreWithBLOBs record);
 
     UserAnalyticalScoreWithBLOBs select(UserAnalyticalScoreWithBLOBs record);
 

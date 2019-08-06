@@ -72,31 +72,23 @@
       </if>
     </trim>
   </insert>
-  <update id="updateSelective" parameterType="cn.edu.whu.irlab.irep.base.entity.system.UserAnalyticalScoreWithBLOBs">
+  <update id="updateByUserIdAndExperimentId" parameterType="cn.edu.whu.irlab.irep.base.entity.system.UserAnalyticalScoreWithBLOBs">
     update user_analytical_score
     <set>
-        <if test="id != null" >
-            id=#{id,jdbcType=INTEGER},
-        </if>
-        <if test="userId != null" >
-            user_id=#{userId,jdbcType=INTEGER},
-        </if>
         <if test="teacherId != null" >
             teacher_id=#{teacherId,jdbcType=INTEGER},
-        </if>
-        <if test="experimentId != null" >
-            experiment_id=#{experimentId,jdbcType=INTEGER},
         </if>
         <if test="score != null" >
             score=#{score,jdbcType=INTEGER},
         </if>
         <if test="analyticalContent != null" >
-            analyticalContent=#{analyticalContent,jdbcType=LONGVARCHAR},
+            analytical_content=#{analyticalContent,jdbcType=LONGVARCHAR},
         </if>
         <if test="teacherComment != null" >
             teacher_comment=#{teacherComment,jdbcType=LONGVARCHAR},
         </if>
     </set>
+      where user_id=#{userId} and experiment_id=#{experimentId}
   </update>
     <select id="select" parameterType="cn.edu.whu.irlab.irep.base.entity.system.UserAnalyticalScoreWithBLOBs" resultMap="ResultMapWithBLOBs">
       select * from user_analytical_score
@@ -117,7 +109,7 @@
               and score=#{score,jdbcType=INTEGER}
           </if>
           <if test="analyticalContent != null" >
-              and analyticalContent=#{analyticalContent,jdbcType=LONGVARCHAR}
+              and analytical_content=#{analyticalContent,jdbcType=LONGVARCHAR}
           </if>
           <if test="teacherComment != null" >
               and teacher_comment=#{teacherComment,jdbcType=LONGVARCHAR}
