@@ -13,10 +13,7 @@ import cn.edu.whu.irlab.irep.service.vo.ResultVo;
 import cn.edu.whu.irlab.irep.service.vo.SearchResultVo;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
@@ -53,8 +50,9 @@ public class BoolController {
      * @return 检索结果
      */
     @PostMapping("/search")
-    public List<SearchResultVo> boolSearchController(@RequestParam(name = "query") String query,
+    public List<SearchResultVo> boolSearchController(@RequestBody JSONObject object,
                                                      HttpServletRequest request) {
+        String query = object.getString("query");
         List<String> booleanQuery = Arrays.asList(query.split(" "));
         boolRetrieverService.initBoolRetriever(booleanQuery, request);
         return boolRetrieverService.search();
@@ -62,11 +60,13 @@ public class BoolController {
 
     /**
      * 返回检索式的预处理结果
+     *
      * @return 检索式的预处理结果
      */
     @PostMapping("/ppq")
-    public JSONObject boolQueryProcessController(@RequestParam(name = "query") String query,
+    public JSONObject boolQueryProcessController(@RequestBody JSONObject object,
                                                  HttpServletRequest request) {
+        String query = object.getString("query");
         JSONObject output = new JSONObject();
         List<String> booleanQuery = Arrays.asList(query.split(" "));
         boolRetrieverService.initBoolRetriever(booleanQuery, request);
@@ -87,8 +87,9 @@ public class BoolController {
      * @return 检索式的预处理结果
      */
     @PostMapping("/boolVector")
-    public List<BoolVectorVo> boolVectorController(@RequestParam(name = "query") String query,
+    public List<BoolVectorVo> boolVectorController(@RequestBody JSONObject object,
                                                    HttpServletRequest request) {
+        String query = object.getString("query");
         List<String> booleanQuery = Arrays.asList(query.split(" "));
         boolRetrieverService.initBoolRetriever(booleanQuery, request);
         return boolRetrieverService.outputBoolVector();
@@ -96,18 +97,22 @@ public class BoolController {
 
     /**
      * 返回计算完毕的布尔向量
+     *
      * @return 检索式的预处理结果
      */
     @PostMapping("/booleanOperation")
-    public List<BoolStepVo> booleanOperationController(@RequestParam(name = "query") String query,
-                                          HttpServletRequest request) {
+    public List<BoolStepVo> booleanOperationController(@RequestBody JSONObject object,
+                                                       HttpServletRequest request) {
+        String query = object.getString("query");
         List<String> booleanQuery = Arrays.asList(query.split(" "));
         boolRetrieverService.initBoolRetriever(booleanQuery, request);
         return boolRetrieverService.booleanOperation();
     }
+
     @PostMapping("/callbackResult")
-    public List<ResultVo> callbackResultController(@RequestParam(name = "query") String query,
-                                                           HttpServletRequest request) {
+    public List<ResultVo> callbackResultController(@RequestBody JSONObject object,
+                                                   HttpServletRequest request) {
+        String query = object.getString("query");
         List<String> booleanQuery = Arrays.asList(query.split(" "));
         boolRetrieverService.initBoolRetriever(booleanQuery, request);
         return boolRetrieverService.descendOrderSimilarity();
