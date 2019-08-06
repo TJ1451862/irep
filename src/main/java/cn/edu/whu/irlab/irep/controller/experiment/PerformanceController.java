@@ -9,6 +9,8 @@ import cn.edu.whu.irlab.irep.base.entity.experiment.Result;
 import cn.edu.whu.irlab.irep.base.entity.experiment.Retriever;
 import cn.edu.whu.irlab.irep.base.entity.system.User;
 import cn.edu.whu.irlab.irep.base.entity.system.UserRetriever;
+import cn.edu.whu.irlab.irep.service.experiment.perfomance.EvaluateService;
+import cn.edu.whu.irlab.irep.service.experiment.perfomance.Impl.EvaluateServiceImpl;
 import cn.edu.whu.irlab.irep.service.experiment.perfomance.Impl.Evaluator;
 import cn.edu.whu.irlab.irep.service.experiment.retrieval.ProbabilityRetrievalService;
 import cn.edu.whu.irlab.irep.service.experiment.retrieval.VsmRetrievalService;
@@ -33,8 +35,6 @@ public class PerformanceController {
     @Autowired
     public VsmRetrievalService vsmRetriever;
 
-    @Autowired
-    private ProbabilityRetrievalService probabilityRetrievalService;
 
 
     @Autowired
@@ -48,27 +48,19 @@ public class PerformanceController {
 
     @Autowired
     public DocumentService documentService;
+    @Autowired
+    private EvaluateService evaluateService;
 
 
-    @PostMapping("testRetriever")
-    public Map<String, List<Result>> testRetriever(@RequestParam("query") String query, @RequestParam("modelName") String modelName) {
-        switch (modelName) {
-            case "boolMode":
-                return null;
-            case "vectorSpaceModel":
-                return vsmRetriever.testRetriever();
-            case "probabilityModel":
-                return probabilityRetrievalService.testRetriever();
-            case "languageModel":
-                return null;
-            default:
-                return null;
-        }
+    @PostMapping("/testRetriever")
+    public Map<String, List<Result>> testRetriever(@RequestParam("query") String query,
+                                                   @RequestParam("modelName") String modelName,
+                                                   HttpServletRequest request) {
+        return evaluateService.testRetriever(query,modelName,request);
     }
 
     /**
      * 返回标准排序
-     *
      * @param queryId 标注查询Id
      * @return 标准排序
      */

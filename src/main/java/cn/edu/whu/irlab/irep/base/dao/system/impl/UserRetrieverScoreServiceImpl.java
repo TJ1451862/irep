@@ -29,6 +29,11 @@ public class UserRetrieverScoreServiceImpl implements UserRetrieverScoreService 
     }
 
     @Override
+    public UserRetrieverScore selectByUserId(int userId){
+        return userRetrieverScoreMapper.selectByUserId(userId);
+    }
+
+    @Override
     public int updateByUserId(UserRetrieverScore userRetrieverScore){
         int state;
         UserRetrieverScore temp=userRetrieverScoreMapper.selectByUserId(userRetrieverScore.getUserId());

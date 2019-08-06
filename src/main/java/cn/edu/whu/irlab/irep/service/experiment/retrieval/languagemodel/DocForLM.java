@@ -1,5 +1,6 @@
 package cn.edu.whu.irlab.irep.service.experiment.retrieval.languagemodel;
 
+import cn.edu.whu.irlab.irep.service.util.Calculator;
 import cn.edu.whu.irlab.irep.service.vo.Doc;
 
 import java.util.HashMap;
@@ -19,7 +20,7 @@ public class DocForLM extends Doc {
     }
 
     public Map<String,Double> setLMap(Map<String,Double> tfMap){
-//        this.LMap=Calculator.calculateLM(tfMap);
+        this.LMap= Calculator.calculateLM(tfMap);
         return this.LMap;
     }
 

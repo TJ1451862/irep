@@ -54,13 +54,46 @@ public class Constructor {
         return indexType;
     }
 
+    /**
+     * 解析分词器名称
+     * @param indexType
+     * @return
+     */
+    public static String analyzerNameConstructor(String indexType) {
+        String analyzerType = indexType.substring(1, 3);
+        switch (analyzerType) {
+            case "01":
+                return "standard";
+            case "02":
+                return "whitespace";
+            case "03":
+                return "simple";
+            case "04":
+                return "CJK";
+            case "05":
+                return "smartChinese";
+            default:
+                return "";
+        }
+    }
+
+    public static boolean removeStopWord(String indexType){
+        String temp=indexType.substring(4);
+        if (temp.equals(0)){
+            return false;
+        }else {
+            return true;
+        }
+    }
+
+
     public static String indexTypeConstructor(HttpServletRequest request) {
 
         boolean chinese = true;
         String analyzer = (String) request.getSession().getAttribute("analyzer");
         boolean removeStopWord = (boolean) request.getSession().getAttribute("removeStopWord");
 
-        return indexTypeConstructor(analyzer,removeStopWord,chinese);
+        return indexTypeConstructor(analyzer, removeStopWord, chinese);
     }
 
     public static String retrieverIdConstructor(Retriever retriever) {

@@ -14,5 +14,7 @@ public interface UserRetrieverScoreService {
 
     UserRetrieverScore select(UserRetrieverScore userRetrieverScore);
 
+    UserRetrieverScore selectByUserId(int userId);
+
     int updateByUserId(UserRetrieverScore userRetrieverScore);
 }

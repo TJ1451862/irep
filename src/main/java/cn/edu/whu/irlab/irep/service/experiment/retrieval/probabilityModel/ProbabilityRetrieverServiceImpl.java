@@ -4,6 +4,7 @@ import cn.edu.whu.irlab.irep.base.dao.experiment.DocumentService;
 import cn.edu.whu.irlab.irep.base.entity.experiment.Document;
 import cn.edu.whu.irlab.irep.base.entity.experiment.Record;
 import cn.edu.whu.irlab.irep.base.entity.experiment.Result;
+import cn.edu.whu.irlab.irep.base.entity.experiment.Retriever;
 import cn.edu.whu.irlab.irep.base.entity.system.User;
 import cn.edu.whu.irlab.irep.base.entity.system.UserRetrieverScore;
 import cn.edu.whu.irlab.irep.service.experiment.IndexService;
@@ -44,6 +45,8 @@ public class ProbabilityRetrieverServiceImpl extends RetrievalService implements
         super.initRetriever(queryContent,request);
         this.k = k;
         this.b = b;
+        super.retriever=new Retriever(true,analyzerName,isRemoveStopWord,"probabilityModel",
+                0,"系数K",(int)k*100,"系数B",(int)b*100);
         setAvg_length();
     }
 

@@ -28,8 +28,6 @@ import java.util.*;
 @Service
 public class BoolRetrieverServiceImpl extends RetrievalService implements BoolRetrieverService {
 
-    private String indexType;//索引类型
-
     private String analyzerName;//分词器名称
 
     private boolean isRemoveStopWord;//是否去停用词
@@ -59,9 +57,16 @@ public class BoolRetrieverServiceImpl extends RetrievalService implements BoolRe
 
     @Override
     public void initBoolRetriever(List<String> booleanQuery, HttpServletRequest request) {
-        this.indexType = Constructor.indexTypeConstructor(request);
         this.analyzerName = (String) request.getSession().getAttribute("analyzer");
         this.isRemoveStopWord = (boolean) request.getSession().getAttribute("removeStopWord");
+        this.booleanQuery = preProcess(booleanQuery);
+        boolStepVoList.clear();
+    }
+
+    @Override
+    public void initBoolRetriever(List<String> booleanQuery, String indexType) {
+        this.analyzerName = Constructor.analyzerNameConstructor(indexType);
+        this.isRemoveStopWord = Constructor.removeStopWord(indexType);
         this.booleanQuery = preProcess(booleanQuery);
         boolStepVoList.clear();
     }
@@ -176,6 +181,8 @@ public class BoolRetrieverServiceImpl extends RetrievalService implements BoolRe
     public int quit() {
         return 0;
     }
+
+
 
     private void compareAndCalc(Stack<String> optStack, Stack<BoolVectorVo> itemStack, String curOpt){
         //比较当前运算符和栈顶运算符的优先级

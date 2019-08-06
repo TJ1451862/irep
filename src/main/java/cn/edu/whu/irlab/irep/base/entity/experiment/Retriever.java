@@ -48,6 +48,17 @@ public class Retriever {
         this.retrieverId= Constructor.retrieverIdConstructor(this);
     }
 
+    public Retriever( Boolean isChinese, String analyzer, Boolean isRemoveStopWord, String model, Integer formulaId, String paramName1, Integer param1) {
+        this.isChinese = isChinese;
+        this.analyzer = analyzer;
+        this.isRemoveStopWord = isRemoveStopWord;
+        this.model = model;
+        this.formulaId = formulaId;
+        this.paramName1 = paramName1;
+        this.param1 = param1;
+        this.retrieverId = Constructor.retrieverIdConstructor(this);
+    }
+
     public String getRetrieverId() {
         return retrieverId;
     }

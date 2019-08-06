@@ -15,6 +15,8 @@ public interface BoolRetrieverService extends RetrieverService {
 
     void initBoolRetriever(List<String> booleanQuery, HttpServletRequest request);
 
+    void initBoolRetriever(List<String> booleanQuery, String indexType);
+
     List<String> preProcess(List<String> booleanQuery);
 
     List<BoolVectorVo> outputBoolVector();

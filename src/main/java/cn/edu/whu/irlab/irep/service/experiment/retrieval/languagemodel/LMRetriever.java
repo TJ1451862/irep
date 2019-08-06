@@ -4,7 +4,18 @@ import cn.edu.whu.irlab.irep.base.entity.experiment.FullIndex;
 import cn.edu.whu.irlab.irep.base.entity.experiment.InvertedIndex;
 import cn.edu.whu.irlab.irep.base.dao.experiment.impl.FullIndexServiceImpl;
 import cn.edu.whu.irlab.irep.base.dao.experiment.impl.InvertedIndexServiceImpl;
+import cn.edu.whu.irlab.irep.base.entity.experiment.Retriever;
+import cn.edu.whu.irlab.irep.base.entity.system.User;
+import cn.edu.whu.irlab.irep.base.entity.system.UserRetrieverScore;
+import cn.edu.whu.irlab.irep.service.experiment.IndexService;
+import cn.edu.whu.irlab.irep.service.experiment.retrieval.LMRetrieverService;
+import cn.edu.whu.irlab.irep.service.experiment.retrieval.RetrievalService;
 import cn.edu.whu.irlab.irep.service.util.Constructor;
+import cn.edu.whu.irlab.irep.service.util.Find;
+import cn.edu.whu.irlab.irep.service.vo.IdfVo;
+import cn.edu.whu.irlab.irep.service.vo.ResultVo;
+import cn.edu.whu.irlab.irep.service.vo.SearchResultVo;
+import cn.edu.whu.irlab.irep.service.vo.TfVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +29,7 @@ import java.util.*;
  * @desc 语言模型检索器
  */
 @Service
-public class LMRetriever {
+public class LMRetriever extends RetrievalService implements LMRetrieverService {
 
     @Autowired
     public FullIndexServiceImpl fullIndexService;
@@ -26,185 +37,87 @@ public class LMRetriever {
     @Autowired
     public InvertedIndexServiceImpl invertedIndexService;
 
-    private String indexType;//索引类型
-
-    private String analyzerName;//分词器名称
-
-    private boolean isRemoveStopWord;//是否去停用词
-
-    private QueryForLM query;//查询语句
-
     private double smoothParam;//平滑系数
 
-    private List<DocForLM> docForLMList= new ArrayList<>();//文档集
+    private int totalArticles = 166;//总共文本数量;
 
-    private List<ResultForLM> result=new ArrayList<>(); //未排序的结果
-
-    private List<ResultForLM> resultAfterSort=new ArrayList<>(); //排序后的结果
-
-    private double totalArticles=166.0;//总共文本数量;
-
-    Map<String,Double> idfMap=new HashMap<>(); //词典中各词项在所有文档中出现的频率
-
-    public void initLMRetriever(String query, double smoothParam,  HttpServletRequest request){
-        this.indexType = Constructor.indexTypeConstructor(request);
-        this.smoothParam=smoothParam;
-        this.analyzerName = (String) request.getSession().getAttribute("analyzer");
-        this.isRemoveStopWord = (boolean)request.getSession().getAttribute("removeStopWord");
-        this.query=new QueryForLM(query, analyzerName, isRemoveStopWord);
-    }
+    //idf值 词典中各词项在所有文档中出现的频率
+    private List<IdfVo> idfVoList;
 
 
-    public void search() {
-        //初始化
-        result.clear();
-        resultAfterSort.clear();
-        docForLMList.clear();
-
-        setDocForLMList();
-        setIdfs();
-        setResult();
-        sortResult();
-    }
-
-    /**
-     * 初始化各doc并计算词频
-     */
-    public void setDocForLMList() {
-        Map<Integer, Map<String, Double>> docID_termTF = selectTFs();
-        for (Integer integer :
-                docID_termTF.keySet()) {
-            DocForLM docForLM = new DocForLM(integer);
-            docForLM.setLMap(docID_termTF.get(integer));
-            docForLMList.add(docForLM);
-        }
-    }
-
-    /**
-     * 获取数据库中各词项的tf
-     * 按文档id进行分类
-     */
-    public Map<Integer, Map<String, Double>> selectTFs() {
-        Map<Integer, Map<String, Double>> docID_termTF = new HashMap<>();
-        List<InvertedIndex> invertedIndexList = invertedIndexService.selectByIndexType(indexType);
-        double tf;
-        String term;
-
-        for (int i = 0; i < invertedIndexList.size(); i++) {
-            Map<String, Double> term_tf = new HashMap<>();
-            InvertedIndex invertedIndex = invertedIndexList.get(i);
-            int docID = invertedIndex.getDocId();
-            term = invertedIndex.getTerm();
-            tf = (double) invertedIndex.getTf();
-            if (docID_termTF.containsKey(invertedIndex.getDocId())) {
-                term_tf = docID_termTF.get(docID);
-                term_tf.put(term, tf);
-                docID_termTF.put(docID, term_tf);
-            } else {
-                term_tf.put(term, tf);
-                docID_termTF.put(docID, term_tf);
-            }
-        }
-        return docID_termTF;
-    }
+    @Autowired
+    private IndexService indexService;
 
 
-    /**
-     * 获取数据库中各词的idf
-     * @return
-     */
-    public void  setIdfs(){
-        List<FullIndex> fullIndexList = fullIndexService.selectByIndexType(indexType);
-        for(int i=0;i<fullIndexList.size();i++){
-            idfMap.put(fullIndexList.get(i).getTerm(),fullIndexList.get(i).getDf()/totalArticles);
-        }
-    }
-
-    /**
-     * 计算各文档的生成概率
-     */
-    public void setResult(){
-        for(int i=0;i<docForLMList.size();i++){
-            Integer docId=docForLMList.get(i).getId();
-            String title=docForLMList.get(i).getTitle();
-            Double GP=1.0;
-            for(int j=0;j<query.getPreProcessResult().size();j++){
-                Map<String,Double> lmap=docForLMList.get(i).getLMap();
-                String term=query.getPreProcessResult().get(j);
-                double a;
-                double b;
-                if(lmap.get(term)==null){
-                    a=0.0;
-                }else{
-                    a=lmap.get(term);
-                }
-                if(idfMap.get(term)==null){
-                    b=0.0;
-                }else{
-                    b=idfMap.get(term);
-                }
-                GP *=(1-smoothParam)*a+(smoothParam)*b;
-            }
-            //保留6位显示
-            if (GP > 0.0000001) {
-                ResultForLM resultI = new ResultForLM(docId, title, GP);
-                result.add(resultI);
-            }
-        }
-    }
-
-    public void sortResult(){
-        List<ResultForLM> resultIList = new ArrayList<>();
-        for (int i = 0; i < result.size(); i++) {
-            resultIList.add(result.get(i));
-        }
-        resultAfterSort = bubbleSort(resultIList);
-    }
-
-    /**
-     * 冒泡排序
-     */
-    public List<ResultForLM> bubbleSort(List<ResultForLM> results) {
-        for (int i = 0; i < results.size(); i++) {
-            for (int j = 0; j < results.size() - 1 - i; j++) {
-                if (results.get(j).getGenerateProbability() < results.get(j + 1).getGenerateProbability()) {
-                    ResultForLM temp = results.get(j + 1);
-                    results.set(j + 1, results.get(j));
-                    results.set(j, temp);
-                }
-            }
-        }
-        return results;
-    }
-
-    /**
-     * get和set方法
-     */
-    public QueryForLM getQuery() {
-        return query;
-    }
-
-    public List<DocForLM> getDocForLMList() {
-        return docForLMList;
-    }
-
-    public Map<String,Double> getIdfMap(){
-        return idfMap;
-    }
-
-    public List<ResultForLM> getResult(){
-        return result;
-    }
-
-    public List<ResultForLM> getResultAfterSort(){
-        return resultAfterSort;
-    }
-
-    public double getSmoothParam() {
-        return smoothParam;
-    }
-
-    public void setSmoothParam(double smoothParam) {
+    public void initLMRetriever(String query, double smoothParam, HttpServletRequest request) {
         this.smoothParam = smoothParam;
+        super.initRetriever(query,request);
+        super.retriever=new Retriever(true,analyzerName,isRemoveStopWord,"languageModel",
+                0,"smoothParam",(int)smoothParam*100);
+        this.idfVoList = calculateDf();
+    }
+
+    public List<IdfVo> calculateDf() {
+        List<FullIndex> fullIndexList = indexService.selectFullIndex();
+        List<IdfVo> idfVoList = new ArrayList<>();
+        int num = 0;
+        for (FullIndex i :
+                fullIndexList) {
+            IdfVo idfVo = new IdfVo(i.getTerm(), num, i.getDf() / (double) totalArticles);
+            idfVoList.add(idfVo);
+            num++;
+        }
+        return idfVoList;
+    }
+
+    @Override
+    public List<TfVo> calculateLM(int docId) {
+        int docLength = indexService.selectDocLength(docId);
+        List<TfVo> tfVos = indexService.selectDocTf(docId);
+        for (TfVo t :
+                tfVos) {
+            t.setTf(t.getTf() / docLength);
+        }
+        return tfVos;
+    }
+
+    @Override
+    public List<ResultVo> calculateSimilarity() {
+        List<ResultVo> resultVos=new ArrayList<>();
+        for (int i = 0; i < totalArticles; i++) {
+            String title = Find.findTitle(i, true);
+            Double GP = 1.0;
+            for (String term :
+                    query.getPreProcessResult()) {
+                List<TfVo> lmVos = calculateLM(i);
+                double a=0;
+                double b=0;
+                for (IdfVo idf :
+                        idfVoList) {
+                    if (term.equals(idf.getTerm())) {
+                        a = idf.getIdf();
+                    }
+                }
+                for (TfVo lm :
+                        lmVos) {
+                    if (term.equals(lm.getTerm())) {
+                        b = lm.getTf();
+                    }
+                }
+                GP *= (1 - smoothParam) * a + (smoothParam) * b;
+            }
+            ResultVo resultVo=new ResultVo(i,title,GP);
+            resultVos.add(resultVo);
+        }
+        return resultVos;
+    }
+
+    @Override
+    public int quit() {
+        UserRetrieverScore userRetrieverScore=new UserRetrieverScore();
+        User user=(User) session.getAttribute("user");
+        userRetrieverScore.setUserId(user.getId());
+        userRetrieverScore.setLanugaeRetriever(retriever.getRetrieverId());
+        return userRetrieverScoreService.updateByUserId(userRetrieverScore);
     }
 }

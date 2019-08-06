@@ -1,5 +1,6 @@
 package cn.edu.whu.irlab.irep.service.util;
 
+import cn.edu.whu.irlab.irep.service.vo.LMVo;
 import cn.edu.whu.irlab.irep.service.vo.VectorIVo;
 import cn.edu.whu.irlab.irep.service.vo.TfVo;
 
@@ -191,6 +192,5 @@ public class Calculator {
         }
         return resultForLM;
     }
-
 
 }
