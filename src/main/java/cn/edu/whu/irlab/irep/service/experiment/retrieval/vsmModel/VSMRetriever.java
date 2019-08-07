@@ -53,7 +53,6 @@ public class VSMRetriever extends RetrievalService implements VsmRetrievalServic
         }else {
             super.retriever = new Retriever(true, analyzerName, isRemoveStopWord, "vsm", formulaID);
         }
-
         setIdfVoList(calculateIdf());
     }
 

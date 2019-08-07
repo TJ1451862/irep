@@ -37,8 +37,8 @@ public class PreprocessorController {
         String token=object.getString("token");
         String analyzerName=object.getString("analyzerName");
         boolean removeStopWord=object.getBoolean("isRemoveStopWord");
-
         List<String> termList = PreProcessorServiceImpl.preProcess(token, analyzerName, removeStopWord);
+
         request.getSession().setAttribute("analyzer", analyzerName);
         request.getSession().setAttribute("removeStopWord", removeStopWord);
 

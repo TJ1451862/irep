@@ -40,9 +40,9 @@
         <!--enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />-->
         <!--<table tableName="full_index" domainObjectName="FullIndex" enableCountByExample="false" enableUpdateByExample="false"-->
                <!--enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />-->
-        <table tableName="result" domainObjectName="Result" enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
-        <!--<table tableName="retriever" domainObjectName="RetrieverService" enableCountByExample="false" enableUpdateByExample="false"-->
+        <!--<table tableName="result" domainObjectName="Result" enableCountByExample="false" enableUpdateByExample="false"-->
+               <!--enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>-->
+        <!--&lt;!&ndash;<table tableName="retriever" domainObjectName="RetrieverService" enableCountByExample="false" enableUpdateByExample="false"&ndash;&gt;-->
                <!--enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>-->
         <!--<table tableName="user_retriever" domainObjectName="UserRetriever" enableCountByExample="false" enableUpdateByExample="false"-->
                <!--enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>-->
@@ -67,6 +67,8 @@
         <!--<table tableName="user_operation_record" domainObjectName="UserOperationRecord" enableCountByExample="false" enableUpdateByExample="false"-->
                <!--enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />-->
         <!--<table tableName="standard_query" domainObjectName="StandardQuery" enableCountByExample="false" enableUpdateByExample="false"-->
+               <!--enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />-->
+        <!--<table tableName="performance" domainObjectName="Performance" enableCountByExample="false" enableUpdateByExample="false"-->
                <!--enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />-->
     </context>
 </generatorConfiguration>

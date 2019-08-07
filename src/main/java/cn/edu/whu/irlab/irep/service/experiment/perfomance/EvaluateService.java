@@ -1,7 +1,9 @@
 package cn.edu.whu.irlab.irep.service.experiment.perfomance;
 
+import cn.edu.whu.irlab.irep.base.entity.experiment.Performance;
 import cn.edu.whu.irlab.irep.base.entity.experiment.Result;
 import cn.edu.whu.irlab.irep.base.entity.experiment.Retriever;
+import com.alibaba.fastjson.JSONObject;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -22,4 +24,8 @@ public interface EvaluateService {
     int testRetriever(Retriever retriever);
 
     Map<String, List<Result>> testRetriever(String query, String modelName, HttpServletRequest request);
+
+    Performance individualPerformance(String query, String modelName, HttpServletRequest request);
+
+    JSONObject calculateAvgPerformances(HttpServletRequest request);
 }
