@@ -13,11 +13,11 @@ import java.util.List;
  **/
 public interface BoolRetrieverService extends RetrieverService {
 
-    void initBoolRetriever(List<String> booleanQuery, HttpServletRequest request);
+    void initBoolRetriever(String query, HttpServletRequest request);
 
-    void initBoolRetriever(List<String> booleanQuery, String indexType);
+    void initBoolRetriever(String query, String indexType);
 
-    List<String> preProcess(List<String> booleanQuery);
+    List<String> preProcess();
 
     List<BoolVectorVo> outputBoolVector();
 

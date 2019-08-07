@@ -97,8 +97,8 @@ public abstract class RetrievalService implements RetrieverService {
             saveTestResult();
         }
         StandardQuery standardQuery = standardQueryService.selectByQueryContent(query.getContent());
-        List<Result> testResults = resultService.selectByQueryIdAndRetrieverId(standardQuery.getId(), retriever.getRetrieverId());
         List<Result> standardResult = resultService.selectByQueryIdAndRetrieverId(standardQuery.getId(), "1000_00");
+        List<Result> testResults = resultService.selectByQueryIdAndRetrieverId(standardQuery.getId(), retriever.getRetrieverId());
         Map<String, List<Result>> testResultMap = new HashedMap();
         testResultMap.put("testResults", testResults);
         testResultMap.put("standardResults", standardResult);

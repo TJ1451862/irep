@@ -49,6 +49,7 @@ public class LMRetriever extends RetrievalService implements LMRetrieverService 
     private IndexService indexService;
 
 
+    @Override
     public void initLMRetriever(String query, double smoothParam, HttpServletRequest request) {
         this.smoothParam = smoothParam;
         super.initRetriever(query,request);

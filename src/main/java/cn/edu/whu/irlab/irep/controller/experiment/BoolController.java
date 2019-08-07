@@ -55,8 +55,7 @@ public class BoolController {
     public List<SearchResultVo> boolSearchController(@RequestBody JSONObject object,
                                                      HttpServletRequest request) {
         String query = object.getString("query");
-        List<String> booleanQuery = Arrays.asList(query.split(" "));
-        boolRetrieverService.initBoolRetriever(booleanQuery, request);
+        boolRetrieverService.initBoolRetriever(query, request);
         return boolRetrieverService.search();
     }
 
@@ -70,15 +69,8 @@ public class BoolController {
                                                  HttpServletRequest request) {
         String query = object.getString("query");
         JSONObject output = new JSONObject();
-        List<String> booleanQuery = Arrays.asList(query.split(" "));
-
-        for (int i = 0; i <booleanQuery.size() ; i++) {
-            if (booleanQuery.get(i).equals("")){
-                booleanQuery.remove(i);
-            }
-        }
-        boolRetrieverService.initBoolRetriever(booleanQuery, request);
-        List<String> result = boolRetrieverService.preProcess(booleanQuery);
+        boolRetrieverService.initBoolRetriever(query, request);
+        List<String> result = boolRetrieverService.preProcess();
         String ppq = "";
         for (String s :
                 result) {
@@ -98,8 +90,7 @@ public class BoolController {
     public List<BoolVectorVo> boolVectorController(@RequestBody JSONObject object,
                                                    HttpServletRequest request) {
         String query = object.getString("query");
-        List<String> booleanQuery = Arrays.asList(query.split(" "));
-        boolRetrieverService.initBoolRetriever(booleanQuery, request);
+        boolRetrieverService.initBoolRetriever(query, request);
         return boolRetrieverService.outputBoolVector();
     }
 
@@ -112,8 +103,7 @@ public class BoolController {
     public List<BoolStepVo> booleanOperationController(@RequestBody JSONObject object,
                                                        HttpServletRequest request) {
         String query = object.getString("query");
-        List<String> booleanQuery = Arrays.asList(query.split(" "));
-        boolRetrieverService.initBoolRetriever(booleanQuery, request);
+        boolRetrieverService.initBoolRetriever(query, request);
         return boolRetrieverService.booleanOperation();
     }
 
@@ -121,8 +111,7 @@ public class BoolController {
     public List<ResultVo> callbackResultController(@RequestBody JSONObject object,
                                                    HttpServletRequest request) {
         String query = object.getString("query");
-        List<String> booleanQuery = Arrays.asList(query.split(" "));
-        boolRetrieverService.initBoolRetriever(booleanQuery, request);
+        boolRetrieverService.initBoolRetriever(query, request);
         return boolRetrieverService.descendOrderSimilarity();
     }
 
@@ -130,8 +119,7 @@ public class BoolController {
     public Map<String, List<Result>> testRetrieverController(@RequestBody JSONObject object,
                                                              HttpServletRequest request) {
         String query = object.getString("query");
-        List<String> booleanQuery = Arrays.asList(query.split(" "));
-        boolRetrieverService.initBoolRetriever(booleanQuery, request);
+        boolRetrieverService.initBoolRetriever(query, request);
         return boolRetrieverService.testRetriever();
     }
 

@@ -9,6 +9,7 @@ import cn.edu.whu.irlab.irep.base.entity.system.User;
 import cn.edu.whu.irlab.irep.base.entity.system.UserRetrieverScore;
 import cn.edu.whu.irlab.irep.service.experiment.perfomance.EvaluateService;
 import cn.edu.whu.irlab.irep.service.experiment.retrieval.BoolRetrieverService;
+import cn.edu.whu.irlab.irep.service.experiment.retrieval.LMRetrieverService;
 import cn.edu.whu.irlab.irep.service.experiment.retrieval.ProbabilityRetrievalService;
 import cn.edu.whu.irlab.irep.service.experiment.retrieval.VsmRetrievalService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,9 @@ public class EvaluateServiceImpl implements EvaluateService {
     private ProbabilityRetrievalService probabilityRetrievalService;
 
     @Autowired
+    private LMRetrieverService lmRetrieverService;
+
+    @Autowired
     private UserRetrieverScoreService userRetrieverScoreService;
 
 
@@ -67,9 +71,7 @@ public class EvaluateServiceImpl implements EvaluateService {
 
         switch (modelName) {
             case "boolModel":
-                List<String> queryList = new ArrayList<>();
-                queryList.add(query);
-                boolRetrieverService.initBoolRetriever(queryList, request);
+                boolRetrieverService.initBoolRetriever(query, request);
                 return boolRetrieverService.testRetriever();
             case "vsm": {
                 String retrieverId = userRetrieverScore.getVsmRetriever();
@@ -89,8 +91,13 @@ public class EvaluateServiceImpl implements EvaluateService {
                 probabilityRetrievalService.initRetriever(query,k,b,request);
                 return probabilityRetrievalService.testRetriever();
             }
-            case "languageModel":
-                return null;
+            case "languageModel":{
+                String retrieverId=userRetrieverScore.getLanugaeRetriever();
+                List<String> list= Arrays.asList(retrieverId.split("_"));
+                double smoothParam = Double.valueOf(list.get(2)) / 100;
+                lmRetrieverService.initLMRetriever(query,smoothParam,request);
+                return lmRetrieverService.testRetriever();
+            }
             default:
                 return null;
         }

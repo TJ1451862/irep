@@ -53,24 +53,34 @@ public class BoolRetrieverServiceImpl extends RetrievalService implements BoolRe
     private IndexService indexService;
 
     @Override
-    public void initBoolRetriever(List<String> booleanQuery, HttpServletRequest request) {
-        super.initRetriever("",request);
-        this.booleanQuery = preProcess(booleanQuery);
+    public void initBoolRetriever(String query, HttpServletRequest request) {
+        super.initRetriever(query, request);
+        this.booleanQuery = preProcess();
         boolStepVoList.clear();
-        super.retriever=new Retriever(true,analyzerName,isRemoveStopWord,"boolModel",0);
+        super.retriever = new Retriever(true, analyzerName, isRemoveStopWord, "boolModel", 0);
     }
 
     @Override
-    public void initBoolRetriever(List<String> booleanQuery, String indexType) {
-        this.analyzerName = Constructor.analyzerNameConstructor(indexType);
-        this.isRemoveStopWord = Constructor.removeStopWord(indexType);
-        this.booleanQuery = preProcess(booleanQuery);
+    public void initBoolRetriever(String query, String indexType) {
+        this.booleanQuery = Arrays.asList(query.split(" "));
+        this.booleanQuery = preProcess();
         boolStepVoList.clear();
     }
 
     @Override
-    public List<String> preProcess(List<String> booleanQuery) {
+    public List<String> preProcess() {
         List<String> output = new ArrayList<>();
+        List<String> booleanQuery= Arrays.asList(query.getContent().split(" "));
+        booleanQuery = new ArrayList<>(booleanQuery);
+
+        Iterator iterator = booleanQuery.iterator();
+        while (iterator.hasNext()) {
+            String s = (String) iterator.next();
+            if ("".equals(s)) {
+                iterator.remove();
+            }
+        }
+
         for (String s :
                 booleanQuery) {
             switch (s) {
@@ -142,7 +152,7 @@ public class BoolRetrieverServiceImpl extends RetrievalService implements BoolRe
                             break;
                         default:
                             //运算符为AND、OR、NOT
-                            compareAndCalc(optStack,itemStack,s);
+                            compareAndCalc(optStack, itemStack, s);
                             break;
                     }
                 }
@@ -152,10 +162,10 @@ public class BoolRetrieverServiceImpl extends RetrievalService implements BoolRe
             }
 
         }
-        if(!optStack.empty()){
-            directCalc(optStack,itemStack,false);
+        if (!optStack.empty()) {
+            directCalc(optStack, itemStack, false);
         }
-        setResultSet(boolStepVoList.get(boolStepVoList.size()-1).getResultSet());
+        setResultSet(boolStepVoList.get(boolStepVoList.size() - 1).getResultSet());
 
         return boolStepVoList;
     }
@@ -180,15 +190,14 @@ public class BoolRetrieverServiceImpl extends RetrievalService implements BoolRe
     }
 
 
-
-    private void compareAndCalc(Stack<String> optStack, Stack<BoolVectorVo> itemStack, String curOpt){
+    private void compareAndCalc(Stack<String> optStack, Stack<BoolVectorVo> itemStack, String curOpt) {
         //比较当前运算符和栈顶运算符的优先级
-        String peekOpt=optStack.peek();
-        int priority=calcPriority(peekOpt,curOpt);
-        if (priority>0){
+        String peekOpt = optStack.peek();
+        int priority = calcPriority(peekOpt, curOpt);
+        if (priority > 0) {
             //当前运算符优先级高，直接入栈
             optStack.push(curOpt);
-        }else {
+        } else {
             //当前操作符
             String opt = optStack.pop();
             //当前操作数2
@@ -198,16 +207,16 @@ public class BoolRetrieverServiceImpl extends RetrievalService implements BoolRe
             //计算结果作为操作数入栈
             BoolVectorVo result = binaryOperation(opt, item1, item2);
             itemStack.push(result);
-            if (optStack.empty()){
+            if (optStack.empty()) {
                 optStack.push(curOpt);
-            }else {
-                compareAndCalc(optStack,itemStack,curOpt);
+            } else {
+                compareAndCalc(optStack, itemStack, curOpt);
             }
         }
     }
 
-    private int calcPriority(String peekOpt,String curOpt){
-        return OPT_PRIORITY_MAP.get(curOpt)-OPT_PRIORITY_MAP.get(peekOpt);
+    private int calcPriority(String peekOpt, String curOpt) {
+        return OPT_PRIORITY_MAP.get(curOpt) - OPT_PRIORITY_MAP.get(peekOpt);
     }
 
     private void directCalc(Stack<String> optStack, Stack<BoolVectorVo> itemStack, boolean bracket) {
@@ -274,7 +283,7 @@ public class BoolRetrieverServiceImpl extends RetrievalService implements BoolRe
         Map<String, Set<Integer>> output = new HashedMap();
         for (String s :
                 booleanQuery) {
-            if (s.equals("AND") || s.equals("NOT") || s.equals("OR")||s.equals("(")||s.equals(")")) {
+            if (s.equals("AND") || s.equals("NOT") || s.equals("OR") || s.equals("(") || s.equals(")")) {
             } else {
                 if (!output.containsKey(s)) {
                     List<InvertedIndex> invertedIndices = indexService.selectInvertedIndex(s);
