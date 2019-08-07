@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.edu.whu.irlab.irep.base.mapper.experiment.PerformanceMapper">
+    <resultMap id="BaseResultMap" type="cn.edu.whu.irlab.irep.base.entity.experiment.Performance">
+        <result column="id" property="id" jdbcType="INTEGER"/>
+        <result column="query" property="query" jdbcType="VARCHAR"/>
+        <result column="retriever_id" property="retrieverId" jdbcType="VARCHAR"/>
+        <result column="precision" property="precision" jdbcType="DECIMAL"/>
+        <result column="p5" property="p5" jdbcType="DECIMAL"/>
+        <result column="p10" property="p10" jdbcType="DECIMAL"/>
+        <result column="p20" property="p20" jdbcType="DECIMAL"/>
+        <result column="recall" property="recall" jdbcType="DECIMAL"/>
+        <result column="r5" property="r5" jdbcType="DECIMAL"/>
+        <result column="r10" property="r10" jdbcType="DECIMAL"/>
+        <result column="r20" property="r20" jdbcType="DECIMAL"/>
+        <result column="ndcg" property="ndcg" jdbcType="DECIMAL"/>
+        <result column="ndcg5" property="ndcg5" jdbcType="DECIMAL"/>
+        <result column="ndcg10" property="ndcg10" jdbcType="DECIMAL"/>
+        <result column="ndcg20" property="ndcg20" jdbcType="DECIMAL"/>
+        <result column="map" property="map" jdbcType="DECIMAL"/>
+        <result column="f1" property="f1" jdbcType="DECIMAL"/>
+    </resultMap>
+    <insert id="insert" parameterType="cn.edu.whu.irlab.irep.base.entity.experiment.Performance">
+    insert into performance (id, query, retriever_id, 
+      `precision`, p5, p10,
+      p20, recall, r5, r10, 
+      r20, ndcg, ndcg5, ndcg10, 
+      ndcg20, map, f1)
+    values (#{id,jdbcType=INTEGER}, #{query,jdbcType=VARCHAR}, #{retrieverId,jdbcType=VARCHAR}, 
+      #{precision,jdbcType=DECIMAL}, #{p5,jdbcType=DECIMAL}, #{p10,jdbcType=DECIMAL}, 
+      #{p20,jdbcType=DECIMAL}, #{recall,jdbcType=DECIMAL}, #{r5,jdbcType=DECIMAL}, #{r10,jdbcType=DECIMAL}, 
+      #{r20,jdbcType=DECIMAL}, #{ndcg,jdbcType=DECIMAL}, #{ndcg5,jdbcType=DECIMAL}, #{ndcg10,jdbcType=DECIMAL}, 
+      #{ndcg20,jdbcType=DECIMAL}, #{map,jdbcType=DECIMAL}, #{f1,jdbcType=DECIMAL})
+  </insert>
+    <insert id="insertSelective" parameterType="cn.edu.whu.irlab.irep.base.entity.experiment.Performance">
+        insert into performance
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="query != null">
+                query,
+            </if>
+            <if test="retrieverId != null">
+                retriever_id,
+            </if>
+            <if test="precision != null">
+                `precision`,
+            </if>
+            <if test="p5 != null">
+                p5,
+            </if>
+            <if test="p10 != null">
+                p10,
+            </if>
+            <if test="p20 != null">
+                p20,
+            </if>
+            <if test="recall != null">
+                recall,
+            </if>
+            <if test="r5 != null">
+                r5,
+            </if>
+            <if test="r10 != null">
+                r10,
+            </if>
+            <if test="r20 != null">
+                r20,
+            </if>
+            <if test="ndcg != null">
+                ndcg,
+            </if>
+            <if test="ndcg5 != null">
+                ndcg5,
+            </if>
+            <if test="ndcg10 != null">
+                ndcg10,
+            </if>
+            <if test="ndcg20 != null">
+                ndcg20,
+            </if>
+            <if test="map != null">
+                map,
+            </if>
+            <if test="f1 != null">
+                f1,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="query != null">
+                #{query,jdbcType=VARCHAR},
+            </if>
+            <if test="retrieverId != null">
+                #{retrieverId,jdbcType=VARCHAR},
+            </if>
+            <if test="precision != null">
+                #{precision,jdbcType=DECIMAL},
+            </if>
+            <if test="p5 != null">
+                #{p5,jdbcType=DECIMAL},
+            </if>
+            <if test="p10 != null">
+                #{p10,jdbcType=DECIMAL},
+            </if>
+            <if test="p20 != null">
+                #{p20,jdbcType=DECIMAL},
+            </if>
+            <if test="recall != null">
+                #{recall,jdbcType=DECIMAL},
+            </if>
+            <if test="r5 != null">
+                #{r5,jdbcType=DECIMAL},
+            </if>
+            <if test="r10 != null">
+                #{r10,jdbcType=DECIMAL},
+            </if>
+            <if test="r20 != null">
+                #{r20,jdbcType=DECIMAL},
+            </if>
+            <if test="ndcg != null">
+                #{ndcg,jdbcType=DECIMAL},
+            </if>
+            <if test="ndcg5 != null">
+                #{ndcg5,jdbcType=DECIMAL},
+            </if>
+            <if test="ndcg10 != null">
+                #{ndcg10,jdbcType=DECIMAL},
+            </if>
+            <if test="ndcg20 != null">
+                #{ndcg20,jdbcType=DECIMAL},
+            </if>
+            <if test="map != null">
+                #{map,jdbcType=DECIMAL},
+            </if>
+            <if test="f1 != null">
+                #{f1,jdbcType=DECIMAL},
+            </if>
+        </trim>
+    </insert>
+    <select id="selectByQueryAndRetrieverId" parameterType="cn.edu.whu.irlab.irep.base.entity.experiment.Performance"
+            resultMap="BaseResultMap">
+        select * from performance where query=#{query} and retriever_id= #{retrieverId}
+    </select>
+</mapper>
