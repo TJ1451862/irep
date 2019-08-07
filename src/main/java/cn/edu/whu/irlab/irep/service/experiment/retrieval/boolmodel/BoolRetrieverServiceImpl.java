@@ -2,6 +2,7 @@ package cn.edu.whu.irlab.irep.service.experiment.retrieval.boolmodel;
 
 
 import cn.edu.whu.irlab.irep.base.entity.experiment.InvertedIndex;
+import cn.edu.whu.irlab.irep.base.entity.experiment.Retriever;
 import cn.edu.whu.irlab.irep.service.experiment.IndexService;
 import cn.edu.whu.irlab.irep.service.experiment.preProcess.Impl.PreProcessorServiceImpl;
 import cn.edu.whu.irlab.irep.service.experiment.retrieval.BoolRetrieverService;
@@ -28,10 +29,6 @@ import java.util.*;
 @Service
 public class BoolRetrieverServiceImpl extends RetrievalService implements BoolRetrieverService {
 
-    private String analyzerName;//分词器名称
-
-    private boolean isRemoveStopWord;//是否去停用词
-
     private List<String> booleanQuery = new ArrayList<>();
 
     private Set<Integer> resultSet = new TreeSet<>();
@@ -57,10 +54,10 @@ public class BoolRetrieverServiceImpl extends RetrievalService implements BoolRe
 
     @Override
     public void initBoolRetriever(List<String> booleanQuery, HttpServletRequest request) {
-        this.analyzerName = (String) request.getSession().getAttribute("analyzer");
-        this.isRemoveStopWord = (boolean) request.getSession().getAttribute("removeStopWord");
+        super.initRetriever("",request);
         this.booleanQuery = preProcess(booleanQuery);
         boolStepVoList.clear();
+        super.retriever=new Retriever(true,analyzerName,isRemoveStopWord,"boolModel",0);
     }
 
     @Override

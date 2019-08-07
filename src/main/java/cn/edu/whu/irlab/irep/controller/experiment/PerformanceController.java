@@ -35,8 +35,6 @@ public class PerformanceController {
     @Autowired
     public VsmRetrievalService vsmRetriever;
 
-
-
     @Autowired
     public ResultService resultService;
 

@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -70,17 +71,21 @@ public class EvaluateServiceImpl implements EvaluateService {
                 queryList.add(query);
                 boolRetrieverService.initBoolRetriever(queryList, request);
                 return boolRetrieverService.testRetriever();
-            case "vectorSpaceModel": {
+            case "vsm": {
                 String retrieverId = userRetrieverScore.getVsmRetriever();
-                int fId = Integer.valueOf(retrieverId.substring(6));
-                double param = Double.valueOf(retrieverId.substring(7, 8)) / 100;
-                vsmRetriever.initVSMRetriever(query, fId, param, request);
+                int formulaId = Integer.valueOf(retrieverId.substring(6));
+                double param=0;
+                if(formulaId==3){
+                     param = Double.valueOf(retrieverId.substring(8,9)) / 100;
+                }
+                vsmRetriever.initVSMRetriever(query, formulaId, param, request);
                 return vsmRetriever.testRetriever();
             }
             case "probabilityModel": {
                 String retrieverId = userRetrieverScore.getProbabilityRetriever();
-                double k = Double.valueOf(retrieverId.substring(7, 8)) / 100;
-                double b = Double.valueOf(retrieverId.substring(7, 8)) / 100;
+                List<String> list= Arrays.asList(retrieverId.split("_"));
+                double k = Double.valueOf(list.get(2)) / 100;
+                double b = Double.valueOf(list.get(3)) / 100;
                 probabilityRetrievalService.initRetriever(query,k,b,request);
                 return probabilityRetrievalService.testRetriever();
             }

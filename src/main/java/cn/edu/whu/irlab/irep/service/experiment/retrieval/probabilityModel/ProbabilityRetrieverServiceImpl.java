@@ -46,7 +46,7 @@ public class ProbabilityRetrieverServiceImpl extends RetrievalService implements
         this.k = k;
         this.b = b;
         super.retriever=new Retriever(true,analyzerName,isRemoveStopWord,"probabilityModel",
-                0,"系数K",(int)k*100,"系数B",(int)b*100);
+                0,"系数K",(int)k*100,"系数B",(int)(b*100));
         setAvg_length();
     }
 
@@ -74,11 +74,6 @@ public class ProbabilityRetrieverServiceImpl extends RetrievalService implements
             }
         }
         return bijVos;
-    }
-
-    @Override
-    public Map<String, List<Result>> testRetriever() {
-        return null;
     }
 
     @Override

@@ -2,6 +2,7 @@ package cn.edu.whu.irlab.irep.controller.experiment;
 
 
 import cn.edu.whu.irlab.irep.base.dao.experiment.impl.ResultServiceImpl;
+import cn.edu.whu.irlab.irep.base.entity.experiment.Result;
 import cn.edu.whu.irlab.irep.service.enums.ResponseEnum;
 import cn.edu.whu.irlab.irep.service.experiment.retrieval.languagemodel.LMRetriever;
 import cn.edu.whu.irlab.irep.service.util.Find;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -97,6 +99,15 @@ public class LMController {
         languageRetriever.initLMRetriever(query, smoothParam, request);
         return languageRetriever.descendOrderSimilarity();
     }
+
+    @PostMapping("/testRetriever")
+    public Map<String, List<Result>> testRetrieverController(@RequestParam(name = "query") String query,
+                                                             @RequestParam(name = "smoothParam") Double smoothParam,
+                                                             HttpServletRequest request){
+        languageRetriever.initLMRetriever(query, smoothParam, request);
+        return languageRetriever.testRetriever();
+    }
+
 
     @PostMapping("/quit")
     public ResponseVo quitController(@RequestParam(name = "query") String query,

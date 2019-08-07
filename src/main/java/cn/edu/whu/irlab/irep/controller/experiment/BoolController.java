@@ -4,6 +4,7 @@ package cn.edu.whu.irlab.irep.controller.experiment;
 import cn.edu.whu.irlab.irep.base.dao.experiment.impl.ResultServiceImpl;
 import cn.edu.whu.irlab.irep.base.dao.experiment.impl.RetrieverServiceImpl;
 import cn.edu.whu.irlab.irep.base.dao.system.impl.UserRetrieverServiceImpl;
+import cn.edu.whu.irlab.irep.base.entity.experiment.Result;
 import cn.edu.whu.irlab.irep.service.experiment.retrieval.BoolRetrieverService;
 
 
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author chr
@@ -69,6 +71,12 @@ public class BoolController {
         String query = object.getString("query");
         JSONObject output = new JSONObject();
         List<String> booleanQuery = Arrays.asList(query.split(" "));
+
+        for (int i = 0; i <booleanQuery.size() ; i++) {
+            if (booleanQuery.get(i).equals("")){
+                booleanQuery.remove(i);
+            }
+        }
         boolRetrieverService.initBoolRetriever(booleanQuery, request);
         List<String> result = boolRetrieverService.preProcess(booleanQuery);
         String ppq = "";
@@ -117,6 +125,16 @@ public class BoolController {
         boolRetrieverService.initBoolRetriever(booleanQuery, request);
         return boolRetrieverService.descendOrderSimilarity();
     }
+
+    @PostMapping("/testRetriever")
+    public Map<String, List<Result>> testRetrieverController(@RequestBody JSONObject object,
+                                                             HttpServletRequest request) {
+        String query = object.getString("query");
+        List<String> booleanQuery = Arrays.asList(query.split(" "));
+        boolRetrieverService.initBoolRetriever(booleanQuery, request);
+        return boolRetrieverService.testRetriever();
+    }
+
 }
 
 

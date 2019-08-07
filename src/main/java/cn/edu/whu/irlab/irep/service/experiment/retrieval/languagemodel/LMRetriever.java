@@ -53,7 +53,7 @@ public class LMRetriever extends RetrievalService implements LMRetrieverService 
         this.smoothParam = smoothParam;
         super.initRetriever(query,request);
         super.retriever=new Retriever(true,analyzerName,isRemoveStopWord,"languageModel",
-                0,"smoothParam",(int)smoothParam*100);
+                0,"smoothParam",(int)(smoothParam*100));
         this.idfVoList = calculateDf();
     }
 

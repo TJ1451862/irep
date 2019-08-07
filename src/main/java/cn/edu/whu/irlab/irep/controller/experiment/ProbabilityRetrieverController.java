@@ -1,5 +1,6 @@
 package cn.edu.whu.irlab.irep.controller.experiment;
 
+import cn.edu.whu.irlab.irep.base.entity.experiment.Result;
 import cn.edu.whu.irlab.irep.service.enums.ResponseEnum;
 import cn.edu.whu.irlab.irep.service.experiment.retrieval.ProbabilityRetrievalService;
 import cn.edu.whu.irlab.irep.service.util.ResponseVoUtil;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author gcr19
@@ -109,6 +111,24 @@ public class ProbabilityRetrieverController {
         probabilityRetrievalService.initRetriever(query, k, b, request);
         return probabilityRetrievalService.descendOrderSimilarity();
     }
+
+    /**
+     * 调试检索模型
+     * @param query
+     * @param k
+     * @param b
+     * @param request
+     * @return
+     */
+    @PostMapping("/testRetriever")
+    public Map<String, List<Result>> testRetrieverController(@RequestParam("query") String query,
+                                                             @RequestParam("k") double k,
+                                                             @RequestParam("b") double b,
+                                                             HttpServletRequest request){
+        probabilityRetrievalService.initRetriever(query, k, b, request);
+        return probabilityRetrievalService.testRetriever();
+    }
+
 
     @PostMapping("/quit")
     public ResponseVo quitController(@RequestParam("query") String query,

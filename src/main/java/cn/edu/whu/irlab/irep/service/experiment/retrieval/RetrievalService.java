@@ -135,7 +135,12 @@ public abstract class RetrievalService implements RetrieverService {
                         existing = true;
                     }
                 }
-                Result result = new Result(sq.getId(), sr.getDocId(),sr.getTitle(), rank, retriever.getRetrieverId(), existing);
+                Result result;
+                if (retriever.getModel().equals("布尔模型")){
+                    result = new Result(sq.getId(), sr.getDocId(),sr.getTitle(), 0, retriever.getRetrieverId(), existing);
+                }else {
+                    result = new Result(sq.getId(), sr.getDocId(),sr.getTitle(), rank, retriever.getRetrieverId(), existing);
+                }
                 forSave.add(result);
             }
         }
