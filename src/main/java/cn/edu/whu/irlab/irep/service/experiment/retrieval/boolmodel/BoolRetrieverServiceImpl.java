@@ -7,7 +7,6 @@ import cn.edu.whu.irlab.irep.service.experiment.IndexService;
 import cn.edu.whu.irlab.irep.service.experiment.preProcess.Impl.PreProcessorServiceImpl;
 import cn.edu.whu.irlab.irep.service.experiment.retrieval.BoolRetrieverService;
 import cn.edu.whu.irlab.irep.service.experiment.retrieval.RetrievalService;
-import cn.edu.whu.irlab.irep.service.util.Constructor;
 import cn.edu.whu.irlab.irep.service.util.Find;
 import cn.edu.whu.irlab.irep.service.vo.BoolStepVo;
 import cn.edu.whu.irlab.irep.service.vo.BoolVectorVo;
@@ -70,7 +69,7 @@ public class BoolRetrieverServiceImpl extends RetrievalService implements BoolRe
     @Override
     public List<String> preProcess() {
         List<String> output = new ArrayList<>();
-        List<String> booleanQuery= Arrays.asList(query.getContent().split(" "));
+        List<String> booleanQuery = Arrays.asList(query.getContent().split(" "));
         booleanQuery = new ArrayList<>(booleanQuery);
 
         Iterator iterator = booleanQuery.iterator();
@@ -81,22 +80,38 @@ public class BoolRetrieverServiceImpl extends RetrievalService implements BoolRe
             }
         }
 
+        boolean isRemoved = false;
+
         for (String s :
                 booleanQuery) {
             switch (s) {
                 case "AND":
-                    output.add(s);
+                    if (isRemoved) {
+                        isRemoved = false;
+                    } else {
+                        output.add(s);
+                    }
                     break;
                 case "OR":
-                    output.add(s);
+                    if (isRemoved) {
+                        isRemoved = false;
+                    } else {
+                        output.add(s);
+                    }
                     break;
                 case "NOT":
-                    output.add(s);
+                    if (isRemoved) {
+                        isRemoved = false;
+                    } else {
+                        output.add(s);
+                    }
                     break;
                 default: {
                     List<String> temp = PreProcessorServiceImpl.preProcess(s, analyzerName, isRemoveStopWord);
                     if (temp.size() == 1) {
                         output.add(temp.get(0));
+                    } else if (temp.size() == 0) {
+                        isRemoved = true;
                     } else {
                         output.add("(");
                         for (String s1 :
