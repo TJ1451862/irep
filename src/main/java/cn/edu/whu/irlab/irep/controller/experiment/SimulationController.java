@@ -1,6 +1,5 @@
 package cn.edu.whu.irlab.irep.controller.experiment;
 
-import cn.edu.whu.irlab.irep.service.experiment.simulation.Impl.SimulationServiceImpl;
 import cn.edu.whu.irlab.irep.service.experiment.simulation.SimulationService;
 import cn.edu.whu.irlab.irep.service.vo.SearchResultVo;
 import org.springframework.beans.factory.annotation.Autowired;

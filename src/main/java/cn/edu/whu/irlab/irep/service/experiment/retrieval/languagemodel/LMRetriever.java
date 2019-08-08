@@ -1,7 +1,6 @@
 package cn.edu.whu.irlab.irep.service.experiment.retrieval.languagemodel;
 
 import cn.edu.whu.irlab.irep.base.entity.experiment.FullIndex;
-import cn.edu.whu.irlab.irep.base.entity.experiment.InvertedIndex;
 import cn.edu.whu.irlab.irep.base.dao.experiment.impl.FullIndexServiceImpl;
 import cn.edu.whu.irlab.irep.base.dao.experiment.impl.InvertedIndexServiceImpl;
 import cn.edu.whu.irlab.irep.base.entity.experiment.Retriever;
@@ -10,11 +9,9 @@ import cn.edu.whu.irlab.irep.base.entity.system.UserRetrieverScore;
 import cn.edu.whu.irlab.irep.service.experiment.IndexService;
 import cn.edu.whu.irlab.irep.service.experiment.retrieval.LMRetrieverService;
 import cn.edu.whu.irlab.irep.service.experiment.retrieval.RetrievalService;
-import cn.edu.whu.irlab.irep.service.util.Constructor;
 import cn.edu.whu.irlab.irep.service.util.Find;
 import cn.edu.whu.irlab.irep.service.vo.IdfVo;
 import cn.edu.whu.irlab.irep.service.vo.ResultVo;
-import cn.edu.whu.irlab.irep.service.vo.SearchResultVo;
 import cn.edu.whu.irlab.irep.service.vo.TfVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

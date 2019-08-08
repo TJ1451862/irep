@@ -1,9 +1,7 @@
 package cn.edu.whu.irlab.irep.service.experiment.retrieval.probabilityModel;
 
 import cn.edu.whu.irlab.irep.base.dao.experiment.DocumentService;
-import cn.edu.whu.irlab.irep.base.entity.experiment.Document;
 import cn.edu.whu.irlab.irep.base.entity.experiment.Record;
-import cn.edu.whu.irlab.irep.base.entity.experiment.Result;
 import cn.edu.whu.irlab.irep.base.entity.experiment.Retriever;
 import cn.edu.whu.irlab.irep.base.entity.system.User;
 import cn.edu.whu.irlab.irep.base.entity.system.UserRetrieverScore;
@@ -14,14 +12,12 @@ import cn.edu.whu.irlab.irep.service.util.Find;
 import cn.edu.whu.irlab.irep.service.vo.BijVo;
 import cn.edu.whu.irlab.irep.service.vo.IndexVo;
 import cn.edu.whu.irlab.irep.service.vo.ResultVo;
-import cn.edu.whu.irlab.irep.service.vo.SearchResultVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class ProbabilityRetrieverServiceImpl extends RetrievalService implements ProbabilityRetrievalService {

@@ -133,7 +133,7 @@ public class EvaluateServiceImpl implements EvaluateService {
         List<Result> resultList;
         switch (modelName) {
             case "boolModel": {
-                retrieverId = "1010_10";
+                retrieverId = userRetrieverScore.getBoolRetriever();
                 performance = performanceService.selectByQueryAndRetrieverId(query, retrieverId);
                 if (performance != null) {
                     return performance;
@@ -190,9 +190,9 @@ public class EvaluateServiceImpl implements EvaluateService {
         int userId = user.getId();
         UserRetrieverScore userRetrieverScore = userRetrieverScoreService.selectByUserId(userId);
 
-        Performance boolModelPerformance = performanceService.selectByQueryAndRetrieverId("avgPerformance", "1010_10");
+        Performance boolModelPerformance = performanceService.selectByQueryAndRetrieverId("avgPerformance", userRetrieverScore.getBoolRetriever());
         if (boolModelPerformance == null) {
-            boolModelPerformance = avgPerformance("boolModel", "1010_10", request);
+            boolModelPerformance = avgPerformance("boolModel", userRetrieverScore.getBoolRetriever(), request);
         }
         Performance vsmPerformance = performanceService.selectByQueryAndRetrieverId("avgPerformance", userRetrieverScore.getVsmRetriever());
         if (vsmPerformance == null) {

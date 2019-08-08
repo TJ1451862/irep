@@ -8,15 +8,19 @@
         <result column="lanugae_retriever" property="lanugaeRetriever" jdbcType="VARCHAR"/>
         <result column="vsm_score" property="vsmScore" jdbcType="INTEGER"/>
         <result column="probability_score" property="probabilityScore" jdbcType="INTEGER"/>
-        <result column="lanugae_score" property="lanugaeScore" jdbcType="INTEGER"/>
+        <result column="language_score" property="languageScore" jdbcType="INTEGER"/>
+        <result column="bool_retriever" property="boolRetriever" jdbcType="VARCHAR"/>
+        <result column="bool_score" property="boolScore" jdbcType="INTEGER"/>
     </resultMap>
     <insert id="insert" parameterType="cn.edu.whu.irlab.irep.base.entity.system.UserRetrieverScore">
     insert into user_retriever_score (user_id, vsm_retriever, probability_retriever, 
       lanugae_retriever, vsm_score, probability_score, 
-      lanugae_score)
+      language_score, bool_retriever, bool_score
+      )
     values (#{userId,jdbcType=INTEGER}, #{vsmRetriever,jdbcType=VARCHAR}, #{probabilityRetriever,jdbcType=VARCHAR}, 
       #{lanugaeRetriever,jdbcType=VARCHAR}, #{vsmScore,jdbcType=INTEGER}, #{probabilityScore,jdbcType=INTEGER}, 
-      #{lanugaeScore,jdbcType=INTEGER})
+      #{languageScore,jdbcType=INTEGER}, #{boolRetriever,jdbcType=VARCHAR}, #{boolScore,jdbcType=INTEGER}
+      )
   </insert>
     <insert id="insertSelective" parameterType="cn.edu.whu.irlab.irep.base.entity.system.UserRetrieverScore">
         insert into user_retriever_score
@@ -39,8 +43,14 @@
             <if test="probabilityScore != null">
                 probability_score,
             </if>
-            <if test="lanugaeScore != null">
-                lanugae_score,
+            <if test="languageScore != null">
+                language_score,
+            </if>
+            <if test="boolRetriever != null">
+                bool_retriever,
+            </if>
+            <if test="boolScore != null">
+                bool_score,
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -62,8 +72,14 @@
             <if test="probabilityScore != null">
                 #{probabilityScore,jdbcType=INTEGER},
             </if>
-            <if test="lanugaeScore != null">
-                #{lanugaeScore,jdbcType=INTEGER},
+            <if test="languageScore != null">
+                #{languageScore,jdbcType=INTEGER},
+            </if>
+            <if test="boolRetriever != null">
+                #{boolRetriever,jdbcType=VARCHAR},
+            </if>
+            <if test="boolScore != null">
+                #{boolScore,jdbcType=INTEGER},
             </if>
         </trim>
     </insert>
@@ -93,9 +109,16 @@
             <if test="probabilityScore != null">
                 and probability_score=#{probabilityScore,jdbcType=INTEGER}
             </if>
-            <if test="lanugaeScore != null">
-                and lanugae_score=#{lanugaeScore,jdbcType=INTEGER}
+            <if test="languageScore != null">
+                and lanugae_score=#{languageScore,jdbcType=INTEGER}
             </if>
+            <if test="boolRetriever != null">
+                and bool_retriever= #{boolRetriever,jdbcType=VARCHAR}
+            </if>
+            <if test="boolScore != null">
+                and bool_score=#{boolScore,jdbcType=INTEGER}
+            </if>
+
         </where>
     </select>
     <update id="updateByUserId" parameterType="cn.edu.whu.irlab.irep.base.entity.system.UserRetrieverScore">
@@ -116,8 +139,14 @@
             <if test="probabilityScore != null">
                 probability_score=#{probabilityScore,jdbcType=INTEGER},
             </if>
-            <if test="lanugaeScore != null">
-                lanugae_score=#{lanugaeScore,jdbcType=INTEGER},
+            <if test="languageScore != null">
+                language_score=#{languageScore,jdbcType=INTEGER},
+            </if>
+            <if test="boolRetriever != null">
+                bool_retriever= #{boolRetriever,jdbcType=VARCHAR},
+            </if>
+            <if test="boolScore != null">
+                bool_score=#{boolScore,jdbcType=INTEGER}
             </if>
         </set>
         where user_id=#{userId,jdbcType=INTEGER}

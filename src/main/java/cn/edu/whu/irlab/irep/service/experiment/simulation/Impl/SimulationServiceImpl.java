@@ -1,18 +1,12 @@
 package cn.edu.whu.irlab.irep.service.experiment.simulation.Impl;
 
 import cn.edu.whu.irlab.irep.base.dao.system.UserRetrieverScoreService;
-import cn.edu.whu.irlab.irep.base.dao.system.impl.UserRetrieverScoreServiceImpl;
 import cn.edu.whu.irlab.irep.base.entity.system.User;
 import cn.edu.whu.irlab.irep.base.entity.system.UserRetrieverScore;
 import cn.edu.whu.irlab.irep.service.experiment.retrieval.*;
-import cn.edu.whu.irlab.irep.service.experiment.retrieval.boolmodel.BoolRetrieverServiceImpl;
-import cn.edu.whu.irlab.irep.service.experiment.retrieval.languagemodel.LMRetriever;
-import cn.edu.whu.irlab.irep.service.experiment.retrieval.probabilityModel.ProbabilityRetrieverServiceImpl;
-import cn.edu.whu.irlab.irep.service.experiment.retrieval.vsmModel.VSMRetriever;
 import cn.edu.whu.irlab.irep.service.experiment.simulation.SimulationService;
 import cn.edu.whu.irlab.irep.service.vo.SearchResultVo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,6 +26,18 @@ public class SimulationServiceImpl implements SimulationService {
 
     @Autowired
     private UserRetrieverScoreService userRetrieverScoreService;
+
+    @Autowired
+    private BoolRetrieverService boolRetrieverService;
+
+    @Autowired
+    private VsmRetrievalService vsmRetrievalService;
+
+    @Autowired
+    private ProbabilityRetrievalService probabilityRetrievalService;
+
+    @Autowired
+    private LMRetrieverService lmRetrieverService;
 
     @Override
     public int selectModel(String modelName, HttpServletRequest request) {
@@ -73,9 +79,8 @@ public class SimulationServiceImpl implements SimulationService {
         retrieverParam = new ArrayList<>(retrieverParam);
         switch (retrieverParam.get(1).getBytes()[0]) {
             case '1': {
-                BoolRetrieverService retrievalService = new BoolRetrieverServiceImpl();
-                retrievalService.initBoolRetriever(query, request);
-                return retrievalService.search();
+                boolRetrieverService.initBoolRetriever(query, request);
+                return boolRetrieverService.search();
             }
             case '2': {
                 int formulaId = Integer.valueOf(retrieverId.substring(6));
@@ -83,24 +88,21 @@ public class SimulationServiceImpl implements SimulationService {
                 if (formulaId == 3) {
                     param = Double.valueOf(retrieverId.substring(8, 9)) / 100;
                 }
-                VsmRetrievalService retrievalService = new VSMRetriever();
-                retrievalService.initVSMRetriever(query, formulaId, param, request);
-                return retrievalService.search();
+                vsmRetrievalService.initVSMRetriever(query, formulaId, param, request);
+                return vsmRetrievalService.search();
             }
             case '3': {
                 List<String> list = Arrays.asList(retrieverId.split("_"));
                 double k = Double.valueOf(list.get(2)) / 100;
                 double b = Double.valueOf(list.get(3)) / 100;
-                ProbabilityRetrievalService retrievalService = new ProbabilityRetrieverServiceImpl();
-                retrievalService.initRetriever(query, k, b, request);
-                return retrievalService.search();
+                probabilityRetrievalService.initRetriever(query, k, b, request);
+                return probabilityRetrievalService.search();
             }
             case '4': {
                 List<String> list = Arrays.asList(retrieverId.split("_"));
                 double smoothParam = Double.valueOf(list.get(2)) / 100;
-                LMRetrieverService retrievalService = new LMRetriever();
-                retrievalService.initLMRetriever(query, smoothParam, request);
-                return retrievalService.search();
+                lmRetrieverService.initLMRetriever(query, smoothParam, request);
+                return lmRetrieverService.search();
             }
             default:
                 return null;

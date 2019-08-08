@@ -17,4 +17,5 @@ public interface UserRetrieverScoreMapper {
     int updateByUserId(UserRetrieverScore userRetrieverScore);
 
 
+
 }

@@ -3,6 +3,8 @@ package cn.edu.whu.irlab.irep.service.experiment.retrieval.boolmodel;
 
 import cn.edu.whu.irlab.irep.base.entity.experiment.InvertedIndex;
 import cn.edu.whu.irlab.irep.base.entity.experiment.Retriever;
+import cn.edu.whu.irlab.irep.base.entity.system.User;
+import cn.edu.whu.irlab.irep.base.entity.system.UserRetrieverScore;
 import cn.edu.whu.irlab.irep.service.experiment.IndexService;
 import cn.edu.whu.irlab.irep.service.experiment.preProcess.Impl.PreProcessorServiceImpl;
 import cn.edu.whu.irlab.irep.service.experiment.retrieval.BoolRetrieverService;
@@ -201,7 +203,11 @@ public class BoolRetrieverServiceImpl extends RetrievalService implements BoolRe
 
     @Override
     public int quit() {
-        return 0;
+        UserRetrieverScore userRetrieverScore=new UserRetrieverScore();
+        User user=(User) session.getAttribute("user");
+        userRetrieverScore.setUserId(user.getId());
+        userRetrieverScore.setBoolRetriever(retriever.getRetrieverId());
+        return userRetrieverScoreService.updateByUserId(userRetrieverScore);
     }
 
 

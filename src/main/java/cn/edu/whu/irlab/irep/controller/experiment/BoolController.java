@@ -5,13 +5,12 @@ import cn.edu.whu.irlab.irep.base.dao.experiment.impl.ResultServiceImpl;
 import cn.edu.whu.irlab.irep.base.dao.experiment.impl.RetrieverServiceImpl;
 import cn.edu.whu.irlab.irep.base.dao.system.impl.UserRetrieverServiceImpl;
 import cn.edu.whu.irlab.irep.base.entity.experiment.Result;
+import cn.edu.whu.irlab.irep.service.enums.ResponseEnum;
 import cn.edu.whu.irlab.irep.service.experiment.retrieval.BoolRetrieverService;
 
 
-import cn.edu.whu.irlab.irep.service.vo.BoolStepVo;
-import cn.edu.whu.irlab.irep.service.vo.BoolVectorVo;
-import cn.edu.whu.irlab.irep.service.vo.ResultVo;
-import cn.edu.whu.irlab.irep.service.vo.SearchResultVo;
+import cn.edu.whu.irlab.irep.service.util.ResponseVoUtil;
+import cn.edu.whu.irlab.irep.service.vo.*;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -123,6 +122,18 @@ public class BoolController {
         return boolRetrieverService.testRetriever();
     }
 
+    @PostMapping("/quit")
+    public ResponseVo quitController(@RequestBody JSONObject object,
+                                     HttpServletRequest request){
+        String query = object.getString("query");
+        boolRetrieverService.initBoolRetriever(query, request);
+        int state=boolRetrieverService.quit();
+        if (state == 1) {
+            return ResponseVoUtil.success();
+        } else {
+            return ResponseVoUtil.error(ResponseEnum.UNKNOW_ERROR);
+        }
+    }
 }
 
 

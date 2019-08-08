@@ -13,7 +13,11 @@ public class UserRetrieverScore {
 
     private Integer probabilityScore;
 
-    private Integer lanugaeScore;
+    private Integer languageScore;
+
+    private String boolRetriever;
+
+    private Integer boolScore;
 
     public Integer getUserId() {
         return userId;
@@ -63,11 +67,27 @@ public class UserRetrieverScore {
         this.probabilityScore = probabilityScore;
     }
 
-    public Integer getLanugaeScore() {
-        return lanugaeScore;
+    public Integer getLanguageScore() {
+        return languageScore;
     }
 
-    public void setLanugaeScore(Integer lanugaeScore) {
-        this.lanugaeScore = lanugaeScore;
+    public void setLanguageScore(Integer languageScore) {
+        this.languageScore = languageScore;
+    }
+
+    public String getBoolRetriever() {
+        return boolRetriever;
+    }
+
+    public void setBoolRetriever(String boolRetriever) {
+        this.boolRetriever = boolRetriever == null ? null : boolRetriever.trim();
+    }
+
+    public Integer getBoolScore() {
+        return boolScore;
+    }
+
+    public void setBoolScore(Integer boolScore) {
+        this.boolScore = boolScore;
     }
 }

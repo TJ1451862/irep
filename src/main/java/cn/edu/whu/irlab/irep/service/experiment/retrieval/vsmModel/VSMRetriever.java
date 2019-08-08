@@ -1,7 +1,6 @@
 package cn.edu.whu.irlab.irep.service.experiment.retrieval.vsmModel;
 
 import cn.edu.whu.irlab.irep.base.dao.experiment.DocumentService;
-import cn.edu.whu.irlab.irep.base.entity.experiment.Document;
 import cn.edu.whu.irlab.irep.base.entity.experiment.FullIndex;
 import cn.edu.whu.irlab.irep.base.entity.experiment.Retriever;
 import cn.edu.whu.irlab.irep.base.entity.system.User;
