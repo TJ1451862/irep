@@ -259,24 +259,24 @@ public class EvaluateServiceImpl implements EvaluateService {
             f1Double = f1Double.add(performance.getF1());
         }
 
-        p = p.divide(size, RoundingMode.HALF_UP);
-        p5 = p5.divide(size, RoundingMode.HALF_UP);
-        p10 = p10.divide(size, RoundingMode.HALF_UP);
-        p20 = p20.divide(size, RoundingMode.HALF_UP);
+        p = p.divide(size, 5,RoundingMode.HALF_UP);
+        p5 = p5.divide(size,5, RoundingMode.HALF_UP);
+        p10 = p10.divide(size,5, RoundingMode.HALF_UP);
+        p20 = p20.divide(size,5, RoundingMode.HALF_UP);
 
 
-        r = r.divide(size, RoundingMode.HALF_UP);
-        r5 = r5.divide(size, RoundingMode.HALF_UP);
-        r10 = r10.divide(size, RoundingMode.HALF_UP);
-        r20 = r20.divide(size, RoundingMode.HALF_UP);
+        r = r.divide(size,5, RoundingMode.HALF_UP);
+        r5 = r5.divide(size,5, RoundingMode.HALF_UP);
+        r10 = r10.divide(size,5, RoundingMode.HALF_UP);
+        r20 = r20.divide(size,5, RoundingMode.HALF_UP);
 
-        n = n.divide(size, RoundingMode.HALF_UP);
-        n5 = n5.divide(size, RoundingMode.HALF_UP);
-        n10 = n10.divide(size, RoundingMode.HALF_UP);
-        n20 = n20.divide(size, RoundingMode.HALF_UP);
+        n = n.divide(size,5, RoundingMode.HALF_UP);
+        n5 = n5.divide(size,5, RoundingMode.HALF_UP);
+        n10 = n10.divide(size,5, RoundingMode.HALF_UP);
+        n20 = n20.divide(size,5, RoundingMode.HALF_UP);
 
-        apDoule = apDoule.divide(size, RoundingMode.HALF_UP);
-        f1Double = f1Double.divide(size, RoundingMode.HALF_UP);
+        apDoule = apDoule.divide(size,5, RoundingMode.HALF_UP);
+        f1Double = f1Double.divide(size,5, RoundingMode.HALF_UP);
 
         Performance performance = new Performance();
         performance.setPrecision(p);

@@ -27,7 +27,13 @@ public class Evaluator {
         int relevant = relatedResultNumOfReturn(standardResults, results);//返回结果中的相关文档数
         int retrieved = results.size();//返回结果数
 
-        precision =  BigDecimal.valueOf(relevant).divide(BigDecimal.valueOf(retrieved), RoundingMode.HALF_UP) ;
+        BigDecimal relevantB = BigDecimal.valueOf(relevant);
+        BigDecimal retrievedB = BigDecimal.valueOf(retrieved);
+        if (retrievedB.compareTo(BigDecimal.ZERO) == 0) {
+            return BigDecimal.ZERO;
+        }
+        precision = relevantB.divide(retrievedB, 5, RoundingMode.HALF_UP);
+
         return precision;
     }
 
@@ -48,7 +54,7 @@ public class Evaluator {
         int relevant = standardResults.size();//所有相关文档数
         int retrieved = relatedResultNumOfReturn(standardResults, results);//返回结果中的相关文档数
 
-        recall = BigDecimal.valueOf(retrieved).divide(BigDecimal.valueOf(relevant),RoundingMode.HALF_UP);
+        recall = BigDecimal.valueOf(retrieved).divide(BigDecimal.valueOf(relevant), 5, RoundingMode.HALF_UP);
         return recall;
     }
 
@@ -69,10 +75,10 @@ public class Evaluator {
         BigDecimal precision = calculatePrecision(standardResults, results, null);
         BigDecimal recall = calculateRecall(standardResults, results, null);
 
-        if (precision.compareTo(BigDecimal.valueOf(0))==0&&recall.compareTo(BigDecimal.valueOf(0))==0){
-            f1=BigDecimal.valueOf(0);
-        }else {
-            f1 = (precision.multiply(recall).multiply(BigDecimal.valueOf(2))).divide (precision.add(recall),RoundingMode.HALF_UP);
+        if (precision.compareTo(BigDecimal.valueOf(0)) == 0 && recall.compareTo(BigDecimal.valueOf(0)) == 0) {
+            f1 = BigDecimal.valueOf(0);
+        } else {
+            f1 = (precision.multiply(recall).multiply(BigDecimal.valueOf(2))).divide(precision.add(recall), 5, RoundingMode.HALF_UP);
         }
         return f1;
     }
@@ -86,11 +92,11 @@ public class Evaluator {
      */
     public BigDecimal calculateAP(List<Result> standardResults, List<Result> results) {
         int positiveNum = standardResults.size();//正例数
-        BigDecimal ap=new BigDecimal(0);
+        BigDecimal ap = new BigDecimal(0);
         for (int i = 0; i < positiveNum; i++) {
-            BigDecimal lowerLimitOfRecall = BigDecimal.valueOf(i).divide(BigDecimal.valueOf(positiveNum),RoundingMode.HALF_UP);
+            BigDecimal lowerLimitOfRecall = BigDecimal.valueOf(i).divide(BigDecimal.valueOf(positiveNum), 5, RoundingMode.HALF_UP);
             BigDecimal precisionMax = new BigDecimal(0);
-            for (int j = 0; j < results.size(); j++) {
+            for (int j = 1; j < results.size(); j++) {
                 if (calculateRecall(standardResults, results, j).compareTo(lowerLimitOfRecall) > 0) {
                     BigDecimal prcision = calculatePrecision(standardResults, results, j);
                     if (prcision.compareTo(precisionMax) > 0) {
@@ -98,16 +104,16 @@ public class Evaluator {
                     }
                 }
             }
-            ap = ap.add(precisionMax) ;
+            ap = ap.add(precisionMax);
         }
-        ap = ap.divide(BigDecimal.valueOf(positiveNum),RoundingMode.HALF_UP);
+        ap = ap.divide(BigDecimal.valueOf(positiveNum), 5, RoundingMode.HALF_UP);
         return ap;
     }
 
     public BigDecimal calculateNDCG(List<Result> standardResults, List<Result> results, Integer length) {
         BigDecimal dcg = new BigDecimal(0);
-        BigDecimal idcg= new BigDecimal(0);
-        BigDecimal ndcg= new BigDecimal(0);
+        BigDecimal idcg = new BigDecimal(0);
+        BigDecimal ndcg = new BigDecimal(0);
 
         if (length != null) {
             results = results.subList(0, length - 1);
@@ -115,7 +121,7 @@ public class Evaluator {
 
         //计算dcg
         for (int i = 0; i < results.size(); i++) {
-            int score=0;
+            int score = 0;
             for (int j = 0; j < standardResults.size(); j++) {
                 Result standard = standardResults.get(j);
                 Result result = results.get(i);
@@ -127,15 +133,15 @@ public class Evaluator {
         }
 
         //计算idcg
-        for (int i = 0; i <results.size() ; i++) {
-            if (i>=standardResults.size()) {
+        for (int i = 0; i < results.size(); i++) {
+            if (i >= standardResults.size()) {
                 break;
             }
-            idcg= idcg.add(BigDecimal.valueOf(standardResults.get(i).getScore()/log2(i+2)));
+            idcg = idcg.add(BigDecimal.valueOf(standardResults.get(i).getScore() / log2(i + 2)));
         }
 
         //计算ndcg
-        ndcg=dcg.divide(idcg,RoundingMode.HALF_UP);
+        ndcg = dcg.divide(idcg, 5, RoundingMode.HALF_UP);
         return ndcg;
     }
 
@@ -144,8 +150,8 @@ public class Evaluator {
     }
 
 
-    public double avg(){
-        double avg=0;
+    public double avg() {
+        double avg = 0;
         return avg;
     }
 
