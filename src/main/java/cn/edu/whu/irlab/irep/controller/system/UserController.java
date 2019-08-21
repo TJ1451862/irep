@@ -2,6 +2,8 @@ package cn.edu.whu.irlab.irep.controller.system;
 
 import cn.edu.whu.irlab.irep.base.dao.system.UserService;
 import cn.edu.whu.irlab.irep.base.entity.system.User;
+import cn.edu.whu.irlab.irep.config.session.MyHttpSessionListener;
+import cn.edu.whu.irlab.irep.config.session.MyWebConfig;
 import cn.edu.whu.irlab.irep.service.enums.ResponseEnum;
 import cn.edu.whu.irlab.irep.service.util.ResponseVoUtil;
 import cn.edu.whu.irlab.irep.service.vo.ResponseVo;
@@ -61,6 +63,7 @@ public class UserController {
         User user = (User)request.getSession().getAttribute("user");
         int i = userService.updateOutTimeByUsernameService(user.getId());
         if(i == 1){
+            request.getSession().removeAttribute("user");
             request.getSession().invalidate();
             return ResponseVoUtil.success();
         }else{
@@ -153,5 +156,14 @@ public class UserController {
     @RequestMapping(value = "/query")
     public ResponseVo<List<User>> queryUserController(){
         return ResponseVoUtil.success(userService.selectAllUserService());
+    }
+
+    /**
+     * 获取当前的在线人数
+     * @return
+     */
+    @RequestMapping(value = "/queryOnline")
+    public ResponseVo<Integer> querySessionOoline(){
+        return ResponseVoUtil.success(MyHttpSessionListener.online);
     }
 }
