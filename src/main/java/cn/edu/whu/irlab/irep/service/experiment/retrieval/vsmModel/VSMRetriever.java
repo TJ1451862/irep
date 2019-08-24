@@ -29,9 +29,6 @@ public class VSMRetriever extends RetrievalService implements VsmRetrievalServic
     @Autowired
     private IndexService indexService;
 
-    @Autowired
-    public DocumentService documentService;
-
     private int formulaID;//公式ID
 
     private double smoothParam;//平滑系数

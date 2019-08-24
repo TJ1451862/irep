@@ -208,10 +208,10 @@ public class EvaluateServiceImpl implements EvaluateService {
         }
 
         JSONObject object =new JSONObject();
-        object.put("boolModelPerformance",boolModelPerformance);
-        object.put("vsmPerformance",vsmPerformance);
-        object.put("probabilityModelPerformance",probabilityModelPerformance);
-        object.put("languageModelPerformance",languageModelPerformance);
+        object.put("布尔模型",boolModelPerformance);
+        object.put("向量空间模型",vsmPerformance);
+        object.put("概率检索模型",probabilityModelPerformance);
+        object.put("语言模型",languageModelPerformance);
         return object;
     }
 

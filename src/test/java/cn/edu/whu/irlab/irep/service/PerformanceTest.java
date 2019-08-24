@@ -5,6 +5,7 @@ import cn.edu.whu.irlab.irep.base.dao.experiment.StandardQueryService;
 import cn.edu.whu.irlab.irep.base.entity.experiment.Result;
 import cn.edu.whu.irlab.irep.base.dao.experiment.impl.ResultServiceImpl;
 import cn.edu.whu.irlab.irep.base.entity.experiment.StandardQuery;
+import cn.edu.whu.irlab.irep.service.util.Find;
 import cn.edu.whu.irlab.irep.service.util.ReadDoc;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -58,6 +59,7 @@ public class PerformanceTest {
                 result.setQueryId(queryId);
                 result.setDocRank(jsonObject.getIntValue("rank"));
                 result.setRetrieverId("1000_00");
+                result.setTitle(Find.findTitle(result.getDocId(),true));
                 result.setScore(jsonObject.getInteger("score"));
 ////                System.out.println(result);
                 resultService.insertSelective(result);
