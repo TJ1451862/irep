@@ -12,6 +12,7 @@ public enum ResponseEnum {
     UNKNOW_ERROR(-1,"未知错误"),
     ADMIN_LOGIN_SUCCESS(100,"管理员登录"),
     USER_LOGIN_SUCCESS(101,"用户登录"),
+    PLANT_USER_LOGIN_SUCCESS(201,"平台用户登录"),
     USERNAME_ERROR(102,"用户名输入错误"),
     USERNAME_SIGN_ERROR(103,"用户名已经注册过了"),
     PASSWORD_ERROR(104,"密码输入错误"),

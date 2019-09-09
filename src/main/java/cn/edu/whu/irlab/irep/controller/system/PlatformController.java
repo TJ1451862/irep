@@ -1,20 +1,28 @@
 package cn.edu.whu.irlab.irep.controller.system;
 
+import cn.edu.whu.irlab.irep.base.dao.system.UserService;
+import cn.edu.whu.irlab.irep.base.entity.system.User;
+import cn.edu.whu.irlab.irep.service.enums.ResponseEnum;
+import cn.edu.whu.irlab.irep.service.util.ResponseVoUtil;
+import cn.edu.whu.irlab.irep.service.vo.ResponseVo;
 import cn.edu.whu.irlab.irep.utils.JwtUtil;
 import cn.edu.whu.irlab.irep.utils.SendData;
 import cn.edu.whu.irlab.irep.utils.Type;
 import com.alibaba.fastjson.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.Date;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * @author fangrf
@@ -26,16 +34,31 @@ import java.util.Map;
 @RequestMapping(value = "/platform")
 public class PlatformController {
 
+    @Autowired
+    private UserService userService;
+
     @RequestMapping("/decode")
     @ResponseBody
-    public String decode(@RequestParam String token) throws UnsupportedEncodingException {
+    public ResponseVo decode(@RequestParam String token, HttpServletRequest request) throws UnsupportedEncodingException {
         System.out.println(token);
-        if(token.indexOf("%") < 0){
-            token = URLEncoder.encode(token,"UTF-8");
-        }
         String jsonStr = JwtUtil.dencrty(token);
-        //获取平台信息
-        return jsonStr;
+        JSONObject jo = JSONObject.parseObject(jsonStr);
+        String username = jo.getString("un");
+        User user1 = userService.selectUserService(username);
+        if (user1 == null) {
+            User nu = new User();
+            nu.setUsername(username);
+            nu.setPassword("123456");
+            nu.setSalt("111");
+            nu.setEmail(UUID.randomUUID().toString());
+            nu.setPhone(UUID.randomUUID().toString());
+            nu.setJobNumber(UUID.randomUUID().toString());
+            nu.setCategory(2);  ////用户类别1校内用户，2校外用户，3是后台管理员
+            userService.insertUserService(nu);
+            user1 = nu;
+        }
+        request.getSession().setAttribute("user",user1);
+        return ResponseVoUtil.success(ResponseEnum.USER_LOGIN_SUCCESS,user1);
     }
 
     @RequestMapping("/sendData")
