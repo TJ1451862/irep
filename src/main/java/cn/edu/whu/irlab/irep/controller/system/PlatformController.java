@@ -52,7 +52,7 @@ public class PlatformController {
             nu.setSalt("111");
             nu.setEmail(UUID.randomUUID().toString());
             nu.setPhone(UUID.randomUUID().toString());
-            nu.setJobNumber(UUID.randomUUID().toString());
+            nu.setJobNumber(UUID.randomUUID().toString().substring(0,10));
             nu.setCategory(2);  ////用户类别1校内用户，2校外用户，3是后台管理员
             userService.insertUserService(nu);
             user1 = nu;
