@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.Date;
 import java.util.Map;
 
@@ -27,8 +28,11 @@ public class PlatformController {
 
     @RequestMapping("/decode")
     @ResponseBody
-    public String decode(@RequestBody String token) throws UnsupportedEncodingException {
+    public String decode(@RequestParam String token) throws UnsupportedEncodingException {
         System.out.println(token);
+        if(token.indexOf("%") < 0){
+            token = URLEncoder.encode(token,"UTF-8");
+        }
         String jsonStr = JwtUtil.dencrty(token);
         //获取平台信息
         return jsonStr;
