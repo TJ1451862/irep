@@ -5,6 +5,7 @@ import cn.edu.whu.irlab.irep.utils.SendData;
 import cn.edu.whu.irlab.irep.utils.Type;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -26,7 +27,7 @@ public class PlatformController {
 
     @RequestMapping("/decode")
     @ResponseBody
-    public String decode(@RequestParam(name="token") String token) throws UnsupportedEncodingException {
+    public String decode(@RequestBody String token) throws UnsupportedEncodingException {
         System.out.println(token);
         String jsonStr = JwtUtil.dencrty(token);
         //获取平台信息
@@ -35,7 +36,7 @@ public class PlatformController {
 
     @RequestMapping("/sendData")
     @ResponseBody
-    public String sendData(@RequestParam Map<String, Object> params) {
+    public String sendData(@RequestBody Map<String, Object> params) {
         String strJson = "";
         JSONObject param = new JSONObject();
         param.put("username",params.get("username"));
