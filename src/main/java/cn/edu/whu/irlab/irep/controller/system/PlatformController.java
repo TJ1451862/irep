@@ -52,6 +52,7 @@ public class PlatformController {
             String xjwt=JwtUtil.encrty(json);
 
             String url = Type.serverURI +"/project/log/upload?xjwt=" +  xjwt ;
+            String statusUrl = Type.serverURI +"/third/api/test/result/upload?xjwt=" +  xjwt ;
             System.out.println(url );
 
             try {
@@ -59,6 +60,8 @@ public class PlatformController {
                  * 发送实验结果。
                  */
                 strJson = SendData.sendPost(url,"");
+                //更新实验状态
+                String strJson2 = SendData.sendPost(statusUrl,"");
                 System.out.println("-------POST-------"+strJson);
 
             } catch (Exception e) {
