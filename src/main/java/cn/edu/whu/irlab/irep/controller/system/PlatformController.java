@@ -44,14 +44,16 @@ public class PlatformController {
         String jsonStr = JwtUtil.dencrty(token);
         JSONObject jo = JSONObject.parseObject(jsonStr);
         String username = jo.getString("un");
+        String dis = jo.getString("dis");
         User user1 = userService.selectUserService(username);
         if (user1 == null) {
             User nu = new User();
             nu.setUsername(username);
+            nu.setU1(dis);
             nu.setPassword("123456");
             nu.setSalt("111");
-            nu.setEmail(UUID.randomUUID().toString());
-            nu.setPhone(UUID.randomUUID().toString());
+            nu.setEmail(UUID.randomUUID().toString().substring(0,10));
+            nu.setPhone(UUID.randomUUID().toString().substring(0,10));
             nu.setJobNumber(UUID.randomUUID().toString().substring(0,10));
             nu.setCategory(2);  ////用户类别1校内用户，2校外用户，3是后台管理员
             userService.insertUserService(nu);
