@@ -34,7 +34,7 @@ public class JwtUtil
 		JWT jwt = new JWT(Type.secret,Type.aeskey,System.nanoTime(),Type.issueId);
 		//token = URLDecoder.decode(token,"UTF-8");
 		//调用解密方法解密token
-		String resultJson = jwt.verifyAndDecrypt(token,now);
+		String resultJson = jwt.verifyAndDecrypt(token,0);
 		return resultJson;
 	}
 	
