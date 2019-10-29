@@ -7,6 +7,7 @@ import cn.edu.whu.irlab.irep.config.session.MyWebConfig;
 import cn.edu.whu.irlab.irep.service.enums.ResponseEnum;
 import cn.edu.whu.irlab.irep.service.util.ResponseVoUtil;
 import cn.edu.whu.irlab.irep.service.vo.ResponseVo;
+import org.apache.tomcat.util.http.ResponseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,6 +35,8 @@ public class UserController {
      * @return
      */
     //请将userId存到session中
+
+
     @RequestMapping(value = "/login")
     public ResponseVo loginController(@RequestBody User user, HttpServletRequest request) {
         User user1 = userService.selectUserService(user.getUsername());

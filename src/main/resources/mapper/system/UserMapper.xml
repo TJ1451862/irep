@@ -21,7 +21,7 @@
   <sql id="Base_Column_List" >
     id, username, password, salt, job_number, phone, email, workspace, category, create_time,
     login_time, out_time, u1, u2, u3
-  </sql>
+</sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select
     <include refid="Base_Column_List" />

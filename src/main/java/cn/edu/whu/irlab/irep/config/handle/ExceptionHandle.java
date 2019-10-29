@@ -23,6 +23,7 @@ public class ExceptionHandle {
     public ResponseVo handle(Exception e){
        if(e instanceof MyException){
           MyException myException = (MyException) e;
+          logger.error(e.getMessage());
           return ResponseVoUtil.error(myException.getCode(),myException.getMessage());
        }
        logger.error("【系统异常】{}", e);
